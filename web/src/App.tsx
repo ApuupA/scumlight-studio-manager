@@ -2,6 +2,7 @@ import { DatesProvider } from '@mantine/dates'
 import { useTranslation } from 'react-i18next'
 import { Navigate, Route, Routes } from 'react-router'
 import LoginPage from './features/auth/LoginPage'
+import ProfilePage from './features/auth/ProfilePage'
 import RequireAuth from './features/auth/RequireAuth'
 import CategoriesPage from './features/gear/CategoriesPage'
 import GearItemPage from './features/gear/GearItemPage'
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/gear/new" element={<GearItemPage />} />
             <Route path="/gear/:id" element={<GearItemPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Route>
 

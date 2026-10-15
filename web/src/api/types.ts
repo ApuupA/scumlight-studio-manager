@@ -15,6 +15,8 @@ export type GearCategoryInput = Schemas['GearCategoryCreateDto']
 
 export type User = Schemas['UserReadDto']
 export type LoginInput = Schemas['LoginDto']
+export type ProfileInput = Schemas['UpdateProfileDto']
+export type ChangePasswordInput = Schemas['ChangePasswordDto']
 
 /** All values of the GearStatus enum, in the order of the C# enum. */
 export const gearStatuses: GearStatus[] = ['Available', 'Defective', 'InRepair', 'LentOut', 'Retired']

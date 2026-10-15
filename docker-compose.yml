@@ -36,7 +36,7 @@ services:
       ConnectionStrings__StudioDatabase: "Host=db;Port=5432;Database=studio;Username=studio;Password=${DB_PASSWORD:-studio}"
       FileStorage__RootPath: /data/files
       OwnerAccount__Email: ${OWNER_EMAIL:-owner@studio.local}
-      OwnerAccount__Password: ${OWNER_PASSWORD:-studio}
+      OwnerAccount__Password: ${OWNER_PASSWORD:-scumlight}
       OwnerAccount__DisplayName: ${OWNER_NAME:-Studio Owner}
     volumes:
       - studio-files:/data/files

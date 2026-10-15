@@ -1,3 +1,4 @@
+using StudioManager.DataLayer.DTO.Auth;
 using StudioManager.DataLayer.DTO.Read;
 
 namespace StudioManager.ServiceLayer.IService.IUserServices
@@ -15,5 +16,15 @@ namespace StudioManager.ServiceLayer.IService.IUserServices
         /// Creates the owner account on the very first start (when no user exists yet).
         /// </summary>
         Task EnsureOwnerExists(string email, string password, string displayName);
+
+        /// <summary>
+        /// Changes name and email. Throws BusinessRuleException if another user already has the email.
+        /// </summary>
+        Task<UserReadDto> UpdateProfile(int id, UpdateProfileDto dto);
+
+        /// <summary>
+        /// Sets a new password. Throws BusinessRuleException if the current password is wrong.
+        /// </summary>
+        Task ChangePassword(int id, ChangePasswordDto dto);
     }
 }

@@ -1,6 +1,6 @@
-import { ActionIcon, AppShell, Burger, Button, Group, NavLink, Text, useMantineColorScheme } from '@mantine/core'
+import { ActionIcon, Anchor, AppShell, Burger, Button, Group, NavLink, useMantineColorScheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconCategory, IconLogout, IconMoon, IconSun, IconTool } from '@tabler/icons-react'
+import { IconCategory, IconLogout, IconMoon, IconSun, IconTool, IconUser } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { NavLink as RouterNavLink, Outlet, useNavigate } from 'react-router'
 import { useCurrentUser, useLogout } from '../features/auth/authApi'
@@ -54,9 +54,9 @@ export default function AppLayout() {
 
           {/* On phones these settings move into the navigation (see below), so the header has room for the logo */}
           <Group gap="sm" wrap="nowrap" visibleFrom="sm">
-            <Text size="sm" c="dimmed">
+            <Anchor component={RouterNavLink} to="/profile" size="sm" c="dimmed">
               {user?.displayName}
-            </Text>
+            </Anchor>
             {settings}
           </Group>
         </Group>
@@ -80,6 +80,13 @@ export default function AppLayout() {
           <Group gap="sm" px="sm" pb="sm" hiddenFrom="sm">
             {settings}
           </Group>
+          <NavLink
+            component={RouterNavLink}
+            to="/profile"
+            label={t('nav.profile')}
+            leftSection={<IconUser size={18} />}
+            onClick={closeNavbar}
+          />
           <Button
             variant="subtle"
             color="gray"

@@ -8,7 +8,8 @@
     "categories": "Categories",
     "logout": "Log out",
     "language": "Language",
-    "toggleColorScheme": "Toggle light / dark mode"
+    "toggleColorScheme": "Toggle light / dark mode",
+    "profile": "Profile"
   },
   "common": {
     "save": "Save",
@@ -82,7 +83,8 @@
     "empty": "No categories yet."
   },
   "validation": {
-    "required": "Required"
+    "required": "Required",
+    "email": "Please enter a valid email address"
   },
   "errors": {
     "unknown": "Something went wrong. Please try again.",
@@ -98,6 +100,23 @@
     "photo": {
       "invalidType": "Only JPG, PNG and WEBP images are allowed.",
       "tooLarge": "The photo must not be larger than 10 MB."
+    },
+    "user": {
+      "emailExists": "Another user already uses this email address.",
+      "wrongPassword": "The current password is wrong."
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "details": "Name & email",
+    "displayName": "Name",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat new password",
+    "passwordHint": "At least {{count}} characters",
+    "passwordTooShort": "The password needs at least {{count}} characters",
+    "passwordMismatch": "The passwords do not match",
+    "passwordChanged": "Password changed"
   }
 }

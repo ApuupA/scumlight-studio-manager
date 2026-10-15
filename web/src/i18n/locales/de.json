@@ -8,7 +8,8 @@
     "categories": "Kategorien",
     "logout": "Abmelden",
     "language": "Sprache",
-    "toggleColorScheme": "Hell / Dunkel umschalten"
+    "toggleColorScheme": "Hell / Dunkel umschalten",
+    "profile": "Profil"
   },
   "common": {
     "save": "Speichern",
@@ -82,7 +83,8 @@
     "empty": "Noch keine Kategorien."
   },
   "validation": {
-    "required": "Pflichtfeld"
+    "required": "Pflichtfeld",
+    "email": "Bitte gib eine gültige E-Mail-Adresse ein"
   },
   "errors": {
     "unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
@@ -98,6 +100,23 @@
     "photo": {
       "invalidType": "Nur JPG-, PNG- und WEBP-Bilder sind erlaubt.",
       "tooLarge": "Das Foto darf maximal 10 MB groß sein."
+    },
+    "user": {
+      "emailExists": "Diese E-Mail-Adresse wird bereits von einem anderen Benutzer verwendet.",
+      "wrongPassword": "Das aktuelle Passwort ist falsch."
     }
+  },
+  "profile": {
+    "title": "Profil",
+    "details": "Name & E-Mail",
+    "displayName": "Name",
+    "changePassword": "Passwort ändern",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Neues Passwort wiederholen",
+    "passwordHint": "Mindestens {{count}} Zeichen",
+    "passwordTooShort": "Das Passwort braucht mindestens {{count}} Zeichen",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein",
+    "passwordChanged": "Passwort geändert"
   }
 }

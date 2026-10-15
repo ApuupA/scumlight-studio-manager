@@ -68,9 +68,32 @@ namespace StudioManager.API.Controllers.AuthControllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<UserReadDto>> Me()
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var user = await _userService.Get(userId);
+            var user = await _userService.Get(CurrentUserId);
             return user == null ? Unauthorized() : Ok(user);
         }
+
+        /// <summary>
+        /// Changes name and email of the logged in user.
+        /// </summary>
+        [HttpPut("me")]
+        public async Task<ActionResult<UserReadDto>> UpdateProfile([FromBody] UpdateProfileDto dto)
+        {
+            return Ok(await _userService.UpdateProfile(CurrentUserId, dto));
+        }
+
+        /// <summary>
+        /// Changes the password of the logged in user (requires the current password).
+        /// </summary>
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        {
+            await _userService.ChangePassword(CurrentUserId, dto);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Id of the logged in user, stored in the login cookie at login.
+        /// </summary>
+        private int CurrentUserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     }
 }

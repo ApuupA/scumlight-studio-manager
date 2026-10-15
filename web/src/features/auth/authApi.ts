@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type { LoginInput } from '../../api/types'
+import type { ChangePasswordInput, LoginInput, ProfileInput } from '../../api/types'
 
 const currentUserKey = ['currentUser']
 
@@ -19,6 +19,22 @@ export function useLogin() {
   return useMutation({
     mutationFn: (input: LoginInput) => unwrap(api.POST('/api/Auth/login', { body: input })),
     onSuccess: (user) => queryClient.setQueryData(currentUserKey, user),
+  })
+}
+
+export function useUpdateProfile() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (input: ProfileInput) => unwrap(api.PUT('/api/Auth/me', { body: input })),
+    // The response is the updated user - put it into the cache, so the header shows the new name immediately
+    onSuccess: (user) => queryClient.setQueryData(currentUserKey, user),
+  })
+}
+
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: (input: ChangePasswordInput) => unwrap(api.POST('/api/Auth/change-password', { body: input })),
   })
 }
 

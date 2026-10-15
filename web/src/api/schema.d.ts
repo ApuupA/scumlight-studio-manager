@@ -123,8 +123,72 @@ export interface paths {
                 };
             };
         };
-        put?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["UpdateProfileDto"];
+                    "text/json": components["schemas"]["UpdateProfileDto"];
+                    "application/*+json": components["schemas"]["UpdateProfileDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["UserReadDto"];
+                    };
+                };
+            };
+        };
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Auth/change-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ChangePasswordDto"];
+                    "text/json": components["schemas"]["ChangePasswordDto"];
+                    "application/*+json": components["schemas"]["ChangePasswordDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;
@@ -516,6 +580,10 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ChangePasswordDto: {
+            currentPassword: string;
+            newPassword: string;
+        };
         GearCategoryCreateDto: {
             name: string;
             description?: string | null;
@@ -594,6 +662,11 @@ export interface components {
             instance?: string | null;
         } & {
             [key: string]: unknown;
+        };
+        UpdateProfileDto: {
+            displayName: string;
+            /** Format: email */
+            email: string;
         };
         UserReadDto: {
             /** Format: int32 */

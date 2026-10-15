@@ -34,7 +34,8 @@ npm run dev --prefix web
 Or open `src/StudioManager.sln` in Visual Studio / Rider and start `StudioManager.API` there.
 
 Log in with the development account from [appsettings.Development.json](src/StudioManager.API/appsettings.Development.json):
-**owner@studio.local / studio**. The account is created on the first start when the database has no users.
+**owner@studio.local / scumlight**. The account is created on the first start when the database has no users.
+After that, name, email and password are changed in the app under **Profile** (the `OwnerAccount` settings are then ignored).
 
 Database migrations are applied automatically when the API starts.
 
