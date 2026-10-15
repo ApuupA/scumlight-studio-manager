@@ -1,0 +1,55 @@
+# Studio Manager - complete application
+#
+#   Everything (production-like):   docker compose up -d --build      -> http://localhost:8080
+#   Only the database (development): docker compose up -d db
+#
+# Passwords below are defaults for local use. On a real server put them into a .env file (see .env.example).
+
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: studio
+      POSTGRES_USER: studio
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-studio}
+    ports:
+      - "5433:5432"   # 5433 on the host, so it does not clash with a locally installed PostgreSQL
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U studio -d studio"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./src
+      dockerfile: StudioManager.API/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__StudioDatabase: "Host=db;Port=5432;Database=studio;Username=studio;Password=${DB_PASSWORD:-studio}"
+      FileStorage__RootPath: /data/files
+      OwnerAccount__Email: ${OWNER_EMAIL:-owner@studio.local}
+      OwnerAccount__Password: ${OWNER_PASSWORD:-studio}
+      OwnerAccount__DisplayName: ${OWNER_NAME:-Studio Owner}
+    volumes:
+      - studio-files:/data/files
+
+  web:
+    build:
+      context: ./web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+volumes:
+  db-data:
+  studio-files:
