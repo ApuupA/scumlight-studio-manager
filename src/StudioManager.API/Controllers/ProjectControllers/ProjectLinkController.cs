@@ -1,0 +1,27 @@
+using Microsoft.AspNetCore.Mvc;
+using StudioManager.DataLayer.DTO.Create;
+using StudioManager.DataLayer.DTO.Read;
+using StudioManager.DataLayer.Models.ProjectModels;
+using StudioManager.ServiceLayer.IService.IProjectServices;
+
+namespace StudioManager.API.Controllers.ProjectControllers
+{
+    public class ProjectLinkController : BaseController<ProjectLinkReadDto, ProjectLinkCreateDto, ProjectLink, IProjectLinkService>
+    {
+        private readonly IProjectLinkService _service;
+
+        public ProjectLinkController(IProjectLinkService service) : base(service)
+        {
+            _service = service;
+        }
+
+        /// <summary>
+        /// All entries of one project.
+        /// </summary>
+        [HttpGet("project/{projectId:int}")]
+        public async Task<ActionResult<IEnumerable<ProjectLinkReadDto>>> GetForProject(int projectId)
+        {
+            return Ok(await _service.GetForProject(projectId));
+        }
+    }
+}

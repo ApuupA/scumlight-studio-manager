@@ -11,4 +11,5 @@ Readability beats cleverness. Follow the existing patterns instead of introducin
 - Frontend: one folder per feature in `web/src/features/`, API hooks in `<feature>Api.ts`, Mantine components,
   every visible text through i18next (both languages).
 - After changing DTOs or endpoints: `npm run api:generate --prefix web` and commit `openapi.json` + `schema.d.ts`.
+- Git: develop on a feature branch (e.g. `feature/milestone-3-mix-revisions`), never commit directly to `main`.
 - Before committing: `dotnet test src/StudioManager.sln`, `npm run lint --prefix web`, `npm run build --prefix web`.

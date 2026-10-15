@@ -1,6 +1,6 @@
 import { ActionIcon, Anchor, AppShell, Burger, Button, Group, NavLink, useMantineColorScheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconCategory, IconLogout, IconMoon, IconSun, IconTool, IconUser } from '@tabler/icons-react'
+import { IconCalendarEvent, IconCategory, IconDisc, IconLogout, IconMoon, IconSun, IconTool, IconUser, IconUsersGroup } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { NavLink as RouterNavLink, Outlet, useNavigate } from 'react-router'
 import { useCurrentUser, useLogout } from '../features/auth/authApi'
@@ -10,6 +10,9 @@ import LanguageSwitcher from './LanguageSwitcher'
 
 /** Entries of the side navigation. New features (projects, sessions, mixes, ...) are added here. */
 const navItems = [
+  { to: '/sessions', labelKey: 'nav.calendar', icon: IconCalendarEvent },
+  { to: '/projects', labelKey: 'nav.projects', icon: IconDisc },
+  { to: '/clients', labelKey: 'nav.clients', icon: IconUsersGroup },
   { to: '/gear', labelKey: 'nav.gear', icon: IconTool },
   { to: '/categories', labelKey: 'nav.categories', icon: IconCategory },
 ]

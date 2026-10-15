@@ -9,7 +9,10 @@
     "logout": "Abmelden",
     "language": "Sprache",
     "toggleColorScheme": "Hell / Dunkel umschalten",
-    "profile": "Profil"
+    "profile": "Profil",
+    "calendar": "Kalender",
+    "projects": "Projekte",
+    "clients": "Kunden"
   },
   "common": {
     "save": "Speichern",
@@ -25,7 +28,17 @@
     "noResults": "Nichts gefunden",
     "confirmDeleteTitle": "Wirklich löschen?",
     "created": "Erstellt",
-    "updated": "Geändert"
+    "updated": "Geändert",
+    "add": "Hinzufügen",
+    "open": "Öffnen",
+    "print": "Drucken",
+    "today": "Heute",
+    "allDay": "Ganztägig",
+    "notes": "Notizen",
+    "name": "Name",
+    "quantity": "Anzahl",
+    "noEntries": "Noch keine Einträge.",
+    "general": "Allgemein"
   },
   "auth": {
     "title": "Anmelden",
@@ -84,7 +97,8 @@
   },
   "validation": {
     "required": "Pflichtfeld",
-    "email": "Bitte gib eine gültige E-Mail-Adresse ein"
+    "email": "Bitte gib eine gültige E-Mail-Adresse ein",
+    "url": "Bitte einen vollständigen Link mit http:// oder https:// eingeben"
   },
   "errors": {
     "unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
@@ -104,6 +118,32 @@
     "user": {
       "emailExists": "Diese E-Mail-Adresse wird bereits von einem anderen Benutzer verwendet.",
       "wrongPassword": "Das aktuelle Passwort ist falsch."
+    },
+    "common": {
+      "invalidReference": "Die Daten verweisen auf einen Eintrag, der nicht (mehr) existiert."
+    },
+    "client": {
+      "hasProjects": "Der Kunde hat noch Projekte. Lösche zuerst die Projekte."
+    },
+    "band": {
+      "clientNotFound": "Der Kunde existiert nicht mehr."
+    },
+    "project": {
+      "clientNotFound": "Der Kunde existiert nicht mehr.",
+      "bandNotOfClient": "Alle Bands eines Projekts müssen zum Kunden des Projekts gehören."
+    },
+    "song": {
+      "projectNotFound": "Das Projekt existiert nicht mehr.",
+      "bandNotInProject": "Diese Band ist nicht an dem Projekt beteiligt."
+    },
+    "session": {
+      "invalidTimes": "Setze Beginn und Ende (Ende nach Beginn) – oder markiere die Session als ganztägig.",
+      "projectNotFound": "Das Projekt existiert nicht mehr.",
+      "songNotInProject": "Alle Songs einer Session müssen zum Projekt gehören."
+    },
+    "gearBooking": {
+      "sessionNotFound": "Die Session existiert nicht mehr.",
+      "gearItemNotFound": "Das Equipment existiert nicht mehr."
     }
   },
   "profile": {
@@ -118,5 +158,249 @@
     "passwordTooShort": "Das Passwort braucht mindestens {{count}} Zeichen",
     "passwordMismatch": "Die Passwörter stimmen nicht überein",
     "passwordChanged": "Passwort geändert"
+  },
+  "clients": {
+    "title": "Kunden",
+    "new": "Neuer Kunde",
+    "newTitle": "Neuer Kunde",
+    "name": "Name",
+    "namePlaceholder": "Band, Label oder Person",
+    "contactPerson": "Ansprechpartner",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "address": "Adresse",
+    "bandCount": "Bands",
+    "projectCount": "Projekte",
+    "projects": "Projekte dieses Kunden",
+    "noProjects": "Noch keine Projekte.",
+    "empty": "Noch keine Kunden. Leg den ersten an!",
+    "deleteConfirm": "\"{{name}}\" und alle zugehörigen Bands werden gelöscht."
+  },
+  "bands": {
+    "title": "Bands",
+    "new": "Band hinzufügen",
+    "newTitle": "Neue Band",
+    "editTitle": "Band bearbeiten",
+    "name": "Name",
+    "genre": "Genre",
+    "members": "Mitglieder",
+    "membersPlaceholder": "z. B. Max – Gesang, Lisa – Drums",
+    "email": "E-Mail",
+    "website": "Website / Social Media",
+    "empty": "Noch keine Bands.",
+    "deleteConfirm": "Die Band \"{{name}}\" wird gelöscht. Ihre Songs bleiben in den Projekten."
+  },
+  "projects": {
+    "title": "Projekte",
+    "new": "Neues Projekt",
+    "newTitle": "Neues Projekt",
+    "projectTitle": "Titel",
+    "client": "Kunde",
+    "bands": "Bands",
+    "bandsHint": "Nur Bands des gewählten Kunden",
+    "type": "Art",
+    "status": "Status",
+    "startDate": "Start",
+    "dueDate": "Deadline / Release",
+    "description": "Beschreibung",
+    "technical": "Technische Einstellungen",
+    "sampleRate": "Samplerate",
+    "bitDepth": "Bittiefe",
+    "daw": "DAW / Template",
+    "dawPlaceholder": "z. B. Cubase 14 – Band-Template",
+    "targetLufs": "Master-Ziel (LUFS)",
+    "productionNotes": "Produktionsnotizen",
+    "recordingNotes": "Recording",
+    "recordingNotesPlaceholder": "Mikrofon-Setup, Amp-Einstellungen, was gut funktioniert hat …",
+    "mixingNotes": "Mixing",
+    "mixingNotesPlaceholder": "Wünsche der Band, Mix-Entscheidungen, Revisionen …",
+    "masteringNotes": "Mastering",
+    "masteringNotesPlaceholder": "Format, Lautheit, Auslieferung (Streaming, Vinyl, CD) …",
+    "empty": "Noch keine Projekte. Leg zuerst einen Kunden an, dann dein erstes Projekt!",
+    "noResults": "Kein Projekt passt zum Filter.",
+    "searchPlaceholder": "Titel, Kunde oder Band …",
+    "progress": "{{done}} / {{total}} Songs fertig",
+    "nextSession": "Nächste Session",
+    "noUpcomingSession": "Keine Session geplant",
+    "deleteConfirm": "\"{{name}}\" wird mit allen Songs, Sessions und Buchungen gelöscht.",
+    "tabs": {
+      "overview": "Übersicht",
+      "songs": "Songs",
+      "sessions": "Sessions",
+      "equipment": "Equipment",
+      "links": "Referenzen & Mixe",
+      "drums": "Drum-Tuning"
+    },
+    "filterActive": "Aktive Projekte",
+    "filterAll": "Alle Projekte"
+  },
+  "projectType": {
+    "Album": "Album",
+    "Ep": "EP",
+    "Single": "Single",
+    "SplitRelease": "Split-Release",
+    "Demo": "Demo",
+    "Other": "Sonstiges"
+  },
+  "projectStatus": {
+    "Planning": "Planung",
+    "PreProduction": "Vorproduktion",
+    "Recording": "Aufnahme",
+    "Editing": "Editing",
+    "Mixing": "Mix",
+    "Mastering": "Mastering",
+    "Completed": "Abgeschlossen",
+    "OnHold": "Pausiert",
+    "Cancelled": "Abgebrochen"
+  },
+  "songs": {
+    "new": "Song hinzufügen",
+    "newTitle": "Neuer Song",
+    "editTitle": "Song bearbeiten",
+    "songTitle": "Titel",
+    "trackNumber": "Nr.",
+    "status": "Status",
+    "bpm": "BPM",
+    "key": "Tonart",
+    "keyPlaceholder": "z. B. Fis-Moll",
+    "tuning": "Stimmung",
+    "tuningPlaceholder": "z. B. Drop C",
+    "band": "Band",
+    "empty": "Noch keine Songs.",
+    "deleteConfirm": "Der Song \"{{name}}\" wird gelöscht."
+  },
+  "songStatus": {
+    "Planned": "Geplant",
+    "Recording": "Aufnahme",
+    "Editing": "Editing",
+    "Mixing": "Mix",
+    "Mastering": "Mastering",
+    "Done": "Fertig"
+  },
+  "links": {
+    "new": "Link hinzufügen",
+    "newTitle": "Neuer Link",
+    "editTitle": "Link bearbeiten",
+    "type": "Art",
+    "linkTitle": "Titel",
+    "linkTitlePlaceholder": "z. B. Snare-Sound wie bei \"Song X\"",
+    "url": "Link (URL)",
+    "song": "Song (optional)",
+    "empty": "Noch keine Referenzen oder Rough Mixes.",
+    "hint": "Links zu Spotify, YouTube, Dropbox, … – Mixe hochladen kommt mit dem Mix-Revision-Tool.",
+    "deleteConfirm": "Der Link \"{{name}}\" wird gelöscht."
+  },
+  "projectLinkType": {
+    "Reference": "Referenz",
+    "RoughMix": "Rough Mix",
+    "Demo": "Demo",
+    "Other": "Sonstiges"
+  },
+  "drums": {
+    "new": "Trommel hinzufügen",
+    "newTitle": "Neue Trommel",
+    "editTitle": "Trommel bearbeiten",
+    "drum": "Trommel",
+    "drumPlaceholder": "z. B. Snare 14x6,5",
+    "batter": "Schlagfell",
+    "resonant": "Resonanzfell",
+    "heads": "Felle",
+    "headsPlaceholder": "z. B. Remo Emperor coated / Ambassador clear",
+    "song": "Song",
+    "songHint": "Leer = Tuning für das ganze Projekt",
+    "wholeProject": "Ganzes Projekt",
+    "hint": "Werte in Hz, z. B. vom TuneBot. Die passende Note wird automatisch angezeigt.",
+    "empty": "Noch kein Drum-Tuning.",
+    "deleteConfirm": "\"{{name}}\" wird gelöscht."
+  },
+  "equipment": {
+    "studioGear": "Studio-Equipment",
+    "studioGearHint": "In den Sessions dieses Projekts gebucht",
+    "noStudioGear": "In den Sessions ist noch kein Equipment gebucht.",
+    "usedIn": "Sessions",
+    "bandGear": "Mitgebrachtes Equipment",
+    "newBandGear": "Equipment hinzufügen",
+    "newTitle": "Mitgebrachtes Equipment",
+    "name": "Equipment",
+    "namePlaceholder": "z. B. Orange Rockerverb 50",
+    "owner": "Mitgebracht von",
+    "ownerPlaceholder": "z. B. Lisa (Drums)",
+    "emptyBandGear": "Noch nichts eingetragen.",
+    "deleteConfirm": "\"{{name}}\" wird aus der Liste entfernt."
+  },
+  "sessions": {
+    "title": "Kalender",
+    "new": "Neue Session",
+    "newTitle": "Neue Session",
+    "sessionTitle": "Titel",
+    "titlePlaceholder": "z. B. Drums Tag 1",
+    "project": "Projekt",
+    "type": "Art",
+    "status": "Status",
+    "date": "Datum",
+    "allDay": "Ganztägig",
+    "startTime": "Beginn",
+    "endTime": "Ende",
+    "engineer": "Engineer",
+    "attendees": "Anwesend",
+    "attendeesPlaceholder": "z. B. Drummer + Gitarrist",
+    "songs": "Bearbeitete Songs",
+    "goals": "Was ist zu tun",
+    "goalsPlaceholder": "Ziel der Session in ein paar Worten",
+    "summary": "Wo stehen wir",
+    "summaryPlaceholder": "Was wurde erreicht, was ist noch offen",
+    "nextSteps": "Nächste Schritte",
+    "progress": "Stand",
+    "empty": "Keine Sessions in diesem Monat.",
+    "emptyDay": "Keine Sessions an diesem Tag.",
+    "emptyProject": "Noch keine Sessions geplant.",
+    "showMonth": "Ganzen Monat anzeigen",
+    "tasksProgress": "{{done}}/{{total}} To-dos",
+    "gearCount": "{{count}} Equipment",
+    "sheet": "Session-Sheet",
+    "deleteConfirm": "Die Session \"{{name}}\" wird mit ihren To-dos und Buchungen gelöscht.",
+    "projectFirst": "Leg zuerst ein Projekt an – jede Session gehört zu einem Projekt."
+  },
+  "sessionType": {
+    "PreProduction": "Vorproduktion",
+    "Recording": "Aufnahme",
+    "Overdubs": "Overdubs",
+    "Editing": "Editing",
+    "Mixing": "Mix",
+    "Mastering": "Mastering",
+    "Production": "Produktionstag",
+    "Other": "Sonstiges"
+  },
+  "sessionStatus": {
+    "Planned": "Geplant",
+    "Confirmed": "Bestätigt",
+    "Completed": "Erledigt",
+    "Cancelled": "Abgesagt"
+  },
+  "tasks": {
+    "title": "To-dos",
+    "placeholder": "Neues To-do, z. B. \"Gitarren reampen Song 2\"",
+    "empty": "Noch keine To-dos."
+  },
+  "booking": {
+    "title": "Gebuchtes Studio-Equipment",
+    "gearItem": "Equipment",
+    "gearItemPlaceholder": "Equipment suchen …",
+    "add": "Buchen",
+    "empty": "Noch kein Equipment gebucht.",
+    "overbooked": "{{total}} von {{available}} gleichzeitig gebucht",
+    "alsoBookedIn": "Auch gebucht in",
+    "statusWarning": "Status: {{status}}",
+    "savedWithWarning": "Gebucht – aber es gibt einen Konflikt, siehe Warnung.",
+    "upcoming": "Kommende Buchungen",
+    "noUpcoming": "In keiner kommenden Session gebucht.",
+    "bookedToday": "Heute in Session",
+    "bookedTodayCount": "{{count}} heute in Session"
+  },
+  "sheet": {
+    "title": "Session-Sheet",
+    "gear": "Studio-Equipment",
+    "bandGear": "Mitgebrachtes Equipment",
+    "checked": "✓"
   }
 }

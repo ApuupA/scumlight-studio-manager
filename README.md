@@ -2,7 +2,7 @@
 
 A web application to manage a recording studio: gear inventory, projects & sessions, documents and (later) mix revisions.
 
-**Status:** Milestone 1 – foundation + gear inventory. See [docs/ROADMAP.md](docs/ROADMAP.md).
+**Status:** Milestone 2 – clients, projects, sessions and gear booking. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 | Part | Technology | Folder |
 |---|---|---|

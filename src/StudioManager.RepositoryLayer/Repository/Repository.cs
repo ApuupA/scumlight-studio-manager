@@ -50,7 +50,14 @@ namespace StudioManager.RepositoryLayer.Repository
 
         public async Task UpdateAsync(T entity)
         {
-            _dbSet.Update(entity);
+            // An entity loaded through this context is already tracked - EF detects the changed properties itself.
+            // Update() is only needed for detached entities; on a tracked one it would also mark every loaded
+            // related entity (e.g. the bands of a project) as modified.
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _dbSet.Update(entity);
+            }
+
             await _context.SaveChangesAsync();
         }
 

@@ -9,13 +9,22 @@
 - German / English UI, light / dark mode
 - Typed API client generated from Swagger, unit tests
 
-## Milestone 2 – Projects, sessions & gear booking
-- Clients / bands (contacts)
-- Projects (album, EP, ...) with songs and song status (tracking → editing → mixing → mastered)
-- Sessions (date/time blocks) inside projects, calendar view
-- Assign gear to sessions → blocked for that time, conflict warning on double booking
-- "In use" shown in the gear list based on bookings
+## ✅ Milestone 2 – Projects, sessions & gear booking
+- Clients with bands; a project belongs to a client and can include several of its bands (split releases)
+- Projects with type, status, deadline, technical settings (sample rate, bit depth, DAW, target LUFS)
+  and notes per phase (recording, mixing, mastering)
+- Songs with band, BPM, key, tuning and status (planned → recording → editing → mixing → mastering → done)
+- References & rough mixes as links, drum tuning (TuneBot Hz shown as note), gear brought by the band
+- Sessions as all-day or time range, with to-do list, worked-on songs, goals / where we are / next steps
+- Calendar view (month) with session list
+- Gear booking per session with quantities; double bookings and unavailable gear only **warn**, never block
+- "In session today" in the gear list, upcoming bookings on the gear page
+- Printable session sheet (to-dos, songs, gear to set up, band gear, drum tuning)
+
+## Milestone 2 – open ideas
 - Gear packages (e.g. "drum mic package") to book several items at once
+- Week view in the calendar, sessions spanning several days
+- Status history of songs (who changed what when)
 
 ## Milestone 3 – Mix revision tool
 - Upload mix versions per song (WAV/MP3), server-side conversion for streaming (FFmpeg)

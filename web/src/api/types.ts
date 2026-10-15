@@ -18,5 +18,45 @@ export type LoginInput = Schemas['LoginDto']
 export type ProfileInput = Schemas['UpdateProfileDto']
 export type ChangePasswordInput = Schemas['ChangePasswordDto']
 
-/** All values of the GearStatus enum, in the order of the C# enum. */
+export type Client = Schemas['ClientReadDto']
+export type ClientInput = Schemas['ClientCreateDto']
+export type Band = Schemas['BandReadDto']
+export type BandInput = Schemas['BandCreateDto']
+
+export type Project = Schemas['ProjectReadDto']
+export type ProjectInput = Schemas['ProjectCreateDto']
+export type ProjectType = Schemas['ProjectType']
+export type ProjectStatus = Schemas['ProjectStatus']
+export type Song = Schemas['SongReadDto']
+export type SongInput = Schemas['SongCreateDto']
+export type SongStatus = Schemas['SongStatus']
+export type ProjectLink = Schemas['ProjectLinkReadDto']
+export type ProjectLinkInput = Schemas['ProjectLinkCreateDto']
+export type ProjectLinkType = Schemas['ProjectLinkType']
+export type DrumTuning = Schemas['DrumTuningReadDto']
+export type DrumTuningInput = Schemas['DrumTuningCreateDto']
+export type ExternalGear = Schemas['ExternalGearReadDto']
+export type ExternalGearInput = Schemas['ExternalGearCreateDto']
+
+export type Session = Schemas['SessionReadDto']
+export type SessionInput = Schemas['SessionCreateDto']
+export type SessionShort = Schemas['SessionShortDto']
+export type SessionType = Schemas['SessionType']
+export type SessionStatus = Schemas['SessionStatus']
+export type SessionTask = Schemas['SessionTaskReadDto']
+export type SessionTaskInput = Schemas['SessionTaskCreateDto']
+export type GearBooking = Schemas['GearBookingReadDto']
+export type GearBookingInput = Schemas['GearBookingCreateDto']
+
+// All values of the C# enums, in the order of the C# enum (used for dropdowns)
 export const gearStatuses: GearStatus[] = ['Available', 'Defective', 'InRepair', 'LentOut', 'Retired']
+export const projectTypes: ProjectType[] = ['Album', 'Ep', 'Single', 'SplitRelease', 'Demo', 'Other']
+export const projectStatuses: ProjectStatus[] = [
+  'Planning', 'PreProduction', 'Recording', 'Editing', 'Mixing', 'Mastering', 'Completed', 'OnHold', 'Cancelled',
+]
+export const songStatuses: SongStatus[] = ['Planned', 'Recording', 'Editing', 'Mixing', 'Mastering', 'Done']
+export const projectLinkTypes: ProjectLinkType[] = ['Reference', 'RoughMix', 'Demo', 'Other']
+export const sessionTypes: SessionType[] = [
+  'PreProduction', 'Recording', 'Overdubs', 'Editing', 'Mixing', 'Mastering', 'Production', 'Other',
+]
+export const sessionStatuses: SessionStatus[] = ['Planned', 'Confirmed', 'Completed', 'Cancelled']

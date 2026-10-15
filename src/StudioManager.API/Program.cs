@@ -7,12 +7,18 @@ using StudioManager.API.Infrastructure;
 using StudioManager.DataLayer.Context;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.RepositoryLayer.Repository;
+using StudioManager.ServiceLayer.IService.IClientServices;
 using StudioManager.ServiceLayer.IService.IFileServices;
 using StudioManager.ServiceLayer.IService.IGearServices;
+using StudioManager.ServiceLayer.IService.IProjectServices;
+using StudioManager.ServiceLayer.IService.ISessionServices;
 using StudioManager.ServiceLayer.IService.IUserServices;
 using StudioManager.ServiceLayer.Mapper;
+using StudioManager.ServiceLayer.Service.ClientServices;
 using StudioManager.ServiceLayer.Service.FileServices;
 using StudioManager.ServiceLayer.Service.GearServices;
+using StudioManager.ServiceLayer.Service.ProjectServices;
+using StudioManager.ServiceLayer.Service.SessionServices;
 using StudioManager.ServiceLayer.Service.UserServices;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -108,6 +114,16 @@ try
     builder.Services.AddScoped<IGearCategoryService, GearCategoryService>();
     builder.Services.AddScoped<IGearItemService, GearItemService>();
     builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IClientService, ClientService>();
+    builder.Services.AddScoped<IBandService, BandService>();
+    builder.Services.AddScoped<IProjectService, ProjectService>();
+    builder.Services.AddScoped<ISongService, SongService>();
+    builder.Services.AddScoped<IProjectLinkService, ProjectLinkService>();
+    builder.Services.AddScoped<IDrumTuningService, DrumTuningService>();
+    builder.Services.AddScoped<IExternalGearService, ExternalGearService>();
+    builder.Services.AddScoped<ISessionService, SessionService>();
+    builder.Services.AddScoped<ISessionTaskService, SessionTaskService>();
+    builder.Services.AddScoped<IGearBookingService, GearBookingService>();
 
     var app = builder.Build();
 

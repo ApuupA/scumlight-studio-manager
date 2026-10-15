@@ -1,0 +1,147 @@
+/*
+ * Printable session sheet. Always black on white (also in dark mode), A4 friendly.
+ * Uses plain HTML elements instead of Mantine components, so the app theme does not affect the print.
+ */
+
+.page {
+  min-height: 100vh;
+  background: #e9e6df;
+  padding: 24px 12px;
+}
+
+.toolbar {
+  max-width: 210mm;
+  margin: 0 auto 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sheet {
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 14mm;
+  background: #fff;
+  color: #111;
+  font-size: 11pt;
+  line-height: 1.4;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #cc3300;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.brand img {
+  width: 28px;
+}
+
+.label {
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #666;
+}
+
+.sheet h1 {
+  font-size: 20pt;
+  margin: 0;
+}
+
+.sheet h2 {
+  font-size: 12pt;
+  margin: 18px 0 6px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 2px;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px 24px;
+  margin-top: 6px;
+}
+
+.sheet table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sheet th,
+.sheet td {
+  text-align: left;
+  padding: 3px 6px 3px 0;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+
+.sheet th {
+  font-size: 8pt;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.check {
+  width: 18px;
+  font-size: 13pt;
+  line-height: 1;
+}
+
+.category {
+  font-weight: 700;
+  padding-top: 8px !important;
+}
+
+.muted {
+  color: #666;
+}
+
+.writeArea {
+  min-height: 30mm;
+  border: 1px solid #ccc;
+  padding: 6px;
+  white-space: pre-wrap;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 24px;
+}
+
+/* When printing: only the white sheet, no toolbar, no grey background */
+@media print {
+  .page {
+    background: none;
+    padding: 0;
+  }
+
+  .toolbar {
+    display: none;
+  }
+
+  .sheet {
+    box-shadow: none;
+    padding: 0;
+    max-width: none;
+  }
+
+  .sheet h2 {
+    break-after: avoid;
+  }
+
+  .sheet tr {
+    break-inside: avoid;
+  }
+}

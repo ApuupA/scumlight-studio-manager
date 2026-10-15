@@ -2,6 +2,7 @@ using Moq;
 using StudioManager.DataLayer.Context;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.Models.GearModels;
+using StudioManager.DataLayer.Models.SessionModels;
 using StudioManager.RepositoryLayer.Repository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IFileServices;
@@ -21,6 +22,7 @@ namespace StudioManager.Tests.Unit
             _service = new GearItemService(
                 new Repository<GearItem>(_context),
                 new Repository<GearCategory>(_context),
+                new Repository<GearBooking>(_context),
                 _mockFileStorage.Object,
                 TestHelper.CreateMapper());
 
