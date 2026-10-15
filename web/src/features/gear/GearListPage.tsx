@@ -1,4 +1,4 @@
-import { Alert, Avatar, Button, Center, Group, Loader, Select, Stack, Table, Text, TextInput, Title, UnstyledButton } from '@mantine/core'
+import { Alert, Avatar, Badge, Button, Center, Group, Loader, Select, Stack, Table, Text, TextInput, Title, UnstyledButton } from '@mantine/core'
 import { IconChevronDown, IconChevronUp, IconPlus, IconSearch, IconSelector, IconTool } from '@tabler/icons-react'
 import { useMemo, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -141,7 +141,18 @@ export default function GearListPage() {
                     </Text>
                   </Table.Td>
                   <Table.Td>{item.gearCategoryName}</Table.Td>
-                  <Table.Td><GearStatusBadge status={item.status} /></Table.Td>
+                  <Table.Td>
+                    <Group gap={4}>
+                      <GearStatusBadge status={item.status} />
+                      {item.bookedTodayQuantity > 0 && (
+                        <Badge color="ember" variant="filled">
+                          {item.quantity > 1
+                            ? t('booking.bookedTodayCount', { count: item.bookedTodayQuantity })
+                            : t('booking.bookedToday')}
+                        </Badge>
+                      )}
+                    </Group>
+                  </Table.Td>
                   <Table.Td>{item.quantity}</Table.Td>
                   <Table.Td>{item.location}</Table.Td>
                 </Table.Tr>

@@ -4,9 +4,16 @@ import { Navigate, Route, Routes } from 'react-router'
 import LoginPage from './features/auth/LoginPage'
 import ProfilePage from './features/auth/ProfilePage'
 import RequireAuth from './features/auth/RequireAuth'
+import ClientListPage from './features/clients/ClientListPage'
+import ClientPage from './features/clients/ClientPage'
 import CategoriesPage from './features/gear/CategoriesPage'
 import GearItemPage from './features/gear/GearItemPage'
 import GearListPage from './features/gear/GearListPage'
+import ProjectListPage from './features/projects/ProjectListPage'
+import ProjectPage from './features/projects/ProjectPage'
+import SessionCalendarPage from './features/sessions/SessionCalendarPage'
+import SessionPage from './features/sessions/SessionPage'
+import SessionSheetPage from './features/sessions/SessionSheetPage'
 import AppLayout from './layout/AppLayout'
 
 /**
@@ -22,10 +29,22 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Everything below requires a logged in user and is shown inside the app layout */}
+        {/* Everything below requires a logged in user */}
         <Route element={<RequireAuth />}>
+          {/* Printable pages without header and navigation */}
+          <Route path="/sessions/:id/sheet" element={<SessionSheetPage />} />
+
+          {/* Normal pages inside the app layout */}
           <Route element={<AppLayout />}>
-            <Route path="/" element={<Navigate to="/gear" replace />} />
+            <Route path="/" element={<Navigate to="/sessions" replace />} />
+            <Route path="/sessions" element={<SessionCalendarPage />} />
+            <Route path="/sessions/new" element={<SessionPage />} />
+            <Route path="/sessions/:id" element={<SessionPage />} />
+            <Route path="/projects" element={<ProjectListPage />} />
+            <Route path="/projects/new" element={<ProjectPage />} />
+            <Route path="/projects/:id" element={<ProjectPage />} />
+            <Route path="/clients" element={<ClientListPage />} />
+            <Route path="/clients/:id" element={<ClientPage />} />
             <Route path="/gear" element={<GearListPage />} />
             <Route path="/gear/new" element={<GearItemPage />} />
             <Route path="/gear/:id" element={<GearItemPage />} />

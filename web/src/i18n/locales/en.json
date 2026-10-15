@@ -9,7 +9,10 @@
     "logout": "Log out",
     "language": "Language",
     "toggleColorScheme": "Toggle light / dark mode",
-    "profile": "Profile"
+    "profile": "Profile",
+    "calendar": "Calendar",
+    "projects": "Projects",
+    "clients": "Clients"
   },
   "common": {
     "save": "Save",
@@ -25,7 +28,17 @@
     "noResults": "Nothing found",
     "confirmDeleteTitle": "Really delete?",
     "created": "Created",
-    "updated": "Updated"
+    "updated": "Updated",
+    "add": "Add",
+    "open": "Open",
+    "print": "Print",
+    "today": "Today",
+    "allDay": "All day",
+    "notes": "Notes",
+    "name": "Name",
+    "quantity": "Qty",
+    "noEntries": "No entries yet.",
+    "general": "General"
   },
   "auth": {
     "title": "Sign in",
@@ -84,7 +97,8 @@
   },
   "validation": {
     "required": "Required",
-    "email": "Please enter a valid email address"
+    "email": "Please enter a valid email address",
+    "url": "Please enter a full link starting with http:// or https://"
   },
   "errors": {
     "unknown": "Something went wrong. Please try again.",
@@ -104,6 +118,32 @@
     "user": {
       "emailExists": "Another user already uses this email address.",
       "wrongPassword": "The current password is wrong."
+    },
+    "common": {
+      "invalidReference": "The data refers to an entry that does not exist (anymore)."
+    },
+    "client": {
+      "hasProjects": "The client still has projects. Delete the projects first."
+    },
+    "band": {
+      "clientNotFound": "The client does not exist anymore."
+    },
+    "project": {
+      "clientNotFound": "The client does not exist anymore.",
+      "bandNotOfClient": "All bands of a project must belong to its client."
+    },
+    "song": {
+      "projectNotFound": "The project does not exist anymore.",
+      "bandNotInProject": "This band does not take part in the project."
+    },
+    "session": {
+      "invalidTimes": "Set start and end time (end after start) – or mark the session as all day.",
+      "projectNotFound": "The project does not exist anymore.",
+      "songNotInProject": "All songs of a session must belong to its project."
+    },
+    "gearBooking": {
+      "sessionNotFound": "The session does not exist anymore.",
+      "gearItemNotFound": "The gear does not exist anymore."
     }
   },
   "profile": {
@@ -118,5 +158,249 @@
     "passwordTooShort": "The password needs at least {{count}} characters",
     "passwordMismatch": "The passwords do not match",
     "passwordChanged": "Password changed"
+  },
+  "clients": {
+    "title": "Clients",
+    "new": "New client",
+    "newTitle": "New client",
+    "name": "Name",
+    "namePlaceholder": "Band, label or person",
+    "contactPerson": "Contact person",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "bandCount": "Bands",
+    "projectCount": "Projects",
+    "projects": "Projects of this client",
+    "noProjects": "No projects yet.",
+    "empty": "No clients yet. Add your first one!",
+    "deleteConfirm": "\"{{name}}\" and all its bands will be deleted."
+  },
+  "bands": {
+    "title": "Bands",
+    "new": "Add band",
+    "newTitle": "New band",
+    "editTitle": "Edit band",
+    "name": "Name",
+    "genre": "Genre",
+    "members": "Members",
+    "membersPlaceholder": "e.g. Max – vocals, Lisa – drums",
+    "email": "Email",
+    "website": "Website / social media",
+    "empty": "No bands yet.",
+    "deleteConfirm": "The band \"{{name}}\" will be deleted. Its songs stay in the projects."
+  },
+  "projects": {
+    "title": "Projects",
+    "new": "New project",
+    "newTitle": "New project",
+    "projectTitle": "Title",
+    "client": "Client",
+    "bands": "Bands",
+    "bandsHint": "Only bands of the selected client",
+    "type": "Type",
+    "status": "Status",
+    "startDate": "Start",
+    "dueDate": "Deadline / release",
+    "description": "Description",
+    "technical": "Technical settings",
+    "sampleRate": "Sample rate",
+    "bitDepth": "Bit depth",
+    "daw": "DAW / template",
+    "dawPlaceholder": "e.g. Cubase 14 – band template",
+    "targetLufs": "Master target (LUFS)",
+    "productionNotes": "Production notes",
+    "recordingNotes": "Recording",
+    "recordingNotesPlaceholder": "Mic setup, amp settings, what worked …",
+    "mixingNotes": "Mixing",
+    "mixingNotesPlaceholder": "Wishes of the band, mix decisions, revisions …",
+    "masteringNotes": "Mastering",
+    "masteringNotesPlaceholder": "Format, loudness, delivery (streaming, vinyl, CD) …",
+    "empty": "No projects yet. Create a client first, then your first project!",
+    "noResults": "No project matches the filter.",
+    "searchPlaceholder": "Title, client or band …",
+    "progress": "{{done}} / {{total}} songs done",
+    "nextSession": "Next session",
+    "noUpcomingSession": "No session planned",
+    "deleteConfirm": "\"{{name}}\" will be deleted with all songs, sessions and bookings.",
+    "tabs": {
+      "overview": "Overview",
+      "songs": "Songs",
+      "sessions": "Sessions",
+      "equipment": "Equipment",
+      "links": "References & mixes",
+      "drums": "Drum tuning"
+    },
+    "filterActive": "Active projects",
+    "filterAll": "All projects"
+  },
+  "projectType": {
+    "Album": "Album",
+    "Ep": "EP",
+    "Single": "Single",
+    "SplitRelease": "Split release",
+    "Demo": "Demo",
+    "Other": "Other"
+  },
+  "projectStatus": {
+    "Planning": "Planning",
+    "PreProduction": "Pre-production",
+    "Recording": "Recording",
+    "Editing": "Editing",
+    "Mixing": "Mixing",
+    "Mastering": "Mastering",
+    "Completed": "Completed",
+    "OnHold": "On hold",
+    "Cancelled": "Cancelled"
+  },
+  "songs": {
+    "new": "Add song",
+    "newTitle": "New song",
+    "editTitle": "Edit song",
+    "songTitle": "Title",
+    "trackNumber": "No.",
+    "status": "Status",
+    "bpm": "BPM",
+    "key": "Key",
+    "keyPlaceholder": "e.g. F# minor",
+    "tuning": "Tuning",
+    "tuningPlaceholder": "e.g. Drop C",
+    "band": "Band",
+    "empty": "No songs yet.",
+    "deleteConfirm": "The song \"{{name}}\" will be deleted."
+  },
+  "songStatus": {
+    "Planned": "Planned",
+    "Recording": "Recording",
+    "Editing": "Editing",
+    "Mixing": "Mixing",
+    "Mastering": "Mastering",
+    "Done": "Done"
+  },
+  "links": {
+    "new": "Add link",
+    "newTitle": "New link",
+    "editTitle": "Edit link",
+    "type": "Type",
+    "linkTitle": "Title",
+    "linkTitlePlaceholder": "e.g. Snare sound like \"Song X\"",
+    "url": "Link (URL)",
+    "song": "Song (optional)",
+    "empty": "No references or rough mixes yet.",
+    "hint": "Links to Spotify, YouTube, Dropbox, … – uploading mixes comes with the mix revision tool.",
+    "deleteConfirm": "The link \"{{name}}\" will be deleted."
+  },
+  "projectLinkType": {
+    "Reference": "Reference",
+    "RoughMix": "Rough mix",
+    "Demo": "Demo",
+    "Other": "Other"
+  },
+  "drums": {
+    "new": "Add drum",
+    "newTitle": "New drum",
+    "editTitle": "Edit drum",
+    "drum": "Drum",
+    "drumPlaceholder": "e.g. Snare 14x6.5",
+    "batter": "Batter head",
+    "resonant": "Resonant head",
+    "heads": "Heads",
+    "headsPlaceholder": "e.g. Remo Emperor coated / Ambassador clear",
+    "song": "Song",
+    "songHint": "Empty = tuning for the whole project",
+    "wholeProject": "Whole project",
+    "hint": "Values in Hz, e.g. from the TuneBot. The matching note is shown automatically.",
+    "empty": "No drum tuning yet.",
+    "deleteConfirm": "\"{{name}}\" will be deleted."
+  },
+  "equipment": {
+    "studioGear": "Studio gear",
+    "studioGearHint": "Booked in the sessions of this project",
+    "noStudioGear": "No gear booked in the sessions yet.",
+    "usedIn": "Sessions",
+    "bandGear": "Gear brought by the band",
+    "newBandGear": "Add gear",
+    "newTitle": "Brought gear",
+    "name": "Gear",
+    "namePlaceholder": "e.g. Orange Rockerverb 50",
+    "owner": "Brought by",
+    "ownerPlaceholder": "e.g. Lisa (drums)",
+    "emptyBandGear": "Nothing entered yet.",
+    "deleteConfirm": "\"{{name}}\" will be removed from the list."
+  },
+  "sessions": {
+    "title": "Calendar",
+    "new": "New session",
+    "newTitle": "New session",
+    "sessionTitle": "Title",
+    "titlePlaceholder": "e.g. Drums day 1",
+    "project": "Project",
+    "type": "Type",
+    "status": "Status",
+    "date": "Date",
+    "allDay": "All day",
+    "startTime": "Start",
+    "endTime": "End",
+    "engineer": "Engineer",
+    "attendees": "Attendees",
+    "attendeesPlaceholder": "e.g. drummer + guitarist",
+    "songs": "Songs worked on",
+    "goals": "What to do",
+    "goalsPlaceholder": "Goal of the session in a few words",
+    "summary": "Where are we now",
+    "summaryPlaceholder": "What was achieved, what is still open",
+    "nextSteps": "Next steps",
+    "progress": "Progress",
+    "empty": "No sessions in this month.",
+    "emptyDay": "No sessions on this day.",
+    "emptyProject": "No sessions planned yet.",
+    "showMonth": "Show whole month",
+    "tasksProgress": "{{done}}/{{total}} to-dos",
+    "gearCount": "{{count}} gear",
+    "sheet": "Session sheet",
+    "deleteConfirm": "The session \"{{name}}\" will be deleted with its to-dos and bookings.",
+    "projectFirst": "Create a project first – every session belongs to a project."
+  },
+  "sessionType": {
+    "PreProduction": "Pre-production",
+    "Recording": "Recording",
+    "Overdubs": "Overdubs",
+    "Editing": "Editing",
+    "Mixing": "Mixing",
+    "Mastering": "Mastering",
+    "Production": "Production day",
+    "Other": "Other"
+  },
+  "sessionStatus": {
+    "Planned": "Planned",
+    "Confirmed": "Confirmed",
+    "Completed": "Completed",
+    "Cancelled": "Cancelled"
+  },
+  "tasks": {
+    "title": "To-dos",
+    "placeholder": "New to-do, e.g. \"Reamp guitars song 2\"",
+    "empty": "No to-dos yet."
+  },
+  "booking": {
+    "title": "Booked studio gear",
+    "gearItem": "Gear",
+    "gearItemPlaceholder": "Search gear …",
+    "add": "Book",
+    "empty": "No gear booked yet.",
+    "overbooked": "{{total}} of {{available}} booked at the same time",
+    "alsoBookedIn": "Also booked in",
+    "statusWarning": "Status: {{status}}",
+    "savedWithWarning": "Booked – but there is a conflict, see the warning.",
+    "upcoming": "Upcoming bookings",
+    "noUpcoming": "Not booked in any upcoming session.",
+    "bookedToday": "In session today",
+    "bookedTodayCount": "{{count}} in session today"
+  },
+  "sheet": {
+    "title": "Session sheet",
+    "gear": "Studio gear",
+    "bandGear": "Gear brought by the band",
+    "checked": "✓"
   }
 }
