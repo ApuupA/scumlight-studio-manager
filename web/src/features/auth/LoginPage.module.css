@@ -1,0 +1,42 @@
+/* Login page: always black like the logo background, with a faint red glow behind the logo */
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mantine-spacing-lg);
+  padding: var(--mantine-spacing-md);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(204, 51, 0, 0.28), transparent 55%),
+    #000;
+}
+
+.language {
+  position: absolute;
+  top: var(--mantine-spacing-md);
+  right: var(--mantine-spacing-md);
+}
+
+.logo {
+  width: 220px;
+  max-width: 60vw;
+  height: auto;
+  filter: drop-shadow(0 0 28px rgba(234, 112, 13, 0.35));
+}
+
+.subtitle {
+  margin-top: -8px;
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #fff7e1;
+  opacity: 0.7;
+}
+
+.card {
+  width: 360px;
+  max-width: 100%;
+  border-top: 3px solid var(--mantine-color-scumlight-6);
+}

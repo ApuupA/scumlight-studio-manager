@@ -1,0 +1,26 @@
+/*
+ * CSS module: the class names are only valid for the component that imports this file
+ * (import classes from './Brand.module.css' -> className={classes.wordmark}).
+ */
+
+/* "Scumlight Studio" lettering like in the logo: red blackletter with an orange offset shadow */
+.wordmark {
+  font-family: 'UnifrakturMaguntia', serif;
+  color: #cc3300;
+  text-shadow: -0.06em 0.05em 0 #ea700d;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+  line-height: 1.2;
+}
+
+.logo {
+  display: block;
+  flex-shrink: 0;
+}

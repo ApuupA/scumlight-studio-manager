@@ -109,6 +109,18 @@ Example: a new entity `Session`.
 
 New to React? Read [docs/FRONTEND_GUIDE.md](docs/FRONTEND_GUIDE.md) – it explains the frontend with C# analogies.
 
+## Design
+
+The look is derived from the Scumlight Studio logo (`web/src/assets/scumlight-logo.png`, original file):
+
+- **Colors and fonts** are all defined in [web/src/theme.ts](web/src/theme.ts): red `#CC3300` (primary color),
+  orange `#EA700D`, cream `#FFF7E1`, black. Dark mode is the default; light mode uses a cream "paper" background.
+- **Fonts** are bundled with the app (no Google requests): *UnifrakturMaguntia* (blackletter, headings and the
+  "Scumlight Studio" lettering) and *Inter* (all other text).
+- **Logo files**: `scumlight-logo-480.webp` (login page), `scumlight-logo-96.webp` (header), `public/favicon.png`,
+  `public/apple-touch-icon.png` – all generated from the original. Replace them if the logo changes.
+- Component specific styles live in CSS modules next to the component (`Brand.module.css`, `LoginPage.module.css`).
+
 ## Tests & checks
 
 ```bash

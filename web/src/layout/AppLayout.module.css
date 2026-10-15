@@ -1,0 +1,4 @@
+/* Red stripe under the header - the brand color from the logo lettering */
+.header {
+  border-bottom: 2px solid var(--mantine-color-scumlight-6);
+}

@@ -1,10 +1,12 @@
 import '@mantine/core/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
+import '@fontsource-variable/inter'
+import '@fontsource/unifrakturmaguntia'
 import 'dayjs/locale/de'
 import './i18n'
 
-import { createTheme, MantineProvider } from '@mantine/core'
+import { MantineProvider } from '@mantine/core'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { ModalsProvider } from '@mantine/modals'
@@ -15,14 +17,10 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
 import { ApiError } from './api/errors'
 import App from './App'
+import { cssVariablesResolver, theme } from './theme'
 
 // Enables date formats like "L" (15.10.2026 in German, 10/15/2026 in English) in the date pickers
 dayjs.extend(localizedFormat)
-
-const theme = createTheme({
-  primaryColor: 'orange',
-  defaultRadius: 'md',
-})
 
 /**
  * TanStack Query caches all data loaded from the API (comparable to a scoped cache in C#).
@@ -47,7 +45,7 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <MantineProvider theme={theme} defaultColorScheme="auto">
+    <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver} defaultColorScheme="dark">
       <QueryClientProvider client={queryClient}>
         <ModalsProvider>
           <Notifications position="top-right" />

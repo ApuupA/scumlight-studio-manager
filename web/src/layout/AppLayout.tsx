@@ -1,9 +1,11 @@
-import { ActionIcon, AppShell, Burger, Button, Group, NavLink, Text, Title, useMantineColorScheme } from '@mantine/core'
+import { ActionIcon, AppShell, Burger, Button, Group, NavLink, Text, useMantineColorScheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconCategory, IconLogout, IconMicrophone2, IconMoon, IconSun, IconTool } from '@tabler/icons-react'
+import { IconCategory, IconLogout, IconMoon, IconSun, IconTool } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { NavLink as RouterNavLink, Outlet, useNavigate } from 'react-router'
 import { useCurrentUser, useLogout } from '../features/auth/authApi'
+import classes from './AppLayout.module.css'
+import Brand from './Brand'
 import LanguageSwitcher from './LanguageSwitcher'
 
 /** Entries of the side navigation. New features (projects, sessions, mixes, ...) are added here. */
@@ -27,28 +29,35 @@ export default function AppLayout() {
     logout.mutate(undefined, { onSuccess: () => navigate('/login', { replace: true }) })
   }
 
+  // Language and light / dark switch - shown in the header on desktop and in the navigation on phones
+  const settings = (
+    <>
+      <LanguageSwitcher />
+      <ActionIcon variant="default" size="lg" onClick={toggleColorScheme} aria-label={t('nav.toggleColorScheme')}>
+        {colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
+      </ActionIcon>
+    </>
+  )
+
   return (
     <AppShell
-      header={{ height: 56 }}
+      header={{ height: 64 }}
       navbar={{ width: 220, breakpoint: 'sm', collapsed: { mobile: !navbarOpened } }}
       padding="md"
     >
-      <AppShell.Header>
+      <AppShell.Header className={classes.header}>
         <Group h="100%" px="md" justify="space-between" wrap="nowrap">
           <Group gap="xs" wrap="nowrap">
             <Burger opened={navbarOpened} onClick={toggleNavbar} hiddenFrom="sm" size="sm" />
-            <IconMicrophone2 color="var(--mantine-primary-color-filled)" />
-            <Title order={4}>{t('app.title')}</Title>
+            <Brand />
           </Group>
 
-          <Group gap="sm" wrap="nowrap">
-            <Text size="sm" c="dimmed" visibleFrom="sm">
+          {/* On phones these settings move into the navigation (see below), so the header has room for the logo */}
+          <Group gap="sm" wrap="nowrap" visibleFrom="sm">
+            <Text size="sm" c="dimmed">
               {user?.displayName}
             </Text>
-            <LanguageSwitcher />
-            <ActionIcon variant="default" size="lg" onClick={toggleColorScheme} aria-label={t('nav.toggleColorScheme')}>
-              {colorScheme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
-            </ActionIcon>
+            {settings}
           </Group>
         </Group>
       </AppShell.Header>
@@ -68,6 +77,9 @@ export default function AppLayout() {
         </AppShell.Section>
 
         <AppShell.Section>
+          <Group gap="sm" px="sm" pb="sm" hiddenFrom="sm">
+            {settings}
+          </Group>
           <Button
             variant="subtle"
             color="gray"
