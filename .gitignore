@@ -1,0 +1,24 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+TestResults/
+
+# Node / frontend
+node_modules/
+web/dist/
+*.tsbuildinfo
+
+# Local data (uploaded files during development) and secrets
+data/
+.env
+appsettings.Local.json
+
+# Editors / tools
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.claude/launch.json
+.claude/settings.local.json

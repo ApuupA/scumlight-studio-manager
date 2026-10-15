@@ -1,0 +1,150 @@
+using AutoMapper;
+using StudioManager.DataLayer.DTO.Create;
+using StudioManager.DataLayer.DTO.Read;
+using StudioManager.DataLayer.Models.GearModels;
+using StudioManager.RepositoryLayer.IRepository;
+using StudioManager.ServiceLayer.Exceptions;
+using StudioManager.ServiceLayer.IService.IFileServices;
+using StudioManager.ServiceLayer.IService.IGearServices;
+using StudioManager.ServiceLayer.Results;
+using System.Linq.Expressions;
+
+namespace StudioManager.ServiceLayer.Service.GearServices
+{
+    public class GearItemService : BaseService<GearItem, GearItemReadDto, GearItemCreateDto>, IGearItemService
+    {
+        public const string PhotoFolder = "gear-photos";
+        public const long MaxPhotoSizeBytes = 10 * 1024 * 1024;
+
+        /// <summary>
+        /// Allowed photo file extensions and the content type they are delivered with.
+        /// </summary>
+        private static readonly Dictionary<string, string> PhotoContentTypes = new(StringComparer.OrdinalIgnoreCase)
+        {
+            [".jpg"] = "image/jpeg",
+            [".jpeg"] = "image/jpeg",
+            [".png"] = "image/png",
+            [".webp"] = "image/webp"
+        };
+
+        private readonly IRepository<GearCategory> _categoryRepository;
+        private readonly IFileStorageService _fileStorage;
+
+        public GearItemService(
+            IRepository<GearItem> repository,
+            IRepository<GearCategory> categoryRepository,
+            IFileStorageService fileStorage,
+            IMapper mapper) : base(repository, mapper)
+        {
+            _categoryRepository = categoryRepository;
+            _fileStorage = fileStorage;
+        }
+
+        // Load the category as well, so GearCategoryName can be filled
+        protected override Expression<Func<GearItem, object>>[] DefaultIncludes => [g => g.GearCategory!];
+
+        public override async Task<IEnumerable<GearItemReadDto>> GetAll()
+        {
+            var items = await base.GetAll();
+            return items.OrderBy(g => g.Name);
+        }
+
+        public override async Task<GearItemReadDto> Insert(GearItemCreateDto createDto)
+        {
+            await EnsureCategoryExists(createDto.GearCategoryId);
+            return await base.Insert(createDto);
+        }
+
+        public override async Task<GearItemReadDto> Update(int id, GearItemCreateDto updateDto)
+        {
+            await EnsureCategoryExists(updateDto.GearCategoryId);
+            return await base.Update(id, updateDto);
+        }
+
+        public override async Task Delete(int id)
+        {
+            var item = await GetEntity(id);
+            await base.Delete(id);
+
+            if (item.PhotoPath != null)
+            {
+                _fileStorage.Delete(item.PhotoPath);
+            }
+        }
+
+        public async Task<GearItemReadDto> SetPhoto(int id, Stream content, string fileName, long length)
+        {
+            var item = await GetEntity(id);
+            var extension = Path.GetExtension(fileName).ToLowerInvariant();
+
+            if (!PhotoContentTypes.ContainsKey(extension))
+            {
+                throw new BusinessRuleException("photo.invalidType", "Only JPG, PNG and WEBP images are allowed.");
+            }
+
+            if (length > MaxPhotoSizeBytes)
+            {
+                throw new BusinessRuleException("photo.tooLarge", "The photo must not be larger than 10 MB.");
+            }
+
+            var oldPhotoPath = item.PhotoPath;
+
+            item.PhotoPath = await _fileStorage.SaveAsync(content, PhotoFolder, extension);
+            await _repository.UpdateAsync(item);
+
+            // Delete the old file only after the new one is saved successfully
+            if (oldPhotoPath != null)
+            {
+                _fileStorage.Delete(oldPhotoPath);
+            }
+
+            return (await Get(id))!;
+        }
+
+        public async Task<FileDownload?> GetPhoto(int id)
+        {
+            var item = await GetEntity(id);
+
+            if (item.PhotoPath == null)
+            {
+                return null;
+            }
+
+            var stream = _fileStorage.OpenRead(item.PhotoPath);
+            if (stream == null)
+            {
+                return null;
+            }
+
+            var contentType = PhotoContentTypes.GetValueOrDefault(Path.GetExtension(item.PhotoPath), "application/octet-stream");
+            return new FileDownload(stream, contentType);
+        }
+
+        public async Task<GearItemReadDto> DeletePhoto(int id)
+        {
+            var item = await GetEntity(id);
+
+            if (item.PhotoPath != null)
+            {
+                _fileStorage.Delete(item.PhotoPath);
+                item.PhotoPath = null;
+                await _repository.UpdateAsync(item);
+            }
+
+            return (await Get(id))!;
+        }
+
+        private async Task<GearItem> GetEntity(int id)
+        {
+            return await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(GearItem), id);
+        }
+
+        private async Task EnsureCategoryExists(int categoryId)
+        {
+            if (!await _categoryRepository.ExistsAsync(c => c.Id == categoryId))
+            {
+                throw new BusinessRuleException("gearItem.categoryNotFound", $"Category with id {categoryId} does not exist.");
+            }
+        }
+    }
+}
