@@ -93,7 +93,15 @@ try
         options.NonNullableReferenceTypesAsRequired();
     });
 
-    builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = builder.Configuration["AutoMapper:LicenseKey"], typeof(MappingProfile));
+    builder.Services.AddAutoMapper(cfg =>
+    {
+        // Without a key AutoMapper only logs a license warning. An empty key would be validated and log an error.
+        var licenseKey = builder.Configuration["AutoMapper:LicenseKey"];
+        if (!string.IsNullOrWhiteSpace(licenseKey))
+        {
+            cfg.LicenseKey = licenseKey;
+        }
+    }, typeof(MappingProfile));
 
     // ---------- Repositories & services ----------
     builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

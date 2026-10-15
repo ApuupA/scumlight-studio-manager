@@ -3,6 +3,8 @@
 # Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
+# Kerberos library the PostgreSQL driver (Npgsql) probes for at startup - without it every start logs an error
+RUN apt-get update && apt-get install -y --no-install-recommends libgssapi-krb5-2 && rm -rf /var/lib/apt/lists/*
 # Folder for uploaded files (mounted as volume). It must belong to the non-root "app" user.
 RUN mkdir -p /data/files && chown $APP_UID /data/files
 USER $APP_UID
