@@ -2,7 +2,6 @@ import '@mantine/core/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
 import '@fontsource-variable/inter'
-import '@fontsource/unifrakturmaguntia'
 import 'dayjs/locale/de'
 import './i18n'
 

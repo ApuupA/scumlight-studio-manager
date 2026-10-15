@@ -3,11 +3,10 @@
  * (import classes from './Brand.module.css' -> className={classes.wordmark}).
  */
 
-/* "Scumlight Studio" lettering like in the logo: red blackletter with an orange offset shadow */
+/* "Scumlight Studio" next to the logo */
 .wordmark {
-  font-family: 'UnifrakturMaguntia', serif;
-  color: #cc3300;
-  text-shadow: -0.06em 0.05em 0 #ea700d;
+  font-size: 17px;
+  font-weight: 700;
   line-height: 1;
   white-space: nowrap;
 }

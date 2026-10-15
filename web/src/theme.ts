@@ -46,9 +46,7 @@ export const theme = createTheme({
 
   fontFamily: "'Inter Variable', system-ui, sans-serif",
   headings: {
-    // Blackletter like the logo lettering - only for headings, body text stays readable
-    fontFamily: "'UnifrakturMaguntia', serif",
-    fontWeight: '400',
+    fontFamily: "'Inter Variable', system-ui, sans-serif",
   },
 })
 

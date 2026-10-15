@@ -14,7 +14,7 @@ export default function Brand() {
     <Group gap={10} wrap="nowrap">
       <img src={logo} alt="" width={34} height={38} className={classes.logo} />
       <Stack gap={3}>
-        <span className={classes.wordmark} style={{ fontSize: 24 }}>{t('app.studioName')}</span>
+        <span className={classes.wordmark}>{t('app.studioName')}</span>
         <span className={classes.subtitle}>{t('app.title')}</span>
       </Stack>
     </Group>
