@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "Studio Manager"
+  },
+  "nav": {
+    "gear": "Gear",
+    "categories": "Categories",
+    "logout": "Log out",
+    "language": "Language",
+    "toggleColorScheme": "Toggle light / dark mode"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "search": "Search",
+    "all": "All",
+    "actions": "Actions",
+    "saved": "Saved",
+    "deleted": "Deleted",
+    "noResults": "Nothing found",
+    "confirmDeleteTitle": "Really delete?",
+    "created": "Created",
+    "updated": "Updated"
+  },
+  "auth": {
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "failed": "Email or password is wrong."
+  },
+  "gear": {
+    "title": "Gear",
+    "new": "New gear",
+    "editTitle": "Edit gear",
+    "newTitle": "New gear",
+    "count": "{{count}} of {{total}} items",
+    "name": "Name",
+    "manufacturer": "Manufacturer",
+    "model": "Model",
+    "serialNumber": "Serial number",
+    "quantity": "Quantity",
+    "status": "Status",
+    "location": "Location",
+    "locationPlaceholder": "e.g. Rack A, Live room, Mic locker",
+    "purchaseDate": "Purchase date",
+    "purchasePrice": "Purchase price",
+    "notes": "Notes",
+    "category": "Category",
+    "searchPlaceholder": "Name, manufacturer, model, serial number…",
+    "empty": "No gear yet. Add your first piece!",
+    "deleteConfirm": "\"{{name}}\" will be deleted permanently.",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "replacePhoto": "Replace photo",
+    "removePhoto": "Remove photo",
+    "noPhoto": "No photo yet",
+    "photoHint": "JPG, PNG or WEBP, max. 10 MB"
+  },
+  "gearStatus": {
+    "Available": "Available",
+    "Defective": "Defective",
+    "InRepair": "In repair",
+    "LentOut": "Lent out",
+    "Retired": "Retired"
+  },
+  "categories": {
+    "title": "Categories",
+    "new": "New category",
+    "editTitle": "Edit category",
+    "newTitle": "New category",
+    "name": "Name",
+    "description": "Description",
+    "sortOrder": "Sort order",
+    "sortOrderHint": "Lower numbers are shown first",
+    "itemCount": "Items",
+    "deleteConfirm": "The category \"{{name}}\" will be deleted.",
+    "empty": "No categories yet."
+  },
+  "validation": {
+    "required": "Required"
+  },
+  "errors": {
+    "unknown": "Something went wrong. Please try again.",
+    "unauthorized": "Please sign in again.",
+    "notFound": "Not found.",
+    "gearCategory": {
+      "hasItems": "This category still contains gear. Move or delete the gear first.",
+      "nameExists": "A category with this name already exists."
+    },
+    "gearItem": {
+      "categoryNotFound": "The selected category does not exist anymore."
+    },
+    "photo": {
+      "invalidType": "Only JPG, PNG and WEBP images are allowed.",
+      "tooLarge": "The photo must not be larger than 10 MB."
+    }
+  }
+}

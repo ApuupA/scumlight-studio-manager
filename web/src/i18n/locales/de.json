@@ -1,0 +1,102 @@
+{
+  "app": {
+    "title": "Studio Manager"
+  },
+  "nav": {
+    "gear": "Equipment",
+    "categories": "Kategorien",
+    "logout": "Abmelden",
+    "language": "Sprache",
+    "toggleColorScheme": "Hell / Dunkel umschalten"
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "back": "Zurück",
+    "search": "Suche",
+    "all": "Alle",
+    "actions": "Aktionen",
+    "saved": "Gespeichert",
+    "deleted": "Gelöscht",
+    "noResults": "Nichts gefunden",
+    "confirmDeleteTitle": "Wirklich löschen?",
+    "created": "Erstellt",
+    "updated": "Geändert"
+  },
+  "auth": {
+    "title": "Anmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "submit": "Anmelden",
+    "failed": "E-Mail oder Passwort ist falsch."
+  },
+  "gear": {
+    "title": "Equipment",
+    "new": "Neues Equipment",
+    "editTitle": "Equipment bearbeiten",
+    "newTitle": "Neues Equipment",
+    "count": "{{count}} von {{total}} Einträgen",
+    "name": "Name",
+    "manufacturer": "Hersteller",
+    "model": "Modell",
+    "serialNumber": "Seriennummer",
+    "quantity": "Anzahl",
+    "status": "Status",
+    "location": "Lagerort",
+    "locationPlaceholder": "z. B. Rack A, Aufnahmeraum, Mikrofonschrank",
+    "purchaseDate": "Kaufdatum",
+    "purchasePrice": "Kaufpreis",
+    "notes": "Notizen",
+    "category": "Kategorie",
+    "searchPlaceholder": "Name, Hersteller, Modell, Seriennummer…",
+    "empty": "Noch kein Equipment. Leg das erste Teil an!",
+    "deleteConfirm": "\"{{name}}\" wird endgültig gelöscht.",
+    "photo": "Foto",
+    "uploadPhoto": "Foto hochladen",
+    "replacePhoto": "Foto ersetzen",
+    "removePhoto": "Foto entfernen",
+    "noPhoto": "Noch kein Foto",
+    "photoHint": "JPG, PNG oder WEBP, max. 10 MB"
+  },
+  "gearStatus": {
+    "Available": "Verfügbar",
+    "Defective": "Defekt",
+    "InRepair": "In Reparatur",
+    "LentOut": "Verliehen",
+    "Retired": "Ausgemustert"
+  },
+  "categories": {
+    "title": "Kategorien",
+    "new": "Neue Kategorie",
+    "editTitle": "Kategorie bearbeiten",
+    "newTitle": "Neue Kategorie",
+    "name": "Name",
+    "description": "Beschreibung",
+    "sortOrder": "Sortierung",
+    "sortOrderHint": "Kleinere Zahlen werden zuerst angezeigt",
+    "itemCount": "Einträge",
+    "deleteConfirm": "Die Kategorie \"{{name}}\" wird gelöscht.",
+    "empty": "Noch keine Kategorien."
+  },
+  "validation": {
+    "required": "Pflichtfeld"
+  },
+  "errors": {
+    "unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "unauthorized": "Bitte melde dich erneut an.",
+    "notFound": "Nicht gefunden.",
+    "gearCategory": {
+      "hasItems": "Diese Kategorie enthält noch Equipment. Verschiebe oder lösche es zuerst.",
+      "nameExists": "Eine Kategorie mit diesem Namen existiert bereits."
+    },
+    "gearItem": {
+      "categoryNotFound": "Die gewählte Kategorie existiert nicht mehr."
+    },
+    "photo": {
+      "invalidType": "Nur JPG-, PNG- und WEBP-Bilder sind erlaubt.",
+      "tooLarge": "Das Foto darf maximal 10 MB groß sein."
+    }
+  }
+}
