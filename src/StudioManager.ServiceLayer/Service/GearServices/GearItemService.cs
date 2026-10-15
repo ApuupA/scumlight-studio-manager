@@ -2,6 +2,7 @@ using AutoMapper;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.GearModels;
+using StudioManager.DataLayer.Models.SessionModels;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IFileServices;
@@ -28,15 +29,18 @@ namespace StudioManager.ServiceLayer.Service.GearServices
         };
 
         private readonly IRepository<GearCategory> _categoryRepository;
+        private readonly IRepository<GearBooking> _bookingRepository;
         private readonly IFileStorageService _fileStorage;
 
         public GearItemService(
             IRepository<GearItem> repository,
             IRepository<GearCategory> categoryRepository,
+            IRepository<GearBooking> bookingRepository,
             IFileStorageService fileStorage,
             IMapper mapper) : base(repository, mapper)
         {
             _categoryRepository = categoryRepository;
+            _bookingRepository = bookingRepository;
             _fileStorage = fileStorage;
         }
 
@@ -45,8 +49,19 @@ namespace StudioManager.ServiceLayer.Service.GearServices
 
         public override async Task<IEnumerable<GearItemReadDto>> GetAll()
         {
-            var items = await base.GetAll();
-            return items.OrderBy(g => g.Name);
+            var items = (await base.GetAll()).OrderBy(g => g.Name).ToList();
+            await SetBookedToday(items);
+            return items;
+        }
+
+        public override async Task<GearItemReadDto?> Get(int id)
+        {
+            var item = await base.Get(id);
+            if (item != null)
+            {
+                await SetBookedToday([item]);
+            }
+            return item;
         }
 
         public override async Task<GearItemReadDto> Insert(GearItemCreateDto createDto)
@@ -132,6 +147,26 @@ namespace StudioManager.ServiceLayer.Service.GearServices
             }
 
             return (await Get(id))!;
+        }
+
+        /// <summary>
+        /// Fills BookedTodayQuantity: pieces booked for today's (not cancelled) sessions.
+        /// </summary>
+        private async Task SetBookedToday(List<GearItemReadDto> items)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Now);
+            var bookings = await _bookingRepository.GetAllAsync(
+                b => b.Session!.Date == today && b.Session.Status != SessionStatus.Cancelled,
+                b => b.Session!);
+
+            var bookedPerItem = bookings
+                .GroupBy(b => b.GearItemId)
+                .ToDictionary(group => group.Key, group => group.Sum(b => b.Quantity));
+
+            foreach (var item in items)
+            {
+                item.BookedTodayQuantity = bookedPerItem.GetValueOrDefault(item.Id);
+            }
         }
 
         private async Task<GearItem> GetEntity(int id)

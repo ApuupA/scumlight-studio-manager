@@ -18,6 +18,12 @@ namespace StudioManager.DataLayer.DTO.Read
         public bool HasPhoto { get; set; }
         public int GearCategoryId { get; set; }
         public string GearCategoryName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Pieces booked for sessions today (calculated, not stored) - shows "in use" in the gear list.
+        /// </summary>
+        public int BookedTodayQuantity { get; set; }
+
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
     }

@@ -36,6 +36,16 @@ namespace StudioManager.ServiceLayer.Service
             return _mapper.Map<IEnumerable<TReadDto>>(entities);
         }
 
+        /// <summary>
+        /// All entities matching the predicate (with DefaultIncludes), e.g. all songs of one project:
+        /// GetAllWhere(s => s.ProjectId == projectId)
+        /// </summary>
+        protected async Task<IEnumerable<TReadDto>> GetAllWhere(Expression<Func<T, bool>> predicate)
+        {
+            var entities = await _repository.GetAllAsync(predicate, DefaultIncludes);
+            return _mapper.Map<IEnumerable<TReadDto>>(entities);
+        }
+
         public virtual async Task<TReadDto?> Get(int id)
         {
             var entity = await _repository.GetAsync(e => e.Id == id, DefaultIncludes);
