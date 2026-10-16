@@ -76,7 +76,11 @@
     "photoHint": "JPG, PNG oder WEBP, max. 10 MB",
     "goodFor": "Geeignet für",
     "goodForHint": "Kurze Stichworte, jeweils mit Enter bestätigen",
-    "goodForPlaceholder": "z. B. Snare, Gitarrenbox, Vocals"
+    "goodForPlaceholder": "z. B. Snare, Gitarrenbox, Vocals",
+    "inSessionToday": "Heute in Session",
+    "inSessionTodayCount": "{{count}} heute in Session",
+    "usedIn": "Verwendet in Projekten",
+    "notUsed": "In keinem Projekt-Setup verwendet."
   },
   "gearStatus": {
     "Available": "Verfügbar",
@@ -112,7 +116,8 @@
       "nameExists": "Eine Kategorie mit diesem Namen existiert bereits."
     },
     "gearItem": {
-      "categoryNotFound": "Die gewählte Kategorie existiert nicht mehr."
+      "categoryNotFound": "Die gewählte Kategorie existiert nicht mehr.",
+      "usedInSetups": "Dieses Equipment wird in einem Projekt-Setup verwendet. Entferne es dort zuerst (siehe \"Verwendet in Projekten\")."
     },
     "photo": {
       "invalidType": "Nur JPG-, PNG- und WEBP-Bilder sind erlaubt.",
@@ -143,11 +148,17 @@
       "invalidTimes": "Setze Beginn und Ende (Ende nach Beginn) – oder markiere die Session als ganztägig.",
       "projectNotFound": "Das Projekt existiert nicht mehr.",
       "songNotInProject": "Alle Songs einer Session müssen zum Projekt gehören.",
-      "invalidEndDate": "Das End-Datum muss nach dem Start-Datum liegen."
+      "invalidEndDate": "Das End-Datum muss nach dem Start-Datum liegen.",
+      "instrumentNotInProject": "Alle Instrumente einer Session müssen zum Projekt gehören."
     },
-    "gearBooking": {
-      "sessionNotFound": "Die Session existiert nicht mehr.",
-      "gearItemNotFound": "Das Equipment existiert nicht mehr."
+    "instrument": {
+      "projectNotFound": "Das Projekt existiert nicht mehr.",
+      "bandNotInProject": "Diese Band ist nicht an dem Projekt beteiligt."
+    },
+    "setupItem": {
+      "oneSourceRequired": "Wähle Studio-Equipment, Band-Equipment oder gib eine Bezeichnung ein – genau eines davon.",
+      "instrumentNotFound": "Das Instrument existiert nicht mehr.",
+      "bandGearNotInProject": "Dieses Band-Equipment gehört nicht zum Projekt."
     }
   },
   "profile": {
@@ -231,9 +242,10 @@
       "overview": "Übersicht",
       "songs": "Songs",
       "sessions": "Sessions",
-      "equipment": "Equipment",
       "links": "Referenzen & Mixe",
-      "drums": "Drum-Tuning"
+      "drums": "Drum-Tuning",
+      "instruments": "Instrumente & Setup",
+      "bandGear": "Mitgebrachtes Equipment"
     },
     "filterActive": "Aktive Projekte",
     "filterAll": "Alle Projekte"
@@ -320,19 +332,15 @@
     "deleteConfirm": "\"{{name}}\" wird gelöscht."
   },
   "equipment": {
-    "studioGear": "Studio-Equipment",
-    "studioGearHint": "In den Sessions dieses Projekts gebucht",
-    "noStudioGear": "In den Sessions ist noch kein Equipment gebucht.",
-    "usedIn": "Sessions",
-    "bandGear": "Mitgebrachtes Equipment",
     "newBandGear": "Equipment hinzufügen",
-    "newTitle": "Mitgebrachtes Equipment",
     "name": "Equipment",
     "namePlaceholder": "z. B. Orange Rockerverb 50",
     "owner": "Mitgebracht von",
     "ownerPlaceholder": "z. B. Lisa (Drums)",
     "emptyBandGear": "Noch nichts eingetragen.",
-    "deleteConfirm": "\"{{name}}\" wird aus der Liste entfernt."
+    "deleteConfirm": "\"{{name}}\" wird aus der Liste entfernt.",
+    "bandGearHint": "Equipment, das die Band mitbringt (Gitarren, Amps, Becken, …) – in den Instrument-Setups verwendbar.",
+    "newTitle": "Mitgebrachtes Equipment"
   },
   "sessions": {
     "title": "Kalender",
@@ -360,7 +368,6 @@
     "emptyDay": "Keine Sessions an diesem Tag.",
     "emptyProject": "Noch keine Sessions geplant.",
     "tasksProgress": "{{done}}/{{total}} To-dos",
-    "gearCount": "{{count}} Equipment",
     "sheet": "Session-Sheet",
     "deleteConfirm": "Die Session \"{{name}}\" wird mit ihren To-dos und Buchungen gelöscht.",
     "projectFirst": "Leg zuerst ein Projekt an – jede Session gehört zu einem Projekt.",
@@ -375,13 +382,19 @@
     "closed": "Erledigte & abgesagte Sessions ({{count}})",
     "duplicate": "Duplizieren",
     "duplicateTitle": "Session duplizieren",
-    "duplicateHint": "Wähle ein oder mehrere Daten. Kopiert werden: Titel, Art, Zeiten, Personen, Ziele, Notizen, Songs, To-dos (wieder offen) und Equipment.",
+    "duplicateHint": "Wähle ein oder mehrere Daten. Kopiert werden: Titel, Art, Zeiten, Personen, Ziele, Notizen, Songs, Instrumente und To-dos (wieder offen).",
     "followingDays": "Folgetage",
     "duplicateSubmit": "{{count}} Kopien anlegen",
     "duplicated": "{{count}} Sessions angelegt",
     "copyFrom": "Von bestehender Session kopieren",
     "copyFromHint": "Schneller bei wiederkehrenden Sessions, z. B. mehreren Drum-Tagen",
-    "copyFromPlaceholder": "Session suchen …"
+    "copyFromPlaceholder": "Session suchen …",
+    "instruments": "Instrumente",
+    "instrumentsHint": "Deren Setups sind das Equipment der Session",
+    "equipment": "Equipment",
+    "equipmentHint": "Aus den Setups der gewählten Instrumente.",
+    "editSetups": "Setups bearbeiten",
+    "noInstruments": "Noch keine Instrumente gewählt – wähle sie im Formular."
   },
   "sessionType": {
     "PreProduction": "Vorproduktion",
@@ -404,25 +417,65 @@
     "placeholder": "Neues To-do, z. B. \"Gitarren reampen Song 2\"",
     "empty": "Noch keine To-dos."
   },
-  "booking": {
-    "title": "Gebuchtes Studio-Equipment",
-    "gearItem": "Equipment",
-    "gearItemPlaceholder": "Equipment suchen …",
-    "add": "Buchen",
-    "empty": "Noch kein Equipment gebucht.",
-    "overbooked": "{{total}} von {{available}} gleichzeitig gebucht",
-    "alsoBookedIn": "Auch gebucht in",
-    "statusWarning": "Status: {{status}}",
-    "savedWithWarning": "Gebucht – aber es gibt einen Konflikt, siehe Warnung.",
-    "upcoming": "Kommende Buchungen",
-    "noUpcoming": "In keiner kommenden Session gebucht.",
-    "bookedToday": "Heute in Session",
-    "bookedTodayCount": "{{count}} heute in Session"
-  },
   "sheet": {
     "title": "Session-Sheet",
-    "gear": "Studio-Equipment",
+    "gear": "Equipment (Setups)",
+    "bandGear": "Mitgebrachtes Equipment"
+  },
+  "projectSheet": {
+    "title": "Projekt-Sheet"
+  },
+  "instruments": {
+    "new": "Instrument hinzufügen",
+    "newTitle": "Neues Instrument",
+    "editTitle": "Instrument bearbeiten",
+    "name": "Instrument",
+    "namePlaceholder": "z. B. Drums, Gitarre links, Lead-Vocals",
+    "band": "Band",
+    "isChain": "Signalkette",
+    "isChainHint": "Setup als Kette mit Pfeilen anzeigen, z. B. Gitarre → Pedal → Amp → Box → Mikro",
+    "chain": "Kette",
+    "list": "Liste",
+    "hint": "Lege die Instrumente an, die in diesem Projekt aufgenommen werden, und das Equipment dafür. Sessions wählen Instrumente und bekommen ihr Equipment von hier.",
+    "empty": "Noch keine Instrumente.",
+    "deleteConfirm": "\"{{name}}\" und sein Setup werden gelöscht. Sessions verlieren dieses Instrument."
+  },
+  "setup": {
+    "add": "Equipment hinzufügen",
+    "newTitle": "Equipment hinzufügen",
+    "editTitle": "Equipment bearbeiten",
+    "studioGear": "Studio-Equipment",
+    "gearPlaceholder": "Equipment suchen …",
+    "suggested": "Passend (\"geeignet für\")",
     "bandGear": "Mitgebrachtes Equipment",
-    "checked": "✓"
+    "bandGearHint": "Neues Band-Equipment zuerst im Tab \"Mitgebrachtes Equipment\" eintragen",
+    "customName": "Bezeichnung",
+    "customNamePlaceholder": "z. B. geliehener Fender Twin",
+    "usedFor": "Verwendet für",
+    "usedForPlaceholder": "z. B. Snare Top, Kick In, Box",
+    "needsInput": "Mikrofon / DI (braucht einen Input)",
+    "needsInputHint": "Diese Einträge erscheinen in der Input-Liste",
+    "noStudioGear": "Noch kein Studio-Equipment – leg es unter \"Equipment\" an.",
+    "empty": "Noch kein Equipment.",
+    "moveUp": "Nach oben",
+    "moveDown": "Nach unten"
+  },
+  "setupSource": {
+    "Studio": "Studio",
+    "Band": "Band",
+    "Custom": "Sonstiges"
+  },
+  "templates": {
+    "title": "Setup-Vorlagen",
+    "fromTemplate": "Aus Vorlage",
+    "saveAs": "Als Vorlage speichern",
+    "saveAsHint": "Speichert dieses Setup für andere Projekte. Mitgebrachtes Equipment wird weggelassen – es gehört nur zu diesem Projekt.",
+    "name": "Name der Vorlage",
+    "saved": "Vorlage \"{{name}}\" gespeichert",
+    "use": "Verwenden",
+    "create": "Instrument anlegen",
+    "applied": "\"{{name}}\" aus der Vorlage angelegt",
+    "empty": "Noch keine Vorlagen. Speichere ein Instrument-Setup über sein \"…\"-Menü als Vorlage.",
+    "deleteConfirm": "Die Vorlage \"{{name}}\" wird gelöscht. Projekte sind davon nicht betroffen."
   }
 }

@@ -37,6 +37,18 @@ namespace StudioManager.RepositoryLayer.Repository
             return await WithIncludes(includes).Where(predicate).ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetAllWithPathsAsync(Expression<Func<T, bool>> predicate, params string[] includePaths)
+        {
+            IQueryable<T> query = _dbSet;
+
+            foreach (var path in includePaths)
+            {
+                query = query.Include(path);
+            }
+
+            return await query.Where(predicate).ToListAsync();
+        }
+
         public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
         {
             return await _dbSet.AnyAsync(predicate);

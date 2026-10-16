@@ -884,261 +884,6 @@
         }
       }
     },
-    "/api/GearBooking/session/{sessionId}": {
-      "get": {
-        "tags": [
-          "GearBooking"
-        ],
-        "parameters": [
-          {
-            "name": "sessionId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GearBookingReadDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/GearBooking/project/{projectId}": {
-      "get": {
-        "tags": [
-          "GearBooking"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GearBookingReadDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/GearBooking/gearItem/{gearItemId}": {
-      "get": {
-        "tags": [
-          "GearBooking"
-        ],
-        "parameters": [
-          {
-            "name": "gearItemId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GearBookingReadDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/GearBooking": {
-      "get": {
-        "tags": [
-          "GearBooking"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GearBookingReadDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "GearBooking"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GearBookingCreateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GearBookingCreateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GearBookingCreateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GearBookingReadDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/GearBooking/{id}": {
-      "get": {
-        "tags": [
-          "GearBooking"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GearBookingReadDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "GearBooking"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GearBookingCreateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GearBookingCreateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GearBookingCreateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GearBookingReadDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "GearBooking"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/GearCategory": {
       "get": {
         "tags": [
@@ -1568,6 +1313,237 @@
         }
       }
     },
+    "/api/InstrumentSetupItem/{id}/move": {
+      "post": {
+        "tags": [
+          "InstrumentSetupItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetupItemMoveDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetupItemMoveDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetupItemMoveDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/InstrumentSetupItem/gearItem/{gearItemId}/usages": {
+      "get": {
+        "tags": [
+          "InstrumentSetupItem"
+        ],
+        "parameters": [
+          {
+            "name": "gearItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GearUsageDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InstrumentSetupItem": {
+      "get": {
+        "tags": [
+          "InstrumentSetupItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InstrumentSetupItemReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "InstrumentSetupItem"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstrumentSetupItemCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstrumentSetupItemCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstrumentSetupItemCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstrumentSetupItemReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InstrumentSetupItem/{id}": {
+      "get": {
+        "tags": [
+          "InstrumentSetupItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstrumentSetupItemReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "InstrumentSetupItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstrumentSetupItemCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstrumentSetupItemCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstrumentSetupItemCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstrumentSetupItemReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "InstrumentSetupItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Project/client/{clientId}": {
       "get": {
         "tags": [
@@ -1738,6 +1714,233 @@
       "delete": {
         "tags": [
           "Project"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ProjectInstrument/project/{projectId}": {
+      "get": {
+        "tags": [
+          "ProjectInstrument"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectInstrumentReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProjectInstrument/from-template": {
+      "post": {
+        "tags": [
+          "ProjectInstrument"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplySetupTemplateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplySetupTemplateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplySetupTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectInstrumentReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProjectInstrument": {
+      "get": {
+        "tags": [
+          "ProjectInstrument"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectInstrumentReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ProjectInstrument"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectInstrumentCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectInstrumentCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectInstrumentCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectInstrumentReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProjectInstrument/{id}": {
+      "get": {
+        "tags": [
+          "ProjectInstrument"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectInstrumentReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProjectInstrument"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectInstrumentCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectInstrumentCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectInstrumentCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectInstrumentReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProjectInstrument"
         ],
         "parameters": [
           {
@@ -2425,6 +2628,89 @@
         }
       }
     },
+    "/api/SetupTemplate": {
+      "get": {
+        "tags": [
+          "SetupTemplate"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SetupTemplateReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SetupTemplate/from-instrument": {
+      "post": {
+        "tags": [
+          "SetupTemplate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetupTemplateFromInstrumentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetupTemplateFromInstrumentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetupTemplateFromInstrumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetupTemplateReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SetupTemplate/{id}": {
+      "delete": {
+        "tags": [
+          "SetupTemplate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Song/project/{projectId}": {
       "get": {
         "tags": [
@@ -2658,6 +2944,38 @@
   },
   "components": {
     "schemas": {
+      "ApplySetupTemplateDto": {
+        "required": [
+          "projectId",
+          "setupTemplateId"
+        ],
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "setupTemplateId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "instrumentName": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "bandId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "BandCreateDto": {
         "required": [
           "clientId",
@@ -3086,117 +3404,6 @@
         },
         "additionalProperties": false
       },
-      "GearBookingCreateDto": {
-        "required": [
-          "gearItemId",
-          "quantity",
-          "sessionId"
-        ],
-        "type": "object",
-        "properties": {
-          "sessionId": {
-            "maximum": 2147483647,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "gearItemId": {
-            "maximum": 2147483647,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "quantity": {
-            "maximum": 10000,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "notes": {
-            "maxLength": 500,
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GearBookingReadDto": {
-        "required": [
-          "availableQuantity",
-          "conflictingSessions",
-          "gearCategoryName",
-          "gearItemId",
-          "gearItemName",
-          "gearStatus",
-          "id",
-          "isOverbooked",
-          "quantity",
-          "session",
-          "sessionId",
-          "totalBookedQuantity"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "notes": {
-            "type": "string",
-            "nullable": true
-          },
-          "sessionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "session": {
-            "$ref": "#/components/schemas/SessionShortDto"
-          },
-          "gearItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "gearItemName": {
-            "type": "string"
-          },
-          "manufacturer": {
-            "type": "string",
-            "nullable": true
-          },
-          "model": {
-            "type": "string",
-            "nullable": true
-          },
-          "gearCategoryName": {
-            "type": "string"
-          },
-          "gearStatus": {
-            "$ref": "#/components/schemas/GearStatus"
-          },
-          "availableQuantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalBookedQuantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isOverbooked": {
-            "type": "boolean"
-          },
-          "conflictingSessions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SessionShortDto"
-            }
-          }
-        },
-        "additionalProperties": false
-      },
       "GearCategoryCreateDto": {
         "required": [
           "name",
@@ -3341,7 +3548,6 @@
       },
       "GearItemReadDto": {
         "required": [
-          "bookedTodayQuantity",
           "dateCreated",
           "dateUpdated",
           "gearCategoryId",
@@ -3349,6 +3555,7 @@
           "goodFor",
           "hasPhoto",
           "id",
+          "inSessionTodayQuantity",
           "name",
           "quantity",
           "status"
@@ -3415,7 +3622,7 @@
           "gearCategoryName": {
             "type": "string"
           },
-          "bookedTodayQuantity": {
+          "inSessionTodayQuantity": {
             "type": "integer",
             "format": "int32"
           },
@@ -3439,6 +3646,191 @@
           "Retired"
         ],
         "type": "string"
+      },
+      "GearUsageDto": {
+        "required": [
+          "instrumentName",
+          "projectId",
+          "projectInstrumentId",
+          "projectStatus",
+          "projectTitle",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectTitle": {
+            "type": "string"
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/ProjectStatus"
+          },
+          "projectInstrumentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "instrumentName": {
+            "type": "string"
+          },
+          "usedFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InstrumentSetupItemCreateDto": {
+        "required": [
+          "needsInput",
+          "projectInstrumentId",
+          "quantity",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "projectInstrumentId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "gearItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "externalGearId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "customName": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "usedFor": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "needsInput": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notes": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InstrumentSetupItemReadDto": {
+        "required": [
+          "displayName",
+          "id",
+          "needsInput",
+          "projectInstrumentId",
+          "quantity",
+          "sortOrder",
+          "source"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectInstrumentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SetupItemSource"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "gearItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gearCategoryName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gearStatus": {
+            "$ref": "#/components/schemas/GearStatus"
+          },
+          "externalGearId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "externalGearOwner": {
+            "type": "string",
+            "nullable": true
+          },
+          "customName": {
+            "type": "string",
+            "nullable": true
+          },
+          "usedFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "needsInput": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InstrumentShortDto": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
       },
       "LoginDto": {
         "required": [
@@ -3575,6 +3967,107 @@
               "type": "integer",
               "format": "int32"
             }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectInstrumentCreateDto": {
+        "required": [
+          "isChain",
+          "name",
+          "projectId",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "isChain": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notes": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "projectId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "bandId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectInstrumentReadDto": {
+        "required": [
+          "dateCreated",
+          "dateUpdated",
+          "id",
+          "isChain",
+          "name",
+          "projectId",
+          "setupItems",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isChain": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bandId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bandName": {
+            "type": "string",
+            "nullable": true
+          },
+          "setupItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstrumentSetupItemReadDto"
+            }
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateUpdated": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -3827,6 +4320,7 @@
       "SessionCreateDto": {
         "required": [
           "date",
+          "instrumentIds",
           "projectId",
           "songIds",
           "status",
@@ -3907,6 +4401,13 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          "instrumentIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         },
         "additionalProperties": false
@@ -3935,8 +4436,8 @@
           "date",
           "dateCreated",
           "dateUpdated",
-          "gearBookingCount",
           "id",
+          "instruments",
           "isAllDay",
           "projectId",
           "projectTitle",
@@ -4033,9 +4534,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "gearBookingCount": {
-            "type": "integer",
-            "format": "int32"
+          "instruments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstrumentShortDto"
+            }
           },
           "dateCreated": {
             "type": "string",
@@ -4044,56 +4547,6 @@
           "dateUpdated": {
             "type": "string",
             "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "SessionShortDto": {
-        "required": [
-          "date",
-          "id",
-          "projectId",
-          "projectTitle",
-          "status",
-          "title"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string"
-          },
-          "status": {
-            "$ref": "#/components/schemas/SessionStatus"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date",
-            "nullable": true
-          },
-          "startTime": {
-            "type": "string",
-            "format": "time",
-            "nullable": true
-          },
-          "endTime": {
-            "type": "string",
-            "format": "time",
-            "nullable": true
-          },
-          "projectId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "projectTitle": {
-            "type": "string"
           }
         },
         "additionalProperties": false
@@ -4202,6 +4655,130 @@
           "Other"
         ],
         "type": "string"
+      },
+      "SetupItemMoveDto": {
+        "required": [
+          "direction"
+        ],
+        "type": "object",
+        "properties": {
+          "direction": {
+            "maximum": 1,
+            "minimum": -1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SetupItemSource": {
+        "enum": [
+          "Studio",
+          "Band",
+          "Custom"
+        ],
+        "type": "string"
+      },
+      "SetupTemplateFromInstrumentDto": {
+        "required": [
+          "name",
+          "projectInstrumentId"
+        ],
+        "type": "object",
+        "properties": {
+          "projectInstrumentId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SetupTemplateItemReadDto": {
+        "required": [
+          "displayName",
+          "id",
+          "needsInput",
+          "quantity",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gearItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "customName": {
+            "type": "string",
+            "nullable": true
+          },
+          "usedFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "needsInput": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SetupTemplateReadDto": {
+        "required": [
+          "id",
+          "isChain",
+          "items",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isChain": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SetupTemplateItemReadDto"
+            }
+          }
+        },
+        "additionalProperties": false
       },
       "SongCreateDto": {
         "required": [
@@ -4424,16 +5001,19 @@
       "name": "ExternalGear"
     },
     {
-      "name": "GearBooking"
-    },
-    {
       "name": "GearCategory"
     },
     {
       "name": "GearItem"
     },
     {
+      "name": "InstrumentSetupItem"
+    },
+    {
       "name": "Project"
+    },
+    {
+      "name": "ProjectInstrument"
     },
     {
       "name": "ProjectLink"
@@ -4443,6 +5023,9 @@
     },
     {
       "name": "SessionTask"
+    },
+    {
+      "name": "SetupTemplate"
     },
     {
       "name": "Song"

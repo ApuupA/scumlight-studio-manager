@@ -2,13 +2,15 @@ import { Button, Center, Loader } from '@mantine/core'
 import { IconArrowLeft, IconPrinter } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
-import type { GearBooking, Session } from '../../api/types'
+import type { Session } from '../../api/types'
 import logo from '../../assets/scumlight-logo-96.webp'
 import { noteFromHz } from '../../utils/format'
 import { useDrumTunings, useExternalGear, useProject, useSongs } from '../projects/projectApi'
-import { useGearBookingsOfSession, useSession, useSessionTasks } from './sessionApi'
+import { useProjectInstruments } from '../instruments/instrumentApi'
+import SetupPrintTable from '../instruments/SetupPrintTable'
+import { useSession, useSessionTasks } from './sessionApi'
 import { formatSessionDates } from './sessionDates'
-import classes from './SessionSheetPage.module.css'
+import classes from '../../components/PrintSheet.module.css'
 
 /**
  * Printable session sheet (route /sessions/:id/sheet): everything needed on the session day on one page.
@@ -28,7 +30,7 @@ function SessionSheet({ session }: { session: Session }) {
   const navigate = useNavigate()
   const { data: project } = useProject(session.projectId)
   const { data: tasks } = useSessionTasks(session.id)
-  const { data: bookings } = useGearBookingsOfSession(session.id)
+  const { data: projectInstruments } = useProjectInstruments(session.projectId)
   const { data: allSongs } = useSongs(session.projectId)
   const { data: externalGear } = useExternalGear(session.projectId)
   const { data: drumTunings } = useDrumTunings(session.projectId)
@@ -36,11 +38,9 @@ function SessionSheet({ session }: { session: Session }) {
   // Only the songs worked on in this session - or all songs of the project if none are selected
   const songs = (allSongs ?? []).filter((song) => session.songIds.length === 0 || session.songIds.includes(song.id))
 
-  // Gear grouped by category, like it is set up in the studio
-  const gearByCategory = new Map<string, GearBooking[]>()
-  for (const booking of bookings ?? []) {
-    gearByCategory.set(booking.gearCategoryName, [...(gearByCategory.get(booking.gearCategoryName) ?? []), booking])
-  }
+  // The instruments recorded in this session - their setups are the gear to set up
+  const sessionInstrumentIds = session.instruments.map((instrument) => instrument.id)
+  const instruments = (projectInstruments ?? []).filter((instrument) => sessionInstrumentIds.includes(instrument.id))
 
   // Drum tuning: project-wide values plus those of the songs in this session
   const tunings = (drumTunings ?? []).filter((tuning) => !tuning.songId || songs.some((song) => song.id === tuning.songId))
@@ -136,26 +136,10 @@ function SessionSheet({ session }: { session: Session }) {
 
         <div className={classes.columns}>
           <div>
-            {gearByCategory.size > 0 && (
+            {instruments.length > 0 && (
               <>
                 <h2>{t('sheet.gear')}</h2>
-                <table>
-                  <tbody>
-                    {[...gearByCategory.entries()].map(([category, categoryBookings]) => [
-                      <tr key={category}><td colSpan={3} className={classes.category}>{category}</td></tr>,
-                      ...categoryBookings.map((booking) => (
-                        <tr key={booking.id}>
-                          <td className={classes.check}>☐</td>
-                          <td>{booking.quantity}×</td>
-                          <td>
-                            {booking.gearItemName}
-                            {booking.manufacturer && <span className={classes.muted}> · {booking.manufacturer}</span>}
-                          </td>
-                        </tr>
-                      )),
-                    ])}
-                  </tbody>
-                </table>
+                <SetupPrintTable instruments={instruments} />
               </>
             )}
           </div>

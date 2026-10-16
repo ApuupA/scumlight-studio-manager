@@ -92,7 +92,7 @@ export function useUpdateProject() {
 }
 
 export function useDeleteProject() {
-  const invalidate = useInvalidate('gearBookings', 'gearItems')
+  const invalidate = useInvalidate('instruments', 'gearItems', 'gearUsages')
   return useMutation({
     mutationFn: (id: number) => unwrap(api.DELETE('/api/Project/{id}', { params: { path: { id } } })),
     onSuccess: invalidate,
@@ -175,7 +175,7 @@ export function useDeleteDrumTuning() {
 // ---------- Gear brought by the band ----------
 
 export function useSaveExternalGear() {
-  const invalidate = useInvalidate('externalGear')
+  const invalidate = useInvalidate('externalGear', 'instruments')
   return useMutation({
     mutationFn: ({ id, input }: { id?: number; input: ExternalGearInput }) =>
       id
@@ -186,7 +186,7 @@ export function useSaveExternalGear() {
 }
 
 export function useDeleteExternalGear() {
-  const invalidate = useInvalidate('externalGear')
+  const invalidate = useInvalidate('externalGear', 'instruments')
   return useMutation({
     mutationFn: (id: number) => unwrap(api.DELETE('/api/ExternalGear/{id}', { params: { path: { id } } })),
     onSuccess: invalidate,

@@ -2,6 +2,7 @@ using Moq;
 using StudioManager.DataLayer.Context;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.Models.GearModels;
+using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.DataLayer.Models.SessionModels;
 using StudioManager.RepositoryLayer.Repository;
 using StudioManager.ServiceLayer.Exceptions;
@@ -22,7 +23,8 @@ namespace StudioManager.Tests.Unit
             _service = new GearItemService(
                 new Repository<GearItem>(_context),
                 new Repository<GearCategory>(_context),
-                new Repository<GearBooking>(_context),
+                new Repository<Session>(_context),
+                new Repository<InstrumentSetupItem>(_context),
                 _mockFileStorage.Object,
                 TestHelper.CreateMapper());
 
@@ -120,6 +122,46 @@ namespace StudioManager.Tests.Unit
             Assert.True(result.HasPhoto);
             Assert.Equal("gear-photos/second.jpg", _context.GearItems.Single().PhotoPath);
             _mockFileStorage.Verify(x => x.Delete("gear-photos/first.jpg"), Times.Once);
+        }
+
+        [Fact]
+        public async Task Delete_ShouldFail_WhenGearIsUsedInASetup()
+        {
+            var created = await _service.Insert(NewDto());
+            var project = new Project { Title = "Album", Client = new DataLayer.Models.ClientModels.Client { Name = "Label" } };
+            _context.ProjectInstruments.Add(new ProjectInstrument
+            {
+                Name = "Drums",
+                Project = project,
+                SetupItems = [new InstrumentSetupItem { GearItemId = created.Id, UsedFor = "Snare Top" }]
+            });
+            await _context.SaveChangesAsync();
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _service.Delete(created.Id));
+
+            Assert.Equal("gearItem.usedInSetups", exception.ErrorCode);
+        }
+
+        [Fact]
+        public async Task GetAll_ShouldCountGearOfTodaysSessionsInstruments()
+        {
+            var created = await _service.Insert(NewDto());
+            var today = DateOnly.FromDateTime(DateTime.Now);
+            var project = new Project { Title = "Album", Client = new DataLayer.Models.ClientModels.Client { Name = "Label" } };
+            var drums = new ProjectInstrument
+            {
+                Name = "Drums",
+                Project = project,
+                SetupItems = [new InstrumentSetupItem { GearItemId = created.Id, Quantity = 2, UsedFor = "Toms" }]
+            };
+            _context.Sessions.AddRange(
+                new Session { Title = "Today", Date = today, Project = project, Instruments = [drums] },
+                new Session { Title = "Tomorrow", Date = today.AddDays(1), Project = project, Instruments = [drums] });
+            await _context.SaveChangesAsync();
+
+            var item = Assert.Single(await _service.GetAll());
+
+            Assert.Equal(2, item.InSessionTodayQuantity);
         }
 
         [Fact]

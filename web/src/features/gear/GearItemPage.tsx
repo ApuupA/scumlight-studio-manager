@@ -11,7 +11,7 @@ import { useCreateGearItem, useDeleteGearItem, useGearItem, useUpdateGearItem } 
 import GearItemForm from './GearItemForm'
 import GearPhotoCard from './GearPhotoCard'
 import GearStatusBadge from './GearStatusBadge'
-import GearUpcomingBookings from './GearUpcomingBookings'
+import GearUsages from './GearUsages'
 
 /**
  * Page for one gear item. Route /gear/new creates a new item, /gear/:id edits an existing one.
@@ -106,7 +106,7 @@ export default function GearItemPage() {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Stack>
               <GearPhotoCard item={item} />
-              <GearUpcomingBookings gearItemId={item.id} />
+              <GearUsages gearItemId={item.id} />
               <Text size="xs" c="dimmed">
                 {t('common.created')}: {formatDate(item.dateCreated, i18n.language)}
                 {' · '}

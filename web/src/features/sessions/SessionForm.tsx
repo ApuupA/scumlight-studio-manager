@@ -7,6 +7,7 @@ import {
 } from '../../api/types'
 import { idOrNull, textOrNull } from '../../utils/form'
 import { formatTime, todayIso, toApiTime } from '../../utils/format'
+import { useProjectInstruments } from '../instruments/instrumentApi'
 import { useProjects, useSongs } from '../projects/projectApi'
 
 interface SessionFormProps {
@@ -39,6 +40,7 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
       startTime: formatTime(session?.startTime) || '10:00',
       endTime: formatTime(session?.endTime) || '18:00',
       songIds: session?.songIds.map(String) ?? [],
+      instrumentIds: session?.instruments.map((instrument) => String(instrument.id)) ?? [],
       engineer: session?.engineer ?? '',
       attendees: session?.attendees ?? '',
       goals: session?.goals ?? '',
@@ -58,10 +60,12 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
 
   // Songs to choose from: only those of the selected project
   const { data: songs } = useSongs(idOrNull(form.values.projectId))
+  const { data: instruments } = useProjectInstruments(idOrNull(form.values.projectId))
 
   const handleProjectChange = (projectId: string | null) => {
     form.setFieldValue('projectId', projectId)
-    form.setFieldValue('songIds', []) // songs of the old project are not valid anymore
+    form.setFieldValue('songIds', []) // songs and instruments of the old project are not valid anymore
+    form.setFieldValue('instrumentIds', [])
   }
 
   const handleSubmit = (values: typeof form.values) => {
@@ -75,6 +79,7 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
       startTime: values.allDay ? null : toApiTime(values.startTime),
       endTime: values.allDay ? null : toApiTime(values.endTime),
       songIds: values.songIds.map(Number),
+      instrumentIds: values.instrumentIds.map(Number),
       engineer: textOrNull(values.engineer),
       attendees: textOrNull(values.attendees),
       goals: textOrNull(values.goals),
@@ -148,13 +153,25 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
           />
         </SimpleGrid>
 
-        <MultiSelect
-          label={t('sessions.songs')}
-          searchable
-          disabled={!form.values.projectId}
-          data={(songs ?? []).map((song) => ({ value: String(song.id), label: `${song.trackNumber}. ${song.title}` }))}
-          {...form.getInputProps('songIds')}
-        />
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          {/* The gear of the session comes from the setups of these instruments */}
+          <MultiSelect
+            label={t('sessions.instruments')}
+            description={t('sessions.instrumentsHint')}
+            searchable
+            disabled={!form.values.projectId}
+            data={(instruments ?? []).map((instrument) => ({ value: String(instrument.id), label: instrument.name }))}
+            {...form.getInputProps('instrumentIds')}
+          />
+          <MultiSelect
+            label={t('sessions.songs')}
+            description={' '}
+            searchable
+            disabled={!form.values.projectId}
+            data={(songs ?? []).map((song) => ({ value: String(song.id), label: `${song.trackNumber}. ${song.title}` }))}
+            {...form.getInputProps('songIds')}
+          />
+        </SimpleGrid>
 
         <Textarea
           label={t('sessions.goals')}

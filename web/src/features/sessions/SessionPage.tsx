@@ -13,7 +13,7 @@ import DuplicateSessionModal from './DuplicateSessionModal'
 import { useCreateSession, useDeleteSession, useSession, useSessions, useUpdateSession } from './sessionApi'
 import { formatSessionDates } from './sessionDates'
 import SessionForm from './SessionForm'
-import SessionGearBookings from './SessionGearBookings'
+import SessionEquipment from './SessionEquipment'
 import SessionTasks from './SessionTasks'
 
 /**
@@ -154,7 +154,7 @@ export default function SessionPage() {
         <Grid.Col span={{ base: 12, lg: 5 }}>
           <Stack>
             <SessionTasks sessionId={session.id} />
-            <SessionGearBookings sessionId={session.id} />
+            <SessionEquipment session={session} />
           </Stack>
         </Grid.Col>
       </Grid>

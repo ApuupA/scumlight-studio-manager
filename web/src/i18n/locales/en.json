@@ -76,7 +76,11 @@
     "photoHint": "JPG, PNG or WEBP, max. 10 MB",
     "goodFor": "Good for",
     "goodForHint": "Short tags, confirm each with Enter",
-    "goodForPlaceholder": "e.g. Snare, Guitar cab, Vocals"
+    "goodForPlaceholder": "e.g. Snare, Guitar cab, Vocals",
+    "inSessionToday": "In session today",
+    "inSessionTodayCount": "{{count}} in session today",
+    "usedIn": "Used in projects",
+    "notUsed": "Not used in any project setup."
   },
   "gearStatus": {
     "Available": "Available",
@@ -112,7 +116,8 @@
       "nameExists": "A category with this name already exists."
     },
     "gearItem": {
-      "categoryNotFound": "The selected category does not exist anymore."
+      "categoryNotFound": "The selected category does not exist anymore.",
+      "usedInSetups": "This gear is used in a project setup. Remove it there first (see \"Used in projects\")."
     },
     "photo": {
       "invalidType": "Only JPG, PNG and WEBP images are allowed.",
@@ -143,11 +148,17 @@
       "invalidTimes": "Set start and end time (end after start) – or mark the session as all day.",
       "projectNotFound": "The project does not exist anymore.",
       "songNotInProject": "All songs of a session must belong to its project.",
-      "invalidEndDate": "The end date must be after the start date."
+      "invalidEndDate": "The end date must be after the start date.",
+      "instrumentNotInProject": "All instruments of a session must belong to its project."
     },
-    "gearBooking": {
-      "sessionNotFound": "The session does not exist anymore.",
-      "gearItemNotFound": "The gear does not exist anymore."
+    "instrument": {
+      "projectNotFound": "The project does not exist anymore.",
+      "bandNotInProject": "This band does not take part in the project."
+    },
+    "setupItem": {
+      "oneSourceRequired": "Choose studio gear, band gear or enter a name – exactly one of them.",
+      "instrumentNotFound": "The instrument does not exist anymore.",
+      "bandGearNotInProject": "This band gear does not belong to the project."
     }
   },
   "profile": {
@@ -231,9 +242,10 @@
       "overview": "Overview",
       "songs": "Songs",
       "sessions": "Sessions",
-      "equipment": "Equipment",
       "links": "References & mixes",
-      "drums": "Drum tuning"
+      "drums": "Drum tuning",
+      "instruments": "Instruments & setup",
+      "bandGear": "Band gear"
     },
     "filterActive": "Active projects",
     "filterAll": "All projects"
@@ -320,19 +332,15 @@
     "deleteConfirm": "\"{{name}}\" will be deleted."
   },
   "equipment": {
-    "studioGear": "Studio gear",
-    "studioGearHint": "Booked in the sessions of this project",
-    "noStudioGear": "No gear booked in the sessions yet.",
-    "usedIn": "Sessions",
-    "bandGear": "Gear brought by the band",
     "newBandGear": "Add gear",
-    "newTitle": "Brought gear",
     "name": "Gear",
     "namePlaceholder": "e.g. Orange Rockerverb 50",
     "owner": "Brought by",
     "ownerPlaceholder": "e.g. Lisa (drums)",
     "emptyBandGear": "Nothing entered yet.",
-    "deleteConfirm": "\"{{name}}\" will be removed from the list."
+    "deleteConfirm": "\"{{name}}\" will be removed from the list.",
+    "bandGearHint": "Gear the band brings (guitars, amps, cymbals, …) – usable in the instrument setups.",
+    "newTitle": "Band gear"
   },
   "sessions": {
     "title": "Calendar",
@@ -360,7 +368,6 @@
     "emptyDay": "No sessions on this day.",
     "emptyProject": "No sessions planned yet.",
     "tasksProgress": "{{done}}/{{total}} to-dos",
-    "gearCount": "{{count}} gear",
     "sheet": "Session sheet",
     "deleteConfirm": "The session \"{{name}}\" will be deleted with its to-dos and bookings.",
     "projectFirst": "Create a project first – every session belongs to a project.",
@@ -375,13 +382,19 @@
     "closed": "Done & cancelled sessions ({{count}})",
     "duplicate": "Duplicate",
     "duplicateTitle": "Duplicate session",
-    "duplicateHint": "Choose one or more dates. Copied: title, type, times, people, goals, notes, songs, to-dos (open again) and gear.",
+    "duplicateHint": "Choose one or more dates. Copied: title, type, times, people, goals, notes, songs, instruments and to-dos (open again).",
     "followingDays": "Following days",
     "duplicateSubmit": "Create {{count}} copies",
     "duplicated": "{{count}} sessions created",
     "copyFrom": "Copy from an existing session",
     "copyFromHint": "Faster for recurring sessions, e.g. several drum days",
-    "copyFromPlaceholder": "Search session …"
+    "copyFromPlaceholder": "Search session …",
+    "instruments": "Instruments",
+    "instrumentsHint": "Their setups are the gear of the session",
+    "equipment": "Equipment",
+    "equipmentHint": "From the setups of the chosen instruments.",
+    "editSetups": "Edit setups",
+    "noInstruments": "No instruments chosen yet – choose them in the form."
   },
   "sessionType": {
     "PreProduction": "Pre-production",
@@ -404,25 +417,65 @@
     "placeholder": "New to-do, e.g. \"Reamp guitars song 2\"",
     "empty": "No to-dos yet."
   },
-  "booking": {
-    "title": "Booked studio gear",
-    "gearItem": "Gear",
-    "gearItemPlaceholder": "Search gear …",
-    "add": "Book",
-    "empty": "No gear booked yet.",
-    "overbooked": "{{total}} of {{available}} booked at the same time",
-    "alsoBookedIn": "Also booked in",
-    "statusWarning": "Status: {{status}}",
-    "savedWithWarning": "Booked – but there is a conflict, see the warning.",
-    "upcoming": "Upcoming bookings",
-    "noUpcoming": "Not booked in any upcoming session.",
-    "bookedToday": "In session today",
-    "bookedTodayCount": "{{count}} in session today"
-  },
   "sheet": {
     "title": "Session sheet",
-    "gear": "Studio gear",
-    "bandGear": "Gear brought by the band",
-    "checked": "✓"
+    "gear": "Equipment (setups)",
+    "bandGear": "Gear brought by the band"
+  },
+  "projectSheet": {
+    "title": "Project sheet"
+  },
+  "instruments": {
+    "new": "Add instrument",
+    "newTitle": "New instrument",
+    "editTitle": "Edit instrument",
+    "name": "Instrument",
+    "namePlaceholder": "e.g. Drums, Guitar left, Lead vocals",
+    "band": "Band",
+    "isChain": "Signal chain",
+    "isChainHint": "Show the setup as a chain with arrows, e.g. guitar → pedal → amp → cab → mic",
+    "chain": "Chain",
+    "list": "List",
+    "hint": "Enter the instruments recorded in this project and the gear used for each. Sessions choose instruments and get their gear from here.",
+    "empty": "No instruments yet.",
+    "deleteConfirm": "\"{{name}}\" and its setup will be deleted. Sessions lose this instrument."
+  },
+  "setup": {
+    "add": "Add gear",
+    "newTitle": "add gear",
+    "editTitle": "edit gear",
+    "studioGear": "Studio gear",
+    "gearPlaceholder": "Search gear …",
+    "suggested": "Suggested (\"good for\")",
+    "bandGear": "Band gear",
+    "bandGearHint": "Enter new band gear in the tab \"Band gear\" first",
+    "customName": "Name",
+    "customNamePlaceholder": "e.g. rented Fender Twin",
+    "usedFor": "Used for",
+    "usedForPlaceholder": "e.g. Snare Top, Kick In, Cab",
+    "needsInput": "Microphone / DI (needs an input)",
+    "needsInputHint": "These entries appear in the input list",
+    "noStudioGear": "No studio gear yet – add it under \"Gear\".",
+    "empty": "No gear yet.",
+    "moveUp": "Move up",
+    "moveDown": "Move down"
+  },
+  "setupSource": {
+    "Studio": "Studio gear",
+    "Band": "Band gear",
+    "Custom": "Other"
+  },
+  "templates": {
+    "title": "Setup templates",
+    "fromTemplate": "From template",
+    "saveAs": "Save as template",
+    "saveAsHint": "Saves this setup for other projects. Band gear is left out – it belongs to this project only.",
+    "name": "Template name",
+    "saved": "Template \"{{name}}\" saved",
+    "use": "Use",
+    "create": "Create instrument",
+    "applied": "\"{{name}}\" created from the template",
+    "empty": "No templates yet. Save an instrument setup as template via its \"…\" menu.",
+    "deleteConfirm": "The template \"{{name}}\" will be deleted. Projects are not affected."
   }
 }

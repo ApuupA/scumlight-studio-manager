@@ -151,11 +151,11 @@ export default function GearListPage() {
                   <Table.Td>
                     <Group gap={4}>
                       <GearStatusBadge status={item.status} />
-                      {item.bookedTodayQuantity > 0 && (
+                      {item.inSessionTodayQuantity > 0 && (
                         <Badge color="ember" variant="filled">
                           {item.quantity > 1
-                            ? t('booking.bookedTodayCount', { count: item.bookedTodayQuantity })
-                            : t('booking.bookedToday')}
+                            ? t('gear.inSessionTodayCount', { count: item.inSessionTodayQuantity })
+                            : t('gear.inSessionToday')}
                         </Badge>
                       )}
                     </Group>

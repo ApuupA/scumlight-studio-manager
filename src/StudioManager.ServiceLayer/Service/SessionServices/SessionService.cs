@@ -14,20 +14,23 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
     {
         private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<Song> _songRepository;
+        private readonly IRepository<ProjectInstrument> _instrumentRepository;
 
         public SessionService(
             IRepository<Session> repository,
             IRepository<Project> projectRepository,
             IRepository<Song> songRepository,
+            IRepository<ProjectInstrument> instrumentRepository,
             IMapper mapper) : base(repository, mapper)
         {
             _projectRepository = projectRepository;
             _songRepository = songRepository;
+            _instrumentRepository = instrumentRepository;
         }
 
         // Project + client for the names, the rest for the counters in the DTO
         protected override Expression<Func<Session, object>>[] DefaultIncludes =>
-            [s => s.Project!.Client!, s => s.Songs, s => s.Tasks, s => s.GearBookings];
+            [s => s.Project!.Client!, s => s.Songs, s => s.Tasks, s => s.Instruments];
 
         public override async Task<IEnumerable<SessionReadDto>> GetAll()
         {
@@ -44,11 +47,16 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
             EnsureValidDatesAndTimes(createDto);
             await EnsureProjectExists(createDto.ProjectId);
             var songs = await LoadSongsOfProject(createDto);
+            var instruments = await LoadInstrumentsOfProject(createDto);
 
             var session = _mapper.Map<Session>(createDto);
             foreach (var song in songs)
             {
                 session.Songs.Add(song);
+            }
+            foreach (var instrument in instruments)
+            {
+                session.Instruments.Add(instrument);
             }
 
             await _repository.AddAsync(session);
@@ -57,19 +65,25 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
 
         public override async Task<SessionReadDto> Update(int id, SessionCreateDto updateDto)
         {
-            // Load the current songs too, so EF knows which song links to remove
-            var session = await _repository.GetAsync(s => s.Id == id, s => s.Songs)
+            // Load the current songs and instruments too, so EF knows which links to remove
+            var session = await _repository.GetAsync(s => s.Id == id, s => s.Songs, s => s.Instruments)
                 ?? throw new EntityNotFoundException(nameof(Session), id);
 
             EnsureValidDatesAndTimes(updateDto);
             await EnsureProjectExists(updateDto.ProjectId);
             var songs = await LoadSongsOfProject(updateDto);
+            var instruments = await LoadInstrumentsOfProject(updateDto);
 
             _mapper.Map(updateDto, session);
             session.Songs.Clear();
             foreach (var song in songs)
             {
                 session.Songs.Add(song);
+            }
+            session.Instruments.Clear();
+            foreach (var instrument in instruments)
+            {
+                session.Instruments.Add(instrument);
             }
 
             await _repository.UpdateAsync(session);
@@ -89,11 +103,11 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         /// <summary>
         /// Copies a session to one or more other dates, e.g. "drums day 1" to the next four days.
         /// Copied: everything planned (title, type, times, length in days, people, goals, notes, songs, to-dos,
-        /// booked gear). Not copied: what happened in the session (summary, next steps) - and all to-dos start open.
+        /// instruments and thereby their gear). Not copied: what happened in the session (summary, next steps) - and all to-dos start open.
         /// </summary>
         public async Task<IEnumerable<SessionReadDto>> Duplicate(int id, SessionDuplicateDto dto)
         {
-            var source = await _repository.GetAsync(s => s.Id == id, s => s.Songs, s => s.Tasks, s => s.GearBookings)
+            var source = await _repository.GetAsync(s => s.Id == id, s => s.Songs, s => s.Tasks, s => s.Instruments)
                 ?? throw new EntityNotFoundException(nameof(Session), id);
 
             var lengthInDays = source.LastDate.DayNumber - source.Date.DayNumber;
@@ -119,9 +133,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
                     Tasks = source.Tasks
                         .Select(t => new SessionTask { Text = t.Text, SortOrder = t.SortOrder, IsDone = false })
                         .ToList(),
-                    GearBookings = source.GearBookings
-                        .Select(b => new GearBooking { GearItemId = b.GearItemId, Quantity = b.Quantity, Notes = b.Notes })
-                        .ToList()
+                    Instruments = source.Instruments.ToList()
                 };
 
                 await _repository.AddAsync(copy);
@@ -170,6 +182,22 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         /// <summary>
         /// Loads the songs of the DTO and makes sure all of them belong to the session's project.
         /// </summary>
+        /// <summary>
+        /// Loads the instruments of the DTO and makes sure all of them belong to the session's project.
+        /// </summary>
+        private async Task<List<ProjectInstrument>> LoadInstrumentsOfProject(SessionCreateDto dto)
+        {
+            var instrumentIds = dto.InstrumentIds.Distinct().ToList();
+            var instruments = (await _instrumentRepository.GetAllAsync(i => instrumentIds.Contains(i.Id) && i.ProjectId == dto.ProjectId)).ToList();
+
+            if (instruments.Count != instrumentIds.Count)
+            {
+                throw new BusinessRuleException("session.instrumentNotInProject", "All instruments of a session must belong to its project.");
+            }
+
+            return instruments;
+        }
+
         private async Task<List<Song>> LoadSongsOfProject(SessionCreateDto dto)
         {
             var songIds = dto.SongIds.Distinct().ToList();

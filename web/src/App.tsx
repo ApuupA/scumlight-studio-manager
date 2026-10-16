@@ -11,6 +11,7 @@ import GearItemPage from './features/gear/GearItemPage'
 import GearListPage from './features/gear/GearListPage'
 import ProjectListPage from './features/projects/ProjectListPage'
 import ProjectPage from './features/projects/ProjectPage'
+import ProjectSheetPage from './features/projects/ProjectSheetPage'
 import SessionCalendarPage from './features/sessions/SessionCalendarPage'
 import SessionPage from './features/sessions/SessionPage'
 import SessionSheetPage from './features/sessions/SessionSheetPage'
@@ -33,6 +34,7 @@ export default function App() {
         <Route element={<RequireAuth />}>
           {/* Printable pages without header and navigation */}
           <Route path="/sessions/:id/sheet" element={<SessionSheetPage />} />
+          <Route path="/projects/:id/sheet" element={<ProjectSheetPage />} />
 
           {/* Normal pages inside the app layout */}
           <Route element={<AppLayout />}>

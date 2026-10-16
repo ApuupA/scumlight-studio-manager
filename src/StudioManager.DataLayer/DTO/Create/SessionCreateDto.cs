@@ -49,5 +49,10 @@ namespace StudioManager.DataLayer.DTO.Create
         /// Songs worked on in this session - they must belong to the project.
         /// </summary>
         public List<int> SongIds { get; set; } = new();
+
+        /// <summary>
+        /// Instruments recorded in this session - they must belong to the project. Their gear is the session's gear.
+        /// </summary>
+        public List<int> InstrumentIds { get; set; } = new();
     }
 }
