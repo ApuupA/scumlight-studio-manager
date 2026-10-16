@@ -29,6 +29,12 @@ namespace StudioManager.RepositoryLayer.IRepository
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
 
         /// <summary>
+        /// Same as above, but the related objects are given as text paths. Needed to load objects "through" a list,
+        /// e.g. "SetupItems.GearItem.GearCategory" loads the setup items of an instrument with their gear and its category.
+        /// </summary>
+        Task<IEnumerable<T>> GetAllWithPathsAsync(Expression<Func<T, bool>> predicate, params string[] includePaths);
+
+        /// <summary>
         /// Returns true if at least one entity matches the predicate.
         /// </summary>
         Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);

@@ -24,6 +24,7 @@ namespace StudioManager.Tests.Unit
                 new Repository<Session>(_context),
                 new Repository<Project>(_context),
                 new Repository<Song>(_context),
+                new Repository<ProjectInstrument>(_context),
                 TestHelper.CreateMapper());
 
             var client = new Client { Name = "Scumlight Records" };
@@ -137,6 +138,27 @@ namespace StudioManager.Tests.Unit
                 Assert.Equal(1, copy.TaskCount);
                 Assert.Equal(0, copy.TasksDoneCount); // to-dos start open again
             });
+        }
+
+        [Fact]
+        public async Task Insert_ShouldLinkInstrumentsOfTheProjectOnly()
+        {
+            var drums = new ProjectInstrument { Name = "Drums", Project = _project };
+            var foreign = new ProjectInstrument { Name = "Foreign", Project = _otherProjectSong.Project };
+            _context.ProjectInstruments.AddRange(drums, foreign);
+            await _context.SaveChangesAsync();
+
+            var dto = NewDto();
+            dto.InstrumentIds = [drums.Id];
+            var created = await _service.Insert(dto);
+            var copy = Assert.Single(await _service.Duplicate(created.Id, new SessionDuplicateDto { Dates = [new DateOnly(2026, 12, 1)] }));
+
+            Assert.Equal("Drums", Assert.Single(created.Instruments).Name);
+            Assert.Equal("Drums", Assert.Single(copy.Instruments).Name);
+
+            dto.InstrumentIds = [foreign.Id];
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _service.Insert(dto));
+            Assert.Equal("session.instrumentNotInProject", exception.ErrorCode);
         }
 
         [Fact]

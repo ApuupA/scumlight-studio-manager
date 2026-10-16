@@ -12,7 +12,7 @@ namespace StudioManager.ServiceLayer.IService.ISessionServices
         Task<IEnumerable<SessionReadDto>> GetForProject(int projectId);
 
         /// <summary>
-        /// Copies a session (with songs, to-dos and gear) to the given dates. Returns the new sessions.
+        /// Copies a session (with songs, to-dos and instruments) to the given dates. Returns the new sessions.
         /// </summary>
         Task<IEnumerable<SessionReadDto>> Duplicate(int id, SessionDuplicateDto dto);
 

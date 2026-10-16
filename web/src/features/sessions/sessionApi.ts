@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type { GearBookingInput, SessionDuplicateInput, SessionInput, SessionStatus, SessionTaskInput } from '../../api/types'
+import type { SessionDuplicateInput, SessionInput, SessionStatus, SessionTaskInput } from '../../api/types'
 
 /**
- * Data access for sessions, their to-dos and gear bookings.
+ * Data access for sessions and their to-dos.
  */
 
 export function useSessions() {
@@ -35,34 +35,13 @@ export function useSessionTasks(sessionId: number) {
   })
 }
 
-export function useGearBookingsOfSession(sessionId: number) {
-  return useQuery({
-    queryKey: ['gearBookings', 'session', sessionId],
-    queryFn: () => unwrap(api.GET('/api/GearBooking/session/{sessionId}', { params: { path: { sessionId } } })),
-  })
-}
-
-export function useGearBookingsOfProject(projectId: number) {
-  return useQuery({
-    queryKey: ['gearBookings', 'project', projectId],
-    queryFn: () => unwrap(api.GET('/api/GearBooking/project/{projectId}', { params: { path: { projectId } } })),
-  })
-}
-
-export function useUpcomingBookingsOfGearItem(gearItemId: number) {
-  return useQuery({
-    queryKey: ['gearBookings', 'gearItem', gearItemId],
-    queryFn: () => unwrap(api.GET('/api/GearBooking/gearItem/{gearItemId}', { params: { path: { gearItemId } } })),
-  })
-}
-
 /**
- * Session changes affect the calendar, project counters, the booking warnings and "booked today" in the gear list.
+ * Session changes affect the calendar, the project counters and "in session today" in the gear list.
  */
 function useInvalidateSessions() {
   const queryClient = useQueryClient()
   return () => {
-    for (const key of ['sessions', 'sessionTasks', 'gearBookings', 'gearItems', 'projects']) {
+    for (const key of ['sessions', 'sessionTasks', 'gearItems', 'projects']) {
       queryClient.invalidateQueries({ queryKey: [key] })
     }
   }
@@ -97,7 +76,7 @@ export function useSetSessionStatus() {
   })
 }
 
-/** Copies a session (with songs, to-dos and gear) to one or more dates. Returns the new sessions. */
+/** Copies a session (with songs, to-dos and instruments) to one or more dates. Returns the new sessions. */
 export function useDuplicateSession() {
   const invalidate = useInvalidateSessions()
   return useMutation({
@@ -132,27 +111,6 @@ export function useDeleteSessionTask() {
   const invalidate = useInvalidateSessions()
   return useMutation({
     mutationFn: (id: number) => unwrap(api.DELETE('/api/SessionTask/{id}', { params: { path: { id } } })),
-    onSuccess: invalidate,
-  })
-}
-
-// ---------- Gear bookings ----------
-
-export function useSaveGearBooking() {
-  const invalidate = useInvalidateSessions()
-  return useMutation({
-    mutationFn: ({ id, input }: { id?: number; input: GearBookingInput }) =>
-      id
-        ? unwrap(api.PUT('/api/GearBooking/{id}', { params: { path: { id } }, body: input }))
-        : unwrap(api.POST('/api/GearBooking', { body: input })),
-    onSuccess: invalidate,
-  })
-}
-
-export function useDeleteGearBooking() {
-  const invalidate = useInvalidateSessions()
-  return useMutation({
-    mutationFn: (id: number) => unwrap(api.DELETE('/api/GearBooking/{id}', { params: { path: { id } } })),
     onSuccess: invalidate,
   })
 }

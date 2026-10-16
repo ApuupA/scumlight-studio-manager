@@ -123,7 +123,9 @@ try
     builder.Services.AddScoped<IExternalGearService, ExternalGearService>();
     builder.Services.AddScoped<ISessionService, SessionService>();
     builder.Services.AddScoped<ISessionTaskService, SessionTaskService>();
-    builder.Services.AddScoped<IGearBookingService, GearBookingService>();
+    builder.Services.AddScoped<IProjectInstrumentService, ProjectInstrumentService>();
+    builder.Services.AddScoped<IInstrumentSetupItemService, InstrumentSetupItemService>();
+    builder.Services.AddScoped<ISetupTemplateService, SetupTemplateService>();
 
     var app = builder.Build();
 

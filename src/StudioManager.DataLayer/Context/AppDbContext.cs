@@ -25,7 +25,11 @@ namespace StudioManager.DataLayer.Context
 
         public DbSet<Session> Sessions { get; set; } = null!;
         public DbSet<SessionTask> SessionTasks { get; set; } = null!;
-        public DbSet<GearBooking> GearBookings { get; set; } = null!;
+
+        public DbSet<ProjectInstrument> ProjectInstruments { get; set; } = null!;
+        public DbSet<InstrumentSetupItem> InstrumentSetupItems { get; set; } = null!;
+        public DbSet<SetupTemplate> SetupTemplates { get; set; } = null!;
+        public DbSet<SetupTemplateItem> SetupTemplateItems { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -73,6 +77,7 @@ namespace StudioManager.DataLayer.Context
             ConfigureClients(modelBuilder);
             ConfigureProjects(modelBuilder);
             ConfigureSessions(modelBuilder);
+            ConfigureInstruments(modelBuilder);
 
             SeedGearCategories(modelBuilder);
         }
@@ -225,6 +230,10 @@ namespace StudioManager.DataLayer.Context
                 entity.HasMany(s => s.Songs)
                       .WithMany(song => song.Sessions)
                       .UsingEntity(join => join.ToTable("SessionSongs"));
+
+                entity.HasMany(s => s.Instruments)
+                      .WithMany(instrument => instrument.Sessions)
+                      .UsingEntity(join => join.ToTable("SessionInstruments"));
             });
 
             modelBuilder.Entity<SessionTask>(entity =>
@@ -236,20 +245,71 @@ namespace StudioManager.DataLayer.Context
                       .HasForeignKey(t => t.SessionId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
+        }
 
-            modelBuilder.Entity<GearBooking>(entity =>
+        private static void ConfigureInstruments(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProjectInstrument>(entity =>
             {
-                entity.Property(b => b.Notes).HasMaxLength(500);
+                entity.Property(i => i.Name).HasMaxLength(100).IsRequired();
+                entity.Property(i => i.Notes).HasMaxLength(2000);
 
-                entity.HasOne(b => b.Session)
-                      .WithMany(s => s.GearBookings)
-                      .HasForeignKey(b => b.SessionId)
+                entity.HasOne(i => i.Project)
+                      .WithMany(p => p.Instruments)
+                      .HasForeignKey(i => i.ProjectId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                // Deleting a gear item removes its bookings
-                entity.HasOne(b => b.GearItem)
+                entity.HasOne(i => i.Band)
                       .WithMany()
-                      .HasForeignKey(b => b.GearItemId)
+                      .HasForeignKey(i => i.BandId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<InstrumentSetupItem>(entity =>
+            {
+                entity.Property(s => s.CustomName).HasMaxLength(200);
+                entity.Property(s => s.UsedFor).HasMaxLength(100);
+                entity.Property(s => s.Notes).HasMaxLength(500);
+
+                entity.HasOne(s => s.ProjectInstrument)
+                      .WithMany(i => i.SetupItems)
+                      .HasForeignKey(s => s.ProjectInstrumentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Studio gear used in a setup can not be deleted (GearItemService explains why)
+                entity.HasOne(s => s.GearItem)
+                      .WithMany()
+                      .HasForeignKey(s => s.GearItemId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                // Band gear removed from the project disappears from the setups as well
+                entity.HasOne(s => s.ExternalGear)
+                      .WithMany()
+                      .HasForeignKey(s => s.ExternalGearId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<SetupTemplate>(entity =>
+            {
+                entity.Property(t => t.Name).HasMaxLength(100).IsRequired();
+                entity.Property(t => t.Notes).HasMaxLength(2000);
+            });
+
+            modelBuilder.Entity<SetupTemplateItem>(entity =>
+            {
+                entity.Property(s => s.CustomName).HasMaxLength(200);
+                entity.Property(s => s.UsedFor).HasMaxLength(100);
+                entity.Property(s => s.Notes).HasMaxLength(500);
+
+                entity.HasOne(s => s.SetupTemplate)
+                      .WithMany(t => t.Items)
+                      .HasForeignKey(s => s.SetupTemplateId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Deleting studio gear removes it from the templates (templates are less important than projects)
+                entity.HasOne(s => s.GearItem)
+                      .WithMany()
+                      .HasForeignKey(s => s.GearItemId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
         }

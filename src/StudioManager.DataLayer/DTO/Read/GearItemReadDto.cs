@@ -21,9 +21,10 @@ namespace StudioManager.DataLayer.DTO.Read
         public string GearCategoryName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Pieces booked for sessions today (calculated, not stored) - shows "in use" in the gear list.
+        /// Pieces used in today's sessions (from the setups of their instruments, calculated, not stored)
+        /// - shows "in session today" in the gear list.
         /// </summary>
-        public int BookedTodayQuantity { get; set; }
+        public int InSessionTodayQuantity { get; set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }

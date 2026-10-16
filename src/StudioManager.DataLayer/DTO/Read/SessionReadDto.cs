@@ -29,7 +29,9 @@ namespace StudioManager.DataLayer.DTO.Read
 
         public int TaskCount { get; set; }
         public int TasksDoneCount { get; set; }
-        public int GearBookingCount { get; set; }
+
+        /// <summary>Instruments recorded in this session (id + name).</summary>
+        public List<InstrumentShortDto> Instruments { get; set; } = new();
 
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }

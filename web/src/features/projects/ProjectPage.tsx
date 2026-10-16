@@ -1,5 +1,7 @@
 import { Alert, Anchor, Button, Center, Group, Loader, Paper, Stack, Tabs, Text, Title } from '@mantine/core'
-import { IconArrowLeft, IconCalendarEvent, IconDisc, IconMetronome, IconInfoCircle, IconLink, IconTool, IconTrash } from '@tabler/icons-react'
+import {
+  IconArrowLeft, IconBackpack, IconCalendarEvent, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconMetronome, IconPrinter, IconTrash,
+} from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
@@ -9,7 +11,8 @@ import { projectStatusColors } from '../../components/statusColors'
 import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import DrumTuningTab from './DrumTuningTab'
-import EquipmentTab from './EquipmentTab'
+import InstrumentsTab from '../instruments/InstrumentsTab'
+import BandGearTab from './BandGearTab'
 import LinksTab from './LinksTab'
 import { useCreateProject, useDeleteProject, useProject, useUpdateProject } from './projectApi'
 import ProjectForm from './ProjectForm'
@@ -106,9 +109,14 @@ export default function ProjectPage() {
             {` · ${t(`projectType.${project.type}`)}`}
           </Text>
         </div>
-        <Button variant="subtle" color="red" leftSection={<IconTrash size={16} />} onClick={handleDelete}>
-          {t('common.delete')}
-        </Button>
+        <Group gap="xs">
+          <Button variant="light" leftSection={<IconPrinter size={16} />} onClick={() => navigate(`/projects/${project.id}/sheet`)}>
+            {t('projectSheet.title')}
+          </Button>
+          <Button variant="subtle" color="red" leftSection={<IconTrash size={16} />} onClick={handleDelete}>
+            {t('common.delete')}
+          </Button>
+        </Group>
       </Group>
 
       <Tabs value={activeTab} onChange={(tab) => setSearchParams({ tab: tab ?? 'overview' }, { replace: true })} keepMounted={false}>
@@ -120,7 +128,8 @@ export default function ProjectPage() {
           <Tabs.Tab value="sessions" leftSection={<IconCalendarEvent size={16} />}>
             {t('projects.tabs.sessions')} ({project.sessionCount})
           </Tabs.Tab>
-          <Tabs.Tab value="equipment" leftSection={<IconTool size={16} />}>{t('projects.tabs.equipment')}</Tabs.Tab>
+          <Tabs.Tab value="instruments" leftSection={<IconGuitarPick size={16} />}>{t('projects.tabs.instruments')}</Tabs.Tab>
+          <Tabs.Tab value="bandGear" leftSection={<IconBackpack size={16} />}>{t('projects.tabs.bandGear')}</Tabs.Tab>
           <Tabs.Tab value="links" leftSection={<IconLink size={16} />}>{t('projects.tabs.links')}</Tabs.Tab>
           <Tabs.Tab value="drums" leftSection={<IconMetronome size={16} />}>{t('projects.tabs.drums')}</Tabs.Tab>
         </Tabs.List>
@@ -132,7 +141,8 @@ export default function ProjectPage() {
         </Tabs.Panel>
         <Tabs.Panel value="songs" pt="md"><SongsTab project={project} /></Tabs.Panel>
         <Tabs.Panel value="sessions" pt="md"><ProjectSessionsTab projectId={project.id} /></Tabs.Panel>
-        <Tabs.Panel value="equipment" pt="md"><EquipmentTab projectId={project.id} /></Tabs.Panel>
+        <Tabs.Panel value="instruments" pt="md"><InstrumentsTab project={project} /></Tabs.Panel>
+        <Tabs.Panel value="bandGear" pt="md"><BandGearTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="links" pt="md"><LinksTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="drums" pt="md"><DrumTuningTab projectId={project.id} /></Tabs.Panel>
       </Tabs>

@@ -2,6 +2,7 @@ using AutoMapper;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.GearModels;
+using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.DataLayer.Models.SessionModels;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.ServiceLayer.Exceptions;
@@ -29,18 +30,21 @@ namespace StudioManager.ServiceLayer.Service.GearServices
         };
 
         private readonly IRepository<GearCategory> _categoryRepository;
-        private readonly IRepository<GearBooking> _bookingRepository;
+        private readonly IRepository<Session> _sessionRepository;
+        private readonly IRepository<InstrumentSetupItem> _setupItemRepository;
         private readonly IFileStorageService _fileStorage;
 
         public GearItemService(
             IRepository<GearItem> repository,
             IRepository<GearCategory> categoryRepository,
-            IRepository<GearBooking> bookingRepository,
+            IRepository<Session> sessionRepository,
+            IRepository<InstrumentSetupItem> setupItemRepository,
             IFileStorageService fileStorage,
             IMapper mapper) : base(repository, mapper)
         {
             _categoryRepository = categoryRepository;
-            _bookingRepository = bookingRepository;
+            _sessionRepository = sessionRepository;
+            _setupItemRepository = setupItemRepository;
             _fileStorage = fileStorage;
         }
 
@@ -50,7 +54,7 @@ namespace StudioManager.ServiceLayer.Service.GearServices
         public override async Task<IEnumerable<GearItemReadDto>> GetAll()
         {
             var items = (await base.GetAll()).OrderBy(g => g.Name).ToList();
-            await SetBookedToday(items);
+            await SetInSessionToday(items);
             return items;
         }
 
@@ -59,7 +63,7 @@ namespace StudioManager.ServiceLayer.Service.GearServices
             var item = await base.Get(id);
             if (item != null)
             {
-                await SetBookedToday([item]);
+                await SetInSessionToday([item]);
             }
             return item;
         }
@@ -94,6 +98,13 @@ namespace StudioManager.ServiceLayer.Service.GearServices
         public override async Task Delete(int id)
         {
             var item = await GetEntity(id);
+
+            if (await _setupItemRepository.ExistsAsync(s => s.GearItemId == id))
+            {
+                throw new BusinessRuleException("gearItem.usedInSetups",
+                    "The gear is used in the setup of a project. Remove it there first (see 'Used in projects').");
+            }
+
             await base.Delete(id);
 
             if (item.PhotoPath != null)
@@ -165,22 +176,27 @@ namespace StudioManager.ServiceLayer.Service.GearServices
         }
 
         /// <summary>
-        /// Fills BookedTodayQuantity: pieces booked for today's (not cancelled) sessions.
+        /// Fills InSessionTodayQuantity: pieces used today - from the setups of the instruments recorded
+        /// in today's (not cancelled) sessions.
         /// </summary>
-        private async Task SetBookedToday(List<GearItemReadDto> items)
+        private async Task SetInSessionToday(List<GearItemReadDto> items)
         {
             var today = DateOnly.FromDateTime(DateTime.Now);
-            var bookings = await _bookingRepository.GetAllAsync(
-                b => b.Session!.Date <= today && (b.Session.EndDate ?? b.Session.Date) >= today && b.Session.Status != SessionStatus.Cancelled,
-                b => b.Session!);
+            var todaysSessions = await _sessionRepository.GetAllWithPathsAsync(
+                s => s.Date <= today && (s.EndDate ?? s.Date) >= today && s.Status != SessionStatus.Cancelled,
+                "Instruments.SetupItems");
 
-            var bookedPerItem = bookings
-                .GroupBy(b => b.GearItemId)
-                .ToDictionary(group => group.Key, group => group.Sum(b => b.Quantity));
+            var quantityPerItem = todaysSessions
+                .SelectMany(session => session.Instruments)
+                .DistinctBy(instrument => instrument.Id) // an instrument in two sessions today needs its gear only once
+                .SelectMany(instrument => instrument.SetupItems)
+                .Where(setupItem => setupItem.GearItemId != null)
+                .GroupBy(setupItem => setupItem.GearItemId!.Value)
+                .ToDictionary(group => group.Key, group => group.Sum(setupItem => setupItem.Quantity));
 
             foreach (var item in items)
             {
-                item.BookedTodayQuantity = bookedPerItem.GetValueOrDefault(item.Id);
+                item.InSessionTodayQuantity = quantityPerItem.GetValueOrDefault(item.Id);
             }
         }
 

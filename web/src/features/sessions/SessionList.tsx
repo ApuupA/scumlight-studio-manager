@@ -1,5 +1,5 @@
 import { Badge, Group, Menu, Paper, Stack, Text, UnstyledButton } from '@mantine/core'
-import { IconChecklist, IconChevronDown, IconTool } from '@tabler/icons-react'
+import { IconChecklist, IconChevronDown, IconGuitarPick } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { sessionStatuses, type Session, type SessionStatus } from '../../api/types'
@@ -81,10 +81,10 @@ export default function SessionList({ sessions, showProject = true }: SessionLis
                     <Text size="xs">{t('sessions.tasksProgress', { done: session.tasksDoneCount, total: session.taskCount })}</Text>
                   </Group>
                 )}
-                {session.gearBookingCount > 0 && (
+                {session.instruments.length > 0 && (
                   <Group gap={2}>
-                    <IconTool size={14} />
-                    <Text size="xs">{t('sessions.gearCount', { count: session.gearBookingCount })}</Text>
+                    <IconGuitarPick size={14} />
+                    <Text size="xs">{session.instruments.map((instrument) => instrument.name).join(', ')}</Text>
                   </Group>
                 )}
               </Group>

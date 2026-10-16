@@ -38,6 +38,21 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("ProjectBands", (string)null);
                 });
 
+            modelBuilder.Entity("ProjectInstrumentSession", b =>
+                {
+                    b.Property<int>("InstrumentsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SessionsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("InstrumentsId", "SessionsId");
+
+                    b.HasIndex("SessionsId");
+
+                    b.ToTable("SessionInstruments", (string)null);
+                });
+
             modelBuilder.Entity("SessionSong", b =>
                 {
                     b.Property<int>("SessionsId")
@@ -466,6 +481,61 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("ExternalGear");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InstrumentSetupItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CustomName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("ExternalGearId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("GearItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("NeedsInput")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("ProjectInstrumentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UsedFor")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExternalGearId");
+
+                    b.HasIndex("GearItemId");
+
+                    b.HasIndex("ProjectInstrumentId");
+
+                    b.ToTable("InstrumentSetupItems");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -541,6 +611,50 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BandId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsChain")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BandId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectInstruments");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectLink", b =>
                 {
                     b.Property<int>("Id")
@@ -587,6 +701,87 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasIndex("SongId");
 
                     b.ToTable("ProjectLinks");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.SetupTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsChain")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SetupTemplates");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.SetupTemplateItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CustomName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("GearItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("NeedsInput")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SetupTemplateId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UsedFor")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GearItemId");
+
+                    b.HasIndex("SetupTemplateId");
+
+                    b.ToTable("SetupTemplateItems");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Song", b =>
@@ -641,42 +836,6 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Songs");
-                });
-
-            modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.GearBooking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("GearItemId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SessionId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GearItemId");
-
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("GearBookings");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
@@ -847,6 +1006,21 @@ namespace StudioManager.DataLayer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ProjectInstrumentSession", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", null)
+                        .WithMany()
+                        .HasForeignKey("InstrumentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.SessionModels.Session", null)
+                        .WithMany()
+                        .HasForeignKey("SessionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SessionSong", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.SessionModels.Session", null)
@@ -913,6 +1087,31 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InstrumentSetupItem", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.ExternalGear", "ExternalGear")
+                        .WithMany()
+                        .HasForeignKey("ExternalGearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("StudioManager.DataLayer.Models.GearModels.GearItem", "GearItem")
+                        .WithMany()
+                        .HasForeignKey("GearItemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", "ProjectInstrument")
+                        .WithMany("SetupItems")
+                        .HasForeignKey("ProjectInstrumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExternalGear");
+
+                    b.Navigation("GearItem");
+
+                    b.Navigation("ProjectInstrument");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Project", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.ClientModels.Client", "Client")
@@ -922,6 +1121,24 @@ namespace StudioManager.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ClientModels.Band", "Band")
+                        .WithMany()
+                        .HasForeignKey("BandId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
+                        .WithMany("Instruments")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Band");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectLink", b =>
@@ -942,6 +1159,24 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Song");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.SetupTemplateItem", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.GearModels.GearItem", "GearItem")
+                        .WithMany()
+                        .HasForeignKey("GearItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.SetupTemplate", "SetupTemplate")
+                        .WithMany("Items")
+                        .HasForeignKey("SetupTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GearItem");
+
+                    b.Navigation("SetupTemplate");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Song", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.ClientModels.Band", "Band")
@@ -958,25 +1193,6 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Band");
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.GearBooking", b =>
-                {
-                    b.HasOne("StudioManager.DataLayer.Models.GearModels.GearItem", "GearItem")
-                        .WithMany()
-                        .HasForeignKey("GearItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StudioManager.DataLayer.Models.SessionModels.Session", "Session")
-                        .WithMany("GearBookings")
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GearItem");
-
-                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
@@ -1019,6 +1235,8 @@ namespace StudioManager.DataLayer.Migrations
 
                     b.Navigation("ExternalGear");
 
+                    b.Navigation("Instruments");
+
                     b.Navigation("Links");
 
                     b.Navigation("Sessions");
@@ -1026,10 +1244,18 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Songs");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", b =>
+                {
+                    b.Navigation("SetupItems");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.SetupTemplate", b =>
+                {
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
                 {
-                    b.Navigation("GearBookings");
-
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

@@ -51,5 +51,6 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public ICollection<ProjectLink> Links { get; set; } = new List<ProjectLink>();
         public ICollection<DrumTuning> DrumTunings { get; set; } = new List<DrumTuning>();
         public ICollection<ExternalGear> ExternalGear { get; set; } = new List<ExternalGear>();
+        public ICollection<ProjectInstrument> Instruments { get; set; } = new List<ProjectInstrument>();
     }
 }

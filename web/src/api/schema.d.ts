@@ -878,260 +878,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/GearBooking/session/{sessionId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    sessionId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["GearBookingReadDto"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/GearBooking/project/{projectId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    projectId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["GearBookingReadDto"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/GearBooking/gearItem/{gearItemId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    gearItemId: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["GearBookingReadDto"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/GearBooking": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["GearBookingReadDto"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["GearBookingCreateDto"];
-                    "text/json": components["schemas"]["GearBookingCreateDto"];
-                    "application/*+json": components["schemas"]["GearBookingCreateDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["GearBookingReadDto"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/GearBooking/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["GearBookingReadDto"];
-                    };
-                };
-            };
-        };
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["GearBookingCreateDto"];
-                    "text/json": components["schemas"]["GearBookingCreateDto"];
-                    "application/*+json": components["schemas"]["GearBookingCreateDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["GearBookingReadDto"];
-                    };
-                };
-            };
-        };
-        post?: never;
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/GearCategory": {
         parameters: {
             query?: never;
@@ -1513,6 +1259,227 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/InstrumentSetupItem/{id}/move": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SetupItemMoveDto"];
+                    "text/json": components["schemas"]["SetupItemMoveDto"];
+                    "application/*+json": components["schemas"]["SetupItemMoveDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InstrumentSetupItem/gearItem/{gearItemId}/usages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    gearItemId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GearUsageDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InstrumentSetupItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InstrumentSetupItemReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InstrumentSetupItemCreateDto"];
+                    "text/json": components["schemas"]["InstrumentSetupItemCreateDto"];
+                    "application/*+json": components["schemas"]["InstrumentSetupItemCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InstrumentSetupItemReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InstrumentSetupItem/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InstrumentSetupItemReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InstrumentSetupItemCreateDto"];
+                    "text/json": components["schemas"]["InstrumentSetupItemCreateDto"];
+                    "application/*+json": components["schemas"]["InstrumentSetupItemCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InstrumentSetupItemReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Project/client/{clientId}": {
         parameters: {
             query?: never;
@@ -1663,6 +1630,227 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["ProjectReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectInstrument/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectInstrumentReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectInstrument/from-template": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ApplySetupTemplateDto"];
+                    "text/json": components["schemas"]["ApplySetupTemplateDto"];
+                    "application/*+json": components["schemas"]["ApplySetupTemplateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectInstrumentReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectInstrument": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectInstrumentReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectInstrumentCreateDto"];
+                    "text/json": components["schemas"]["ProjectInstrumentCreateDto"];
+                    "application/*+json": components["schemas"]["ProjectInstrumentCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectInstrumentReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectInstrument/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectInstrumentReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectInstrumentCreateDto"];
+                    "text/json": components["schemas"]["ProjectInstrumentCreateDto"];
+                    "application/*+json": components["schemas"]["ProjectInstrumentCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectInstrumentReadDto"];
                     };
                 };
             };
@@ -2319,6 +2507,117 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/SetupTemplate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SetupTemplateReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/SetupTemplate/from-instrument": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SetupTemplateFromInstrumentDto"];
+                    "text/json": components["schemas"]["SetupTemplateFromInstrumentDto"];
+                    "application/*+json": components["schemas"]["SetupTemplateFromInstrumentDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SetupTemplateReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/SetupTemplate/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Song/project/{projectId}": {
         parameters: {
             query?: never;
@@ -2544,6 +2843,15 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ApplySetupTemplateDto: {
+            /** Format: int32 */
+            projectId: number;
+            /** Format: int32 */
+            setupTemplateId: number;
+            instrumentName?: string | null;
+            /** Format: int32 */
+            bandId?: number | null;
+        };
         BandCreateDto: {
             name: string;
             genre?: string | null;
@@ -2665,38 +2973,6 @@ export interface components {
             /** Format: date-time */
             dateUpdated: string;
         };
-        GearBookingCreateDto: {
-            /** Format: int32 */
-            sessionId: number;
-            /** Format: int32 */
-            gearItemId: number;
-            /** Format: int32 */
-            quantity: number;
-            notes?: string | null;
-        };
-        GearBookingReadDto: {
-            /** Format: int32 */
-            id: number;
-            /** Format: int32 */
-            quantity: number;
-            notes?: string | null;
-            /** Format: int32 */
-            sessionId: number;
-            session: components["schemas"]["SessionShortDto"];
-            /** Format: int32 */
-            gearItemId: number;
-            gearItemName: string;
-            manufacturer?: string | null;
-            model?: string | null;
-            gearCategoryName: string;
-            gearStatus: components["schemas"]["GearStatus"];
-            /** Format: int32 */
-            availableQuantity: number;
-            /** Format: int32 */
-            totalBookedQuantity: number;
-            isOverbooked: boolean;
-            conflictingSessions: components["schemas"]["SessionShortDto"][];
-        };
         GearCategoryCreateDto: {
             name: string;
             description?: string | null;
@@ -2757,7 +3033,7 @@ export interface components {
             gearCategoryId: number;
             gearCategoryName: string;
             /** Format: int32 */
-            bookedTodayQuantity: number;
+            inSessionTodayQuantity: number;
             /** Format: date-time */
             dateCreated: string;
             /** Format: date-time */
@@ -2765,6 +3041,62 @@ export interface components {
         };
         /** @enum {string} */
         GearStatus: "Available" | "Defective" | "InRepair" | "LentOut" | "Retired";
+        GearUsageDto: {
+            /** Format: int32 */
+            projectId: number;
+            projectTitle: string;
+            projectStatus: components["schemas"]["ProjectStatus"];
+            /** Format: int32 */
+            projectInstrumentId: number;
+            instrumentName: string;
+            usedFor?: string | null;
+            /** Format: int32 */
+            quantity: number;
+        };
+        InstrumentSetupItemCreateDto: {
+            /** Format: int32 */
+            projectInstrumentId: number;
+            /** Format: int32 */
+            gearItemId?: number | null;
+            /** Format: int32 */
+            externalGearId?: number | null;
+            customName?: string | null;
+            usedFor?: string | null;
+            /** Format: int32 */
+            quantity: number;
+            needsInput: boolean;
+            /** Format: int32 */
+            sortOrder: number;
+            notes?: string | null;
+        };
+        InstrumentSetupItemReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            projectInstrumentId: number;
+            source: components["schemas"]["SetupItemSource"];
+            displayName: string;
+            /** Format: int32 */
+            gearItemId?: number | null;
+            gearCategoryName?: string | null;
+            gearStatus?: components["schemas"]["GearStatus"];
+            /** Format: int32 */
+            externalGearId?: number | null;
+            externalGearOwner?: string | null;
+            customName?: string | null;
+            usedFor?: string | null;
+            /** Format: int32 */
+            quantity: number;
+            needsInput: boolean;
+            /** Format: int32 */
+            sortOrder: number;
+            notes?: string | null;
+        };
+        InstrumentShortDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
         LoginDto: {
             /** Format: email */
             email: string;
@@ -2802,6 +3134,36 @@ export interface components {
             /** Format: int32 */
             clientId: number;
             bandIds: number[];
+        };
+        ProjectInstrumentCreateDto: {
+            name: string;
+            isChain: boolean;
+            /** Format: int32 */
+            sortOrder: number;
+            notes?: string | null;
+            /** Format: int32 */
+            projectId: number;
+            /** Format: int32 */
+            bandId?: number | null;
+        };
+        ProjectInstrumentReadDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            isChain: boolean;
+            /** Format: int32 */
+            sortOrder: number;
+            notes?: string | null;
+            /** Format: int32 */
+            projectId: number;
+            /** Format: int32 */
+            bandId?: number | null;
+            bandName?: string | null;
+            setupItems: components["schemas"]["InstrumentSetupItemReadDto"][];
+            /** Format: date-time */
+            dateCreated: string;
+            /** Format: date-time */
+            dateUpdated: string;
         };
         ProjectLinkCreateDto: {
             type: components["schemas"]["ProjectLinkType"];
@@ -2896,6 +3258,7 @@ export interface components {
             /** Format: int32 */
             projectId: number;
             songIds: number[];
+            instrumentIds: number[];
         };
         SessionDuplicateDto: {
             dates: string[];
@@ -2930,29 +3293,11 @@ export interface components {
             taskCount: number;
             /** Format: int32 */
             tasksDoneCount: number;
-            /** Format: int32 */
-            gearBookingCount: number;
+            instruments: components["schemas"]["InstrumentShortDto"][];
             /** Format: date-time */
             dateCreated: string;
             /** Format: date-time */
             dateUpdated: string;
-        };
-        SessionShortDto: {
-            /** Format: int32 */
-            id: number;
-            title: string;
-            status: components["schemas"]["SessionStatus"];
-            /** Format: date */
-            date: string;
-            /** Format: date */
-            endDate?: string | null;
-            /** Format: time */
-            startTime?: string | null;
-            /** Format: time */
-            endTime?: string | null;
-            /** Format: int32 */
-            projectId: number;
-            projectTitle: string;
         };
         /** @enum {string} */
         SessionStatus: "Planned" | "Confirmed" | "Completed" | "Cancelled";
@@ -2983,6 +3328,40 @@ export interface components {
         };
         /** @enum {string} */
         SessionType: "PreProduction" | "Recording" | "Overdubs" | "Editing" | "Mixing" | "Mastering" | "Production" | "Other";
+        SetupItemMoveDto: {
+            /** Format: int32 */
+            direction: number;
+        };
+        /** @enum {string} */
+        SetupItemSource: "Studio" | "Band" | "Custom";
+        SetupTemplateFromInstrumentDto: {
+            /** Format: int32 */
+            projectInstrumentId: number;
+            name: string;
+        };
+        SetupTemplateItemReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            gearItemId?: number | null;
+            displayName: string;
+            customName?: string | null;
+            usedFor?: string | null;
+            /** Format: int32 */
+            quantity: number;
+            needsInput: boolean;
+            /** Format: int32 */
+            sortOrder: number;
+            notes?: string | null;
+        };
+        SetupTemplateReadDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            isChain: boolean;
+            notes?: string | null;
+            items: components["schemas"]["SetupTemplateItemReadDto"][];
+        };
         SongCreateDto: {
             title: string;
             /** Format: int32 */

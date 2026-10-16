@@ -30,10 +30,14 @@
 - Set the status of several songs at once; song key removed
 - "Good for" tags on gear (shown in the list, searchable)
 
-**Phase B – instruments & setup** (replaces the per-session gear booking)
-- Recorded instruments per project, each with its setup (studio gear, band gear or free text + "used for")
-- Signal chains for guitars / bass (e.g. Les Paul → Tube Screamer → JCM800 → 1960A → SM57)
-- Sessions pick instruments and inherit their gear; setup templates; printable project sheet
+**✅ Phase B – instruments & setup** (replaces the per-session gear booking)
+- Recorded instruments per project, each with its setup (studio gear, band gear or free text + "used for", quantity)
+- Signal chains for guitars / bass (e.g. Les Paul → Tube Screamer → JCM800 → 1960A → SM57), lists for drums
+- Gear suggestions via "good for" tags; mics / DIs marked as "needs an input" (basis for the input lists)
+- Sessions pick instruments and inherit their gear (also when creating / duplicating a session)
+- Setup templates (save an instrument setup, create new instruments from it)
+- "In session today" and "used in projects" on the gear pages; gear used in a setup can not be deleted
+- Printable project sheet
 
 **Phase C – input lists**
 - Settings page: studio inputs configured once (snake channel, preamp + group color, DAW channel)

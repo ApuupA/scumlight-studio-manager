@@ -50,7 +50,11 @@ namespace StudioManager.DataLayer.Models.SessionModels
         public Project? Project { get; set; }
 
         public ICollection<SessionTask> Tasks { get; set; } = new List<SessionTask>();
-        public ICollection<GearBooking> GearBookings { get; set; } = new List<GearBooking>();
+
+        /// <summary>
+        /// Instruments recorded in this session (many-to-many) - the session's gear comes from their setups.
+        /// </summary>
+        public ICollection<ProjectInstrument> Instruments { get; set; } = new List<ProjectInstrument>();
 
         /// <summary>
         /// Songs worked on in this session (many-to-many).

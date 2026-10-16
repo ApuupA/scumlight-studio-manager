@@ -1,5 +1,5 @@
 /*
- * Printable session sheet. Always black on white (also in dark mode), A4 friendly.
+ * Printable sheets (session sheet, project sheet). Always black on white (also in dark mode), A4 friendly.
  * Uses plain HTML elements instead of Mantine components, so the app theme does not affect the print.
  */
 
