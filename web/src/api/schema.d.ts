@@ -1910,6 +1910,92 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Session/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SessionStatusUpdateDto"];
+                    "text/json": components["schemas"]["SessionStatusUpdateDto"];
+                    "application/*+json": components["schemas"]["SessionStatusUpdateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SessionReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Session/{id}/duplicate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SessionDuplicateDto"];
+                    "text/json": components["schemas"]["SessionDuplicateDto"];
+                    "application/*+json": components["schemas"]["SessionDuplicateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SessionReadDto"][];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Session": {
         parameters: {
             query?: never;
@@ -2270,6 +2356,47 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Song/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SongStatusUpdateDto"];
+                    "text/json": components["schemas"]["SongStatusUpdateDto"];
+                    "application/*+json": components["schemas"]["SongStatusUpdateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SongReadDto"][];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Song": {
         parameters: {
             query?: never;
@@ -2604,6 +2731,7 @@ export interface components {
             /** Format: double */
             purchasePrice?: number | null;
             notes?: string | null;
+            goodFor: string[];
             /** Format: int32 */
             gearCategoryId: number;
         };
@@ -2623,6 +2751,7 @@ export interface components {
             /** Format: double */
             purchasePrice?: number | null;
             notes?: string | null;
+            goodFor: string[];
             hasPhoto: boolean;
             /** Format: int32 */
             gearCategoryId: number;
@@ -2752,6 +2881,8 @@ export interface components {
             status: components["schemas"]["SessionStatus"];
             /** Format: date */
             date: string;
+            /** Format: date */
+            endDate?: string | null;
             /** Format: time */
             startTime?: string | null;
             /** Format: time */
@@ -2766,6 +2897,9 @@ export interface components {
             projectId: number;
             songIds: number[];
         };
+        SessionDuplicateDto: {
+            dates: string[];
+        };
         SessionReadDto: {
             /** Format: int32 */
             id: number;
@@ -2774,6 +2908,8 @@ export interface components {
             status: components["schemas"]["SessionStatus"];
             /** Format: date */
             date: string;
+            /** Format: date */
+            endDate?: string | null;
             /** Format: time */
             startTime?: string | null;
             /** Format: time */
@@ -2808,6 +2944,8 @@ export interface components {
             status: components["schemas"]["SessionStatus"];
             /** Format: date */
             date: string;
+            /** Format: date */
+            endDate?: string | null;
             /** Format: time */
             startTime?: string | null;
             /** Format: time */
@@ -2818,6 +2956,9 @@ export interface components {
         };
         /** @enum {string} */
         SessionStatus: "Planned" | "Confirmed" | "Completed" | "Cancelled";
+        SessionStatusUpdateDto: {
+            status: components["schemas"]["SessionStatus"];
+        };
         SessionTaskCreateDto: {
             text: string;
             isDone: boolean;
@@ -2849,7 +2990,6 @@ export interface components {
             status: components["schemas"]["SongStatus"];
             /** Format: double */
             bpm?: number | null;
-            key?: string | null;
             tuning?: string | null;
             notes?: string | null;
             /** Format: int32 */
@@ -2866,7 +3006,6 @@ export interface components {
             status: components["schemas"]["SongStatus"];
             /** Format: double */
             bpm?: number | null;
-            key?: string | null;
             tuning?: string | null;
             notes?: string | null;
             /** Format: int32 */
@@ -2881,6 +3020,10 @@ export interface components {
         };
         /** @enum {string} */
         SongStatus: "Planned" | "Recording" | "Editing" | "Mixing" | "Mastering" | "Done";
+        SongStatusUpdateDto: {
+            songIds: number[];
+            status: components["schemas"]["SongStatus"];
+        };
         UpdateProfileDto: {
             displayName: string;
             /** Format: email */

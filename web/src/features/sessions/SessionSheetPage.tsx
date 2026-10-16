@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import type { GearBooking, Session } from '../../api/types'
 import logo from '../../assets/scumlight-logo-96.webp'
-import { formatDateLong, formatSessionTime, noteFromHz } from '../../utils/format'
+import { noteFromHz } from '../../utils/format'
 import { useDrumTunings, useExternalGear, useProject, useSongs } from '../projects/projectApi'
 import { useGearBookingsOfSession, useSession, useSessionTasks } from './sessionApi'
+import { formatSessionDates } from './sessionDates'
 import classes from './SessionSheetPage.module.css'
 
 /**
@@ -64,7 +65,7 @@ function SessionSheet({ session }: { session: Session }) {
 
         <h1>{session.title}</h1>
         <div className={classes.meta}>
-          <div><strong>{formatDateLong(session.date, i18n.language)}</strong> · {formatSessionTime(session, t('common.allDay'))}</div>
+          <div><strong>{formatSessionDates(session, i18n.language, t('common.allDay'), t('sessions.daily'))}</strong></div>
           <div>{t(`sessionType.${session.type}`)} · {t(`sessionStatus.${session.status}`)}</div>
           <div>
             {t('sessions.project')}: <strong>{session.projectTitle}</strong> ({session.clientName})
@@ -113,7 +114,6 @@ function SessionSheet({ session }: { session: Session }) {
                   <th>{t('songs.songTitle')}</th>
                   {(project?.bands.length ?? 0) > 1 && <th>{t('songs.band')}</th>}
                   <th>{t('songs.bpm')}</th>
-                  <th>{t('songs.key')}</th>
                   <th>{t('songs.tuning')}</th>
                   <th>{t('songs.status')}</th>
                 </tr>
@@ -125,7 +125,6 @@ function SessionSheet({ session }: { session: Session }) {
                     <td><strong>{song.title}</strong></td>
                     {(project?.bands.length ?? 0) > 1 && <td>{song.bandName}</td>}
                     <td>{song.bpm}</td>
-                    <td>{song.key}</td>
                     <td>{song.tuning}</td>
                     <td>{t(`songStatus.${song.status}`)}</td>
                   </tr>

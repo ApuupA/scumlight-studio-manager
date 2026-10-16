@@ -15,9 +15,6 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public SongStatus Status { get; set; } = SongStatus.Planned;
         public decimal? Bpm { get; set; }
 
-        /// <summary>Musical key, e.g. "F# minor".</summary>
-        public string? Key { get; set; }
-
         /// <summary>Instrument tuning, e.g. "Drop C" or "Eb standard".</summary>
         public string? Tuning { get; set; }
 

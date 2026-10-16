@@ -37,6 +37,10 @@ namespace StudioManager.DataLayer.DTO.Create
         [MaxLength(4000)]
         public string? Notes { get; set; }
 
+        /// <summary>Tags like "Snare" or "Vocals" - see GearItem.GoodFor.</summary>
+        [MaxLength(20)]
+        public List<string> GoodFor { get; set; } = new();
+
         [Range(1, int.MaxValue)]
         public int GearCategoryId { get; set; }
     }

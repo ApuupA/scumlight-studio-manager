@@ -9,7 +9,6 @@ namespace StudioManager.DataLayer.DTO.Read
         public int TrackNumber { get; set; }
         public SongStatus Status { get; set; }
         public decimal? Bpm { get; set; }
-        public string? Key { get; set; }
         public string? Tuning { get; set; }
         public string? Notes { get; set; }
         public int ProjectId { get; set; }

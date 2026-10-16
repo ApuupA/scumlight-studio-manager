@@ -80,7 +80,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.SongsDoneCount, opt => opt.MapFrom(src => src.Songs.Count(s => s.Status == SongStatus.Done)))
                 .ForMember(dest => dest.SessionCount, opt => opt.MapFrom(src => src.Sessions.Count))
                 .ForMember(dest => dest.NextSessionDate, opt => opt.MapFrom(src => src.Sessions
-                    .Where(s => s.Status != SessionStatus.Cancelled && s.Date >= DateOnly.FromDateTime(DateTime.Now))
+                    .Where(s => s.Status != SessionStatus.Cancelled && s.LastDate >= DateOnly.FromDateTime(DateTime.Now))
                     .Select(s => (DateOnly?)s.Date)
                     .Min()));
 

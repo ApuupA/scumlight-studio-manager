@@ -49,6 +49,9 @@ namespace StudioManager.DataLayer.Context
                 entity.Property(g => g.PhotoPath).HasMaxLength(300);
                 entity.Property(g => g.PurchasePrice).HasPrecision(10, 2);
 
+                // Existing gear gets an empty list - without a default the column could not be added to filled tables
+                entity.Property(g => g.GoodFor).HasDefaultValueSql("'{}'");
+
                 // Store enums as readable text ("InRepair") instead of numbers
                 entity.Property(g => g.Status).HasConversion<string>().HasMaxLength(20);
 
@@ -133,7 +136,6 @@ namespace StudioManager.DataLayer.Context
                 entity.Property(s => s.Title).HasMaxLength(200).IsRequired();
                 entity.Property(s => s.Status).HasConversion<string>().HasMaxLength(20);
                 entity.Property(s => s.Bpm).HasPrecision(6, 2);
-                entity.Property(s => s.Key).HasMaxLength(50);
                 entity.Property(s => s.Tuning).HasMaxLength(50);
                 entity.Property(s => s.Notes).HasMaxLength(4000);
 

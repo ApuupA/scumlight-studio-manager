@@ -1979,6 +1979,107 @@
         }
       }
     },
+    "/api/Session/{id}/status": {
+      "put": {
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionStatusUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionStatusUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionStatusUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Session/{id}/duplicate": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionDuplicateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionDuplicateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionDuplicateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SessionReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Session": {
       "get": {
         "tags": [
@@ -2340,6 +2441,47 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SongReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Song/status": {
+      "put": {
+        "tags": [
+          "Song"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongStatusUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongStatusUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongStatusUpdateDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -3123,6 +3265,7 @@
       "GearItemCreateDto": {
         "required": [
           "gearCategoryId",
+          "goodFor",
           "name",
           "quantity",
           "status"
@@ -3180,6 +3323,13 @@
             "type": "string",
             "nullable": true
           },
+          "goodFor": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "gearCategoryId": {
             "maximum": 2147483647,
             "minimum": 1,
@@ -3196,6 +3346,7 @@
           "dateUpdated",
           "gearCategoryId",
           "gearCategoryName",
+          "goodFor",
           "hasPhoto",
           "id",
           "name",
@@ -3247,6 +3398,12 @@
           "notes": {
             "type": "string",
             "nullable": true
+          },
+          "goodFor": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "hasPhoto": {
             "type": "boolean"
@@ -3693,6 +3850,11 @@
             "type": "string",
             "format": "date"
           },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
           "startTime": {
             "type": "string",
             "format": "time",
@@ -3749,6 +3911,24 @@
         },
         "additionalProperties": false
       },
+      "SessionDuplicateDto": {
+        "required": [
+          "dates"
+        ],
+        "type": "object",
+        "properties": {
+          "dates": {
+            "maxItems": 60,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
       "SessionReadDto": {
         "required": [
           "clientName",
@@ -3785,6 +3965,11 @@
           "date": {
             "type": "string",
             "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
           },
           "startTime": {
             "type": "string",
@@ -3888,6 +4073,11 @@
             "type": "string",
             "format": "date"
           },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
           "startTime": {
             "type": "string",
             "format": "time",
@@ -3916,6 +4106,18 @@
           "Cancelled"
         ],
         "type": "string"
+      },
+      "SessionStatusUpdateDto": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/SessionStatus"
+          }
+        },
+        "additionalProperties": false
       },
       "SessionTaskCreateDto": {
         "required": [
@@ -4031,11 +4233,6 @@
             "format": "double",
             "nullable": true
           },
-          "key": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
           "tuning": {
             "maxLength": 50,
             "type": "string",
@@ -4091,10 +4288,6 @@
             "format": "double",
             "nullable": true
           },
-          "key": {
-            "type": "string",
-            "nullable": true
-          },
           "tuning": {
             "type": "string",
             "nullable": true
@@ -4137,6 +4330,27 @@
           "Done"
         ],
         "type": "string"
+      },
+      "SongStatusUpdateDto": {
+        "required": [
+          "songIds",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "songIds": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/SongStatus"
+          }
+        },
+        "additionalProperties": false
       },
       "UpdateProfileDto": {
         "required": [

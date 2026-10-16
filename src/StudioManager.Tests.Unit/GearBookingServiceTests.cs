@@ -68,6 +68,17 @@ namespace StudioManager.Tests.Unit
         }
 
         [Fact]
+        public void SessionsOverlap_ShouldCoverAllDaysOfAMultiDaySession()
+        {
+            var production = new Session { Date = Day, EndDate = Day.AddDays(2), StartTime = new(9, 0), EndTime = new(17, 0) };
+            var mixOnSecondDay = new Session { Date = Day.AddDays(1), StartTime = new(10, 0), EndTime = new(12, 0) };
+            var mixAfterwards = new Session { Date = Day.AddDays(3) };
+
+            Assert.True(GearBookingService.SessionsOverlap(production, mixOnSecondDay));
+            Assert.False(GearBookingService.SessionsOverlap(production, mixAfterwards));
+        }
+
+        [Fact]
         public void SessionsOverlap_ShouldBeFalse_OnDifferentDays()
         {
             var a = new Session { Date = Day };

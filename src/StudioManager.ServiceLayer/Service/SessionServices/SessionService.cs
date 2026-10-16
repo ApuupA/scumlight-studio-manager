@@ -41,7 +41,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
 
         public override async Task<SessionReadDto> Insert(SessionCreateDto createDto)
         {
-            EnsureValidTimes(createDto);
+            EnsureValidDatesAndTimes(createDto);
             await EnsureProjectExists(createDto.ProjectId);
             var songs = await LoadSongsOfProject(createDto);
 
@@ -61,7 +61,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
             var session = await _repository.GetAsync(s => s.Id == id, s => s.Songs)
                 ?? throw new EntityNotFoundException(nameof(Session), id);
 
-            EnsureValidTimes(updateDto);
+            EnsureValidDatesAndTimes(updateDto);
             await EnsureProjectExists(updateDto.ProjectId);
             var songs = await LoadSongsOfProject(updateDto);
 
@@ -76,12 +76,79 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
             return (await Get(id))!;
         }
 
+        public async Task<SessionReadDto> SetStatus(int id, SessionStatusUpdateDto dto)
+        {
+            var session = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Session), id);
+
+            session.Status = dto.Status;
+            await _repository.UpdateAsync(session);
+
+            return (await Get(id))!;
+        }
+
         /// <summary>
-        /// Either no times (all-day session) or both, with the end after the start.
+        /// Copies a session to one or more other dates, e.g. "drums day 1" to the next four days.
+        /// Copied: everything planned (title, type, times, length in days, people, goals, notes, songs, to-dos,
+        /// booked gear). Not copied: what happened in the session (summary, next steps) - and all to-dos start open.
+        /// </summary>
+        public async Task<IEnumerable<SessionReadDto>> Duplicate(int id, SessionDuplicateDto dto)
+        {
+            var source = await _repository.GetAsync(s => s.Id == id, s => s.Songs, s => s.Tasks, s => s.GearBookings)
+                ?? throw new EntityNotFoundException(nameof(Session), id);
+
+            var lengthInDays = source.LastDate.DayNumber - source.Date.DayNumber;
+            var copies = new List<Session>();
+
+            foreach (var date in dto.Dates.Distinct().Order())
+            {
+                var copy = new Session
+                {
+                    Title = source.Title,
+                    Type = source.Type,
+                    Status = SessionStatus.Planned,
+                    Date = date,
+                    EndDate = lengthInDays > 0 ? date.AddDays(lengthInDays) : null,
+                    StartTime = source.StartTime,
+                    EndTime = source.EndTime,
+                    Engineer = source.Engineer,
+                    Attendees = source.Attendees,
+                    Goals = source.Goals,
+                    Notes = source.Notes,
+                    ProjectId = source.ProjectId,
+                    Songs = source.Songs.ToList(),
+                    Tasks = source.Tasks
+                        .Select(t => new SessionTask { Text = t.Text, SortOrder = t.SortOrder, IsDone = false })
+                        .ToList(),
+                    GearBookings = source.GearBookings
+                        .Select(b => new GearBooking { GearItemId = b.GearItemId, Quantity = b.Quantity, Notes = b.Notes })
+                        .ToList()
+                };
+
+                await _repository.AddAsync(copy);
+                copies.Add(copy);
+            }
+
+            var copyIds = copies.Select(c => c.Id).ToList();
+            return SortByTime(await GetAllWhere(s => copyIds.Contains(s.Id)));
+        }
+
+        /// <summary>
+        /// Dates: an end date must be after the start date (the same day counts as a single-day session).
+        /// Times: either none (all-day session) or both, with the end after the start - they apply to every day.
         /// Sessions over midnight are not supported - plan them as all-day or split them.
         /// </summary>
-        private static void EnsureValidTimes(SessionCreateDto dto)
+        private static void EnsureValidDatesAndTimes(SessionCreateDto dto)
         {
+            if (dto.EndDate == dto.Date)
+            {
+                dto.EndDate = null;
+            }
+
+            if (dto.EndDate < dto.Date)
+            {
+                throw new BusinessRuleException("session.invalidEndDate", "The end date must be after the start date.");
+            }
+
             var onlyOneTimeSet = (dto.StartTime == null) != (dto.EndTime == null);
             var endNotAfterStart = dto.StartTime != null && dto.EndTime != null && dto.EndTime <= dto.StartTime;
 

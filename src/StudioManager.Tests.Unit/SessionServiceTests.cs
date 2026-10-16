@@ -77,6 +77,69 @@ namespace StudioManager.Tests.Unit
         }
 
         [Fact]
+        public async Task Insert_ShouldRejectEndDateBeforeStartDate()
+        {
+            var dto = NewDto();
+            dto.EndDate = dto.Date.AddDays(-1);
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _service.Insert(dto));
+
+            Assert.Equal("session.invalidEndDate", exception.ErrorCode);
+        }
+
+        [Fact]
+        public async Task Insert_WithEndDateOnTheSameDay_ShouldBeSingleDay()
+        {
+            var dto = NewDto();
+            dto.EndDate = dto.Date;
+
+            var result = await _service.Insert(dto);
+
+            Assert.Null(result.EndDate);
+        }
+
+        [Fact]
+        public async Task SetStatus_ShouldOnlyChangeTheStatus()
+        {
+            var dto = NewDto();
+            dto.SongIds = [_song1.Id];
+            var created = await _service.Insert(dto);
+
+            var result = await _service.SetStatus(created.Id, new SessionStatusUpdateDto { Status = SessionStatus.Completed });
+
+            Assert.Equal(SessionStatus.Completed, result.Status);
+            Assert.Equal("Mixing", result.Title);
+            Assert.Equal([_song1.Id], result.SongIds);
+        }
+
+        [Fact]
+        public async Task Duplicate_ShouldCopyPlanButNotResults()
+        {
+            var dto = NewDto(start: null, end: null);
+            dto.EndDate = dto.Date.AddDays(1); // two-day session
+            dto.Summary = "Drums song 1 done";
+            dto.SongIds = [_song1.Id];
+            var source = await _service.Insert(dto);
+            _context.SessionTasks.Add(new SessionTask { SessionId = source.Id, Text = "Mic check", IsDone = true });
+            await _context.SaveChangesAsync();
+
+            var newDates = new[] { new DateOnly(2026, 12, 1), new DateOnly(2026, 12, 3) };
+            var copies = (await _service.Duplicate(source.Id, new SessionDuplicateDto { Dates = newDates.ToList() })).ToList();
+
+            Assert.Equal(2, copies.Count);
+            Assert.Equal(new DateOnly(2026, 12, 2), copies[0].EndDate); // keeps the length of two days
+            Assert.All(copies, copy =>
+            {
+                Assert.Equal("Mixing", copy.Title);
+                Assert.Equal(SessionStatus.Planned, copy.Status);
+                Assert.Null(copy.Summary);
+                Assert.Equal([_song1.Id], copy.SongIds);
+                Assert.Equal(1, copy.TaskCount);
+                Assert.Equal(0, copy.TasksDoneCount); // to-dos start open again
+            });
+        }
+
+        [Fact]
         public async Task Insert_ShouldRejectSongsOfAnotherProject()
         {
             var dto = NewDto();

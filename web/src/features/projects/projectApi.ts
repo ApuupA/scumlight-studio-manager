@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type { DrumTuningInput, ExternalGearInput, ProjectInput, ProjectLinkInput, SongInput } from '../../api/types'
+import type {
+  DrumTuningInput, ExternalGearInput, ProjectInput, ProjectLinkInput, SongInput, SongStatusUpdateInput,
+} from '../../api/types'
 
 /**
  * Data access for projects and everything that belongs to a project:
@@ -107,6 +109,15 @@ export function useSaveSong() {
       id
         ? unwrap(api.PUT('/api/Song/{id}', { params: { path: { id } }, body: input }))
         : unwrap(api.POST('/api/Song', { body: input })),
+    onSuccess: invalidate,
+  })
+}
+
+/** Sets the same status for several songs at once. */
+export function useSetSongStatus() {
+  const invalidate = useInvalidate('songs')
+  return useMutation({
+    mutationFn: (input: SongStatusUpdateInput) => unwrap(api.PUT('/api/Song/status', { body: input })),
     onSuccess: invalidate,
   })
 }

@@ -60,7 +60,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         {
             var today = DateOnly.FromDateTime(DateTime.Now);
             var bookings = await _repository.GetAllAsync(
-                b => b.GearItemId == gearItemId && b.Session!.Date >= today && b.Session.Status != SessionStatus.Cancelled,
+                b => b.GearItemId == gearItemId && (b.Session!.EndDate ?? b.Session.Date) >= today && b.Session.Status != SessionStatus.Cancelled,
                 DefaultIncludes);
 
             return (await WithWarnings(bookings))
@@ -95,12 +95,13 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         }
 
         /// <summary>
-        /// True if two sessions take place at the same time: same day and either one of them is all-day
-        /// or their time ranges overlap (18:00-22:00 and 22:00-23:00 do not overlap).
+        /// True if two sessions take place at the same time: they share at least one day and either one of them
+        /// is all-day or their daily time ranges overlap (18:00-22:00 and 22:00-23:00 do not overlap).
         /// </summary>
         public static bool SessionsOverlap(Session a, Session b)
         {
-            if (a.Date != b.Date)
+            var shareADay = a.Date <= b.LastDate && b.Date <= a.LastDate;
+            if (!shareADay)
             {
                 return false;
             }
@@ -126,12 +127,14 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
                 return [];
             }
 
-            // All bookings of the same gear on the same days - one query instead of one per booking
+            // All bookings of the same gear in the same period - one query instead of one per booking
             var gearItemIds = bookingList.Select(b => b.GearItemId).Distinct().ToList();
-            var dates = bookingList.Select(b => b.Session!.Date).Distinct().ToList();
+            var firstDay = bookingList.Min(b => b.Session!.Date);
+            var lastDay = bookingList.Max(b => b.Session!.LastDate);
             var sameDayBookings = (await _repository.GetAllAsync(
                 b => gearItemIds.Contains(b.GearItemId)
-                     && dates.Contains(b.Session!.Date)
+                     && b.Session!.Date <= lastDay
+                     && (b.Session.EndDate ?? b.Session.Date) >= firstDay
                      && b.Session.Status != SessionStatus.Cancelled,
                 b => b.Session!.Project!)).ToList();
 

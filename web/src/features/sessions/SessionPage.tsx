@@ -1,15 +1,17 @@
-import { Alert, Anchor, Badge, Button, Center, Grid, Group, Loader, Paper, Stack, Text, Title } from '@mantine/core'
-import { IconArrowLeft, IconPrinter, IconTrash } from '@tabler/icons-react'
+import { Alert, Anchor, Badge, Button, Center, Grid, Group, Loader, Paper, Select, Stack, Text, Title } from '@mantine/core'
+import { IconArrowLeft, IconCopy, IconPrinter, IconTrash } from '@tabler/icons-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
-import type { SessionInput } from '../../api/types'
+import type { Session, SessionInput } from '../../api/types'
 import StatusBadge from '../../components/StatusBadge'
 import { sessionStatusColors } from '../../components/statusColors'
 import { confirmDelete } from '../../utils/confirmDelete'
-import { formatDateLong, formatSessionTime } from '../../utils/format'
 import { notifyError, notifySuccess } from '../../utils/notify'
-import { useCreateSession, useDeleteSession, useSession, useUpdateSession } from './sessionApi'
+import DuplicateSessionModal from './DuplicateSessionModal'
+import { useCreateSession, useDeleteSession, useSession, useSessions, useUpdateSession } from './sessionApi'
+import { formatSessionDates } from './sessionDates'
 import SessionForm from './SessionForm'
 import SessionGearBookings from './SessionGearBookings'
 import SessionTasks from './SessionTasks'
@@ -30,6 +32,10 @@ export default function SessionPage() {
   const createSession = useCreateSession()
   const updateSession = useUpdateSession()
   const deleteSession = useDeleteSession()
+  const { data: allSessions } = useSessions()
+
+  // The session the duplicate dialog is open for (this one, or the one chosen under "copy from" on a new session)
+  const [sessionToCopy, setSessionToCopy] = useState<Session | null>(null)
 
   const handleSubmit = (input: SessionInput) => {
     if (isNew) {
@@ -73,6 +79,25 @@ export default function SessionPage() {
       <Stack>
         {backLink}
         <Title order={2}>{t('sessions.newTitle')}</Title>
+
+        {/* Shortcut: instead of filling the form, copy an existing session (with to-dos and gear) */}
+        {(allSessions?.length ?? 0) > 0 && (
+          <Paper withBorder p="md">
+            <Select
+              label={t('sessions.copyFrom')}
+              description={t('sessions.copyFromHint')}
+              placeholder={t('sessions.copyFromPlaceholder')}
+              searchable
+              value={null}
+              onChange={(id) => setSessionToCopy(allSessions?.find((s) => String(s.id) === id) ?? null)}
+              data={[...(allSessions ?? [])].reverse().map((s) => ({
+                value: String(s.id),
+                label: `${s.title} · ${s.projectTitle} · ${formatSessionDates(s, i18n.language, t('common.allDay'), t('sessions.daily'))}`,
+              }))}
+            />
+          </Paper>
+        )}
+
         <Paper withBorder p="md">
           <SessionForm
             initialProjectId={Number(searchParams.get('projectId')) || undefined}
@@ -82,6 +107,8 @@ export default function SessionPage() {
             onCancel={() => navigate(-1)}
           />
         </Paper>
+
+        {sessionToCopy && <DuplicateSessionModal session={sessionToCopy} onClose={() => setSessionToCopy(null)} />}
       </Stack>
     )
   }
@@ -98,7 +125,7 @@ export default function SessionPage() {
             <StatusBadge value={session.status} translationKey="sessionStatus" colors={sessionStatusColors} />
           </Group>
           <Text c="dimmed">
-            {formatDateLong(session.date, i18n.language)} · {formatSessionTime(session, t('common.allDay'))} ·{' '}
+            {formatSessionDates(session, i18n.language, t('common.allDay'), t('sessions.daily'))} ·{' '}
             <Anchor component={Link} to={`/projects/${session.projectId}?tab=sessions`} c="dimmed">
               {session.projectTitle}
             </Anchor>{' '}
@@ -106,6 +133,9 @@ export default function SessionPage() {
           </Text>
         </div>
         <Group gap="xs">
+          <Button variant="light" leftSection={<IconCopy size={16} />} onClick={() => setSessionToCopy(session)}>
+            {t('sessions.duplicate')}
+          </Button>
           <Button variant="light" leftSection={<IconPrinter size={16} />} onClick={() => navigate(`/sessions/${session.id}/sheet`)}>
             {t('sessions.sheet')}
           </Button>
@@ -128,6 +158,8 @@ export default function SessionPage() {
           </Stack>
         </Grid.Col>
       </Grid>
+
+      {sessionToCopy && <DuplicateSessionModal session={sessionToCopy} onClose={() => setSessionToCopy(null)} />}
     </Stack>
   )
 }

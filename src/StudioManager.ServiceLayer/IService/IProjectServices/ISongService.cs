@@ -10,5 +10,10 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
         /// All Song entries of one project.
         /// </summary>
         Task<IEnumerable<SongReadDto>> GetForProject(int projectId);
+
+        /// <summary>
+        /// Sets the same status for several songs at once (e.g. four songs to "Mixing"). Returns the changed songs.
+        /// </summary>
+        Task<IEnumerable<SongReadDto>> SetStatus(SongStatusUpdateDto dto);
     }
 }
