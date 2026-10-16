@@ -5,6 +5,7 @@ using StudioManager.DataLayer.Models.ClientModels;
 using StudioManager.DataLayer.Models.GearModels;
 using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.DataLayer.Models.SessionModels;
+using StudioManager.DataLayer.Models.SettingsModels;
 using StudioManager.DataLayer.Models.UserModels;
 
 namespace StudioManager.ServiceLayer.Mapper
@@ -46,6 +47,50 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateProjectMappings();
             CreateSessionMappings();
             CreateInstrumentMappings();
+            CreateInputListMappings();
+        }
+
+        private void CreateInputListMappings()
+        {
+            CreateMap<InputGroup, InputGroupReadDto>()
+                .ForMember(dest => dest.InputCount, opt => opt.MapFrom(src => src.Inputs.Count));
+            CreateMap<InputGroupCreateDto, InputGroup>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Inputs, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<StudioInput, StudioInputReadDto>()
+                .ForMember(dest => dest.InputGroupName, opt => opt.MapFrom(src => src.InputGroup != null ? src.InputGroup.Name : null))
+                .ForMember(dest => dest.InputGroupColor, opt => opt.MapFrom(src => src.InputGroup != null ? src.InputGroup.Color : null));
+            CreateMap<StudioInputCreateDto, StudioInput>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.InputGroup, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            // The rows (one per studio input) are built by InputListService
+            CreateMap<InputList, InputListReadDto>()
+                .ForMember(dest => dest.Rows, opt => opt.Ignore())
+                .ForMember(dest => dest.UsedInputCount, opt => opt.Ignore());
+            CreateMap<InputListCreateDto, InputList>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.Rows, opt => opt.Ignore())
+                .ForMember(dest => dest.Sessions, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<InputListRowSaveDto, InputListRow>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.InputListId, opt => opt.Ignore())
+                .ForMember(dest => dest.InputList, opt => opt.Ignore())
+                .ForMember(dest => dest.StudioInputId, opt => opt.Ignore())
+                .ForMember(dest => dest.StudioInput, opt => opt.Ignore())
+                .ForMember(dest => dest.SetupItemId, opt => opt.Ignore())
+                .ForMember(dest => dest.SetupItem, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
         }
 
         private void CreateInstrumentMappings()
@@ -150,6 +195,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.DrumTunings, opt => opt.Ignore())
                 .ForMember(dest => dest.ExternalGear, opt => opt.Ignore())
                 .ForMember(dest => dest.Instruments, opt => opt.Ignore())
+                .ForMember(dest => dest.InputLists, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
 
@@ -198,12 +244,14 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.SongIds, opt => opt.MapFrom(src => src.Songs.Select(s => s.Id)))
                 .ForMember(dest => dest.TaskCount, opt => opt.MapFrom(src => src.Tasks.Count))
                 .ForMember(dest => dest.TasksDoneCount, opt => opt.MapFrom(src => src.Tasks.Count(t => t.IsDone)))
-                .ForMember(dest => dest.Instruments, opt => opt.MapFrom(src => src.Instruments.OrderBy(i => i.SortOrder)));
+                .ForMember(dest => dest.Instruments, opt => opt.MapFrom(src => src.Instruments.OrderBy(i => i.SortOrder)))
+                .ForMember(dest => dest.InputListName, opt => opt.MapFrom(src => src.InputList != null ? src.InputList.Name : null));
 
             // The songs are set by SessionService (they have to be loaded from the database)
             CreateMap<SessionCreateDto, Session>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.InputList, opt => opt.Ignore())
                 .ForMember(dest => dest.Songs, opt => opt.Ignore())
                 .ForMember(dest => dest.Tasks, opt => opt.Ignore())
                 .ForMember(dest => dest.Instruments, opt => opt.Ignore())

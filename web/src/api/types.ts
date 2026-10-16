@@ -56,6 +56,16 @@ export type SetupTemplate = Schemas['SetupTemplateReadDto']
 export type ApplySetupTemplateInput = Schemas['ApplySetupTemplateDto']
 export type GearUsage = Schemas['GearUsageDto']
 
+export type InputGroup = Schemas['InputGroupReadDto']
+export type InputGroupInput = Schemas['InputGroupCreateDto']
+export type StudioInput = Schemas['StudioInputReadDto']
+export type StudioInputInput = Schemas['StudioInputCreateDto']
+export type StudioInputBulkInput = Schemas['StudioInputBulkCreateDto']
+export type InputList = Schemas['InputListReadDto']
+export type InputListInput = Schemas['InputListCreateDto']
+export type InputListRow = Schemas['InputListRowReadDto']
+export type InputListRowInput = Schemas['InputListRowSaveDto']
+
 // All values of the C# enums, in the order of the C# enum (used for dropdowns)
 export const gearStatuses: GearStatus[] = ['Available', 'Defective', 'InRepair', 'LentOut', 'Retired']
 export const projectTypes: ProjectType[] = ['Album', 'Ep', 'Single', 'SplitRelease', 'Demo', 'Other']

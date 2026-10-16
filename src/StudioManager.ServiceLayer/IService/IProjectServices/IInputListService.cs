@@ -1,0 +1,31 @@
+using StudioManager.DataLayer.DTO.Create;
+using StudioManager.DataLayer.DTO.Read;
+using StudioManager.DataLayer.Models.ProjectModels;
+
+namespace StudioManager.ServiceLayer.IService.IProjectServices
+{
+    /// <summary>
+    /// Input lists of a project. Every returned list contains one row per studio input.
+    /// </summary>
+    public interface IInputListService : IBaseService<InputList, InputListReadDto, InputListCreateDto>
+    {
+        Task<IEnumerable<InputListReadDto>> GetForProject(int projectId);
+
+        /// <summary>
+        /// Saves what is plugged into one studio input. A completely empty row is removed.
+        /// Returns the whole updated list.
+        /// </summary>
+        Task<InputListReadDto> SaveRow(int inputListId, int studioInputId, InputListRowSaveDto dto);
+
+        /// <summary>
+        /// Puts the microphones / DIs ("needs an input") of the given instruments into the free inputs.
+        /// Entries that are already in the list are skipped.
+        /// </summary>
+        Task<InputListFillResultDto> FillFromSetups(int inputListId, InputListFillDto dto);
+
+        /// <summary>
+        /// Removes all rows - the list is empty again.
+        /// </summary>
+        Task<InputListReadDto> ClearRows(int inputListId);
+    }
+}

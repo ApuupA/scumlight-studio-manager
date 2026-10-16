@@ -15,22 +15,25 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<Song> _songRepository;
         private readonly IRepository<ProjectInstrument> _instrumentRepository;
+        private readonly IRepository<InputList> _inputListRepository;
 
         public SessionService(
             IRepository<Session> repository,
             IRepository<Project> projectRepository,
             IRepository<Song> songRepository,
             IRepository<ProjectInstrument> instrumentRepository,
+            IRepository<InputList> inputListRepository,
             IMapper mapper) : base(repository, mapper)
         {
             _projectRepository = projectRepository;
             _songRepository = songRepository;
             _instrumentRepository = instrumentRepository;
+            _inputListRepository = inputListRepository;
         }
 
         // Project + client for the names, the rest for the counters in the DTO
         protected override Expression<Func<Session, object>>[] DefaultIncludes =>
-            [s => s.Project!.Client!, s => s.Songs, s => s.Tasks, s => s.Instruments];
+            [s => s.Project!.Client!, s => s.Songs, s => s.Tasks, s => s.Instruments, s => s.InputList!];
 
         public override async Task<IEnumerable<SessionReadDto>> GetAll()
         {
@@ -46,6 +49,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         {
             EnsureValidDatesAndTimes(createDto);
             await EnsureProjectExists(createDto.ProjectId);
+            await EnsureInputListIsInProject(createDto);
             var songs = await LoadSongsOfProject(createDto);
             var instruments = await LoadInstrumentsOfProject(createDto);
 
@@ -71,6 +75,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
 
             EnsureValidDatesAndTimes(updateDto);
             await EnsureProjectExists(updateDto.ProjectId);
+            await EnsureInputListIsInProject(updateDto);
             var songs = await LoadSongsOfProject(updateDto);
             var instruments = await LoadInstrumentsOfProject(updateDto);
 
@@ -103,7 +108,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         /// <summary>
         /// Copies a session to one or more other dates, e.g. "drums day 1" to the next four days.
         /// Copied: everything planned (title, type, times, length in days, people, goals, notes, songs, to-dos,
-        /// instruments and thereby their gear). Not copied: what happened in the session (summary, next steps) - and all to-dos start open.
+        /// instruments and thereby their gear, input list). Not copied: what happened in the session (summary, next steps) - and all to-dos start open.
         /// </summary>
         public async Task<IEnumerable<SessionReadDto>> Duplicate(int id, SessionDuplicateDto dto)
         {
@@ -129,6 +134,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
                     Goals = source.Goals,
                     Notes = source.Notes,
                     ProjectId = source.ProjectId,
+                    InputListId = source.InputListId,
                     Songs = source.Songs.ToList(),
                     Tasks = source.Tasks
                         .Select(t => new SessionTask { Text = t.Text, SortOrder = t.SortOrder, IsDone = false })
@@ -182,6 +188,15 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
         /// <summary>
         /// Loads the songs of the DTO and makes sure all of them belong to the session's project.
         /// </summary>
+        private async Task EnsureInputListIsInProject(SessionCreateDto dto)
+        {
+            if (dto.InputListId != null
+                && !await _inputListRepository.ExistsAsync(l => l.Id == dto.InputListId && l.ProjectId == dto.ProjectId))
+            {
+                throw new BusinessRuleException("session.inputListNotInProject", "The input list must belong to the session's project.");
+            }
+        }
+
         /// <summary>
         /// Loads the instruments of the DTO and makes sure all of them belong to the session's project.
         /// </summary>

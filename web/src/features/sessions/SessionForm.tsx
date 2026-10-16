@@ -7,6 +7,7 @@ import {
 } from '../../api/types'
 import { idOrNull, textOrNull } from '../../utils/form'
 import { formatTime, todayIso, toApiTime } from '../../utils/format'
+import { useInputLists } from '../inputLists/inputListApi'
 import { useProjectInstruments } from '../instruments/instrumentApi'
 import { useProjects, useSongs } from '../projects/projectApi'
 
@@ -41,6 +42,7 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
       endTime: formatTime(session?.endTime) || '18:00',
       songIds: session?.songIds.map(String) ?? [],
       instrumentIds: session?.instruments.map((instrument) => String(instrument.id)) ?? [],
+      inputListId: session?.inputListId ? String(session.inputListId) : null,
       engineer: session?.engineer ?? '',
       attendees: session?.attendees ?? '',
       goals: session?.goals ?? '',
@@ -61,11 +63,13 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
   // Songs to choose from: only those of the selected project
   const { data: songs } = useSongs(idOrNull(form.values.projectId))
   const { data: instruments } = useProjectInstruments(idOrNull(form.values.projectId))
+  const { data: inputLists } = useInputLists(idOrNull(form.values.projectId))
 
   const handleProjectChange = (projectId: string | null) => {
     form.setFieldValue('projectId', projectId)
     form.setFieldValue('songIds', []) // songs and instruments of the old project are not valid anymore
     form.setFieldValue('instrumentIds', [])
+    form.setFieldValue('inputListId', null)
   }
 
   const handleSubmit = (values: typeof form.values) => {
@@ -80,6 +84,7 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
       endTime: values.allDay ? null : toApiTime(values.endTime),
       songIds: values.songIds.map(Number),
       instrumentIds: values.instrumentIds.map(Number),
+      inputListId: idOrNull(values.inputListId),
       engineer: textOrNull(values.engineer),
       attendees: textOrNull(values.attendees),
       goals: textOrNull(values.goals),
@@ -172,6 +177,15 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
             {...form.getInputProps('songIds')}
           />
         </SimpleGrid>
+
+        <Select
+          label={t('sessions.inputList')}
+          description={t('sessions.inputListHint')}
+          clearable
+          disabled={!form.values.projectId}
+          data={(inputLists ?? []).map((list) => ({ value: String(list.id), label: list.name }))}
+          {...form.getInputProps('inputListId')}
+        />
 
         <Textarea
           label={t('sessions.goals')}

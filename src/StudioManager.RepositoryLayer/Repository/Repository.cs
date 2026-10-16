@@ -93,6 +93,12 @@ namespace StudioManager.RepositoryLayer.Repository
             }
         }
 
+        public async Task DeleteRangeAsync(IEnumerable<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
+            await _context.SaveChangesAsync();
+        }
+
         /// <summary>
         /// Builds a query that also loads the given related objects (SQL JOIN), e.g. g => g.GearCategory
         /// </summary>

@@ -54,5 +54,8 @@ namespace StudioManager.DataLayer.DTO.Create
         /// Instruments recorded in this session - they must belong to the project. Their gear is the session's gear.
         /// </summary>
         public List<int> InstrumentIds { get; set; } = new();
+
+        /// <summary>The input list used in this session - must belong to the project. Null = none.</summary>
+        public int? InputListId { get; set; }
     }
 }

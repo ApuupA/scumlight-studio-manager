@@ -33,6 +33,9 @@ namespace StudioManager.DataLayer.DTO.Read
         /// <summary>Instruments recorded in this session (id + name).</summary>
         public List<InstrumentShortDto> Instruments { get; set; } = new();
 
+        public int? InputListId { get; set; }
+        public string? InputListName { get; set; }
+
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
     }
