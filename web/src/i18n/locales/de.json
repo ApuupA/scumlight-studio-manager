@@ -73,7 +73,10 @@
     "replacePhoto": "Foto ersetzen",
     "removePhoto": "Foto entfernen",
     "noPhoto": "Noch kein Foto",
-    "photoHint": "JPG, PNG oder WEBP, max. 10 MB"
+    "photoHint": "JPG, PNG oder WEBP, max. 10 MB",
+    "goodFor": "Geeignet für",
+    "goodForHint": "Kurze Stichworte, jeweils mit Enter bestätigen",
+    "goodForPlaceholder": "z. B. Snare, Gitarrenbox, Vocals"
   },
   "gearStatus": {
     "Available": "Verfügbar",
@@ -139,7 +142,8 @@
     "session": {
       "invalidTimes": "Setze Beginn und Ende (Ende nach Beginn) – oder markiere die Session als ganztägig.",
       "projectNotFound": "Das Projekt existiert nicht mehr.",
-      "songNotInProject": "Alle Songs einer Session müssen zum Projekt gehören."
+      "songNotInProject": "Alle Songs einer Session müssen zum Projekt gehören.",
+      "invalidEndDate": "Das End-Datum muss nach dem Start-Datum liegen."
     },
     "gearBooking": {
       "sessionNotFound": "Die Session existiert nicht mehr.",
@@ -261,13 +265,15 @@
     "trackNumber": "Nr.",
     "status": "Status",
     "bpm": "BPM",
-    "key": "Tonart",
-    "keyPlaceholder": "z. B. Fis-Moll",
     "tuning": "Stimmung",
     "tuningPlaceholder": "z. B. Drop C",
     "band": "Band",
     "empty": "Noch keine Songs.",
-    "deleteConfirm": "Der Song \"{{name}}\" wird gelöscht."
+    "deleteConfirm": "Der Song \"{{name}}\" wird gelöscht.",
+    "selected": "{{count}} ausgewählt",
+    "selectAll": "Alle Songs auswählen",
+    "setStatus": "Status setzen",
+    "statusChanged": "{{count}} Songs auf \"{{status}}\" gesetzt"
   },
   "songStatus": {
     "Planned": "Geplant",
@@ -351,15 +357,31 @@
     "summaryPlaceholder": "Was wurde erreicht, was ist noch offen",
     "nextSteps": "Nächste Schritte",
     "progress": "Stand",
-    "empty": "Keine Sessions in diesem Monat.",
     "emptyDay": "Keine Sessions an diesem Tag.",
     "emptyProject": "Noch keine Sessions geplant.",
-    "showMonth": "Ganzen Monat anzeigen",
     "tasksProgress": "{{done}}/{{total}} To-dos",
     "gearCount": "{{count}} Equipment",
     "sheet": "Session-Sheet",
     "deleteConfirm": "Die Session \"{{name}}\" wird mit ihren To-dos und Buchungen gelöscht.",
-    "projectFirst": "Leg zuerst ein Projekt an – jede Session gehört zu einem Projekt."
+    "projectFirst": "Leg zuerst ein Projekt an – jede Session gehört zu einem Projekt.",
+    "endDate": "Bis (mehrtägig)",
+    "endDatePlaceholder": "Eintägig",
+    "daily": "täglich",
+    "changeStatus": "Status ändern",
+    "showAll": "Alle Sessions anzeigen",
+    "overdue": "Noch nicht abgeschlossen",
+    "overdueHint": "Diese Sessions liegen in der Vergangenheit. Setze sie über den Status-Button auf \"Erledigt\" (oder \"Abgesagt\").",
+    "emptyUpcoming": "Keine kommenden Sessions geplant.",
+    "closed": "Erledigte & abgesagte Sessions ({{count}})",
+    "duplicate": "Duplizieren",
+    "duplicateTitle": "Session duplizieren",
+    "duplicateHint": "Wähle ein oder mehrere Daten. Kopiert werden: Titel, Art, Zeiten, Personen, Ziele, Notizen, Songs, To-dos (wieder offen) und Equipment.",
+    "followingDays": "Folgetage",
+    "duplicateSubmit": "{{count}} Kopien anlegen",
+    "duplicated": "{{count}} Sessions angelegt",
+    "copyFrom": "Von bestehender Session kopieren",
+    "copyFromHint": "Schneller bei wiederkehrenden Sessions, z. B. mehreren Drum-Tagen",
+    "copyFromPlaceholder": "Session suchen …"
   },
   "sessionType": {
     "PreProduction": "Vorproduktion",

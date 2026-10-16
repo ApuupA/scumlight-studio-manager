@@ -34,6 +34,7 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
       type: session?.type ?? ('Recording' as SessionType),
       status: session?.status ?? ('Planned' as SessionStatus),
       date: session?.date ?? initialDate ?? todayIso(),
+      endDate: session?.endDate ?? (null as string | null),
       allDay: session ? session.isAllDay : true,
       startTime: formatTime(session?.startTime) || '10:00',
       endTime: formatTime(session?.endTime) || '18:00',
@@ -49,6 +50,7 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
       projectId: (value) => (value ? null : t('validation.required')),
       title: (value) => (value.trim() ? null : t('validation.required')),
       date: (value) => (value ? null : t('validation.required')),
+      endDate: (value, values) => (!value || value >= values.date ? null : t('errors.session.invalidEndDate')),
       // "HH:mm" strings can be compared as text
       endTime: (value, values) => (values.allDay || value > values.startTime ? null : t('errors.session.invalidTimes')),
     },
@@ -69,6 +71,7 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
       type: values.type,
       status: values.status,
       date: values.date,
+      endDate: values.endDate && values.endDate !== values.date ? values.endDate : null,
       startTime: values.allDay ? null : toApiTime(values.startTime),
       endTime: values.allDay ? null : toApiTime(values.endTime),
       songIds: values.songIds.map(Number),
@@ -116,6 +119,16 @@ export default function SessionForm({ session, initialProjectId, initialDate, is
 
         <Group align="flex-end" wrap="wrap">
           <DatePickerInput label={t('sessions.date')} withAsterisk valueFormat="dd, L" w={180} {...form.getInputProps('date')} />
+          {/* Optional: last day of a multi-day session (e.g. album production Fri - Sun) */}
+          <DatePickerInput
+            label={t('sessions.endDate')}
+            placeholder={t('sessions.endDatePlaceholder')}
+            clearable
+            valueFormat="dd, L"
+            minDate={form.values.date}
+            w={180}
+            {...form.getInputProps('endDate')}
+          />
           <Switch label={t('sessions.allDay')} mb={8} {...form.getInputProps('allDay', { type: 'checkbox' })} />
         </Group>
         {!form.values.allDay && (

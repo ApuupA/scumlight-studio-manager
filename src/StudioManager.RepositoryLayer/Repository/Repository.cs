@@ -61,6 +61,16 @@ namespace StudioManager.RepositoryLayer.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateRangeAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities.Where(e => _context.Entry(e).State == EntityState.Detached))
+            {
+                _dbSet.Update(entity);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);

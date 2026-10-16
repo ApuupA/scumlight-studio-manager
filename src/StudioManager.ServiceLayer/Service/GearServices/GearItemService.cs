@@ -67,13 +67,28 @@ namespace StudioManager.ServiceLayer.Service.GearServices
         public override async Task<GearItemReadDto> Insert(GearItemCreateDto createDto)
         {
             await EnsureCategoryExists(createDto.GearCategoryId);
+            createDto.GoodFor = CleanTags(createDto.GoodFor);
             return await base.Insert(createDto);
         }
 
         public override async Task<GearItemReadDto> Update(int id, GearItemCreateDto updateDto)
         {
             await EnsureCategoryExists(updateDto.GearCategoryId);
+            updateDto.GoodFor = CleanTags(updateDto.GoodFor);
             return await base.Update(id, updateDto);
+        }
+
+        /// <summary>
+        /// Trims the "good for" tags and removes empty ones and duplicates ("Snare" and "snare" count as the same).
+        /// </summary>
+        private static List<string> CleanTags(IEnumerable<string> tags)
+        {
+            return tags
+                .Select(tag => tag.Trim())
+                .Where(tag => tag.Length > 0)
+                .DistinctBy(tag => tag.ToLowerInvariant())
+                .Take(20)
+                .ToList();
         }
 
         public override async Task Delete(int id)
@@ -156,7 +171,7 @@ namespace StudioManager.ServiceLayer.Service.GearServices
         {
             var today = DateOnly.FromDateTime(DateTime.Now);
             var bookings = await _bookingRepository.GetAllAsync(
-                b => b.Session!.Date == today && b.Session.Status != SessionStatus.Cancelled,
+                b => b.Session!.Date <= today && (b.Session.EndDate ?? b.Session.Date) >= today && b.Session.Status != SessionStatus.Cancelled,
                 b => b.Session!);
 
             var bookedPerItem = bookings

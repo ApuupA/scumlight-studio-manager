@@ -15,6 +15,7 @@ namespace StudioManager.DataLayer.DTO.Read
         public DateOnly? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
         public string? Notes { get; set; }
+        public List<string> GoodFor { get; set; } = new();
         public bool HasPhoto { get; set; }
         public int GearCategoryId { get; set; }
         public string GearCategoryName { get; set; } = string.Empty;

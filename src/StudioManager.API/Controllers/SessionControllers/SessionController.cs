@@ -23,5 +23,23 @@ namespace StudioManager.API.Controllers.SessionControllers
         {
             return Ok(await _service.GetForProject(projectId));
         }
+
+        /// <summary>
+        /// Changes only the status of the session.
+        /// </summary>
+        [HttpPut("{id:int}/status")]
+        public async Task<ActionResult<SessionReadDto>> SetStatus(int id, [FromBody] SessionStatusUpdateDto dto)
+        {
+            return Ok(await _service.SetStatus(id, dto));
+        }
+
+        /// <summary>
+        /// Copies the session (with songs, to-dos and gear) to the given dates, e.g. for a series of recording days.
+        /// </summary>
+        [HttpPost("{id:int}/duplicate")]
+        public async Task<ActionResult<IEnumerable<SessionReadDto>>> Duplicate(int id, [FromBody] SessionDuplicateDto dto)
+        {
+            return Ok(await _service.Duplicate(id, dto));
+        }
     }
 }

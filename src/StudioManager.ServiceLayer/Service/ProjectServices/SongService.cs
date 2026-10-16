@@ -28,6 +28,21 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             return songs.OrderBy(s => s.TrackNumber).ThenBy(s => s.Title);
         }
 
+        public async Task<IEnumerable<SongReadDto>> SetStatus(SongStatusUpdateDto dto)
+        {
+            var songIds = dto.SongIds.Distinct().ToList();
+            var songs = (await _repository.GetAllAsync(s => songIds.Contains(s.Id))).ToList();
+
+            foreach (var song in songs)
+            {
+                song.Status = dto.Status;
+            }
+
+            await _repository.UpdateRangeAsync(songs);
+
+            return (await GetAllWhere(s => songIds.Contains(s.Id))).OrderBy(s => s.TrackNumber);
+        }
+
         public override async Task<SongReadDto> Insert(SongCreateDto createDto)
         {
             await EnsureBandIsInProject(createDto);

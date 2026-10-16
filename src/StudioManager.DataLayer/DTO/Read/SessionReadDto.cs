@@ -9,6 +9,7 @@ namespace StudioManager.DataLayer.DTO.Read
         public SessionType Type { get; set; }
         public SessionStatus Status { get; set; }
         public DateOnly Date { get; set; }
+        public DateOnly? EndDate { get; set; }
         public TimeOnly? StartTime { get; set; }
         public TimeOnly? EndTime { get; set; }
         public bool IsAllDay { get; set; }

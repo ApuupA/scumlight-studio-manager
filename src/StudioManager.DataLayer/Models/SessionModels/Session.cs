@@ -3,8 +3,9 @@ using StudioManager.DataLayer.Models.ProjectModels;
 namespace StudioManager.DataLayer.Models.SessionModels
 {
     /// <summary>
-    /// A block of studio time for a project: either a whole day (StartTime / EndTime are null)
-    /// or a time range on one day, e.g. a mixing session from 18:00 to 22:00.
+    /// A block of studio time for a project, on one day or over several days (Date to EndDate).
+    /// Either all-day (StartTime / EndTime are null) or with times that apply to every day,
+    /// e.g. a mixing session from 18:00 to 22:00 or an album production Fri - Sat, 9:00 to 17:00.
     /// </summary>
     public class Session : BaseEntity
     {
@@ -12,7 +13,12 @@ namespace StudioManager.DataLayer.Models.SessionModels
         public SessionType Type { get; set; } = SessionType.Recording;
         public SessionStatus Status { get; set; } = SessionStatus.Planned;
 
+        /// <summary>The (first) day of the session.</summary>
         public DateOnly Date { get; set; }
+
+        /// <summary>Last day of a multi-day session, null for a single day.</summary>
+        public DateOnly? EndDate { get; set; }
+
         public TimeOnly? StartTime { get; set; }
         public TimeOnly? EndTime { get; set; }
 
@@ -20,6 +26,11 @@ namespace StudioManager.DataLayer.Models.SessionModels
         /// True if the session takes the whole day (no times set).
         /// </summary>
         public bool IsAllDay => StartTime == null || EndTime == null;
+
+        /// <summary>
+        /// The last day of the session: EndDate for multi-day sessions, otherwise Date.
+        /// </summary>
+        public DateOnly LastDate => EndDate ?? Date;
 
         public string? Engineer { get; set; }
 

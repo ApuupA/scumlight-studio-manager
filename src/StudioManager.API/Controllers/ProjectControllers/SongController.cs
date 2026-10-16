@@ -23,5 +23,14 @@ namespace StudioManager.API.Controllers.ProjectControllers
         {
             return Ok(await _service.GetForProject(projectId));
         }
+
+        /// <summary>
+        /// Sets the same status for several songs at once.
+        /// </summary>
+        [HttpPut("status")]
+        public async Task<ActionResult<IEnumerable<SongReadDto>>> SetStatus([FromBody] SongStatusUpdateDto dto)
+        {
+            return Ok(await _service.SetStatus(dto));
+        }
     }
 }

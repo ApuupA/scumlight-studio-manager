@@ -27,7 +27,6 @@ export default function SongFormModal({ project, song, nextTrackNumber, onClose 
       // With only one band in the project, preselect it
       bandId: song?.bandId ? String(song.bandId) : project.bands.length === 1 ? String(project.bands[0].id) : null,
       bpm: song?.bpm ?? ('' as number | string),
-      key: song?.key ?? '',
       tuning: song?.tuning ?? '',
       notes: song?.notes ?? '',
     },
@@ -44,7 +43,6 @@ export default function SongFormModal({ project, song, nextTrackNumber, onClose 
       status: values.status,
       bandId: idOrNull(values.bandId),
       bpm: numberOrNull(values.bpm),
-      key: textOrNull(values.key),
       tuning: textOrNull(values.tuning),
       notes: textOrNull(values.notes),
     }
@@ -80,7 +78,6 @@ export default function SongFormModal({ project, song, nextTrackNumber, onClose 
               {...form.getInputProps('bandId')}
             />
             <NumberInput label={t('songs.bpm')} min={1} max={400} decimalScale={2} {...form.getInputProps('bpm')} />
-            <TextInput label={t('songs.key')} placeholder={t('songs.keyPlaceholder')} maxLength={50} {...form.getInputProps('key')} />
             <TextInput label={t('songs.tuning')} placeholder={t('songs.tuningPlaceholder')} maxLength={50} {...form.getInputProps('tuning')} />
           </SimpleGrid>
           <Textarea label={t('common.notes')} autosize minRows={2} maxLength={4000} {...form.getInputProps('notes')} />

@@ -19,6 +19,12 @@ namespace StudioManager.DataLayer.Models.GearModels
         public string? Notes { get; set; }
 
         /// <summary>
+        /// What the gear is good for, as short tags, e.g. ["Snare", "Guitar cab"]. Helps to find the right gear.
+        /// Stored as a text array in PostgreSQL.
+        /// </summary>
+        public List<string> GoodFor { get; set; } = new();
+
+        /// <summary>
         /// Path of the photo relative to the file storage root, null if no photo was uploaded.
         /// </summary>
         public string? PhotoPath { get; set; }

@@ -14,6 +14,11 @@ namespace StudioManager.DataLayer.DTO.Create
         public DateOnly Date { get; set; }
 
         /// <summary>
+        /// Last day for a multi-day session (must be after Date), null for a single day.
+        /// </summary>
+        public DateOnly? EndDate { get; set; }
+
+        /// <summary>
         /// Both null = all-day session. Otherwise both must be set and EndTime must be after StartTime.
         /// </summary>
         public TimeOnly? StartTime { get; set; }

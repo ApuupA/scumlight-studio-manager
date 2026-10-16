@@ -1,18 +1,28 @@
-import { Alert, Button, Card, Center, Grid, Group, Indicator, Loader, Stack, Text, Title } from '@mantine/core'
+import { Accordion, Alert, Button, Card, Center, Grid, Group, Indicator, Loader, Stack, Text, Title } from '@mantine/core'
 import { Calendar } from '@mantine/dates'
-import { IconPlus } from '@tabler/icons-react'
+import { IconAlertTriangle, IconPlus } from '@tabler/icons-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
+import type { Session } from '../../api/types'
 import { formatDateLong, parseDate, todayIso } from '../../utils/format'
 import { useProjects } from '../projects/projectApi'
+import { allDays, coversDay, isPast, lastDay } from './sessionDates'
 import SessionList from './SessionList'
 import { useSessions } from './sessionApi'
 
+/** Sessions that are finished one way or another - they go into the collapsed "done" section. */
+function isClosed(session: Session) {
+  return session.status === 'Completed' || session.status === 'Cancelled'
+}
+
 /**
- * Studio calendar: month view with a dot on every day that has sessions, next to it the list of sessions
- * of the month - or of one day after clicking it.
+ * Studio calendar. Right side, from top to bottom:
+ * - past sessions not marked as done yet ("overdue") - mark them done with the status menu
+ * - all upcoming sessions, grouped by month
+ * - done and cancelled sessions, collapsed
+ * Clicking a day in the calendar shows only the sessions of that day.
  */
 export default function SessionCalendarPage() {
   const { t, i18n } = useTranslation()
@@ -20,24 +30,31 @@ export default function SessionCalendarPage() {
   const { data: sessions, isPending, error } = useSessions()
   const { data: projects } = useProjects()
 
-  // Dates are strings "YYYY-MM-DD" (like C# DateOnly), the displayed month is any date in that month
+  // Dates are strings "YYYY-MM-DD" (like C# DateOnly)
   const [displayedMonth, setDisplayedMonth] = useState(todayIso())
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
 
-  /** Number of (not cancelled) sessions per day - for the dots in the calendar. */
-  const sessionCountPerDay = useMemo(() => {
-    const counts = new Map<string, number>()
-    for (const session of sessions ?? []) {
-      if (session.status !== 'Cancelled') counts.set(session.date, (counts.get(session.date) ?? 0) + 1)
-    }
-    return counts
-  }, [sessions])
-
-  const visibleSessions = (sessions ?? []).filter((session) =>
-    selectedDate ? session.date === selectedDate : session.date.startsWith(displayedMonth.slice(0, 7)),
+  /** Days with at least one (not cancelled) session - for the dots in the calendar. */
+  const daysWithSessions = useMemo(
+    () => new Set((sessions ?? []).filter((s) => s.status !== 'Cancelled').flatMap((s) => allDays(s))),
+    [sessions],
   )
 
-  const monthTitle = new Intl.DateTimeFormat(i18n.language, { month: 'long', year: 'numeric' }).format(parseDate(displayedMonth))
+  // The three sections (all lists are already sorted by date by the API)
+  const all = sessions ?? []
+  const overdue = all.filter((s) => !isClosed(s) && isPast(s))
+  const upcoming = all.filter((s) => !isClosed(s) && !isPast(s))
+  const closed = all.filter(isClosed).sort((a, b) => lastDay(b).localeCompare(lastDay(a))) // newest first
+
+  /** Upcoming sessions grouped by month: [["Oktober 2026", [...]], ["November 2026", [...]]] */
+  const upcomingByMonth = useMemo(() => {
+    const groups = new Map<string, Session[]>()
+    for (const session of upcoming) {
+      const month = new Intl.DateTimeFormat(i18n.language, { month: 'long', year: 'numeric' }).format(parseDate(session.date))
+      groups.set(month, [...(groups.get(month) ?? []), session])
+    }
+    return [...groups.entries()]
+  }, [upcoming, i18n.language])
 
   const goToToday = () => {
     setDisplayedMonth(todayIso())
@@ -67,16 +84,13 @@ export default function SessionCalendarPage() {
           <Card withBorder>
             <Calendar
               date={displayedMonth}
-              onDateChange={(date) => {
-                setDisplayedMonth(date)
-                setSelectedDate(null) // a new month shows all its sessions
-              }}
+              onDateChange={setDisplayedMonth}
               getDayProps={(date) => ({
                 selected: date === selectedDate,
                 onClick: () => setSelectedDate(date === selectedDate ? null : date), // second click deselects
               })}
               renderDay={(date) => (
-                <Indicator size={6} color="scumlight" offset={-3} disabled={!sessionCountPerDay.has(date)}>
+                <Indicator size={6} color="scumlight" offset={-3} disabled={!daysWithSessions.has(date)}>
                   <div>{Number(date.slice(8, 10))}</div>
                 </Indicator>
               )}
@@ -87,17 +101,55 @@ export default function SessionCalendarPage() {
         </Grid.Col>
 
         <Grid.Col span={{ base: 12, md: 'auto' }}>
-          <Group justify="space-between" mb="sm">
-            <Title order={4}>{selectedDate ? formatDateLong(selectedDate, i18n.language) : monthTitle}</Title>
-            {selectedDate && (
-              <Button variant="subtle" size="xs" onClick={() => setSelectedDate(null)}>{t('sessions.showMonth')}</Button>
-            )}
-          </Group>
-
-          {visibleSessions.length === 0 ? (
-            <Text c="dimmed" py="md">{selectedDate ? t('sessions.emptyDay') : t('sessions.empty')}</Text>
+          {selectedDate ? (
+            // ---------- One day selected ----------
+            <Stack>
+              <Group justify="space-between">
+                <Title order={4}>{formatDateLong(selectedDate, i18n.language)}</Title>
+                <Button variant="subtle" size="xs" onClick={() => setSelectedDate(null)}>{t('sessions.showAll')}</Button>
+              </Group>
+              {all.some((s) => coversDay(s, selectedDate)) ? (
+                <SessionList sessions={all.filter((s) => coversDay(s, selectedDate))} />
+              ) : (
+                <Text c="dimmed">{t('sessions.emptyDay')}</Text>
+              )}
+            </Stack>
           ) : (
-            <SessionList sessions={visibleSessions} />
+            // ---------- Overview ----------
+            <Stack gap="lg">
+              {overdue.length > 0 && (
+                <Stack gap="xs">
+                  <Group gap={6}>
+                    <IconAlertTriangle size={18} color="var(--mantine-color-yellow-6)" />
+                    <Title order={4}>{t('sessions.overdue')}</Title>
+                  </Group>
+                  <Text size="sm" c="dimmed">{t('sessions.overdueHint')}</Text>
+                  <SessionList sessions={overdue} />
+                </Stack>
+              )}
+
+              {upcomingByMonth.length === 0 ? (
+                <Text c="dimmed">{t('sessions.emptyUpcoming')}</Text>
+              ) : (
+                upcomingByMonth.map(([month, monthSessions]) => (
+                  <Stack key={month} gap="xs">
+                    <Title order={4}>{month}</Title>
+                    <SessionList sessions={monthSessions} />
+                  </Stack>
+                ))
+              )}
+
+              {closed.length > 0 && (
+                <Accordion variant="contained">
+                  <Accordion.Item value="closed">
+                    <Accordion.Control>{t('sessions.closed', { count: closed.length })}</Accordion.Control>
+                    <Accordion.Panel>
+                      <SessionList sessions={closed} />
+                    </Accordion.Panel>
+                  </Accordion.Item>
+                </Accordion>
+              )}
+            </Stack>
           )}
         </Grid.Col>
       </Grid>

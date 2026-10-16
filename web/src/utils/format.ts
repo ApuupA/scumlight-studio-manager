@@ -47,12 +47,23 @@ export function formatSessionTime(
     : allDayText
 }
 
-/** Today as "YYYY-MM-DD" in local time (the format of C# DateOnly). */
+/** A Date as "YYYY-MM-DD" in local time (the format of C# DateOnly). */
+export function toIsoDate(date: Date): string {
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${date.getFullYear()}-${month}-${day}`
+}
+
+/** Today as "YYYY-MM-DD". */
 export function todayIso(): string {
-  const now = new Date()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
-  return `${now.getFullYear()}-${month}-${day}`
+  return toIsoDate(new Date())
+}
+
+/** "2026-10-16" + 3 days -> "2026-10-19" */
+export function addDays(day: string, days: number): string {
+  const date = parseDate(day)
+  date.setDate(date.getDate() + days)
+  return toIsoDate(date)
 }
 
 const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']

@@ -21,10 +21,25 @@
 - "In session today" in the gear list, upcoming bookings on the gear page
 - Printable session sheet (to-dos, songs, gear to set up, band gear, drum tuning)
 
-## Milestone 2 – open ideas
-- Gear packages (e.g. "drum mic package") to book several items at once
-- Week view in the calendar, sessions spanning several days
-- Status history of songs (who changed what when)
+## Milestone 2 – revision after the first real test
+**✅ Phase A – quick wins**
+- Calendar lists all upcoming sessions (grouped by month), overdue sessions on top, done / cancelled collapsed
+- Change the session status directly in the list
+- Duplicate a session to one or many dates (series of recording days), "copy from" when creating a session
+- Multi-day sessions (e.g. Fri – Sun, 9:00 – 17:00 daily)
+- Set the status of several songs at once; song key removed
+- "Good for" tags on gear (shown in the list, searchable)
+
+**Phase B – instruments & setup** (replaces the per-session gear booking)
+- Recorded instruments per project, each with its setup (studio gear, band gear or free text + "used for")
+- Signal chains for guitars / bass (e.g. Les Paul → Tube Screamer → JCM800 → 1960A → SM57)
+- Sessions pick instruments and inherit their gear; setup templates; printable project sheet
+
+**Phase C – input lists**
+- Settings page: studio inputs configured once (snake channel, preamp + group color, DAW channel)
+- Several input lists per project (tabs), pre-filled from the instrument setups; +48V / HPF / Tone / EQ, insert, comment
+- Sessions pick their input list; printable input sheet
+
 
 ## Milestone 3 – Mix revision tool
 - Upload mix versions per song (WAV/MP3), server-side conversion for streaming (FFmpeg)
@@ -33,16 +48,16 @@
 - Share link for clients without account, approval per song
 - Optional loudness matching between versions
 
-## Milestone 4 – I/O & input lists
-- Model the studio I/O: interface channels, preamps, patchbay, outboard inserts
-- Input list per session: source → mic → preamp → channel, printable as PDF
-- Reusable input list templates
+## Milestone 4 – Patchbay & outboard
+- Input lists moved to Milestone 2, phase C
+- Patchbay and outboard inserts in the studio I/O, reusable input list templates
 
 ## Milestone 5 – Documents & templates
 - File storage per project (lyrics, charts, references, contracts)
 - Printable templates filled with session data: take sheets, track sheets, recall sheets
 
 ## Ideas for later
+- Status history of songs (who changed what when)
 - Client accounts with access to their own projects only
 - Maintenance log per gear item (tube swaps, repairs, recalibration)
 - QR code labels for gear

@@ -50,7 +50,7 @@ export default function GearListPage() {
       .filter((item) => !status || item.status === status)
       .filter((item) =>
         !searchText ||
-        [item.name, item.manufacturer, item.model, item.serialNumber, item.location]
+        [item.name, item.manufacturer, item.model, item.serialNumber, item.location, ...item.goodFor]
           .some((value) => value?.toLowerCase().includes(searchText)),
       )
       .sort((a, b) => {
@@ -139,6 +139,13 @@ export default function GearListPage() {
                     <Text size="xs" c="dimmed">
                       {[item.manufacturer, item.model].filter(Boolean).join(' · ')}
                     </Text>
+                    {item.goodFor.length > 0 && (
+                      <Group gap={4} mt={4}>
+                        {item.goodFor.map((tag) => (
+                          <Badge key={tag} size="xs" variant="outline" color="gray">{tag}</Badge>
+                        ))}
+                      </Group>
+                    )}
                   </Table.Td>
                   <Table.Td>{item.gearCategoryName}</Table.Td>
                   <Table.Td>

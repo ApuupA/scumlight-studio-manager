@@ -17,9 +17,6 @@ namespace StudioManager.DataLayer.DTO.Create
         public decimal? Bpm { get; set; }
 
         [MaxLength(50)]
-        public string? Key { get; set; }
-
-        [MaxLength(50)]
         public string? Tuning { get; set; }
 
         [MaxLength(4000)]

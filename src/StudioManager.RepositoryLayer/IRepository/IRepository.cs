@@ -38,6 +38,11 @@ namespace StudioManager.RepositoryLayer.IRepository
         Task UpdateAsync(T entity);
 
         /// <summary>
+        /// Saves changes of several entities in one go (e.g. a new status for several songs).
+        /// </summary>
+        Task UpdateRangeAsync(IEnumerable<T> entities);
+
+        /// <summary>
         /// Deletes the entity with the given id. Does nothing if it does not exist.
         /// </summary>
         Task DeleteAsync(int id);

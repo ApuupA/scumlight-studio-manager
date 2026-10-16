@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type { GearBookingInput, SessionInput, SessionTaskInput } from '../../api/types'
+import type { GearBookingInput, SessionDuplicateInput, SessionInput, SessionStatus, SessionTaskInput } from '../../api/types'
 
 /**
  * Data access for sessions, their to-dos and gear bookings.
@@ -83,6 +83,26 @@ export function useUpdateSession() {
   return useMutation({
     mutationFn: ({ id, input }: { id: number; input: SessionInput }) =>
       unwrap(api.PUT('/api/Session/{id}', { params: { path: { id } }, body: input })),
+    onSuccess: invalidate,
+  })
+}
+
+/** Changes only the status of a session (e.g. directly in the calendar list). */
+export function useSetSessionStatus() {
+  const invalidate = useInvalidateSessions()
+  return useMutation({
+    mutationFn: ({ id, status }: { id: number; status: SessionStatus }) =>
+      unwrap(api.PUT('/api/Session/{id}/status', { params: { path: { id } }, body: { status } })),
+    onSuccess: invalidate,
+  })
+}
+
+/** Copies a session (with songs, to-dos and gear) to one or more dates. Returns the new sessions. */
+export function useDuplicateSession() {
+  const invalidate = useInvalidateSessions()
+  return useMutation({
+    mutationFn: ({ id, input }: { id: number; input: SessionDuplicateInput }) =>
+      unwrap(api.POST('/api/Session/{id}/duplicate', { params: { path: { id } }, body: input })),
     onSuccess: invalidate,
   })
 }

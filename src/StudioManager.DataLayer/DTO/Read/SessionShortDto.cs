@@ -11,6 +11,7 @@ namespace StudioManager.DataLayer.DTO.Read
         public string Title { get; set; } = string.Empty;
         public SessionStatus Status { get; set; }
         public DateOnly Date { get; set; }
+        public DateOnly? EndDate { get; set; }
         public TimeOnly? StartTime { get; set; }
         public TimeOnly? EndTime { get; set; }
         public int ProjectId { get; set; }

@@ -1,11 +1,13 @@
-import { Badge, Group, Paper, Stack, Text } from '@mantine/core'
-import { IconChecklist, IconTool } from '@tabler/icons-react'
+import { Badge, Group, Menu, Paper, Stack, Text, UnstyledButton } from '@mantine/core'
+import { IconChecklist, IconChevronDown, IconTool } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import type { Session } from '../../api/types'
+import { sessionStatuses, type Session, type SessionStatus } from '../../api/types'
 import StatusBadge from '../../components/StatusBadge'
 import { sessionStatusColors } from '../../components/statusColors'
-import { formatDateLong, formatSessionTime } from '../../utils/format'
+import { notifyError } from '../../utils/notify'
+import { useSetSessionStatus } from './sessionApi'
+import { formatSessionDates } from './sessionDates'
 
 interface SessionListProps {
   sessions: Session[]
@@ -15,10 +17,16 @@ interface SessionListProps {
 
 /**
  * Sessions as clickable cards, one per row. Used in the calendar and on the project page.
+ * The status can be changed directly on the card (click on the status badge).
  */
 export default function SessionList({ sessions, showProject = true }: SessionListProps) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
+  const setStatus = useSetSessionStatus()
+
+  const handleStatusChange = (session: Session, status: SessionStatus) => {
+    setStatus.mutate({ id: session.id, status }, { onError: (error) => notifyError(error, t) })
+  }
 
   return (
     <Stack gap="xs">
@@ -33,7 +41,7 @@ export default function SessionList({ sessions, showProject = true }: SessionLis
           <Group justify="space-between" wrap="nowrap" align="flex-start">
             <div>
               <Text size="xs" c="dimmed">
-                {formatDateLong(session.date, i18n.language)} · {formatSessionTime(session, t('common.allDay'))}
+                {formatSessionDates(session, i18n.language, t('common.allDay'), t('sessions.daily'))}
               </Text>
               <Text fw={600}>{session.title}</Text>
               {showProject && (
@@ -41,9 +49,30 @@ export default function SessionList({ sessions, showProject = true }: SessionLis
               )}
             </div>
             <Stack gap={4} align="flex-end">
-              <Group gap={4}>
+              <Group gap={4} wrap="nowrap">
                 <Badge variant="outline" color="gray">{t(`sessionType.${session.type}`)}</Badge>
-                <StatusBadge value={session.status} translationKey="sessionStatus" colors={sessionStatusColors} />
+
+                {/* Status menu - stopPropagation: a click here must not open the session */}
+                <Menu position="bottom-end">
+                  <Menu.Target>
+                    <UnstyledButton onClick={(event) => event.stopPropagation()} aria-label={t('sessions.changeStatus')}>
+                      <StatusBadge
+                        value={session.status}
+                        translationKey="sessionStatus"
+                        colors={sessionStatusColors}
+                        rightSection={<IconChevronDown size={10} />}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    </UnstyledButton>
+                  </Menu.Target>
+                  <Menu.Dropdown onClick={(event) => event.stopPropagation()}>
+                    {sessionStatuses.map((status) => (
+                      <Menu.Item key={status} disabled={status === session.status} onClick={() => handleStatusChange(session, status)}>
+                        <StatusBadge value={status} translationKey="sessionStatus" colors={sessionStatusColors} />
+                      </Menu.Item>
+                    ))}
+                  </Menu.Dropdown>
+                </Menu>
               </Group>
               <Group gap="sm">
                 {session.taskCount > 0 && (

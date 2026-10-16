@@ -1,9 +1,11 @@
-import { Button, Group, NumberInput, Select, SimpleGrid, Stack, Textarea, TextInput } from '@mantine/core'
+import { Button, Group, NumberInput, Select, SimpleGrid, Stack, TagsInput, Textarea, TextInput } from '@mantine/core'
+import { useMemo } from 'react'
 import { DatePickerInput } from '@mantine/dates'
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import { gearStatuses, type GearItem, type GearItemInput, type GearStatus } from '../../api/types'
 import { useCategories } from './categoryApi'
+import { useGearItems } from './gearApi'
 
 /**
  * Values while the form is being edited. Input fields work with strings (empty = ''),
@@ -20,6 +22,7 @@ interface GearFormValues {
   purchaseDate: string | null
   purchasePrice: number | string
   notes: string
+  goodFor: string[]
   gearCategoryId: string | null
 }
 
@@ -35,6 +38,7 @@ function toFormValues(item?: GearItem): GearFormValues {
     purchaseDate: item?.purchaseDate ?? null,
     purchasePrice: item?.purchasePrice ?? '',
     notes: item?.notes ?? '',
+    goodFor: item?.goodFor ?? [],
     gearCategoryId: item ? String(item.gearCategoryId) : null,
   }
 }
@@ -53,6 +57,7 @@ function toInput(values: GearFormValues): GearItemInput {
     purchaseDate: values.purchaseDate,
     purchasePrice: values.purchasePrice === '' ? null : Number(values.purchasePrice),
     notes: textOrNull(values.notes),
+    goodFor: values.goodFor,
     gearCategoryId: Number(values.gearCategoryId),
   }
 }
@@ -72,6 +77,13 @@ interface GearItemFormProps {
 export default function GearItemForm({ item, isSaving, onSubmit, onCancel }: GearItemFormProps) {
   const { t, i18n } = useTranslation()
   const { data: categories } = useCategories()
+  const { data: allGear } = useGearItems()
+
+  // Suggestions: all tags already used on any gear item, so the same words are used everywhere
+  const tagSuggestions = useMemo(
+    () => [...new Set((allGear ?? []).flatMap((gear) => gear.goodFor))].sort(),
+    [allGear],
+  )
 
   const form = useForm<GearFormValues>({
     initialValues: toFormValues(item),
@@ -122,6 +134,16 @@ export default function GearItemForm({ item, isSaving, onSubmit, onCancel }: Gea
             {...form.getInputProps('purchasePrice')}
           />
         </SimpleGrid>
+
+        <TagsInput
+          label={t('gear.goodFor')}
+          description={t('gear.goodForHint')}
+          placeholder={t('gear.goodForPlaceholder')}
+          data={tagSuggestions}
+          maxTags={20}
+          clearable
+          {...form.getInputProps('goodFor')}
+        />
 
         <Textarea label={t('gear.notes')} autosize minRows={3} maxLength={4000} {...form.getInputProps('notes')} />
 
