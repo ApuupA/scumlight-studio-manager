@@ -1,5 +1,5 @@
 import { Alert, Anchor, Badge, Button, Center, Grid, Group, Loader, Paper, Select, Stack, Text, Title } from '@mantine/core'
-import { IconArrowLeft, IconCopy, IconPrinter, IconTrash } from '@tabler/icons-react'
+import { IconArrowLeft, IconCopy, IconListNumbers, IconPrinter, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
@@ -136,6 +136,15 @@ export default function SessionPage() {
           <Button variant="light" leftSection={<IconCopy size={16} />} onClick={() => setSessionToCopy(session)}>
             {t('sessions.duplicate')}
           </Button>
+          {session.inputListId && (
+            <Button
+              variant="light"
+              leftSection={<IconListNumbers size={16} />}
+              onClick={() => navigate(`/input-lists/${session.inputListId}/sheet?sessionId=${session.id}`)}
+            >
+              {t('inputList.sheet')}
+            </Button>
+          )}
           <Button variant="light" leftSection={<IconPrinter size={16} />} onClick={() => navigate(`/sessions/${session.id}/sheet`)}>
             {t('sessions.sheet')}
           </Button>

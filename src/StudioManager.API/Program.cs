@@ -12,6 +12,7 @@ using StudioManager.ServiceLayer.IService.IFileServices;
 using StudioManager.ServiceLayer.IService.IGearServices;
 using StudioManager.ServiceLayer.IService.IProjectServices;
 using StudioManager.ServiceLayer.IService.ISessionServices;
+using StudioManager.ServiceLayer.IService.ISettingsServices;
 using StudioManager.ServiceLayer.IService.IUserServices;
 using StudioManager.ServiceLayer.Mapper;
 using StudioManager.ServiceLayer.Service.ClientServices;
@@ -19,6 +20,7 @@ using StudioManager.ServiceLayer.Service.FileServices;
 using StudioManager.ServiceLayer.Service.GearServices;
 using StudioManager.ServiceLayer.Service.ProjectServices;
 using StudioManager.ServiceLayer.Service.SessionServices;
+using StudioManager.ServiceLayer.Service.SettingsServices;
 using StudioManager.ServiceLayer.Service.UserServices;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -126,6 +128,9 @@ try
     builder.Services.AddScoped<IProjectInstrumentService, ProjectInstrumentService>();
     builder.Services.AddScoped<IInstrumentSetupItemService, InstrumentSetupItemService>();
     builder.Services.AddScoped<ISetupTemplateService, SetupTemplateService>();
+    builder.Services.AddScoped<IInputListService, InputListService>();
+    builder.Services.AddScoped<IInputGroupService, InputGroupService>();
+    builder.Services.AddScoped<IStudioInputService, StudioInputService>();
 
     var app = builder.Build();
 

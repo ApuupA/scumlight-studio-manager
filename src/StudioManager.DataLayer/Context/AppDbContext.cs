@@ -4,6 +4,7 @@ using StudioManager.DataLayer.Models.ClientModels;
 using StudioManager.DataLayer.Models.GearModels;
 using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.DataLayer.Models.SessionModels;
+using StudioManager.DataLayer.Models.SettingsModels;
 using StudioManager.DataLayer.Models.UserModels;
 
 namespace StudioManager.DataLayer.Context
@@ -30,6 +31,11 @@ namespace StudioManager.DataLayer.Context
         public DbSet<InstrumentSetupItem> InstrumentSetupItems { get; set; } = null!;
         public DbSet<SetupTemplate> SetupTemplates { get; set; } = null!;
         public DbSet<SetupTemplateItem> SetupTemplateItems { get; set; } = null!;
+
+        public DbSet<InputGroup> InputGroups { get; set; } = null!;
+        public DbSet<StudioInput> StudioInputs { get; set; } = null!;
+        public DbSet<InputList> InputLists { get; set; } = null!;
+        public DbSet<InputListRow> InputListRows { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -78,6 +84,7 @@ namespace StudioManager.DataLayer.Context
             ConfigureProjects(modelBuilder);
             ConfigureSessions(modelBuilder);
             ConfigureInstruments(modelBuilder);
+            ConfigureInputLists(modelBuilder);
 
             SeedGearCategories(modelBuilder);
         }
@@ -234,6 +241,12 @@ namespace StudioManager.DataLayer.Context
                 entity.HasMany(s => s.Instruments)
                       .WithMany(instrument => instrument.Sessions)
                       .UsingEntity(join => join.ToTable("SessionInstruments"));
+
+                // Deleting an input list keeps the sessions, they just have no input list anymore
+                entity.HasOne(s => s.InputList)
+                      .WithMany(l => l.Sessions)
+                      .HasForeignKey(s => s.InputListId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<SessionTask>(entity =>
@@ -311,6 +324,69 @@ namespace StudioManager.DataLayer.Context
                       .WithMany()
                       .HasForeignKey(s => s.GearItemId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        private static void ConfigureInputLists(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<InputGroup>(entity =>
+            {
+                entity.Property(g => g.Name).HasMaxLength(100).IsRequired();
+                entity.Property(g => g.Color).HasMaxLength(20).IsRequired();
+            });
+
+            modelBuilder.Entity<StudioInput>(entity =>
+            {
+                entity.Property(i => i.SnakeChannel).HasMaxLength(50);
+                entity.Property(i => i.Preamp).HasMaxLength(100);
+                entity.Property(i => i.DawChannel).HasMaxLength(50);
+                entity.Property(i => i.Notes).HasMaxLength(200);
+
+                // Deleting a group keeps its inputs (they just lose their color)
+                entity.HasOne(i => i.InputGroup)
+                      .WithMany(g => g.Inputs)
+                      .HasForeignKey(i => i.InputGroupId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<InputList>(entity =>
+            {
+                entity.Property(l => l.Name).HasMaxLength(100).IsRequired();
+                entity.Property(l => l.Notes).HasMaxLength(2000);
+
+                entity.HasOne(l => l.Project)
+                      .WithMany(p => p.InputLists)
+                      .HasForeignKey(l => l.ProjectId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<InputListRow>(entity =>
+            {
+                entity.Property(r => r.Source).HasMaxLength(100);
+                entity.Property(r => r.Microphone).HasMaxLength(100);
+                entity.Property(r => r.Stand).HasMaxLength(100);
+                entity.Property(r => r.Insert).HasMaxLength(100);
+                entity.Property(r => r.Comment).HasMaxLength(200);
+
+                // One row per studio input and list
+                entity.HasIndex(r => new { r.InputListId, r.StudioInputId }).IsUnique();
+
+                entity.HasOne(r => r.InputList)
+                      .WithMany(l => l.Rows)
+                      .HasForeignKey(r => r.InputListId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Deleting a studio input removes its rows from all input lists
+                entity.HasOne(r => r.StudioInput)
+                      .WithMany()
+                      .HasForeignKey(r => r.StudioInputId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // The row stays when the setup entry is deleted - it was only the source of the pre-filled values
+                entity.HasOne(r => r.SetupItem)
+                      .WithMany()
+                      .HasForeignKey(r => r.SetupItemId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
         }
 

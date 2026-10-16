@@ -481,6 +481,109 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("ExternalGear");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InputList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("InputLists");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InputListRow", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Eq")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Hpf")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("InputListId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Insert")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Microphone")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("Phantom")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("SetupItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Source")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Stand")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("StudioInputId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Tone")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SetupItemId");
+
+                    b.HasIndex("StudioInputId");
+
+                    b.HasIndex("InputListId", "StudioInputId")
+                        .IsUnique();
+
+                    b.ToTable("InputListRows");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InstrumentSetupItem", b =>
                 {
                     b.Property<int>("Id")
@@ -873,6 +976,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("character varying(4000)");
 
+                    b.Property<int?>("InputListId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("NextSteps")
                         .HasMaxLength(4000)
                         .HasColumnType("character varying(4000)");
@@ -909,6 +1015,8 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Date");
+
+                    b.HasIndex("InputListId");
 
                     b.HasIndex("ProjectId");
 
@@ -948,6 +1056,81 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasIndex("SessionId");
 
                     b.ToTable("SessionTasks");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.SettingsModels.InputGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InputGroups");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.SettingsModels.StudioInput", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DawChannel")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int?>("InputGroupId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Preamp")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("SnakeChannel")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InputGroupId");
+
+                    b.ToTable("StudioInputs");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.UserModels.User", b =>
@@ -1087,6 +1270,43 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InputList", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
+                        .WithMany("InputLists")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InputListRow", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.InputList", "InputList")
+                        .WithMany("Rows")
+                        .HasForeignKey("InputListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.InstrumentSetupItem", "SetupItem")
+                        .WithMany()
+                        .HasForeignKey("SetupItemId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("StudioManager.DataLayer.Models.SettingsModels.StudioInput", "StudioInput")
+                        .WithMany()
+                        .HasForeignKey("StudioInputId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("InputList");
+
+                    b.Navigation("SetupItem");
+
+                    b.Navigation("StudioInput");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InstrumentSetupItem", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.ExternalGear", "ExternalGear")
@@ -1197,11 +1417,18 @@ namespace StudioManager.DataLayer.Migrations
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
                 {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.InputList", "InputList")
+                        .WithMany("Sessions")
+                        .HasForeignKey("InputListId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
                         .WithMany("Sessions")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("InputList");
 
                     b.Navigation("Project");
                 });
@@ -1217,6 +1444,16 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Session");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.SettingsModels.StudioInput", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.SettingsModels.InputGroup", "InputGroup")
+                        .WithMany("Inputs")
+                        .HasForeignKey("InputGroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("InputGroup");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ClientModels.Client", b =>
                 {
                     b.Navigation("Bands");
@@ -1229,11 +1466,20 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("GearItems");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.InputList", b =>
+                {
+                    b.Navigation("Rows");
+
+                    b.Navigation("Sessions");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Project", b =>
                 {
                     b.Navigation("DrumTunings");
 
                     b.Navigation("ExternalGear");
+
+                    b.Navigation("InputLists");
 
                     b.Navigation("Instruments");
 
@@ -1257,6 +1503,11 @@ namespace StudioManager.DataLayer.Migrations
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
                 {
                     b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.SettingsModels.InputGroup", b =>
+                {
+                    b.Navigation("Inputs");
                 });
 #pragma warning restore 612, 618
         }

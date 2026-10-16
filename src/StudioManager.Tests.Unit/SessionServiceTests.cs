@@ -25,6 +25,7 @@ namespace StudioManager.Tests.Unit
                 new Repository<Project>(_context),
                 new Repository<Song>(_context),
                 new Repository<ProjectInstrument>(_context),
+                new Repository<InputList>(_context),
                 TestHelper.CreateMapper());
 
             var client = new Client { Name = "Scumlight Records" };
@@ -159,6 +160,24 @@ namespace StudioManager.Tests.Unit
             dto.InstrumentIds = [foreign.Id];
             var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _service.Insert(dto));
             Assert.Equal("session.instrumentNotInProject", exception.ErrorCode);
+        }
+
+        [Fact]
+        public async Task Insert_ShouldOnlyAcceptAnInputListOfTheProject()
+        {
+            var drumsList = new InputList { Name = "Drums", Project = _project };
+            var foreignList = new InputList { Name = "Foreign", Project = _otherProjectSong.Project };
+            _context.InputLists.AddRange(drumsList, foreignList);
+            await _context.SaveChangesAsync();
+
+            var dto = NewDto();
+            dto.InputListId = drumsList.Id;
+            var created = await _service.Insert(dto);
+            Assert.Equal("Drums", created.InputListName);
+
+            dto.InputListId = foreignList.Id;
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _service.Insert(dto));
+            Assert.Equal("session.inputListNotInProject", exception.ErrorCode);
         }
 
         [Fact]

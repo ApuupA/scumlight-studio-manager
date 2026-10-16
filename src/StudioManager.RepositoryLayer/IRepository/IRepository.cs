@@ -52,5 +52,10 @@ namespace StudioManager.RepositoryLayer.IRepository
         /// Deletes the entity with the given id. Does nothing if it does not exist.
         /// </summary>
         Task DeleteAsync(int id);
+
+        /// <summary>
+        /// Deletes several entities in one go (e.g. all rows of an input list).
+        /// </summary>
+        Task DeleteRangeAsync(IEnumerable<T> entities);
     }
 }

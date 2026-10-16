@@ -9,12 +9,14 @@ import ClientPage from './features/clients/ClientPage'
 import CategoriesPage from './features/gear/CategoriesPage'
 import GearItemPage from './features/gear/GearItemPage'
 import GearListPage from './features/gear/GearListPage'
+import InputSheetPage from './features/inputLists/InputSheetPage'
 import ProjectListPage from './features/projects/ProjectListPage'
 import ProjectPage from './features/projects/ProjectPage'
 import ProjectSheetPage from './features/projects/ProjectSheetPage'
 import SessionCalendarPage from './features/sessions/SessionCalendarPage'
 import SessionPage from './features/sessions/SessionPage'
 import SessionSheetPage from './features/sessions/SessionSheetPage'
+import SettingsPage from './features/settings/SettingsPage'
 import AppLayout from './layout/AppLayout'
 
 /**
@@ -35,6 +37,7 @@ export default function App() {
           {/* Printable pages without header and navigation */}
           <Route path="/sessions/:id/sheet" element={<SessionSheetPage />} />
           <Route path="/projects/:id/sheet" element={<ProjectSheetPage />} />
+          <Route path="/input-lists/:id/sheet" element={<InputSheetPage />} />
 
           {/* Normal pages inside the app layout */}
           <Route element={<AppLayout />}>
@@ -52,6 +55,7 @@ export default function App() {
             <Route path="/gear/:id" element={<GearItemPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Route>
         </Route>
 

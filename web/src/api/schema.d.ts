@@ -1259,6 +1259,453 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/InputGroup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputGroupReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InputGroupCreateDto"];
+                    "text/json": components["schemas"]["InputGroupCreateDto"];
+                    "application/*+json": components["schemas"]["InputGroupCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputGroupReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InputGroup/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputGroupReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InputGroupCreateDto"];
+                    "text/json": components["schemas"]["InputGroupCreateDto"];
+                    "application/*+json": components["schemas"]["InputGroupCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputGroupReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InputList/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InputList/{id}/rows/{studioInputId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                    studioInputId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InputListRowSaveDto"];
+                    "text/json": components["schemas"]["InputListRowSaveDto"];
+                    "application/*+json": components["schemas"]["InputListRowSaveDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InputList/{id}/fill-from-setups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InputListFillDto"];
+                    "text/json": components["schemas"]["InputListFillDto"];
+                    "application/*+json": components["schemas"]["InputListFillDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListFillResultDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InputList/{id}/rows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InputList": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InputListCreateDto"];
+                    "text/json": components["schemas"]["InputListCreateDto"];
+                    "application/*+json": components["schemas"]["InputListCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/InputList/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InputListCreateDto"];
+                    "text/json": components["schemas"]["InputListCreateDto"];
+                    "application/*+json": components["schemas"]["InputListCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/InstrumentSetupItem/{id}/move": {
         parameters: {
             query?: never;
@@ -2839,6 +3286,190 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/StudioInput/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["StudioInputBulkCreateDto"];
+                    "text/json": components["schemas"]["StudioInputBulkCreateDto"];
+                    "application/*+json": components["schemas"]["StudioInputBulkCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StudioInputReadDto"][];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/StudioInput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StudioInputReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["StudioInputCreateDto"];
+                    "text/json": components["schemas"]["StudioInputCreateDto"];
+                    "application/*+json": components["schemas"]["StudioInputCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StudioInputReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/StudioInput/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StudioInputReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["StudioInputCreateDto"];
+                    "text/json": components["schemas"]["StudioInputCreateDto"];
+                    "application/*+json": components["schemas"]["StudioInputCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StudioInputReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3053,6 +3684,88 @@ export interface components {
             /** Format: int32 */
             quantity: number;
         };
+        InputGroupCreateDto: {
+            name: string;
+            color: string;
+            /** Format: int32 */
+            sortOrder: number;
+        };
+        InputGroupReadDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            color: string;
+            /** Format: int32 */
+            sortOrder: number;
+            /** Format: int32 */
+            inputCount: number;
+        };
+        InputListCreateDto: {
+            name: string;
+            notes?: string | null;
+            /** Format: int32 */
+            sortOrder: number;
+            /** Format: int32 */
+            projectId: number;
+        };
+        InputListFillDto: {
+            instrumentIds: number[];
+        };
+        InputListFillResultDto: {
+            inputList: components["schemas"]["InputListReadDto"];
+            /** Format: int32 */
+            addedCount: number;
+            /** Format: int32 */
+            notPlacedCount: number;
+        };
+        InputListReadDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            notes?: string | null;
+            /** Format: int32 */
+            sortOrder: number;
+            /** Format: int32 */
+            projectId: number;
+            rows: components["schemas"]["InputListRowReadDto"][];
+            /** Format: int32 */
+            usedInputCount: number;
+        };
+        InputListRowReadDto: {
+            /** Format: int32 */
+            studioInputId: number;
+            /** Format: int32 */
+            number: number;
+            snakeChannel?: string | null;
+            preamp?: string | null;
+            dawChannel?: string | null;
+            inputGroupName?: string | null;
+            inputGroupColor?: string | null;
+            /** Format: int32 */
+            rowId?: number | null;
+            source?: string | null;
+            microphone?: string | null;
+            stand?: string | null;
+            phantom: boolean;
+            hpf: boolean;
+            tone: boolean;
+            eq: boolean;
+            insert?: string | null;
+            comment?: string | null;
+            /** Format: int32 */
+            setupItemId?: number | null;
+        };
+        InputListRowSaveDto: {
+            source?: string | null;
+            microphone?: string | null;
+            stand?: string | null;
+            phantom: boolean;
+            hpf: boolean;
+            tone: boolean;
+            eq: boolean;
+            insert?: string | null;
+            comment?: string | null;
+        };
         InstrumentSetupItemCreateDto: {
             /** Format: int32 */
             projectInstrumentId: number;
@@ -3259,6 +3972,8 @@ export interface components {
             projectId: number;
             songIds: number[];
             instrumentIds: number[];
+            /** Format: int32 */
+            inputListId?: number | null;
         };
         SessionDuplicateDto: {
             dates: string[];
@@ -3294,6 +4009,9 @@ export interface components {
             /** Format: int32 */
             tasksDoneCount: number;
             instruments: components["schemas"]["InstrumentShortDto"][];
+            /** Format: int32 */
+            inputListId?: number | null;
+            inputListName?: string | null;
             /** Format: date-time */
             dateCreated: string;
             /** Format: date-time */
@@ -3402,6 +4120,45 @@ export interface components {
         SongStatusUpdateDto: {
             songIds: number[];
             status: components["schemas"]["SongStatus"];
+        };
+        StudioInputBulkCreateDto: {
+            /** Format: int32 */
+            count: number;
+            snakePrefix?: string | null;
+            /** Format: int32 */
+            snakeStart?: number | null;
+            preampPrefix?: string | null;
+            /** Format: int32 */
+            preampStart?: number | null;
+            dawPrefix?: string | null;
+            /** Format: int32 */
+            dawStart?: number | null;
+            /** Format: int32 */
+            inputGroupId?: number | null;
+        };
+        StudioInputCreateDto: {
+            /** Format: int32 */
+            sortOrder: number;
+            snakeChannel?: string | null;
+            preamp?: string | null;
+            dawChannel?: string | null;
+            notes?: string | null;
+            /** Format: int32 */
+            inputGroupId?: number | null;
+        };
+        StudioInputReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            sortOrder: number;
+            snakeChannel?: string | null;
+            preamp?: string | null;
+            dawChannel?: string | null;
+            notes?: string | null;
+            /** Format: int32 */
+            inputGroupId?: number | null;
+            inputGroupName?: string | null;
+            inputGroupColor?: string | null;
         };
         UpdateProfileDto: {
             displayName: string;

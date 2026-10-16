@@ -1313,6 +1313,488 @@
         }
       }
     },
+    "/api/InputGroup": {
+      "get": {
+        "tags": [
+          "InputGroup"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InputGroupReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "InputGroup"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputGroupCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputGroupCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputGroupCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputGroupReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InputGroup/{id}": {
+      "get": {
+        "tags": [
+          "InputGroup"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputGroupReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "InputGroup"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputGroupCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputGroupCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputGroupCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputGroupReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "InputGroup"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/InputList/project/{projectId}": {
+      "get": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InputListReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InputList/{id}/rows/{studioInputId}": {
+      "put": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "studioInputId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListRowSaveDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListRowSaveDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListRowSaveDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputListReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InputList/{id}/fill-from-setups": {
+      "post": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListFillDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListFillDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListFillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputListFillResultDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InputList/{id}/rows": {
+      "delete": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputListReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InputList": {
+      "get": {
+        "tags": [
+          "InputList"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InputListReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "InputList"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputListReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/InputList/{id}": {
+      "get": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputListReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputListReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/InstrumentSetupItem/{id}/move": {
       "post": {
         "tags": [
@@ -2940,6 +3422,203 @@
           }
         }
       }
+    },
+    "/api/StudioInput/bulk": {
+      "post": {
+        "tags": [
+          "StudioInput"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputBulkCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputBulkCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputBulkCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudioInputReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/StudioInput": {
+      "get": {
+        "tags": [
+          "StudioInput"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudioInputReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "StudioInput"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudioInputReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/StudioInput/{id}": {
+      "get": {
+        "tags": [
+          "StudioInput"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudioInputReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "StudioInput"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudioInputCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudioInputReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "StudioInput"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3686,6 +4365,307 @@
         },
         "additionalProperties": false
       },
+      "InputGroupCreateDto": {
+        "required": [
+          "color",
+          "name",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InputGroupReadDto": {
+        "required": [
+          "color",
+          "id",
+          "inputCount",
+          "name",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inputCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InputListCreateDto": {
+        "required": [
+          "name",
+          "projectId",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "notes": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InputListFillDto": {
+        "required": [
+          "instrumentIds"
+        ],
+        "type": "object",
+        "properties": {
+          "instrumentIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "InputListFillResultDto": {
+        "required": [
+          "addedCount",
+          "inputList",
+          "notPlacedCount"
+        ],
+        "type": "object",
+        "properties": {
+          "inputList": {
+            "$ref": "#/components/schemas/InputListReadDto"
+          },
+          "addedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "notPlacedCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InputListReadDto": {
+        "required": [
+          "id",
+          "name",
+          "projectId",
+          "rows",
+          "sortOrder",
+          "usedInputCount"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InputListRowReadDto"
+            }
+          },
+          "usedInputCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InputListRowReadDto": {
+        "required": [
+          "eq",
+          "hpf",
+          "number",
+          "phantom",
+          "studioInputId",
+          "tone"
+        ],
+        "type": "object",
+        "properties": {
+          "studioInputId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "snakeChannel": {
+            "type": "string",
+            "nullable": true
+          },
+          "preamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "dawChannel": {
+            "type": "string",
+            "nullable": true
+          },
+          "inputGroupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "inputGroupColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "rowId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "microphone": {
+            "type": "string",
+            "nullable": true
+          },
+          "stand": {
+            "type": "string",
+            "nullable": true
+          },
+          "phantom": {
+            "type": "boolean"
+          },
+          "hpf": {
+            "type": "boolean"
+          },
+          "tone": {
+            "type": "boolean"
+          },
+          "eq": {
+            "type": "boolean"
+          },
+          "insert": {
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "setupItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InputListRowSaveDto": {
+        "required": [
+          "eq",
+          "hpf",
+          "phantom",
+          "tone"
+        ],
+        "type": "object",
+        "properties": {
+          "source": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "microphone": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "stand": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "phantom": {
+            "type": "boolean"
+          },
+          "hpf": {
+            "type": "boolean"
+          },
+          "tone": {
+            "type": "boolean"
+          },
+          "eq": {
+            "type": "boolean"
+          },
+          "insert": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "InstrumentSetupItemCreateDto": {
         "required": [
           "needsInput",
@@ -4408,6 +5388,11 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          "inputListId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4539,6 +5524,15 @@
             "items": {
               "$ref": "#/components/schemas/InstrumentShortDto"
             }
+          },
+          "inputListId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "inputListName": {
+            "type": "string",
+            "nullable": true
           },
           "dateCreated": {
             "type": "string",
@@ -4929,6 +5923,141 @@
         },
         "additionalProperties": false
       },
+      "StudioInputBulkCreateDto": {
+        "required": [
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "maximum": 64,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "snakePrefix": {
+            "maxLength": 40,
+            "type": "string",
+            "nullable": true
+          },
+          "snakeStart": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "preampPrefix": {
+            "maxLength": 90,
+            "type": "string",
+            "nullable": true
+          },
+          "preampStart": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dawPrefix": {
+            "maxLength": 40,
+            "type": "string",
+            "nullable": true
+          },
+          "dawStart": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "inputGroupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudioInputCreateDto": {
+        "required": [
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "snakeChannel": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "preamp": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "dawChannel": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "inputGroupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudioInputReadDto": {
+        "required": [
+          "id",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "snakeChannel": {
+            "type": "string",
+            "nullable": true
+          },
+          "preamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "dawChannel": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "inputGroupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "inputGroupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "inputGroupColor": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateProfileDto": {
         "required": [
           "displayName",
@@ -5007,6 +6136,12 @@
       "name": "GearItem"
     },
     {
+      "name": "InputGroup"
+    },
+    {
+      "name": "InputList"
+    },
+    {
       "name": "InstrumentSetupItem"
     },
     {
@@ -5029,6 +6164,9 @@
     },
     {
       "name": "Song"
+    },
+    {
+      "name": "StudioInput"
     }
   ]
 }

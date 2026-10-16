@@ -39,8 +39,8 @@
 - "In session today" and "used in projects" on the gear pages; gear used in a setup can not be deleted
 - Printable project sheet
 
-**Phase C – input lists**
-- Settings page: studio inputs configured once (snake channel, preamp + group color, DAW channel)
+**✅ Phase C – input lists**
+- Settings page: studio inputs configured once (snake channel, preamp + group color, DAW channel), several at once with numbering
 - Several input lists per project (tabs), pre-filled from the instrument setups; +48V / HPF / Tone / EQ, insert, comment
 - Sessions pick their input list; printable input sheet
 

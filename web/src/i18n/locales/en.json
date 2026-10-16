@@ -12,7 +12,8 @@
     "profile": "Profile",
     "calendar": "Calendar",
     "projects": "Projects",
-    "clients": "Clients"
+    "clients": "Clients",
+    "settings": "Settings"
   },
   "common": {
     "save": "Save",
@@ -149,7 +150,8 @@
       "projectNotFound": "The project does not exist anymore.",
       "songNotInProject": "All songs of a session must belong to its project.",
       "invalidEndDate": "The end date must be after the start date.",
-      "instrumentNotInProject": "All instruments of a session must belong to its project."
+      "instrumentNotInProject": "All instruments of a session must belong to its project.",
+      "inputListNotInProject": "The input list must belong to the session's project."
     },
     "instrument": {
       "projectNotFound": "The project does not exist anymore.",
@@ -159,6 +161,9 @@
       "oneSourceRequired": "Choose studio gear, band gear or enter a name – exactly one of them.",
       "instrumentNotFound": "The instrument does not exist anymore.",
       "bandGearNotInProject": "This band gear does not belong to the project."
+    },
+    "inputList": {
+      "instrumentNotInProject": "All instruments must belong to the list's project."
     }
   },
   "profile": {
@@ -245,7 +250,8 @@
       "links": "References & mixes",
       "drums": "Drum tuning",
       "instruments": "Instruments & setup",
-      "bandGear": "Band gear"
+      "bandGear": "Band gear",
+      "inputLists": "Input lists"
     },
     "filterActive": "Active projects",
     "filterAll": "All projects"
@@ -394,7 +400,9 @@
     "equipment": "Equipment",
     "equipmentHint": "From the setups of the chosen instruments.",
     "editSetups": "Edit setups",
-    "noInstruments": "No instruments chosen yet – choose them in the form."
+    "noInstruments": "No instruments chosen yet – choose them in the form.",
+    "inputList": "Input list",
+    "inputListHint": "From the project, tab \"Input lists\""
   },
   "sessionType": {
     "PreProduction": "Pre-production",
@@ -477,5 +485,81 @@
     "applied": "\"{{name}}\" created from the template",
     "empty": "No templates yet. Save an instrument setup as template via its \"…\" menu.",
     "deleteConfirm": "The template \"{{name}}\" will be deleted. Projects are not affected."
+  },
+  "settings": {
+    "title": "Settings",
+    "groups": "Input groups",
+    "groupsHint": "Usually one group per preamp / converter. The rows of the input list get the group color.",
+    "newGroup": "New group",
+    "editGroup": "Edit group",
+    "groupName": "Name",
+    "groupNamePlaceholder": "e.g. SSL, WA412, Apollo Unison",
+    "color": "Color",
+    "noGroups": "No groups yet.",
+    "deleteGroupConfirm": "The group \"{{name}}\" will be deleted. Its inputs stay (without color).",
+    "inputs": "Studio inputs",
+    "inputsHint": "The fixed signal path of every input (snake → preamp → DAW). Every input list has one row per input.",
+    "newInput": "Add input",
+    "editInput": "Edit input",
+    "noInputs": "No inputs yet – start with \"Add several inputs\".",
+    "group": "Group",
+    "position": "Position",
+    "positionHint": "Order in the input list, 0 = at the end",
+    "deleteInputConfirm": "Input {{number}} will be deleted – also from all input lists.",
+    "bulkTitle": "Add several inputs",
+    "bulkHint": "Creates numbered inputs at once, e.g. the 8 channels of a preamp. Text + start number gives \"16CH - 1\", \"16CH - 2\", … Without a start number the text is used for every input (e.g. \"UNISON\").",
+    "count": "Number of inputs",
+    "prefix": "text",
+    "startNumber": "Start number",
+    "noNumberHint": "Empty = no number",
+    "preview": "Preview",
+    "bulkSubmit": "Create inputs ({{count}})",
+    "inputsCreated": "Inputs created: {{count}}"
+  },
+  "colors": {
+    "gray": "Gray",
+    "orange": "Orange",
+    "red": "Red",
+    "blue": "Blue",
+    "green": "Green",
+    "yellow": "Yellow",
+    "teal": "Teal",
+    "violet": "Violet",
+    "pink": "Pink"
+  },
+  "inputList": {
+    "source": "Source",
+    "microphone": "Microphone",
+    "stand": "Stand",
+    "snake": "Snake",
+    "preamp": "Preamp",
+    "phantom": "+48V",
+    "hpf": "HPF",
+    "tone": "Tone",
+    "eq": "EQ",
+    "insert": "Insert",
+    "dawChannel": "DAW ch.",
+    "comment": "Comment",
+    "new": "New input list",
+    "newTitle": "New input list",
+    "editTitle": "Rename input list",
+    "name": "Name",
+    "namePlaceholder": "e.g. Drums, Vocals, Live guitar + drums",
+    "empty": "No input lists yet.",
+    "noStudioInputs": "There are no studio inputs yet. Configure them once under",
+    "usage": "{{used}} of {{total}} inputs in use",
+    "fill": "Fill from setups",
+    "fillTitle": "Fill from instrument setups",
+    "fillHint": "The microphones / DIs (\"needs an input\") of the chosen instruments are put into the free inputs. Entries already in the list are skipped.",
+    "inputsNeeded": "Inputs needed: {{count}}",
+    "filled": "Inputs filled: {{count}}",
+    "filledPartly": "{{added}} inputs filled – {{notPlaced}} did not fit, all inputs are in use",
+    "sheet": "Input sheet",
+    "sheetSession": "Session",
+    "rename": "Rename",
+    "clear": "Clear list",
+    "clearConfirm": "All entries of \"{{name}}\" will be removed.",
+    "cleared": "List cleared",
+    "deleteConfirm": "The input list \"{{name}}\" will be deleted. Sessions using it keep running without input list."
   }
 }

@@ -120,6 +120,43 @@
   gap: 0 24px;
 }
 
+/* ---------- Input sheet (landscape, like the Excel input list) ---------- */
+
+.inputSheetHeader {
+  display: grid;
+  grid-template-columns: 40px 2fr 2fr 2fr 1fr;
+  gap: 8px;
+  align-items: end;
+  border-bottom: 3px solid #cc3300;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.inputSheetHeader img {
+  width: 36px;
+}
+
+.inputSheetHeader .label {
+  display: block;
+}
+
+.inputTable th {
+  background: #2f5f4f;
+  color: #fff;
+  padding: 4px 6px;
+}
+
+.inputTable td {
+  border: 1px solid #999;
+  padding: 3px 6px;
+}
+
+/* Print the colored rows (browsers skip background colors by default) */
+.inputTable tr {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
 /* When printing: only the white sheet, no toolbar, no grey background */
 @media print {
   .page {

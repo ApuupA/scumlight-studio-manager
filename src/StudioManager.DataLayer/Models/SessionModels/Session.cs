@@ -49,6 +49,10 @@ namespace StudioManager.DataLayer.Models.SessionModels
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
 
+        /// <summary>The input list used in this session (one of the project's input lists), null if none.</summary>
+        public int? InputListId { get; set; }
+        public InputList? InputList { get; set; }
+
         public ICollection<SessionTask> Tasks { get; set; } = new List<SessionTask>();
 
         /// <summary>
