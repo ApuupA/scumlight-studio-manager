@@ -110,6 +110,11 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             {
                 throw new BusinessRuleException("setupItem.bandGearNotInProject", "The band gear does not belong to this project.");
             }
+
+            if (dto.ExternalGearId != null && await _externalGearRepository.ExistsAsync(g => g.Id == dto.ExternalGearId && g.IsSuggestion))
+            {
+                throw new BusinessRuleException("setupItem.bandGearNotAccepted", "Accept the band's suggestion first (tab 'Band gear').");
+            }
         }
     }
 }

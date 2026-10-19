@@ -23,5 +23,14 @@ namespace StudioManager.API.Controllers.ProjectControllers
         {
             return Ok(await _service.GetForProject(projectId));
         }
+
+        /// <summary>
+        /// Accepts a suggestion the band entered via the band gear link.
+        /// </summary>
+        [HttpPost("{id:int}/accept")]
+        public async Task<ActionResult<ExternalGearReadDto>> Accept(int id)
+        {
+            return Ok(await _service.Accept(id));
+        }
     }
 }

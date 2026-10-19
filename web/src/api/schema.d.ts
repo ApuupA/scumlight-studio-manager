@@ -468,6 +468,201 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/BandGearLink/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BandGearLinkDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BandGearLinkDto"];
+                    };
+                };
+            };
+        };
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/BandGearLink/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    token: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BandGearFormDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/BandGearLink/{token}/gear": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    token: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["BandGearSuggestionDto"];
+                    "text/json": components["schemas"]["BandGearSuggestionDto"];
+                    "application/*+json": components["schemas"]["BandGearSuggestionDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BandGearFormDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/BandGearLink/{token}/gear/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    token: string;
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BandGearFormDto"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Calendar/token": {
         parameters: {
             query?: never;
@@ -995,6 +1190,43 @@ export interface paths {
         };
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ExternalGear/{id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExternalGearReadDto"];
+                    };
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;
@@ -4586,6 +4818,31 @@ export interface components {
             /** Format: int32 */
             clientId: number;
         };
+        BandGearEntryDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            quantity: number;
+            owner?: string | null;
+            notes?: string | null;
+            isSuggestion: boolean;
+        };
+        BandGearFormDto: {
+            projectTitle: string;
+            bandNames: string;
+            entries: components["schemas"]["BandGearEntryDto"][];
+        };
+        BandGearLinkDto: {
+            token?: string | null;
+        };
+        BandGearSuggestionDto: {
+            name: string;
+            /** Format: int32 */
+            quantity: number;
+            owner?: string | null;
+            notes?: string | null;
+        };
         BandReadDto: {
             /** Format: int32 */
             id: number;
@@ -4694,6 +4951,7 @@ export interface components {
             quantity: number;
             owner?: string | null;
             notes?: string | null;
+            isSuggestion: boolean;
             /** Format: int32 */
             projectId: number;
             /** Format: date-time */

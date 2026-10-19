@@ -11,6 +11,11 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// <summary>Cover art of the project, path in the file storage.</summary>
         public string? PhotoPath { get; set; }
 
+        /// <summary>
+        /// Secret of the band gear link (/band-gear/{token}), where the band enters its gear. Null = no link.
+        /// </summary>
+        public string? BandGearToken { get; set; }
+
         public string Title { get; set; } = string.Empty;
         public ProjectType Type { get; set; } = ProjectType.Album;
         public ProjectStatus Status { get; set; } = ProjectStatus.Planning;

@@ -161,7 +161,8 @@
     "setupItem": {
       "oneSourceRequired": "Wähle Studio-Equipment, Band-Equipment oder gib eine Bezeichnung ein – genau eines davon.",
       "instrumentNotFound": "Das Instrument existiert nicht mehr.",
-      "bandGearNotInProject": "Dieses Band-Equipment gehört nicht zum Projekt."
+      "bandGearNotInProject": "Dieses Band-Equipment gehört nicht zum Projekt.",
+      "bandGearNotAccepted": "Nimm den Vorschlag der Band zuerst an (Tab „Mitgebrachtes Equipment\")."
     },
     "inputList": {
       "instrumentNotInProject": "Alle Instrumente müssen zum Projekt der Liste gehören.",
@@ -175,6 +176,9 @@
     "songTrack": {
       "songNotFound": "Den Song gibt es nicht mehr.",
       "otherProject": "Spuren können nur von einem Song desselben Projekts kopiert werden."
+    },
+    "bandGearLink": {
+      "tooManySuggestions": "Es gibt zu viele offene Einträge – bitte warte, bis das Studio sie geprüft hat."
     }
   },
   "profile": {
@@ -670,5 +674,32 @@
     "secret": "Behalte den Link für dich – wer ihn hat, kann die Sessions sehen (ohne Anmeldung).",
     "renew": "Neuen Link erzeugen",
     "renewConfirm": "Der aktuelle Link funktioniert dann nicht mehr – Kalender, die ihn nutzen, müssen mit dem neuen Link neu abonniert werden."
+  },
+  "bandGearLink": {
+    "title": "Link für die Band",
+    "hint": "Schick ihn der Band: Sie trägt das Equipment ein, das sie mitbringt (ohne Anmeldung). Du nimmst jeden Eintrag hier an oder lehnst ihn ab.",
+    "create": "Link für die Band erstellen",
+    "renew": "Neuen Link erzeugen",
+    "renewConfirm": "Der aktuelle Link funktioniert dann nicht mehr – schick der Band den neuen.",
+    "switchOff": "Link abschalten",
+    "switchOffConfirm": "Die Band kann dann kein Equipment mehr eintragen. Die Einträge bleiben.",
+    "newSuggestions": "Die Band hat neues Equipment eingetragen: {{count}} – annehmen (✓) oder ablehnen (löschen).",
+    "suggestion": "Vorschlag der Band",
+    "accept": "Annehmen"
+  },
+  "bandGearPage": {
+    "title": "Euer Equipment fürs Studio",
+    "hint": "Tragt bitte alles ein, was ihr mitbringt: Instrumente, Amps, Boxen, Pedale, Becken, Snares, … Das Studio prüft jeden Eintrag.",
+    "invalidTitle": "Link ungültig",
+    "invalid": "Dieser Link funktioniert nicht (mehr). Bitte frag beim Studio nach einem neuen.",
+    "pending": "wird geprüft",
+    "accepted": "bestätigt",
+    "name": "Was?",
+    "namePlaceholder": "z. B. Gibson Les Paul, Ampeg SVT, Zildjian 18\" Crash",
+    "quantity": "Anzahl",
+    "owner": "Wer bringt es mit?",
+    "ownerPlaceholder": "z. B. Max (Gitarre)",
+    "notesPlaceholder": "z. B. braucht ein 9-V-Netzteil",
+    "add": "Hinzufügen"
   }
 }

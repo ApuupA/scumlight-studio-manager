@@ -33,7 +33,7 @@ function SessionSheet({ session }: { session: Session }) {
   const { data: tasks } = useSessionTasks(session.id)
   const { data: projectInstruments } = useProjectInstruments(session.projectId)
   const { data: allSongs } = useSongs(session.projectId)
-  const { data: externalGear } = useExternalGear(session.projectId)
+  const externalGear = useExternalGear(session.projectId).data?.filter((gear) => !gear.isSuggestion) // open suggestions are not printed
   const { data: drumTunings } = useDrumTunings(session.projectId)
 
   // Only the songs worked on in this session - or all songs of the project if none are selected

@@ -67,7 +67,7 @@
 - Pictures for clients and bands, cover art for projects; list / tile view
 - Calendar subscription link: sessions show up in the Nextcloud / phone calendar
 
-**3. Band gear via link**
+**✅ 3. Band gear via link** (v1.4.0)
 - A link per project (no login) where the band enters the gear it brings; you accept the entries
 
 **4. Finance** (replaces Papierkram) – step by step

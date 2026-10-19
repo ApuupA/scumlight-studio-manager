@@ -45,6 +45,8 @@ export type ProjectLinkType = Schemas['ProjectLinkType']
 export type DrumTuning = Schemas['DrumTuningReadDto']
 export type DrumTuningInput = Schemas['DrumTuningCreateDto']
 export type ExternalGear = Schemas['ExternalGearReadDto']
+export type BandGearForm = Schemas['BandGearFormDto']
+export type BandGearSuggestionInput = Schemas['BandGearSuggestionDto']
 export type ExternalGearInput = Schemas['ExternalGearCreateDto']
 
 export type Session = Schemas['SessionReadDto']

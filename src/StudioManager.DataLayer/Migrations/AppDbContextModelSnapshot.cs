@@ -463,6 +463,9 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("IsSuggestion")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -655,6 +658,10 @@ namespace StudioManager.DataLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BandGearToken")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
                     b.Property<int?>("BitDepth")
                         .HasColumnType("integer");
 
@@ -720,6 +727,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BandGearToken")
+                        .IsUnique();
 
                     b.HasIndex("ClientId");
 

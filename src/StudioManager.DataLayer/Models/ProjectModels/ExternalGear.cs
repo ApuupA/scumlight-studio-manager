@@ -13,6 +13,12 @@ namespace StudioManager.DataLayer.Models.ProjectModels
 
         public string? Notes { get; set; }
 
+        /// <summary>
+        /// Entered by the band via the band gear link and not accepted by the studio yet.
+        /// Suggestions can not be used in setups and are not printed.
+        /// </summary>
+        public bool IsSuggestion { get; set; }
+
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
     }
