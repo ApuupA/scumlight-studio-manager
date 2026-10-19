@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
@@ -25,6 +26,7 @@ using StudioManager.ServiceLayer.Service.SessionServices;
 using StudioManager.ServiceLayer.Service.SettingsServices;
 using StudioManager.ServiceLayer.Service.UserServices;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
@@ -72,6 +74,19 @@ try
             options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             options.ExpireTimeSpan = TimeSpan.FromDays(14);
             options.SlidingExpiration = true;
+
+            // A deleted login is logged out right away (the cookie itself would stay valid for 14 days)
+            options.Events.OnValidatePrincipal = async context =>
+            {
+                var userId = int.Parse(context.Principal!.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+
+                if (await userService.Get(userId) == null)
+                {
+                    context.RejectPrincipal();
+                    await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                }
+            };
 
             // An API should answer with 401 / 403 instead of redirecting to a login page
             options.Events.OnRedirectToLogin = context =>

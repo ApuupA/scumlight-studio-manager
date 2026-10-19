@@ -126,7 +126,8 @@
     },
     "user": {
       "emailExists": "Another user already uses this email address.",
-      "wrongPassword": "The current password is wrong."
+      "wrongPassword": "The current password is wrong.",
+      "cannotDeleteSelf": "You can not delete your own login."
     },
     "common": {
       "invalidReference": "The data refers to an entry that does not exist (anymore)."
@@ -572,5 +573,20 @@
     "deleteConfirm": "The input list \"{{name}}\" will be deleted. Sessions using it keep running without input list.",
     "dragHint": "Drag to another input",
     "moveHint": "drag ⋮⋮ to move source, microphone, stand and +48V to another input"
+  },
+  "users": {
+    "title": "Users",
+    "hint": "Everyone who can log in. All users see and edit the same data.",
+    "new": "Add user",
+    "newTitle": "New user",
+    "newHint": "Give the start password to the new user – they can change it in their profile after logging in.",
+    "startPassword": "Start password",
+    "invalidEmail": "Please enter a valid email address",
+    "create": "Create user",
+    "created": "User created",
+    "you": "you",
+    "setPassword": "Set new password",
+    "setPasswordTitle": "New password for {{name}}",
+    "deleteConfirm": "{{name}} will be deleted and can not log in anymore. The data stays."
   }
 }

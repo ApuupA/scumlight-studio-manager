@@ -8,6 +8,26 @@ namespace StudioManager.ServiceLayer.IService.IUserServices
         Task<UserReadDto?> Get(int id);
 
         /// <summary>
+        /// All logins, sorted by name.
+        /// </summary>
+        Task<IEnumerable<UserReadDto>> GetAll();
+
+        /// <summary>
+        /// Creates another login with full access. The email address must not be used yet.
+        /// </summary>
+        Task<UserReadDto> Create(UserCreateDto dto);
+
+        /// <summary>
+        /// Sets a new password for a user (no current password needed - only owners may do this).
+        /// </summary>
+        Task SetPassword(int id, SetPasswordDto dto);
+
+        /// <summary>
+        /// Deletes a login. The logged in user can not delete themselves, so there is always one login left.
+        /// </summary>
+        Task Delete(int id, int currentUserId);
+
+        /// <summary>
         /// Checks email and password. Returns the user if they are correct, otherwise null.
         /// </summary>
         Task<UserReadDto?> ValidateCredentials(string email, string password);

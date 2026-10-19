@@ -10,6 +10,7 @@ import { notifyError, notifySuccess } from '../../utils/notify'
 import BulkInputsModal from './BulkInputsModal'
 import InputGroupFormModal from './InputGroupFormModal'
 import { useDeleteInputGroup, useDeleteStudioInput, useInputGroups, useStudioInputs } from './settingsApi'
+import UsersCard from '../users/UsersCard'
 import StudioInputFormModal from './StudioInputFormModal'
 
 /** Which dialog is open. */
@@ -20,8 +21,8 @@ type Dialog =
   | { type: 'bulk' }
 
 /**
- * Studio settings: the input groups and the studio inputs (snake -> preamp -> DAW).
- * Configured once - every input list of every project uses these inputs.
+ * Studio settings: the input groups and the studio inputs (snake -> preamp -> DAW) - configured once,
+ * every input list of every project uses these inputs - and the logins of the studio.
  */
 export default function SettingsPage() {
   const { t } = useTranslation()
@@ -122,6 +123,8 @@ export default function SettingsPage() {
           </Table.ScrollContainer>
         )}
       </Card>
+
+      <UsersCard />
 
       {dialog.type === 'group' && <InputGroupFormModal group={dialog.group} onClose={close} />}
       {dialog.type === 'input' && <StudioInputFormModal input={dialog.input} onClose={close} />}

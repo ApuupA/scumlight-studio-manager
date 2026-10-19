@@ -17,3 +17,6 @@ export function numberOrNull(value: number | string): number | null {
 export function idOrNull(value: string | null): number | null {
   return value ? Number(value) : null
 }
+
+/** Minimum password length - the same rule as in the backend (MinLength(8)). */
+export const minPasswordLength = 8
