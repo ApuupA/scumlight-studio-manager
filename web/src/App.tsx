@@ -17,6 +17,8 @@ import SessionCalendarPage from './features/sessions/SessionCalendarPage'
 import SessionPage from './features/sessions/SessionPage'
 import SessionSheetPage from './features/sessions/SessionSheetPage'
 import SettingsPage from './features/settings/SettingsPage'
+import SongPage from './features/songs/SongPage'
+import SongSheetPage from './features/songs/SongSheetPage'
 import AppLayout from './layout/AppLayout'
 
 /**
@@ -38,6 +40,7 @@ export default function App() {
           <Route path="/sessions/:id/sheet" element={<SessionSheetPage />} />
           <Route path="/projects/:id/sheet" element={<ProjectSheetPage />} />
           <Route path="/input-lists/:id/sheet" element={<InputSheetPage />} />
+          <Route path="/songs/:id/sheet" element={<SongSheetPage />} />
 
           {/* Normal pages inside the app layout */}
           <Route element={<AppLayout />}>
@@ -48,6 +51,7 @@ export default function App() {
             <Route path="/projects" element={<ProjectListPage />} />
             <Route path="/projects/new" element={<ProjectPage />} />
             <Route path="/projects/:id" element={<ProjectPage />} />
+            <Route path="/songs/:id" element={<SongPage />} />
             <Route path="/clients" element={<ClientListPage />} />
             <Route path="/clients/:id" element={<ClientPage />} />
             <Route path="/gear" element={<GearListPage />} />

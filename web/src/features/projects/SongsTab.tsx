@@ -1,7 +1,8 @@
-import { Button, Checkbox, Group, Menu, Paper, Table, Text } from '@mantine/core'
+import { Anchor, Button, Checkbox, Group, Menu, Paper, Progress, Table, Text } from '@mantine/core'
 import { IconChevronDown, IconPlus } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 import { songStatuses, type Project, type Song, type SongStatus } from '../../api/types'
 import RowActions from '../../components/RowActions'
 import StatusBadge from '../../components/StatusBadge'
@@ -108,6 +109,7 @@ export default function SongsTab({ project }: { project: Project }) {
                 <Table.Th>{t('songs.status')}</Table.Th>
                 <Table.Th>{t('songs.bpm')}</Table.Th>
                 <Table.Th>{t('songs.tuning')}</Table.Th>
+                <Table.Th w={130}>{t('songPage.recording')}</Table.Th>
                 <Table.Th w={90} />
               </Table.Tr>
             </Table.Thead>
@@ -123,13 +125,22 @@ export default function SongsTab({ project }: { project: Project }) {
                   </Table.Td>
                   <Table.Td c="dimmed">{song.trackNumber}</Table.Td>
                   <Table.Td>
-                    <Text fw={500}>{song.title}</Text>
+                    <Anchor component={Link} to={`/songs/${song.id}`} fw={500}>{song.title}</Anchor>
                     {song.notes && <Text size="xs" c="dimmed" lineClamp={1}>{song.notes}</Text>}
                   </Table.Td>
                   {showBandColumn && <Table.Td>{song.bandName}</Table.Td>}
                   <Table.Td><StatusBadge value={song.status} translationKey="songStatus" colors={songStatusColors} /></Table.Td>
                   <Table.Td>{formatTempos(song.tempos, t)}</Table.Td>
                   <Table.Td>{song.tuning}</Table.Td>
+                  <Table.Td>
+                    {/* Progress of the recording checklist on the song page */}
+                    {song.trackCount > 0 && (
+                      <>
+                        <Text size="xs" c="dimmed">{song.tracksRecordedCount} / {song.trackCount}</Text>
+                        <Progress size="sm" value={(song.tracksRecordedCount / song.trackCount) * 100} />
+                      </>
+                    )}
+                  </Table.Td>
                   <Table.Td>
                     <RowActions onEdit={() => setModal({ open: true, song })} onDelete={() => handleDelete(song)} />
                   </Table.Td>

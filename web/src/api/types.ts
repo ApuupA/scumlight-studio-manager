@@ -32,6 +32,11 @@ export type ProjectStatus = Schemas['ProjectStatus']
 export type Song = Schemas['SongReadDto']
 export type SongInput = Schemas['SongCreateDto']
 export type SongTempo = Schemas['SongTempoReadDto']
+export type SongSection = Schemas['SongSectionReadDto']
+export type SongSectionInput = Schemas['SongSectionCreateDto']
+export type SongTrack = Schemas['SongTrackReadDto']
+export type SongTrackInput = Schemas['SongTrackCreateDto']
+export type SongTrackStatus = Schemas['SongTrackStatus']
 export type SongStatus = Schemas['SongStatus']
 export type SongStatusUpdateInput = Schemas['SongStatusUpdateDto']
 export type ProjectLink = Schemas['ProjectLinkReadDto']
@@ -76,6 +81,7 @@ export const projectStatuses: ProjectStatus[] = [
   'Planning', 'PreProduction', 'Recording', 'Editing', 'Mixing', 'Mastering', 'Completed', 'OnHold', 'Cancelled',
 ]
 export const songStatuses: SongStatus[] = ['Planned', 'Recording', 'Editing', 'Mixing', 'Mastering', 'Done']
+export const songTrackStatuses: SongTrackStatus[] = ['Open', 'Recorded', 'Edited']
 export const projectLinkTypes: ProjectLinkType[] = ['Reference', 'RoughMix', 'Demo', 'Other']
 export const sessionTypes: SessionType[] = [
   'PreProduction', 'Recording', 'Overdubs', 'Editing', 'Mixing', 'Mastering', 'Production', 'Other',

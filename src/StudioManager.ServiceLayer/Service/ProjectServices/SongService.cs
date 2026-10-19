@@ -19,8 +19,8 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             _projectRepository = projectRepository;
         }
 
-        // Load the band (for BandName) and the tempos
-        protected override Expression<Func<Song, object>>[] DefaultIncludes => [s => s.Band!, s => s.Tempos];
+        // Load the band (for BandName), the tempos and the tracks (for the recording progress)
+        protected override Expression<Func<Song, object>>[] DefaultIncludes => [s => s.Band!, s => s.Tempos, s => s.Tracks];
 
         public async Task<IEnumerable<SongReadDto>> GetForProject(int projectId)
         {
@@ -63,6 +63,16 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
             _mapper.Map(updateDto, song);
             ReplaceTempos(song, updateDto);
+            await _repository.UpdateAsync(song);
+
+            return (await Get(id))!;
+        }
+
+        public async Task<SongReadDto> SetLyrics(int id, SongLyricsDto dto)
+        {
+            var song = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Song), id);
+
+            song.Lyrics = string.IsNullOrWhiteSpace(dto.Lyrics) ? null : dto.Lyrics.TrimEnd();
             await _repository.UpdateAsync(song);
 
             return (await Get(id))!;

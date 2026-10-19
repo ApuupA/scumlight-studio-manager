@@ -21,6 +21,8 @@ namespace StudioManager.DataLayer.Context
         public DbSet<Project> Projects { get; set; } = null!;
         public DbSet<Song> Songs { get; set; } = null!;
         public DbSet<SongTempo> SongTempos { get; set; } = null!;
+        public DbSet<SongSection> SongSections { get; set; } = null!;
+        public DbSet<SongTrack> SongTracks { get; set; } = null!;
         public DbSet<ProjectLink> ProjectLinks { get; set; } = null!;
         public DbSet<DrumTuning> DrumTunings { get; set; } = null!;
         public DbSet<ExternalGear> ExternalGear { get; set; } = null!;
@@ -150,6 +152,7 @@ namespace StudioManager.DataLayer.Context
                 entity.Property(s => s.Status).HasConversion<string>().HasMaxLength(20);
                 entity.Property(s => s.Tuning).HasMaxLength(50);
                 entity.Property(s => s.Notes).HasMaxLength(4000);
+                entity.Property(s => s.Lyrics).HasMaxLength(20000);
 
                 entity.HasOne(s => s.Project)
                       .WithMany(p => p.Songs)
@@ -161,6 +164,29 @@ namespace StudioManager.DataLayer.Context
                       .WithMany()
                       .HasForeignKey(s => s.BandId)
                       .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<SongSection>(entity =>
+            {
+                entity.Property(s => s.Name).HasMaxLength(100).IsRequired();
+                entity.Property(s => s.Notes).HasMaxLength(1000);
+
+                entity.HasOne(s => s.Song)
+                      .WithMany(s => s.Sections)
+                      .HasForeignKey(s => s.SongId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<SongTrack>(entity =>
+            {
+                entity.Property(t => t.Name).HasMaxLength(100).IsRequired();
+                entity.Property(t => t.Status).HasConversion<string>().HasMaxLength(20);
+                entity.Property(t => t.Notes).HasMaxLength(500);
+
+                entity.HasOne(t => t.Song)
+                      .WithMany(s => s.Tracks)
+                      .HasForeignKey(t => t.SongId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<SongTempo>(entity =>

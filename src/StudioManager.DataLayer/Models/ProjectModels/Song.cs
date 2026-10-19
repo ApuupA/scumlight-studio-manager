@@ -19,6 +19,9 @@ namespace StudioManager.DataLayer.Models.ProjectModels
 
         public string? Notes { get; set; }
 
+        /// <summary>Lyrics, e.g. for the vocal booth.</summary>
+        public string? Lyrics { get; set; }
+
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
 
@@ -32,6 +35,12 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// Tempo(s) of the song in song order - several if the tempo changes.
         /// </summary>
         public ICollection<SongTempo> Tempos { get; set; } = new List<SongTempo>();
+
+        /// <summary>Arrangement: Intro, Verse 1, Chorus 1, ...</summary>
+        public ICollection<SongSection> Sections { get; set; } = new List<SongSection>();
+
+        /// <summary>Recording checklist: the tracks of the song and their progress.</summary>
+        public ICollection<SongTrack> Tracks { get; set; } = new List<SongTrack>();
 
         /// <summary>
         /// Sessions in which this song was worked on.
