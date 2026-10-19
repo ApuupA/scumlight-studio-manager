@@ -24,6 +24,7 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
         private readonly IRepository<TimeEntry> _timeEntryRepository;
         private readonly IRepository<ProjectCostItem> _costItemRepository;
         private readonly IRepository<BusinessSettings> _settingsRepository;
+        private readonly IRepository<Quote> _quoteRepository;
         private readonly IMapper _mapper;
 
         public InvoiceService(
@@ -33,8 +34,10 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
             IRepository<TimeEntry> timeEntryRepository,
             IRepository<ProjectCostItem> costItemRepository,
             IRepository<BusinessSettings> settingsRepository,
+            IRepository<Quote> quoteRepository,
             IMapper mapper)
         {
+            _quoteRepository = quoteRepository;
             _invoiceRepository = invoiceRepository;
             _paymentRepository = paymentRepository;
             _projectRepository = projectRepository;
@@ -103,6 +106,58 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
             return (await Get(invoice.Id))!;
         }
 
+        public async Task<InvoiceReadDto> CreateDraftFromQuote(int quoteId)
+        {
+            var quote = (await _quoteRepository.GetAllWithPathsAsync(q => q.Id == quoteId, "Lines", "Project")).SingleOrDefault()
+                ?? throw new EntityNotFoundException(nameof(Quote), quoteId);
+
+            if (quote.Status != QuoteStatus.Sent && quote.Status != QuoteStatus.Accepted)
+            {
+                throw new BusinessRuleException("quote.cannotBeInvoiced", "Only a sent or accepted quote can become an invoice.");
+            }
+
+            var project = quote.Project!;
+
+            // The quote's price covers the project's work - its open hours and extra items count as invoiced
+            var entries = (await _timeEntryRepository.GetAllAsync(t => t.ProjectId == project.Id && t.IsBillable && t.InvoiceId == null && t.StartedAt == null)).ToList();
+            var costItems = (await _costItemRepository.GetAllAsync(c => c.ProjectId == project.Id && c.IsBillable && c.InvoiceId == null)).ToList();
+
+            var invoice = new Invoice
+            {
+                ProjectId = quote.ProjectId,
+                ClientId = quote.ClientId,
+                InvoiceDate = DateOnly.FromDateTime(DateTime.Now),
+                RecipientName = quote.RecipientName,
+                RecipientAddress = quote.RecipientAddress,
+                ServiceFrom = entries.Select(e => (DateOnly?)e.Date).Min(),
+                ServiceTo = entries.Select(e => (DateOnly?)e.Date).Max(),
+                IntroText = $"Gemäß Angebot {quote.Number} vom {quote.QuoteDate:dd.MM.yyyy}",
+                IncludesFlatPrice = project.PricingMode == PricingMode.FlatPrice,
+                Lines = quote.Lines
+                    .OrderBy(l => l.SortOrder)
+                    .Select(l => Line(l.Description, l.Quantity, l.Unit, l.UnitPrice, l.SortOrder))
+                    .ToList()
+            };
+            await _invoiceRepository.AddAsync(invoice);
+
+            foreach (var entry in entries)
+            {
+                entry.InvoiceId = invoice.Id;
+            }
+            foreach (var item in costItems)
+            {
+                item.InvoiceId = invoice.Id;
+            }
+            await _timeEntryRepository.UpdateRangeAsync(entries);
+            await _costItemRepository.UpdateRangeAsync(costItems);
+
+            quote.Status = QuoteStatus.Invoiced;
+            quote.InvoiceId = invoice.Id;
+            await _quoteRepository.UpdateAsync(quote);
+
+            return (await Get(invoice.Id))!;
+        }
+
         public async Task<InvoiceReadDto> UpdateDraft(int id, InvoiceUpdateDto dto)
         {
             var invoice = await LoadDraft(id);
@@ -152,11 +207,7 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
                 throw new BusinessRuleException("invoice.recipientMissing", "The invoice needs a recipient.");
             }
 
-            // Required content of an invoice: full name and address of the sender, tax number or VAT ID
-            if (string.IsNullOrWhiteSpace(settings.CompanyName ?? settings.OwnerName)
-                || string.IsNullOrWhiteSpace(settings.Street) || string.IsNullOrWhiteSpace(settings.PostalCode)
-                || string.IsNullOrWhiteSpace(settings.City)
-                || string.IsNullOrWhiteSpace(settings.TaxNumber ?? settings.VatId))
+            if (!FinanceService.HasRequiredBusinessData(settings))
             {
                 throw new BusinessRuleException("invoice.businessDataMissing",
                     "Fill in the business data first (profile page): name, address and tax number.");
@@ -346,7 +397,8 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
         }
 
         /// <summary>
-        /// The hours and extra items of an invoice are open again (draft deleted or invoice cancelled).
+        /// The hours and extra items of an invoice are open again (draft deleted or invoice cancelled),
+        /// a quote it was made from can be invoiced again.
         /// </summary>
         private async Task ReleaseEntries(int invoiceId)
         {
@@ -364,6 +416,15 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
 
             await _timeEntryRepository.UpdateRangeAsync(entries);
             await _costItemRepository.UpdateRangeAsync(costItems);
+
+            // A quote that became this invoice can be invoiced again
+            var quotes = (await _quoteRepository.GetAllAsync(q => q.InvoiceId == invoiceId)).ToList();
+            foreach (var quote in quotes)
+            {
+                quote.InvoiceId = null;
+                quote.Status = QuoteStatus.Accepted;
+            }
+            await _quoteRepository.UpdateRangeAsync(quotes);
         }
 
         private async Task<Invoice> LoadInvoice(int id)
@@ -398,10 +459,8 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
 
             var settings = await FinanceService.LoadSettings(_settingsRepository);
             var today = DateOnly.FromDateTime(DateTime.Now);
-            var currentSender = _mapper.Map<BusinessSettingsReadDto>(settings);
             // A draft shows which number it will get
-            currentSender.NextInvoiceNumberPreview = FinanceService.FormatInvoiceNumber(
-                settings.InvoiceNumberPrefix, settings.NextInvoiceNumber, settings.InvoiceNumberDigits, today.Year);
+            var currentSender = FinanceService.ToSenderDto(_mapper, settings, today.Year);
 
             return invoices
                 .OrderByDescending(i => i.InvoiceDate)

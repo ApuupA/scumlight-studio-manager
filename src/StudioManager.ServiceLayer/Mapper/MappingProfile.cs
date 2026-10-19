@@ -308,7 +308,8 @@ namespace StudioManager.ServiceLayer.Mapper
         private void CreateFinanceMappings()
         {
             CreateMap<BusinessSettings, BusinessSettingsReadDto>()
-                .ForMember(dest => dest.NextInvoiceNumberPreview, opt => opt.Ignore()); // set by FinanceService
+                .ForMember(dest => dest.NextInvoiceNumberPreview, opt => opt.Ignore()) // set by FinanceService
+                .ForMember(dest => dest.NextQuoteNumberPreview, opt => opt.Ignore());
             CreateMap<BusinessSettingsUpdateDto, BusinessSettings>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Currency, opt => opt.Ignore())

@@ -43,7 +43,7 @@ export function useUpdateBusinessSettings() {
  */
 export function settingsToInput(settings: BusinessSettings): BusinessSettingsInput {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars -- currency and preview are not saved
-  const { currency, nextInvoiceNumberPreview, ...input } = settings
+  const { currency, nextInvoiceNumberPreview, nextQuoteNumberPreview, ...input } = settings
   return input
 }
 

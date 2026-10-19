@@ -30,7 +30,8 @@ namespace StudioManager.Tests.Unit
             var mapper = TestHelper.CreateMapper();
             _invoiceService = new InvoiceService(
                 new Repository<Invoice>(_context), new Repository<Payment>(_context), new Repository<Project>(_context),
-                new Repository<TimeEntry>(_context), new Repository<ProjectCostItem>(_context), new Repository<BusinessSettings>(_context), mapper);
+                new Repository<TimeEntry>(_context), new Repository<ProjectCostItem>(_context), new Repository<BusinessSettings>(_context),
+                new Repository<Quote>(_context), mapper);
             _timeEntryService = new TimeEntryService(
                 new Repository<TimeEntry>(_context), new Repository<Project>(_context), new Repository<Session>(_context),
                 new Repository<User>(_context), new Repository<StandardTask>(_context), mapper);

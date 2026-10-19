@@ -1,4 +1,4 @@
-import { Alert, Center, Group, Loader, Paper, SegmentedControl, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core'
+import { Alert, Center, Group, Loader, Paper, SegmentedControl, SimpleGrid, Stack, Table, Text } from '@mantine/core'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -19,10 +19,10 @@ const filters: Record<Filter, (invoice: Invoice) => boolean> = {
 }
 
 /**
- * All invoices (route /invoices): what is open, what is overdue, what was invoiced this year.
+ * Tab "Invoices" of the finance page: what is open, what is overdue, what was invoiced this year.
  * New invoices are created in a project (tab "Time & costs").
  */
-export default function InvoiceListPage() {
+export default function InvoicesOverview() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const { data: invoices, isPending, error } = useInvoices()
@@ -43,8 +43,6 @@ export default function InvoiceListPage() {
 
   return (
     <Stack>
-      <Title order={2}>{t('invoices.title')}</Title>
-
       <SimpleGrid cols={{ base: 1, sm: 3 }}>
         <Paper withBorder p="sm">
           <Text size="xs" c="dimmed" tt="uppercase" fw={700}>{t('invoices.openTotal')}</Text>

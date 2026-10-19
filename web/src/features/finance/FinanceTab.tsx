@@ -12,6 +12,7 @@ import { useCostItems, useDeleteCostItem, useDeleteTimeEntry, useProjectFinance,
 import PricingCard from './PricingCard'
 import TimeEntryFormModal from './TimeEntryFormModal'
 import ProjectInvoicesCard from '../invoices/ProjectInvoicesCard'
+import ProjectQuotesCard from '../quotes/ProjectQuotesCard'
 
 type Dialog = { type: 'none' } | { type: 'entry'; entry?: TimeEntry } | { type: 'costItem'; item?: ProjectCostItem }
 
@@ -129,6 +130,7 @@ export default function FinanceTab({ projectId }: { projectId: number }) {
         <Grid.Col span={{ base: 12, lg: 4 }}>
           <Stack>
             <ProjectInvoicesCard projectId={projectId} />
+            <ProjectQuotesCard projectId={projectId} />
 
             {/* key: fresh form values when the pricing was changed */}
             {finance && <PricingCard key={`${finance.pricingMode}-${finance.hourlyRate}-${finance.flatPrice}`} projectId={projectId} finance={finance} />}

@@ -19,6 +19,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         private readonly IRepository<Band> _bandRepository;
         private readonly IPhotoService _photos;
         private readonly IRepository<Invoice> _invoiceRepository;
+        private readonly IRepository<Quote> _quoteRepository;
 
         public const string PhotoFolder = "project-covers";
 
@@ -28,9 +29,11 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             IRepository<Band> bandRepository,
             IPhotoService photos,
             IRepository<Invoice> invoiceRepository,
+            IRepository<Quote> quoteRepository,
             IMapper mapper) : base(repository, mapper)
         {
             _invoiceRepository = invoiceRepository;
+            _quoteRepository = quoteRepository;
             _clientRepository = clientRepository;
             _bandRepository = bandRepository;
             _photos = photos;
@@ -118,6 +121,18 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             if (await _invoiceRepository.ExistsAsync(i => i.ProjectId == id))
             {
                 throw new BusinessRuleException("project.hasInvoices", "The project has invoices and can not be deleted.");
+            }
+
+            // Issued quotes are kept as well - drafts are simply deleted with the project
+            if (await _quoteRepository.ExistsAsync(q => q.ProjectId == id && q.Number != null))
+            {
+                throw new BusinessRuleException("project.hasQuotes", "The project has quotes and can not be deleted.");
+            }
+
+            var drafts = await _quoteRepository.GetAllAsync(q => q.ProjectId == id);
+            foreach (var draft in drafts)
+            {
+                await _quoteRepository.DeleteAsync(draft.Id);
             }
 
             var project = await _repository.GetAsync(id);

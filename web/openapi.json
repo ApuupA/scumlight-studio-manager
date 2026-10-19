@@ -2882,6 +2882,36 @@
         }
       }
     },
+    "/api/Invoice/from-quote/{quoteId}": {
+      "post": {
+        "tags": [
+          "Invoice"
+        ],
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Invoice/{id}/issue": {
       "post": {
         "tags": [
@@ -3957,6 +3987,287 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Quote": {
+      "get": {
+        "tags": [
+          "Quote"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuoteReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quote/project/{projectId}": {
+      "get": {
+        "tags": [
+          "Quote"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuoteReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quote/{id}": {
+      "get": {
+        "tags": [
+          "Quote"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Quote"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quote"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Quote/project/{projectId}/draft": {
+      "post": {
+        "tags": [
+          "Quote"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quote/{id}/issue": {
+      "post": {
+        "tags": [
+          "Quote"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceDateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceDateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quote/{id}/status": {
+      "put": {
+        "tags": [
+          "Quote"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteStatusDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteStatusDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteReadDto"
+                }
+              }
+            }
           }
         }
       }
@@ -6364,7 +6675,11 @@
           "isSmallBusiness",
           "nextInvoiceNumber",
           "nextInvoiceNumberPreview",
+          "nextQuoteNumber",
+          "nextQuoteNumberPreview",
           "paymentTermDays",
+          "quoteNumberPrefix",
+          "quoteValidityDays",
           "vatRate"
         ],
         "type": "object",
@@ -6452,6 +6767,20 @@
           },
           "nextInvoiceNumberPreview": {
             "type": "string"
+          },
+          "quoteNumberPrefix": {
+            "type": "string"
+          },
+          "nextQuoteNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quoteValidityDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextQuoteNumberPreview": {
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -6463,7 +6792,10 @@
           "invoiceNumberPrefix",
           "isSmallBusiness",
           "nextInvoiceNumber",
+          "nextQuoteNumber",
           "paymentTermDays",
+          "quoteNumberPrefix",
+          "quoteValidityDays",
           "vatRate"
         ],
         "type": "object",
@@ -6567,6 +6899,22 @@
           },
           "invoiceNumberDigits": {
             "maximum": 8,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "quoteNumberPrefix": {
+            "maxLength": 30,
+            "type": "string"
+          },
+          "nextQuoteNumber": {
+            "maximum": 999999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "quoteValidityDays": {
+            "maximum": 365,
             "minimum": 1,
             "type": "integer",
             "format": "int32"
@@ -8676,6 +9024,182 @@
         ],
         "type": "string"
       },
+      "QuoteReadDto": {
+        "required": [
+          "clientId",
+          "clientName",
+          "grossTotal",
+          "id",
+          "isExpired",
+          "isSmallBusiness",
+          "lines",
+          "netTotal",
+          "projectId",
+          "projectTitle",
+          "quoteDate",
+          "recipientName",
+          "sender",
+          "status",
+          "vatAmount",
+          "vatRate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/QuoteStatus"
+          },
+          "isExpired": {
+            "type": "boolean"
+          },
+          "quoteDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "recipientName": {
+            "type": "string"
+          },
+          "recipientAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "introText": {
+            "type": "string",
+            "nullable": true
+          },
+          "closingText": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSmallBusiness": {
+            "type": "boolean"
+          },
+          "vatRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "netTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "vatAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "grossTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectTitle": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "clientName": {
+            "type": "string"
+          },
+          "invoiceId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "invoiceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "sender": {
+            "$ref": "#/components/schemas/BusinessSettingsReadDto"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLineDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuoteStatus": {
+        "enum": [
+          "Draft",
+          "Sent",
+          "Accepted",
+          "Declined",
+          "Invoiced"
+        ],
+        "type": "string"
+      },
+      "QuoteStatusDto": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/QuoteStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuoteUpdateDto": {
+        "required": [
+          "lines",
+          "quoteDate",
+          "recipientName"
+        ],
+        "type": "object",
+        "properties": {
+          "quoteDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "recipientName": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "recipientAddress": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "introText": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "closingText": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLineDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
       "SessionCreateDto": {
         "required": [
           "date",
@@ -10100,6 +10624,9 @@
     },
     {
       "name": "ProjectLink"
+    },
+    {
+      "name": "Quote"
     },
     {
       "name": "Session"
