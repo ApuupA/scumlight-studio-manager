@@ -41,6 +41,8 @@ Database migrations are applied automatically when the API starts.
 
 ## Run everything in Docker (like on the server)
 
+Setting it up on the real server (Apache, HTTPS, backups): see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 ```bash
 cp .env.example .env      # set real passwords!
 docker compose up -d --build
