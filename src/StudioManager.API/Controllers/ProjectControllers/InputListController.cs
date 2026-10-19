@@ -46,6 +46,15 @@ namespace StudioManager.API.Controllers.ProjectControllers
         }
 
         /// <summary>
+        /// Moves source, microphone and stand to another studio input (drag and drop in the list).
+        /// </summary>
+        [HttpPost("{id:int}/move")]
+        public async Task<ActionResult<InputListReadDto>> MoveEntry(int id, [FromBody] InputListMoveDto dto)
+        {
+            return Ok(await _service.MoveEntry(id, dto));
+        }
+
+        /// <summary>
         /// Removes all rows of the list.
         /// </summary>
         [HttpDelete("{id:int}/rows")]

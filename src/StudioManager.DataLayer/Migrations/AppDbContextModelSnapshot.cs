@@ -898,10 +898,6 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<int?>("BandId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal?>("Bpm")
-                        .HasPrecision(6, 2)
-                        .HasColumnType("numeric(6,2)");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -939,6 +935,40 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Songs");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.SongTempo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Bpm")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("numeric(6,2)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("FromBar")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SongId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("SongTempos");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
@@ -1415,6 +1445,17 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.SongTempo", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Song", "Song")
+                        .WithMany("Tempos")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Song");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.InputList", "InputList")
@@ -1498,6 +1539,11 @@ namespace StudioManager.DataLayer.Migrations
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.SetupTemplate", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Song", b =>
+                {
+                    b.Navigation("Tempos");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>

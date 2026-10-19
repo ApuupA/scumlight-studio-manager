@@ -81,6 +81,7 @@ export default function InputListsTab({ projectId }: { projectId: number }) {
             <Text size="sm" c="dimmed">
               {t('inputList.usage', { used: activeList.usedInputCount, total: activeList.rows.length })}
               {activeList.notes && ` · ${activeList.notes}`}
+              {` · ${t('inputList.moveHint')}`}
             </Text>
             <Group gap="xs">
               <Button size="xs" variant="light" leftSection={<IconPlaylistAdd size={14} />} onClick={() => setDialog({ type: 'fill', list: activeList })}>

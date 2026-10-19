@@ -200,9 +200,13 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
 
             CreateMap<Song, SongReadDto>()
-                .ForMember(dest => dest.BandName, opt => opt.MapFrom(src => src.Band != null ? src.Band.Name : null));
+                .ForMember(dest => dest.BandName, opt => opt.MapFrom(src => src.Band != null ? src.Band.Name : null))
+                .ForMember(dest => dest.Tempos, opt => opt.MapFrom(src => src.Tempos.OrderBy(t => t.SortOrder)));
+            CreateMap<SongTempo, SongTempoReadDto>();
+            // The tempos are replaced by SongService (ReplaceTempos)
             CreateMap<SongCreateDto, Song>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Tempos, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.Band, opt => opt.Ignore())
                 .ForMember(dest => dest.Sessions, opt => opt.Ignore())

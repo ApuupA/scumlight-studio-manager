@@ -19,8 +19,8 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             _projectRepository = projectRepository;
         }
 
-        // Load the band, so BandName can be filled
-        protected override Expression<Func<Song, object>>[] DefaultIncludes => [s => s.Band!];
+        // Load the band (for BandName) and the tempos
+        protected override Expression<Func<Song, object>>[] DefaultIncludes => [s => s.Band!, s => s.Tempos];
 
         public async Task<IEnumerable<SongReadDto>> GetForProject(int projectId)
         {
@@ -46,13 +46,44 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         public override async Task<SongReadDto> Insert(SongCreateDto createDto)
         {
             await EnsureBandIsInProject(createDto);
-            return await base.Insert(createDto);
+
+            var song = _mapper.Map<Song>(createDto);
+            ReplaceTempos(song, createDto);
+            await _repository.AddAsync(song);
+
+            return (await Get(song.Id))!;
         }
 
         public override async Task<SongReadDto> Update(int id, SongCreateDto updateDto)
         {
             await EnsureBandIsInProject(updateDto);
-            return await base.Update(id, updateDto);
+
+            var song = await _repository.GetAsync(s => s.Id == id, s => s.Tempos)
+                ?? throw new EntityNotFoundException(nameof(Song), id);
+
+            _mapper.Map(updateDto, song);
+            ReplaceTempos(song, updateDto);
+            await _repository.UpdateAsync(song);
+
+            return (await Get(id))!;
+        }
+
+        /// <summary>
+        /// Replaces the tempos of the song with the ones from the form (EF deletes the removed ones).
+        /// </summary>
+        private static void ReplaceTempos(Song song, SongCreateDto dto)
+        {
+            song.Tempos.Clear();
+
+            for (var i = 0; i < dto.Tempos.Count; i++)
+            {
+                song.Tempos.Add(new SongTempo
+                {
+                    Bpm = dto.Tempos[i].Bpm,
+                    FromBar = dto.Tempos[i].FromBar,
+                    SortOrder = i + 1
+                });
+            }
         }
 
         /// <summary>

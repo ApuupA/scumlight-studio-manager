@@ -11,6 +11,7 @@ import SetupPrintTable from '../instruments/SetupPrintTable'
 import { formatSessionDates } from '../sessions/sessionDates'
 import { useSessionsOfProject } from '../sessions/sessionApi'
 import { useDrumTunings, useExternalGear, useProject, useProjectLinks, useSongs } from './projectApi'
+import { formatTempos } from './songTempos'
 
 /**
  * Printable project sheet (route /projects/:id/sheet): everything about the project on paper -
@@ -102,7 +103,7 @@ function ProjectSheet({ project }: { project: Project }) {
                     <td>{song.trackNumber}</td>
                     <td><strong>{song.title}</strong></td>
                     {project.bands.length > 1 && <td>{song.bandName}</td>}
-                    <td>{song.bpm}</td>
+                    <td>{formatTempos(song.tempos, t)}</td>
                     <td>{song.tuning}</td>
                     <td>{t(`songStatus.${song.status}`)}</td>
                   </tr>

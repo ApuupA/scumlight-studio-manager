@@ -13,7 +13,6 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public int TrackNumber { get; set; }
 
         public SongStatus Status { get; set; } = SongStatus.Planned;
-        public decimal? Bpm { get; set; }
 
         /// <summary>Instrument tuning, e.g. "Drop C" or "Eb standard".</summary>
         public string? Tuning { get; set; }
@@ -28,6 +27,11 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// </summary>
         public int? BandId { get; set; }
         public Band? Band { get; set; }
+
+        /// <summary>
+        /// Tempo(s) of the song in song order - several if the tempo changes.
+        /// </summary>
+        public ICollection<SongTempo> Tempos { get; set; } = new List<SongTempo>();
 
         /// <summary>
         /// Sessions in which this song was worked on.

@@ -141,7 +141,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
                             InputListId = list.Id,
                             StudioInputId = freeInputs.Dequeue().Id,
                             SetupItemId = item.Id,
-                            Source = item.Quantity > 1 ? $"{source} {piece}" : source,
+                            Source = PieceName(source, piece, item.Quantity),
                             Microphone = item.GearItem?.Name ?? item.ExternalGear?.Name ?? item.CustomName
                         });
                         addedCount++;
@@ -155,6 +155,49 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
                 AddedCount = addedCount,
                 NotPlacedCount = notPlacedCount
             };
+        }
+
+        public async Task<InputListReadDto> MoveEntry(int inputListId, InputListMoveDto dto)
+        {
+            await EnsureListExists(inputListId);
+            if (!await _studioInputRepository.ExistsAsync(i => i.Id == dto.ToStudioInputId))
+            {
+                throw new EntityNotFoundException(nameof(StudioInput), dto.ToStudioInputId);
+            }
+
+            var rows = (await _rowRepository.GetAllAsync(r => r.InputListId == inputListId
+                && (r.StudioInputId == dto.FromStudioInputId || r.StudioInputId == dto.ToStudioInputId))).ToList();
+
+            var from = rows.SingleOrDefault(r => r.StudioInputId == dto.FromStudioInputId)
+                ?? throw new BusinessRuleException("inputList.nothingToMove", "Nothing is plugged into this input.");
+
+            if (dto.FromStudioInputId == dto.ToStudioInputId)
+            {
+                return (await Get(inputListId))!;
+            }
+
+            // The target input is free: create its row first
+            var to = rows.SingleOrDefault(r => r.StudioInputId == dto.ToStudioInputId);
+            if (to == null)
+            {
+                to = new InputListRow { InputListId = inputListId, StudioInputId = dto.ToStudioInputId };
+                await _rowRepository.AddAsync(to);
+            }
+
+            // Only what is plugged in changes places - +48V, HPF, Tone, EQ, insert and comment stay at their input
+            (from.Source, to.Source) = (to.Source, from.Source);
+            (from.Microphone, to.Microphone) = (to.Microphone, from.Microphone);
+            (from.Stand, to.Stand) = (to.Stand, from.Stand);
+            (from.SetupItemId, to.SetupItemId) = (to.SetupItemId, from.SetupItemId);
+            await _rowRepository.UpdateRangeAsync([from, to]);
+
+            // An input with nothing left in it is free again
+            if (IsEmpty(from))
+            {
+                await _rowRepository.DeleteAsync(from.Id);
+            }
+
+            return (await Get(inputListId))!;
         }
 
         public async Task<InputListReadDto> ClearRows(int inputListId)
@@ -239,6 +282,20 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             dto.Insert = Trim(dto.Insert);
             dto.Comment = Trim(dto.Comment);
         }
+
+        /// <summary>
+        /// "Overheads L" / "Overheads R" for a pair (almost always stereo), "Toms 1", "Toms 2", "Toms 3" for more.
+        /// </summary>
+        private static string PieceName(string source, int piece, int quantity) => quantity switch
+        {
+            1 => source,
+            2 => piece == 1 ? $"{source} L" : $"{source} R",
+            _ => $"{source} {piece}"
+        };
+
+        private static bool IsEmpty(InputListRow row) =>
+            row.Source == null && row.Microphone == null && row.Stand == null && row.Insert == null && row.Comment == null
+            && !row.Phantom && !row.Hpf && !row.Tone && !row.Eq;
 
         private static bool IsEmpty(InputListRowSaveDto dto) =>
             dto.Source == null && dto.Microphone == null && dto.Stand == null && dto.Insert == null && dto.Comment == null

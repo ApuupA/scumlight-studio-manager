@@ -8,7 +8,7 @@ namespace StudioManager.DataLayer.DTO.Read
         public string Title { get; set; } = string.Empty;
         public int TrackNumber { get; set; }
         public SongStatus Status { get; set; }
-        public decimal? Bpm { get; set; }
+        public List<SongTempoReadDto> Tempos { get; set; } = new();
         public string? Tuning { get; set; }
         public string? Notes { get; set; }
         public int ProjectId { get; set; }

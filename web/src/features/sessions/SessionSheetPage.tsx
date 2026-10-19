@@ -11,6 +11,7 @@ import SetupPrintTable from '../instruments/SetupPrintTable'
 import { useSession, useSessionTasks } from './sessionApi'
 import { formatSessionDates } from './sessionDates'
 import classes from '../../components/PrintSheet.module.css'
+import { formatTempos } from '../projects/songTempos'
 
 /**
  * Printable session sheet (route /sessions/:id/sheet): everything needed on the session day on one page.
@@ -124,7 +125,7 @@ function SessionSheet({ session }: { session: Session }) {
                     <td>{song.trackNumber}</td>
                     <td><strong>{song.title}</strong></td>
                     {(project?.bands.length ?? 0) > 1 && <td>{song.bandName}</td>}
-                    <td>{song.bpm}</td>
+                    <td>{formatTempos(song.tempos, t)}</td>
                     <td>{song.tuning}</td>
                     <td>{t(`songStatus.${song.status}`)}</td>
                   </tr>

@@ -1609,6 +1609,55 @@
         }
       }
     },
+    "/api/InputList/{id}/move": {
+      "post": {
+        "tags": [
+          "InputList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListMoveDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListMoveDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputListMoveDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputListReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/InputList/{id}/rows": {
       "delete": {
         "tags": [
@@ -4490,6 +4539,28 @@
         },
         "additionalProperties": false
       },
+      "InputListMoveDto": {
+        "required": [
+          "fromStudioInputId",
+          "toStudioInputId"
+        ],
+        "type": "object",
+        "properties": {
+          "fromStudioInputId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "toStudioInputId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "InputListReadDto": {
         "required": [
           "id",
@@ -5778,6 +5849,7 @@
         "required": [
           "projectId",
           "status",
+          "tempos",
           "title",
           "trackNumber"
         ],
@@ -5797,12 +5869,11 @@
           "status": {
             "$ref": "#/components/schemas/SongStatus"
           },
-          "bpm": {
-            "maximum": 400,
-            "minimum": 1,
-            "type": "number",
-            "format": "double",
-            "nullable": true
+          "tempos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SongTempoCreateDto"
+            }
           },
           "tuning": {
             "maxLength": 50,
@@ -5835,6 +5906,7 @@
           "id",
           "projectId",
           "status",
+          "tempos",
           "title",
           "trackNumber"
         ],
@@ -5854,10 +5926,11 @@
           "status": {
             "$ref": "#/components/schemas/SongStatus"
           },
-          "bpm": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
+          "tempos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SongTempoReadDto"
+            }
           },
           "tuning": {
             "type": "string",
@@ -5919,6 +5992,46 @@
           },
           "status": {
             "$ref": "#/components/schemas/SongStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SongTempoCreateDto": {
+        "required": [
+          "bpm"
+        ],
+        "type": "object",
+        "properties": {
+          "bpm": {
+            "maximum": 400,
+            "minimum": 1,
+            "type": "number",
+            "format": "double"
+          },
+          "fromBar": {
+            "maximum": 99999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SongTempoReadDto": {
+        "required": [
+          "bpm"
+        ],
+        "type": "object",
+        "properties": {
+          "bpm": {
+            "type": "number",
+            "format": "double"
+          },
+          "fromBar": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false

@@ -10,6 +10,7 @@ import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useDeleteSong, useSetSongStatus, useSongs } from './projectApi'
 import SongFormModal from './SongFormModal'
+import { formatTempos } from './songTempos'
 
 /** State of the song dialog: closed, new song, or editing a song. */
 type ModalState = { open: false } | { open: true; song?: Song }
@@ -127,7 +128,7 @@ export default function SongsTab({ project }: { project: Project }) {
                   </Table.Td>
                   {showBandColumn && <Table.Td>{song.bandName}</Table.Td>}
                   <Table.Td><StatusBadge value={song.status} translationKey="songStatus" colors={songStatusColors} /></Table.Td>
-                  <Table.Td>{song.bpm}</Table.Td>
+                  <Table.Td>{formatTempos(song.tempos, t)}</Table.Td>
                   <Table.Td>{song.tuning}</Table.Td>
                   <Table.Td>
                     <RowActions onEdit={() => setModal({ open: true, song })} onDelete={() => handleDelete(song)} />

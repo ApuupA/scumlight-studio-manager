@@ -47,13 +47,14 @@ namespace StudioManager.Tests.Unit
         private async Task<int> CreateInstrument(string name = "Guitar") =>
             (await _instrumentService.Insert(new ProjectInstrumentCreateDto { Name = name, ProjectId = _project.Id, IsChain = true })).Id;
 
-        private InstrumentSetupItemCreateDto Item(int instrumentId, int? gearItemId = null, int? externalGearId = null, string? customName = null) => new()
+        private InstrumentSetupItemCreateDto Item(int instrumentId, int? gearItemId = null, int? externalGearId = null, string? customName = null, bool needsInput = false) => new()
         {
             ProjectInstrumentId = instrumentId,
             GearItemId = gearItemId,
             ExternalGearId = externalGearId,
             CustomName = customName,
-            UsedFor = "Cab"
+            UsedFor = "Cab",
+            NeedsInput = needsInput
         };
 
         [Fact]
@@ -111,6 +112,21 @@ namespace StudioManager.Tests.Unit
 
             var instrument = (await _instrumentService.Get(guitar))!;
             Assert.Equal(new[] { "Guitar", "Cab", "Amp" }, instrument.SetupItems.Select(i => i.DisplayName));
+        }
+
+        [Fact]
+        public async Task Move_InAList_ShouldSwapWithinTheSameGroup()
+        {
+            var drums = (await _instrumentService.Insert(new ProjectInstrumentCreateDto { Name = "Drums", ProjectId = _project.Id, IsChain = false })).Id;
+            await _setupItemService.Insert(Item(drums, customName: "Kick mic", needsInput: true));
+            await _setupItemService.Insert(Item(drums, customName: "Drum rug"));
+            var snare = await _setupItemService.Insert(Item(drums, customName: "Snare mic", needsInput: true));
+
+            // Shown as "Kick mic, Snare mic" + "Drum rug": up swaps with the kick mic, not with the rug
+            await _setupItemService.Move(snare.Id, new SetupItemMoveDto { Direction = -1 });
+
+            var instrument = (await _instrumentService.Get(drums))!;
+            Assert.Equal(new[] { "Snare mic", "Drum rug", "Kick mic" }, instrument.SetupItems.Select(i => i.DisplayName));
         }
 
         [Fact]
