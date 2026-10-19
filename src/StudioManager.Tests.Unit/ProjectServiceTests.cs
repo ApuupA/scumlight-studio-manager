@@ -2,6 +2,7 @@ using Moq;
 using StudioManager.DataLayer.Context;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.Models.ClientModels;
+using StudioManager.DataLayer.Models.FinanceModels;
 using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.RepositoryLayer.Repository;
 using StudioManager.ServiceLayer.Exceptions;
@@ -32,7 +33,7 @@ namespace StudioManager.Tests.Unit
             var mapper = TestHelper.CreateMapper();
             _photos = new PhotoService(_mockFileStorage.Object);
             _projectService = new ProjectService(
-                new Repository<Project>(_context), new Repository<Client>(_context), new Repository<Band>(_context), _photos, mapper);
+                new Repository<Project>(_context), new Repository<Client>(_context), new Repository<Band>(_context), _photos, new Repository<Invoice>(_context), mapper);
             _clientService = new ClientService(new Repository<Client>(_context), new Repository<Project>(_context), _photos, mapper);
 
             _label = new Client { Name = "Split Label" };

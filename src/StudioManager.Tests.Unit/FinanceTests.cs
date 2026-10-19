@@ -33,7 +33,7 @@ namespace StudioManager.Tests.Unit
             _costItemService = new ProjectCostItemService(new Repository<ProjectCostItem>(_context), mapper);
             _financeService = new FinanceService(
                 new Repository<BusinessSettings>(_context), new Repository<Project>(_context), new Repository<TimeEntry>(_context),
-                new Repository<ProjectCostItem>(_context), mapper);
+                new Repository<ProjectCostItem>(_context), new Repository<Invoice>(_context), mapper);
 
             _project = new Project { Title = "Album", Client = new Client { Name = "Label" } };
             _user = new User { Email = "owner@studio.local", DisplayName = "Owner" };

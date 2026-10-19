@@ -8,6 +8,7 @@ using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IFileServices;
 using StudioManager.ServiceLayer.IService.IProjectServices;
 using StudioManager.ServiceLayer.Results;
+using StudioManager.DataLayer.Models.FinanceModels;
 using System.Linq.Expressions;
 
 namespace StudioManager.ServiceLayer.Service.ProjectServices
@@ -17,6 +18,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         private readonly IRepository<Client> _clientRepository;
         private readonly IRepository<Band> _bandRepository;
         private readonly IPhotoService _photos;
+        private readonly IRepository<Invoice> _invoiceRepository;
 
         public const string PhotoFolder = "project-covers";
 
@@ -25,8 +27,10 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             IRepository<Client> clientRepository,
             IRepository<Band> bandRepository,
             IPhotoService photos,
+            IRepository<Invoice> invoiceRepository,
             IMapper mapper) : base(repository, mapper)
         {
+            _invoiceRepository = invoiceRepository;
             _clientRepository = clientRepository;
             _bandRepository = bandRepository;
             _photos = photos;
@@ -110,6 +114,12 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
         public override async Task Delete(int id)
         {
+            // Invoices must be kept for years - and they belong to the project
+            if (await _invoiceRepository.ExistsAsync(i => i.ProjectId == id))
+            {
+                throw new BusinessRuleException("project.hasInvoices", "The project has invoices and can not be deleted.");
+            }
+
             var project = await _repository.GetAsync(id);
             await base.Delete(id);
             _photos.DeleteFile(project?.PhotoPath);

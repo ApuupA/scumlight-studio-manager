@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import type { TaskUnit, TimeEntry } from '../../api/types'
 import { idOrNull } from '../../utils/form'
-import { todayIso } from '../../utils/format'
+import { decimalSeparator, todayIso } from '../../utils/format'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useCurrentUser } from '../auth/authApi'
 import { useSessionsOfProject } from '../sessions/sessionApi'
@@ -33,7 +33,7 @@ interface TimeEntryFormModalProps {
  * Create or edit a time entry: date, hours, what was done, optionally the session and who worked.
  */
 export default function TimeEntryFormModal({ projectId, entry, defaults, onClose }: TimeEntryFormModalProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const saveEntry = useSaveTimeEntry()
   const { data: sessions } = useSessionsOfProject(projectId)
   const { data: users } = useUsers()
@@ -102,7 +102,7 @@ export default function TimeEntryFormModal({ projectId, entry, defaults, onClose
           />
           <SimpleGrid cols={2}>
             <DatePickerInput label={t('finance.date')} valueFormat="L" withAsterisk {...form.getInputProps('date')} />
-            <NumberInput
+            <NumberInput {...decimalSeparator(i18n.language)}
               label={t('finance.hours')}
               description={selectedTask?.unit === 'Day' ? t('finance.dayHint', { hours: selectedTask.hoursPerUnit }) : t('finance.hoursHint')}
               min={0.25} max={24} step={0.25} decimalScale={2} withAsterisk data-autofocus {...form.getInputProps('hours')}

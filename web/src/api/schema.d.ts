@@ -2608,6 +2608,365 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Invoice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Invoice/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Invoice/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InvoiceUpdateDto"];
+                    "text/json": components["schemas"]["InvoiceUpdateDto"];
+                    "application/*+json": components["schemas"]["InvoiceUpdateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Invoice/project/{projectId}/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Invoice/{id}/issue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InvoiceDateDto"];
+                    "text/json": components["schemas"]["InvoiceDateDto"];
+                    "application/*+json": components["schemas"]["InvoiceDateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Invoice/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InvoiceDateDto"];
+                    "text/json": components["schemas"]["InvoiceDateDto"];
+                    "application/*+json": components["schemas"]["InvoiceDateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Invoice/{id}/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["PaymentCreateDto"];
+                    "text/json": components["schemas"]["PaymentCreateDto"];
+                    "application/*+json": components["schemas"]["PaymentCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Invoice/{id}/payments/{paymentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                    paymentId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Project/client/{clientId}": {
         parameters: {
             query?: never;
@@ -5988,6 +6347,82 @@ export interface components {
             id: number;
             name: string;
         };
+        InvoiceDateDto: {
+            /** Format: date */
+            date: string;
+        };
+        InvoiceLineDto: {
+            description: string;
+            /** Format: double */
+            quantity: number;
+            unit?: string | null;
+            /** Format: double */
+            unitPrice: number;
+            /** Format: double */
+            total: number;
+        };
+        /** @enum {string} */
+        InvoicePaymentStatus: "Draft" | "Open" | "PartiallyPaid" | "Paid" | "Overdue" | "Cancelled" | "Cancellation";
+        InvoiceReadDto: {
+            /** Format: int32 */
+            id: number;
+            number?: string | null;
+            status: components["schemas"]["InvoiceStatus"];
+            paymentStatus: components["schemas"]["InvoicePaymentStatus"];
+            /** Format: date */
+            invoiceDate: string;
+            /** Format: date */
+            serviceFrom?: string | null;
+            /** Format: date */
+            serviceTo?: string | null;
+            /** Format: date */
+            dueDate?: string | null;
+            recipientName: string;
+            recipientAddress?: string | null;
+            introText?: string | null;
+            closingText?: string | null;
+            isSmallBusiness: boolean;
+            /** Format: double */
+            vatRate: number;
+            /** Format: double */
+            netTotal: number;
+            /** Format: double */
+            vatAmount: number;
+            /** Format: double */
+            grossTotal: number;
+            /** Format: double */
+            paidAmount: number;
+            /** Format: double */
+            openAmount: number;
+            /** Format: int32 */
+            cancelsInvoiceId?: number | null;
+            cancelsInvoiceNumber?: string | null;
+            cancelledByNumber?: string | null;
+            /** Format: int32 */
+            projectId: number;
+            projectTitle: string;
+            /** Format: int32 */
+            clientId: number;
+            clientName: string;
+            sender: components["schemas"]["BusinessSettingsReadDto"];
+            lines: components["schemas"]["InvoiceLineDto"][];
+            payments: components["schemas"]["PaymentReadDto"][];
+        };
+        /** @enum {string} */
+        InvoiceStatus: "Draft" | "Issued" | "Cancelled";
+        InvoiceUpdateDto: {
+            /** Format: date */
+            invoiceDate: string;
+            /** Format: date */
+            serviceFrom?: string | null;
+            /** Format: date */
+            serviceTo?: string | null;
+            recipientName: string;
+            recipientAddress?: string | null;
+            introText?: string | null;
+            closingText?: string | null;
+            lines: components["schemas"]["InvoiceLineDto"][];
+        };
         LoginDto: {
             /** Format: email */
             email: string;
@@ -5996,6 +6431,22 @@ export interface components {
         MoveDto: {
             /** Format: int32 */
             direction: number;
+        };
+        PaymentCreateDto: {
+            /** Format: date */
+            date: string;
+            /** Format: double */
+            amount: number;
+            note?: string | null;
+        };
+        PaymentReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: date */
+            date: string;
+            /** Format: double */
+            amount: number;
+            note?: string | null;
         };
         /** @enum {string} */
         PricingMode: "Hourly" | "FlatPrice";
@@ -6036,6 +6487,9 @@ export interface components {
             isBillable: boolean;
             /** Format: int32 */
             projectId: number;
+            /** Format: int32 */
+            invoiceId?: number | null;
+            invoiceNumber?: string | null;
         };
         ProjectCreateDto: {
             title: string;
@@ -6080,6 +6534,10 @@ export interface components {
             totalValue: number;
             /** Format: double */
             actualHourlyRate?: number | null;
+            /** Format: double */
+            invoicedTotal: number;
+            /** Format: double */
+            paidTotal: number;
             currency: string;
         };
         ProjectInstrumentCreateDto: {
@@ -6529,6 +6987,9 @@ export interface components {
             startedAt?: string | null;
             /** Format: int32 */
             projectId: number;
+            /** Format: int32 */
+            invoiceId?: number | null;
+            invoiceNumber?: string | null;
             projectTitle: string;
             /** Format: int32 */
             standardTaskId?: number | null;

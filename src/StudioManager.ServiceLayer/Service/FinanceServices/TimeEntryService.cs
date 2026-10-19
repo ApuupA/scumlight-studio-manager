@@ -38,7 +38,7 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
 
         // Load project, session, user and standard task, so their names can be shown
         protected override Expression<Func<TimeEntry, object>>[] DefaultIncludes =>
-            [t => t.Project!, t => t.Session!, t => t.User!, t => t.StandardTask!];
+            [t => t.Project!, t => t.Session!, t => t.User!, t => t.StandardTask!, t => t.Invoice!];
 
         public async Task<IEnumerable<TimeEntryReadDto>> GetForProject(int projectId)
         {
@@ -56,10 +56,29 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
 
         public override async Task<TimeEntryReadDto> Update(int id, TimeEntryCreateDto updateDto)
         {
+            await EnsureNotInvoiced(id);
             await Validate(updateDto.ProjectId, updateDto.SessionId, updateDto.UserId, updateDto.StandardTaskId);
             updateDto.Description = updateDto.Description?.Trim() ?? string.Empty;
             RequireTaskOrNote(updateDto);
             return await base.Update(id, updateDto);
+        }
+
+        public override async Task Delete(int id)
+        {
+            await EnsureNotInvoiced(id);
+            await base.Delete(id);
+        }
+
+        /// <summary>
+        /// Time on an invoice (or draft) is locked - the invoice would not match anymore.
+        /// </summary>
+        private async Task EnsureNotInvoiced(int id)
+        {
+            if (await _repository.ExistsAsync(t => t.Id == id && t.InvoiceId != null))
+            {
+                throw new BusinessRuleException("timeEntry.invoiced",
+                    "This time is on an invoice - delete the draft or cancel the invoice first.");
+            }
         }
 
         public async Task<TimeEntryReadDto?> GetRunningTimer(int userId)

@@ -11,6 +11,7 @@ import CostItemFormModal from './CostItemFormModal'
 import { useCostItems, useDeleteCostItem, useDeleteTimeEntry, useProjectFinance, useTimeEntries } from './financeApi'
 import PricingCard from './PricingCard'
 import TimeEntryFormModal from './TimeEntryFormModal'
+import ProjectInvoicesCard from '../invoices/ProjectInvoicesCard'
 
 type Dialog = { type: 'none' } | { type: 'entry'; entry?: TimeEntry } | { type: 'costItem'; item?: ProjectCostItem }
 
@@ -67,7 +68,11 @@ export default function FinanceTab({ projectId }: { projectId: number }) {
               : t('finance.atRate', { rate: money(finance.effectiveHourlyRate) })}
           />
           <Stat label={t('finance.extras')} value={money(finance.extrasValue)} />
-          <Stat label={t('finance.totalValue')} value={money(finance.totalValue)} hint={t('finance.totalHint')} />
+          <Stat
+            label={t('finance.totalValue')}
+            value={money(finance.totalValue)}
+            hint={t('finance.invoicedHint', { invoiced: money(finance.invoicedTotal), paid: money(finance.paidTotal) })}
+          />
         </SimpleGrid>
       )}
 
@@ -103,10 +108,14 @@ export default function FinanceTab({ projectId }: { projectId: number }) {
                               <Text size="sm" fw={600}>{hours(entry.hours)}</Text>
                             )}
                             {!entry.isBillable && <Badge size="xs" variant="outline" color="gray">{t('finance.notBillable')}</Badge>}
+                            {/* On an invoice: locked */}
+                            {entry.invoiceId && <Badge size="xs" variant="light" color="green">{entry.invoiceNumber ?? t('invoices.draft')}</Badge>}
                           </Group>
                         </Table.Td>
                         <Table.Td w={90}>
-                          <RowActions onEdit={() => setDialog({ type: 'entry', entry })} onDelete={() => handleDeleteEntry(entry)} />
+                          {!entry.invoiceId && (
+                            <RowActions onEdit={() => setDialog({ type: 'entry', entry })} onDelete={() => handleDeleteEntry(entry)} />
+                          )}
                         </Table.Td>
                       </Table.Tr>
                     ))}
@@ -119,6 +128,8 @@ export default function FinanceTab({ projectId }: { projectId: number }) {
 
         <Grid.Col span={{ base: 12, lg: 4 }}>
           <Stack>
+            <ProjectInvoicesCard projectId={projectId} />
+
             {/* key: fresh form values when the pricing was changed */}
             {finance && <PricingCard key={`${finance.pricingMode}-${finance.hourlyRate}-${finance.flatPrice}`} projectId={projectId} finance={finance} />}
 
@@ -141,11 +152,14 @@ export default function FinanceTab({ projectId }: { projectId: number }) {
                           {item.quantity !== 1 && `${item.quantity} × ${money(item.unitPrice)} · `}
                           {formatDate(item.date, i18n.language)}
                           {!item.isBillable && ` · ${t('finance.notBillable')}`}
+                          {item.invoiceId && ` · ${item.invoiceNumber ?? t('invoices.draft')}`}
                         </Text>
                       </div>
                       <Group gap={4} wrap="nowrap">
                         <Text size="sm" fw={600}>{money(item.total)}</Text>
-                        <RowActions onEdit={() => setDialog({ type: 'costItem', item })} onDelete={() => handleDeleteCostItem(item)} />
+                        {!item.invoiceId && (
+                          <RowActions onEdit={() => setDialog({ type: 'costItem', item })} onDelete={() => handleDeleteCostItem(item)} />
+                        )}
                       </Group>
                     </Group>
                   ))}

@@ -3,7 +3,7 @@ import { DatePickerInput } from '@mantine/dates'
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import type { ProjectCostItem } from '../../api/types'
-import { formatPrice, todayIso } from '../../utils/format'
+import { decimalSeparator, formatPrice, todayIso } from '../../utils/format'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useSaveCostItem } from './financeApi'
 
@@ -62,8 +62,8 @@ export default function CostItemFormModal({ projectId, item, onClose }: { projec
             data-autofocus {...form.getInputProps('description')} />
           <SimpleGrid cols={3}>
             <DatePickerInput label={t('finance.date')} valueFormat="L" {...form.getInputProps('date')} />
-            <NumberInput label={t('finance.quantity')} min={0.01} decimalScale={2} {...form.getInputProps('quantity')} />
-            <NumberInput label={t('finance.unitPrice')} min={0} decimalScale={2} fixedDecimalScale suffix=" €" {...form.getInputProps('unitPrice')} />
+            <NumberInput {...decimalSeparator(i18n.language)} label={t('finance.quantity')} min={0.01} decimalScale={2} {...form.getInputProps('quantity')} />
+            <NumberInput {...decimalSeparator(i18n.language)} label={t('finance.unitPrice')} min={0} decimalScale={2} fixedDecimalScale suffix=" €" {...form.getInputProps('unitPrice')} />
           </SimpleGrid>
           <Text size="sm">{t('finance.total')}: <strong>{formatPrice(total, i18n.language)}</strong></Text>
           <Checkbox label={t('finance.billable')} description={t('finance.costBillableHint')} {...form.getInputProps('isBillable', { type: 'checkbox' })} />

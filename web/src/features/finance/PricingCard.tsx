@@ -2,7 +2,7 @@ import { Button, Group, NumberInput, Paper, SegmentedControl, Stack, Text, Title
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { PricingMode, ProjectFinance } from '../../api/types'
-import { formatPrice } from '../../utils/format'
+import { decimalSeparator, formatPrice } from '../../utils/format'
 import { numberOrNull } from '../../utils/form'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useSetPricing } from './financeApi'
@@ -39,7 +39,7 @@ export default function PricingCard({ projectId, finance }: { projectId: number;
           ]}
         />
         {mode === 'Hourly' ? (
-          <NumberInput
+          <NumberInput {...decimalSeparator(i18n.language)}
             label={t('finance.hourlyRate')}
             description={t('finance.hourlyRateHint')}
             placeholder={defaultRate != null ? `${t('finance.defaultRate')}: ${formatPrice(defaultRate, i18n.language)}` : undefined}
@@ -50,7 +50,7 @@ export default function PricingCard({ projectId, finance }: { projectId: number;
             onChange={setHourlyRate}
           />
         ) : (
-          <NumberInput label={t('finance.flatPrice')} min={0} decimalScale={2} suffix=" €" value={flatPrice} onChange={setFlatPrice} />
+          <NumberInput {...decimalSeparator(i18n.language)} label={t('finance.flatPrice')} min={0} decimalScale={2} suffix=" €" value={flatPrice} onChange={setFlatPrice} />
         )}
         <Text size="xs" c="dimmed">{mode === 'Hourly' ? t('finance.hourlyHint') : t('finance.flatHint')}</Text>
         <Group justify="flex-end">

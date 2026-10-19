@@ -4,6 +4,8 @@ using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.FinanceModels;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.ServiceLayer.IService.IFinanceServices;
+using StudioManager.ServiceLayer.Exceptions;
+using System.Linq.Expressions;
 
 namespace StudioManager.ServiceLayer.Service.FinanceServices
 {
@@ -27,8 +29,30 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
 
         public override async Task<ProjectCostItemReadDto> Update(int id, ProjectCostItemCreateDto updateDto)
         {
+            await EnsureNotInvoiced(id);
             updateDto.Description = updateDto.Description.Trim();
             return await base.Update(id, updateDto);
+        }
+
+        public override async Task Delete(int id)
+        {
+            await EnsureNotInvoiced(id);
+            await base.Delete(id);
+        }
+
+        // Load the invoice, so its number can be shown
+        protected override Expression<Func<ProjectCostItem, object>>[] DefaultIncludes => [c => c.Invoice!];
+
+        /// <summary>
+        /// An item on an invoice (or draft) is locked - the invoice would not match anymore.
+        /// </summary>
+        private async Task EnsureNotInvoiced(int id)
+        {
+            if (await _repository.ExistsAsync(c => c.Id == id && c.InvoiceId != null))
+            {
+                throw new BusinessRuleException("costItem.invoiced",
+                    "This item is on an invoice - delete the draft or cancel the invoice first.");
+            }
         }
     }
 }
