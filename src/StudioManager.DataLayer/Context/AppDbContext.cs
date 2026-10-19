@@ -46,6 +46,8 @@ namespace StudioManager.DataLayer.Context
         public DbSet<Invoice> Invoices { get; set; } = null!;
         public DbSet<InvoiceLine> InvoiceLines { get; set; } = null!;
         public DbSet<Payment> Payments { get; set; } = null!;
+        public DbSet<Quote> Quotes { get; set; } = null!;
+        public DbSet<QuoteLine> QuoteLines { get; set; } = null!;
         public DbSet<TimeEntry> TimeEntries { get; set; } = null!;
         public DbSet<ProjectCostItem> ProjectCostItems { get; set; } = null!;
 
@@ -527,6 +529,7 @@ namespace StudioManager.DataLayer.Context
                 entity.Property(s => s.Bic).HasMaxLength(20);
                 entity.Property(s => s.VatRate).HasPrecision(5, 2);
                 entity.Property(s => s.InvoiceNumberPrefix).HasMaxLength(30).IsRequired();
+                entity.Property(s => s.QuoteNumberPrefix).HasMaxLength(30).IsRequired();
             });
 
             modelBuilder.Entity<StandardTask>(entity =>
@@ -631,6 +634,52 @@ namespace StudioManager.DataLayer.Context
                 entity.HasOne(l => l.Invoice)
                       .WithMany(i => i.Lines)
                       .HasForeignKey(l => l.InvoiceId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Quote>(entity =>
+            {
+                entity.Property(q => q.Number).HasMaxLength(50);
+                entity.HasIndex(q => q.Number).IsUnique();
+
+                entity.Property(q => q.Status).HasConversion<string>().HasMaxLength(20);
+                entity.Property(q => q.RecipientName).HasMaxLength(200).IsRequired();
+                entity.Property(q => q.RecipientAddress).HasMaxLength(500);
+                entity.Property(q => q.IntroText).HasMaxLength(2000);
+                entity.Property(q => q.ClosingText).HasMaxLength(2000);
+                entity.Property(q => q.VatRate).HasPrecision(5, 2);
+                entity.Property(q => q.NetTotal).HasPrecision(12, 2);
+                entity.Property(q => q.VatAmount).HasPrecision(12, 2);
+                entity.Property(q => q.GrossTotal).HasPrecision(12, 2);
+
+                // Quotes are kept with the project like invoices
+                entity.HasOne(q => q.Project)
+                      .WithMany()
+                      .HasForeignKey(q => q.ProjectId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(q => q.Client)
+                      .WithMany()
+                      .HasForeignKey(q => q.ClientId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(q => q.Invoice)
+                      .WithMany()
+                      .HasForeignKey(q => q.InvoiceId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<QuoteLine>(entity =>
+            {
+                entity.Property(l => l.Description).HasMaxLength(300).IsRequired();
+                entity.Property(l => l.Unit).HasMaxLength(20);
+                entity.Property(l => l.Quantity).HasPrecision(10, 2);
+                entity.Property(l => l.UnitPrice).HasPrecision(12, 2);
+                entity.Property(l => l.Total).HasPrecision(12, 2);
+
+                entity.HasOne(l => l.Quote)
+                      .WithMany(q => q.Lines)
+                      .HasForeignKey(l => l.QuoteId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 

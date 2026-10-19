@@ -60,5 +60,15 @@ namespace StudioManager.DataLayer.Models.FinanceModels
 
         /// <summary>Minimum number of digits: 3 → "007".</summary>
         public int InvoiceNumberDigits { get; set; } = 3;
+
+        // ---------- Quotes ----------
+
+        /// <summary>Prefix of quote numbers ({YYYY} = year), e.g. "AN-{YYYY}-" → "AN-2026-001". Digits as for invoices.</summary>
+        public string QuoteNumberPrefix { get; set; } = "AN-{YYYY}-";
+
+        public int NextQuoteNumber { get; set; } = 1;
+
+        /// <summary>How many days a quote is valid.</summary>
+        public int QuoteValidityDays { get; set; } = 30;
     }
 }

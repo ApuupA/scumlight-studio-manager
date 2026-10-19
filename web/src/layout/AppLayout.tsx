@@ -14,7 +14,7 @@ const navItems = [
   { to: '/sessions', labelKey: 'nav.calendar', icon: IconCalendarEvent },
   { to: '/projects', labelKey: 'nav.projects', icon: IconDisc },
   { to: '/clients', labelKey: 'nav.clients', icon: IconUsersGroup },
-  { to: '/invoices', labelKey: 'nav.invoices', icon: IconFileInvoice },
+  { to: '/finance', labelKey: 'nav.finance', icon: IconFileInvoice },
   { to: '/gear', labelKey: 'nav.gear', icon: IconTool },
   { to: '/categories', labelKey: 'nav.categories', icon: IconCategory },
   { to: '/settings', labelKey: 'nav.settings', icon: IconSettings },

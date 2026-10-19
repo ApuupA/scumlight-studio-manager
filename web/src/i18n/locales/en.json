@@ -14,7 +14,8 @@
     "projects": "Projects",
     "clients": "Clients",
     "settings": "Settings",
-    "invoices": "Invoices"
+    "invoices": "Invoices",
+    "finance": "Finance"
   },
   "common": {
     "save": "Save",
@@ -142,7 +143,8 @@
     "project": {
       "clientNotFound": "The client does not exist anymore.",
       "bandNotOfClient": "All bands of a project must belong to its client.",
-      "hasInvoices": "The project has invoices and can not be deleted (invoices must be kept)."
+      "hasInvoices": "The project has invoices and can not be deleted (invoices must be kept).",
+      "hasQuotes": "The project has quotes and can not be deleted."
     },
     "song": {
       "projectNotFound": "The project does not exist anymore.",
@@ -208,6 +210,12 @@
     },
     "costItem": {
       "invoiced": "This item is on an invoice – delete the draft or cancel the invoice first."
+    },
+    "quote": {
+      "noLines": "The quote has no lines.",
+      "notDraft": "An issued quote can not be changed or deleted.",
+      "statusNotPossible": "This status can not be set for this quote.",
+      "cannotBeInvoiced": "Only a sent or accepted quote can become an invoice."
     }
   },
   "profile": {
@@ -845,7 +853,12 @@
     "nextInvoiceNumber": "Next number",
     "nextInvoiceNumberHint": "e.g. continue from your old program",
     "invoiceNumberDigits": "Digits",
-    "nextNumberPreview": "The next invoice gets the number"
+    "nextNumberPreview": "The next invoice gets the number",
+    "quotes": "Quotes",
+    "quoteNumberPrefix": "Prefix",
+    "nextQuoteNumber": "Next number",
+    "quoteValidityDays": "Valid for (days)",
+    "nextQuotePreview": "The next quote gets the number"
   },
   "invoiceStatus": {
     "Draft": "Draft",
@@ -923,6 +936,49 @@
     "filter": {
       "open": "Open",
       "overdue": "Overdue",
+      "drafts": "Drafts",
+      "all": "All"
+    }
+  },
+  "quoteStatus": {
+    "Draft": "Draft",
+    "Sent": "Sent",
+    "Accepted": "Accepted",
+    "Declined": "Declined",
+    "Invoiced": "Invoiced"
+  },
+  "quotes": {
+    "title": "Quotes",
+    "quote": "Quote",
+    "draft": "Quote draft",
+    "draftHint": "Add the standard tasks of the project with \"Add standard task\" (priced with the project's hourly rate) and adjust the quantities. \"Issue\" gives it the next quote number.",
+    "create": "Create quote",
+    "createHint": "New quotes are created in the project (tab \"Time & costs\").",
+    "projectEmpty": "No quotes yet.",
+    "empty": "No quotes here.",
+    "number": "Quote no.",
+    "quoteDate": "Quote date",
+    "validUntil": "Valid until",
+    "validityHint": "Valid for {{days}} days from the day of issuing (profile page).",
+    "validityNote": "This quote is valid until {{date}}.",
+    "expired": "Expired",
+    "addTask": "Add standard task",
+    "addTaskHint": "Price at {{rate}} / h",
+    "closingTextPlaceholder": "e.g. We look forward to working with you!",
+    "delete": "Delete draft",
+    "deleteConfirm": "The quote draft will be deleted.",
+    "issue": "Issue",
+    "issueTitle": "Issue quote",
+    "issueConfirm": "The quote gets the number {{number}} and is valid for {{days}} days. After that it can not be changed anymore.",
+    "issued": "Quote {{number}} issued",
+    "answerHint": "What did the client say?",
+    "resetAnswer": "Back to \"sent\"",
+    "createInvoice": "Create invoice",
+    "invoiceCreated": "Invoice draft created from the quote – the project's open hours count as invoiced.",
+    "toInvoice": "Invoice: {{number}}",
+    "filter": {
+      "open": "Waiting",
+      "accepted": "Accepted",
       "drafts": "Drafts",
       "all": "All"
     }

@@ -29,5 +29,12 @@ namespace StudioManager.DataLayer.DTO.Read
 
         /// <summary>How the next invoice number will look this year, e.g. "2026-018".</summary>
         public string NextInvoiceNumberPreview { get; set; } = string.Empty;
+
+        public string QuoteNumberPrefix { get; set; } = string.Empty;
+        public int NextQuoteNumber { get; set; }
+        public int QuoteValidityDays { get; set; }
+
+        /// <summary>How the next quote number will look this year, e.g. "AN-2026-001".</summary>
+        public string NextQuoteNumberPreview { get; set; } = string.Empty;
     }
 }

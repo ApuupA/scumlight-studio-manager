@@ -41,5 +41,15 @@ namespace StudioManager.DataLayer.DTO.Create
 
         [Range(1, 8)]
         public int InvoiceNumberDigits { get; set; } = 3;
+
+        /// <summary>Prefix of quote numbers, {YYYY} = year, e.g. "AN-{YYYY}-".</summary>
+        [MaxLength(30)]
+        public string QuoteNumberPrefix { get; set; } = "AN-{YYYY}-";
+
+        [Range(1, 999999)]
+        public int NextQuoteNumber { get; set; } = 1;
+
+        [Range(1, 365)]
+        public int QuoteValidityDays { get; set; } = 30;
     }
 }

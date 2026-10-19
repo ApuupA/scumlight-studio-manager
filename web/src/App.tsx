@@ -21,9 +21,11 @@ import SongPage from './features/songs/SongPage'
 import SongSheetPage from './features/songs/SongSheetPage'
 import AppLayout from './layout/AppLayout'
 import BandGearPage from './features/bandGearLink/BandGearPage'
-import InvoiceListPage from './features/invoices/InvoiceListPage'
+import FinancePage from './features/finance/FinancePage'
 import InvoicePage from './features/invoices/InvoicePage'
 import InvoicePrintPage from './features/invoices/InvoicePrintPage'
+import QuotePage from './features/quotes/QuotePage'
+import QuotePrintPage from './features/quotes/QuotePrintPage'
 
 /**
  * All pages of the app. Comparable to the [Route] attributes of controllers:
@@ -48,6 +50,7 @@ export default function App() {
           <Route path="/input-lists/:id/sheet" element={<InputSheetPage />} />
           <Route path="/songs/:id/sheet" element={<SongSheetPage />} />
           <Route path="/invoices/:id/print" element={<InvoicePrintPage />} />
+          <Route path="/quotes/:id/print" element={<QuotePrintPage />} />
 
           {/* Normal pages inside the app layout */}
           <Route element={<AppLayout />}>
@@ -59,8 +62,11 @@ export default function App() {
             <Route path="/projects/new" element={<ProjectPage />} />
             <Route path="/projects/:id" element={<ProjectPage />} />
             <Route path="/songs/:id" element={<SongPage />} />
-            <Route path="/invoices" element={<InvoiceListPage />} />
+            <Route path="/finance" element={<FinancePage />} />
+            {/* The old address of the invoice list */}
+            <Route path="/invoices" element={<Navigate to="/finance" replace />} />
             <Route path="/invoices/:id" element={<InvoicePage />} />
+            <Route path="/quotes/:id" element={<QuotePage />} />
             <Route path="/clients" element={<ClientListPage />} />
             <Route path="/clients/:id" element={<ClientPage />} />
             <Route path="/gear" element={<GearListPage />} />

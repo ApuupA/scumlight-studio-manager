@@ -2800,6 +2800,43 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Invoice/from-quote/{quoteId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    quoteId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InvoiceReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Invoice/{id}/issue": {
         parameters: {
             query?: never;
@@ -3807,6 +3844,284 @@ export interface paths {
                 };
             };
         };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Quote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["QuoteReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Quote/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["QuoteReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Quote/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["QuoteReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["QuoteUpdateDto"];
+                    "text/json": components["schemas"]["QuoteUpdateDto"];
+                    "application/*+json": components["schemas"]["QuoteUpdateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["QuoteReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Quote/project/{projectId}/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["QuoteReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Quote/{id}/issue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InvoiceDateDto"];
+                    "text/json": components["schemas"]["InvoiceDateDto"];
+                    "application/*+json": components["schemas"]["InvoiceDateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["QuoteReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Quote/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["QuoteStatusDto"];
+                    "text/json": components["schemas"]["QuoteStatusDto"];
+                    "application/*+json": components["schemas"]["QuoteStatusDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["QuoteReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -6013,6 +6328,12 @@ export interface components {
             /** Format: int32 */
             invoiceNumberDigits: number;
             nextInvoiceNumberPreview: string;
+            quoteNumberPrefix: string;
+            /** Format: int32 */
+            nextQuoteNumber: number;
+            /** Format: int32 */
+            quoteValidityDays: number;
+            nextQuoteNumberPreview: string;
         };
         BusinessSettingsUpdateDto: {
             /** Format: double */
@@ -6041,6 +6362,11 @@ export interface components {
             nextInvoiceNumber: number;
             /** Format: int32 */
             invoiceNumberDigits: number;
+            quoteNumberPrefix: string;
+            /** Format: int32 */
+            nextQuoteNumber: number;
+            /** Format: int32 */
+            quoteValidityDays: number;
         };
         CalendarTokenDto: {
             token?: string | null;
@@ -6650,6 +6976,55 @@ export interface components {
         ProjectStatus: "Planning" | "PreProduction" | "Recording" | "Editing" | "Mixing" | "Mastering" | "Completed" | "OnHold" | "Cancelled";
         /** @enum {string} */
         ProjectType: "Album" | "Ep" | "Single" | "SplitRelease" | "Demo" | "Other";
+        QuoteReadDto: {
+            /** Format: int32 */
+            id: number;
+            number?: string | null;
+            status: components["schemas"]["QuoteStatus"];
+            isExpired: boolean;
+            /** Format: date */
+            quoteDate: string;
+            /** Format: date */
+            validUntil?: string | null;
+            recipientName: string;
+            recipientAddress?: string | null;
+            introText?: string | null;
+            closingText?: string | null;
+            isSmallBusiness: boolean;
+            /** Format: double */
+            vatRate: number;
+            /** Format: double */
+            netTotal: number;
+            /** Format: double */
+            vatAmount: number;
+            /** Format: double */
+            grossTotal: number;
+            /** Format: int32 */
+            projectId: number;
+            projectTitle: string;
+            /** Format: int32 */
+            clientId: number;
+            clientName: string;
+            /** Format: int32 */
+            invoiceId?: number | null;
+            invoiceNumber?: string | null;
+            sender: components["schemas"]["BusinessSettingsReadDto"];
+            lines: components["schemas"]["InvoiceLineDto"][];
+        };
+        /** @enum {string} */
+        QuoteStatus: "Draft" | "Sent" | "Accepted" | "Declined" | "Invoiced";
+        QuoteStatusDto: {
+            status: components["schemas"]["QuoteStatus"];
+        };
+        QuoteUpdateDto: {
+            /** Format: date */
+            quoteDate: string;
+            recipientName: string;
+            recipientAddress?: string | null;
+            introText?: string | null;
+            closingText?: string | null;
+            lines: components["schemas"]["InvoiceLineDto"][];
+        };
         SessionCreateDto: {
             title: string;
             type: components["schemas"]["SessionType"];

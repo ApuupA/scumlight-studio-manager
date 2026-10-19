@@ -14,7 +14,8 @@
     "projects": "Projekte",
     "clients": "Kunden",
     "settings": "Einstellungen",
-    "invoices": "Rechnungen"
+    "invoices": "Rechnungen",
+    "finance": "Finanzen"
   },
   "common": {
     "save": "Speichern",
@@ -142,7 +143,8 @@
     "project": {
       "clientNotFound": "Der Kunde existiert nicht mehr.",
       "bandNotOfClient": "Alle Bands eines Projekts müssen zum Kunden des Projekts gehören.",
-      "hasInvoices": "Das Projekt hat Rechnungen und kann nicht gelöscht werden (Rechnungen müssen aufbewahrt werden)."
+      "hasInvoices": "Das Projekt hat Rechnungen und kann nicht gelöscht werden (Rechnungen müssen aufbewahrt werden).",
+      "hasQuotes": "Das Projekt hat Angebote und kann nicht gelöscht werden."
     },
     "song": {
       "projectNotFound": "Das Projekt existiert nicht mehr.",
@@ -208,6 +210,12 @@
     },
     "costItem": {
       "invoiced": "Dieser Posten steht auf einer Rechnung – lösch zuerst den Entwurf oder storniere die Rechnung."
+    },
+    "quote": {
+      "noLines": "Das Angebot hat keine Positionen.",
+      "notDraft": "Ein ausgestelltes Angebot kann nicht geändert oder gelöscht werden.",
+      "statusNotPossible": "Dieser Status ist für dieses Angebot nicht möglich.",
+      "cannotBeInvoiced": "Nur ein versendetes oder angenommenes Angebot kann zur Rechnung werden."
     }
   },
   "profile": {
@@ -845,7 +853,12 @@
     "nextInvoiceNumber": "Nächste Nummer",
     "nextInvoiceNumberHint": "z. B. Nummern aus dem alten Programm fortsetzen",
     "invoiceNumberDigits": "Stellen",
-    "nextNumberPreview": "Die nächste Rechnung bekommt die Nummer"
+    "nextNumberPreview": "Die nächste Rechnung bekommt die Nummer",
+    "quotes": "Angebote",
+    "quoteNumberPrefix": "Präfix",
+    "nextQuoteNumber": "Nächste Nummer",
+    "quoteValidityDays": "Gültig (Tage)",
+    "nextQuotePreview": "Das nächste Angebot bekommt die Nummer"
   },
   "invoiceStatus": {
     "Draft": "Entwurf",
@@ -923,6 +936,49 @@
     "filter": {
       "open": "Offen",
       "overdue": "Überfällig",
+      "drafts": "Entwürfe",
+      "all": "Alle"
+    }
+  },
+  "quoteStatus": {
+    "Draft": "Entwurf",
+    "Sent": "Versendet",
+    "Accepted": "Angenommen",
+    "Declined": "Abgelehnt",
+    "Invoiced": "Abgerechnet"
+  },
+  "quotes": {
+    "title": "Angebote",
+    "quote": "Angebot",
+    "draft": "Angebotsentwurf",
+    "draftHint": "Füge die Leistungen mit „Leistung hinzufügen\" ein (Preis aus dem Stundensatz des Projekts) und passe die Mengen an. „Ausstellen\" gibt ihm die nächste Angebotsnummer.",
+    "create": "Angebot erstellen",
+    "createHint": "Neue Angebote erstellst du im Projekt (Tab „Zeit & Kosten\").",
+    "projectEmpty": "Noch keine Angebote.",
+    "empty": "Keine Angebote hier.",
+    "number": "Angebotsnr.",
+    "quoteDate": "Angebotsdatum",
+    "validUntil": "Gültig bis",
+    "validityHint": "Gültig {{days}} Tage ab dem Tag des Ausstellens (Profil).",
+    "validityNote": "Dieses Angebot ist gültig bis zum {{date}}.",
+    "expired": "Abgelaufen",
+    "addTask": "Leistung hinzufügen",
+    "addTaskHint": "Preis bei {{rate}} / h",
+    "closingTextPlaceholder": "z. B. Wir freuen uns auf die Zusammenarbeit!",
+    "delete": "Entwurf löschen",
+    "deleteConfirm": "Der Angebotsentwurf wird gelöscht.",
+    "issue": "Ausstellen",
+    "issueTitle": "Angebot ausstellen",
+    "issueConfirm": "Das Angebot bekommt die Nummer {{number}} und ist {{days}} Tage gültig. Danach kann es nicht mehr geändert werden.",
+    "issued": "Angebot {{number}} ausgestellt",
+    "answerHint": "Was hat der Kunde gesagt?",
+    "resetAnswer": "Zurück auf „versendet\"",
+    "createInvoice": "Rechnung erstellen",
+    "invoiceCreated": "Rechnungsentwurf aus dem Angebot erstellt – die offenen Stunden des Projekts gelten damit als abgerechnet.",
+    "toInvoice": "Rechnung: {{number}}",
+    "filter": {
+      "open": "Offen",
+      "accepted": "Angenommen",
       "drafts": "Entwürfe",
       "all": "Alle"
     }

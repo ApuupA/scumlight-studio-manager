@@ -21,6 +21,12 @@ namespace StudioManager.ServiceLayer.IService.IFinanceServices
         /// </summary>
         Task<InvoiceReadDto> CreateDraft(int projectId);
 
+        /// <summary>
+        /// A draft with the lines of a sent / accepted quote. The project's open hours and extra items count as
+        /// invoiced (the quote's price covers them); the quote becomes "Invoiced".
+        /// </summary>
+        Task<InvoiceReadDto> CreateDraftFromQuote(int quoteId);
+
         /// <summary>Changes a draft (recipient, dates, texts, lines).</summary>
         Task<InvoiceReadDto> UpdateDraft(int id, InvoiceUpdateDto dto);
 

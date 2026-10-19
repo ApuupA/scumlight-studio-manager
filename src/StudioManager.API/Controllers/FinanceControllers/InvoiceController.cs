@@ -52,6 +52,15 @@ namespace StudioManager.API.Controllers.FinanceControllers
         }
 
         /// <summary>
+        /// Creates a draft from a sent / accepted quote.
+        /// </summary>
+        [HttpPost("from-quote/{quoteId:int}")]
+        public async Task<ActionResult<InvoiceReadDto>> CreateDraftFromQuote(int quoteId)
+        {
+            return Ok(await _invoiceService.CreateDraftFromQuote(quoteId));
+        }
+
+        /// <summary>
         /// Changes a draft (recipient, dates, texts, lines).
         /// </summary>
         [HttpPut("{id:int}")]

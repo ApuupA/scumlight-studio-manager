@@ -12,7 +12,7 @@ import { settingsToInput, useBusinessSettings, useUpdateBusinessSettings } from 
 export default function BusinessDataCard() {
   const { data: settings } = useBusinessSettings()
   // key: fresh form values after saving (the preview of the next number changes)
-  return settings ? <BusinessDataForm key={settings.nextInvoiceNumberPreview + settings.companyName} settings={settings} /> : null
+  return settings ? <BusinessDataForm key={settings.nextInvoiceNumberPreview + settings.nextQuoteNumberPreview + settings.companyName} settings={settings} /> : null
 }
 
 function BusinessDataForm({ settings }: { settings: BusinessSettings }) {
@@ -31,6 +31,9 @@ function BusinessDataForm({ settings }: { settings: BusinessSettings }) {
         // Empty text fields are sent as null ("not filled in") - an empty email would not be a valid email address
         ...(Object.fromEntries(Object.entries(values).map(([key, value]) => [key, value === '' ? null : value])) as BusinessSettingsInput),
         invoiceNumberPrefix: values.invoiceNumberPrefix ?? '',
+        quoteNumberPrefix: values.quoteNumberPrefix ?? '',
+        nextQuoteNumber: Number(values.nextQuoteNumber) || 1,
+        quoteValidityDays: Number(values.quoteValidityDays) || 30,
         vatRate: Number(values.vatRate) || 0,
         paymentTermDays: Number(values.paymentTermDays) || 0,
         nextInvoiceNumber: Number(values.nextInvoiceNumber) || 1,
@@ -91,6 +94,15 @@ function BusinessDataForm({ settings }: { settings: BusinessSettings }) {
             <NumberInput label={t('business.invoiceNumberDigits')} min={1} max={8} allowDecimal={false} {...form.getInputProps('invoiceNumberDigits')} />
           </SimpleGrid>
           <Text size="sm">{t('business.nextNumberPreview')}: <strong>{settings.nextInvoiceNumberPreview}</strong></Text>
+
+          <Divider label={t('business.quotes')} labelPosition="left" />
+          <SimpleGrid cols={{ base: 1, sm: 3 }}>
+            <TextInput label={t('business.quoteNumberPrefix')} description={t('business.invoiceNumberPrefixHint')} maxLength={30}
+              {...form.getInputProps('quoteNumberPrefix')} />
+            <NumberInput label={t('business.nextQuoteNumber')} min={1} allowDecimal={false} {...form.getInputProps('nextQuoteNumber')} />
+            <NumberInput label={t('business.quoteValidityDays')} min={1} max={365} allowDecimal={false} {...form.getInputProps('quoteValidityDays')} />
+          </SimpleGrid>
+          <Text size="sm">{t('business.nextQuotePreview')}: <strong>{settings.nextQuoteNumberPreview}</strong></Text>
 
           <Group justify="flex-end">
             <Button type="submit" loading={updateSettings.isPending}>{t('common.save')}</Button>

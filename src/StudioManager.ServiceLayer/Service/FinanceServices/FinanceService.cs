@@ -59,6 +59,7 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
             dto.Iban = Clean(dto.Iban)?.Replace(" ", "").ToUpperInvariant();
             dto.Bic = Clean(dto.Bic)?.ToUpperInvariant();
             dto.InvoiceNumberPrefix = dto.InvoiceNumberPrefix?.Trim() ?? string.Empty;
+            dto.QuoteNumberPrefix = dto.QuoteNumberPrefix?.Trim() ?? string.Empty;
 
             _mapper.Map(dto, settings);
             await _settingsRepository.UpdateAsync(settings);
@@ -73,13 +74,29 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
             return prefix.Replace("{YYYY}", year.ToString()) + number.ToString().PadLeft(digits, '0');
         }
 
-        private BusinessSettingsReadDto ToReadDto(BusinessSettings settings)
+        private BusinessSettingsReadDto ToReadDto(BusinessSettings settings) => ToSenderDto(_mapper, settings, DateTime.Now.Year);
+
+        /// <summary>
+        /// The settings as DTO including how the next invoice / quote number will look in the given year.
+        /// Also used by InvoiceService and QuoteService for drafts.
+        /// </summary>
+        public static BusinessSettingsReadDto ToSenderDto(IMapper mapper, BusinessSettings settings, int year)
         {
-            var dto = _mapper.Map<BusinessSettingsReadDto>(settings);
-            dto.NextInvoiceNumberPreview = FormatInvoiceNumber(
-                settings.InvoiceNumberPrefix, settings.NextInvoiceNumber, settings.InvoiceNumberDigits, DateTime.Now.Year);
+            var dto = mapper.Map<BusinessSettingsReadDto>(settings);
+            dto.NextInvoiceNumberPreview = FormatInvoiceNumber(settings.InvoiceNumberPrefix, settings.NextInvoiceNumber, settings.InvoiceNumberDigits, year);
+            dto.NextQuoteNumberPreview = FormatInvoiceNumber(settings.QuoteNumberPrefix, settings.NextQuoteNumber, settings.InvoiceNumberDigits, year);
             return dto;
         }
+
+        /// <summary>
+        /// Required content of an invoice / quote: full name and address of the sender, tax number or VAT ID.
+        /// </summary>
+        public static bool HasRequiredBusinessData(BusinessSettings settings) =>
+            !string.IsNullOrWhiteSpace(settings.CompanyName ?? settings.OwnerName)
+            && !string.IsNullOrWhiteSpace(settings.Street)
+            && !string.IsNullOrWhiteSpace(settings.PostalCode)
+            && !string.IsNullOrWhiteSpace(settings.City)
+            && !string.IsNullOrWhiteSpace(settings.TaxNumber ?? settings.VatId);
 
         public async Task<ProjectFinanceDto> GetProjectFinance(int projectId)
         {

@@ -78,7 +78,8 @@
 - ✅ b2) (v1.7.0) Invoices from open hours / items (grouped by standard task, notes stay internal): gap-free numbers, all required content, locked once issued (corrections by
   cancellation invoice), PDF via print; payments and partial payments, open / overdue overview;
   small business (§ 19 UStG) or VAT switchable
-- c) Quotes that turn into invoices
+- ✅ c) (v1.8.0) Quotes per project with standard tasks (project rate), own number range, validity, print; status sent / accepted /
+  declined; "Create invoice" turns an accepted quote into an invoice draft. Navigation "Invoices" became "Finance" (tabs)
 - d) Expenses with receipts; yearly overview of income and expenses (basis for the EÜR), CSV export
 
 ## Later
