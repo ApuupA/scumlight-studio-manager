@@ -31,6 +31,51 @@ namespace StudioManager.ServiceLayer.Service.UserServices
             return user == null ? null : _mapper.Map<UserReadDto>(user);
         }
 
+        public async Task<IEnumerable<UserReadDto>> GetAll()
+        {
+            var users = await _repository.GetAllAsync();
+            return _mapper.Map<IEnumerable<UserReadDto>>(users.OrderBy(u => u.DisplayName));
+        }
+
+        public async Task<UserReadDto> Create(UserCreateDto dto)
+        {
+            var normalizedEmail = NormalizeEmail(dto.Email);
+            if (await _repository.ExistsAsync(u => u.Email == normalizedEmail))
+            {
+                throw new BusinessRuleException("user.emailExists", "Another user already uses this email address.");
+            }
+
+            // For now every login has full access and sees the same data as the owner
+            var user = new User
+            {
+                Email = normalizedEmail,
+                DisplayName = dto.DisplayName.Trim(),
+                Role = UserRole.Owner
+            };
+            user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
+
+            await _repository.AddAsync(user);
+            return _mapper.Map<UserReadDto>(user);
+        }
+
+        public async Task SetPassword(int id, SetPasswordDto dto)
+        {
+            var user = await GetEntity(id);
+            user.PasswordHash = _passwordHasher.HashPassword(user, dto.NewPassword);
+            await _repository.UpdateAsync(user);
+        }
+
+        public async Task Delete(int id, int currentUserId)
+        {
+            if (id == currentUserId)
+            {
+                throw new BusinessRuleException("user.cannotDeleteSelf", "You can not delete your own login.");
+            }
+
+            await GetEntity(id);
+            await _repository.DeleteAsync(id);
+        }
+
         public async Task<UserReadDto?> ValidateCredentials(string email, string password)
         {
             var normalizedEmail = NormalizeEmail(email);

@@ -96,5 +96,54 @@ namespace StudioManager.Tests.Unit
 
             Assert.Equal("user.emailExists", exception.ErrorCode);
         }
+
+        [Fact]
+        public async Task Create_ShouldAddALoginWithFullAccess()
+        {
+            await CreateOwner();
+
+            var created = await _service.Create(new UserCreateDto { DisplayName = " Max ", Email = " Max@Band.de ", Password = "start-password" });
+
+            Assert.Equal("Max", created.DisplayName);
+            Assert.Equal("max@band.de", created.Email);
+            Assert.Equal(UserRole.Owner, created.Role);
+            Assert.NotNull(await _service.ValidateCredentials("max@band.de", "start-password"));
+            Assert.Equal(2, (await _service.GetAll()).Count());
+        }
+
+        [Fact]
+        public async Task Create_ShouldRejectAnEmailThatIsAlreadyUsed()
+        {
+            await CreateOwner();
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(
+                () => _service.Create(new UserCreateDto { DisplayName = "Copy", Email = "OWNER@studio.local", Password = "start-password" }));
+
+            Assert.Equal("user.emailExists", exception.ErrorCode);
+        }
+
+        [Fact]
+        public async Task SetPassword_ShouldReplaceThePassword()
+        {
+            var owner = await CreateOwner();
+
+            await _service.SetPassword(owner.Id, new SetPasswordDto { NewPassword = "new-password" });
+
+            Assert.Null(await _service.ValidateCredentials("owner@studio.local", "secret"));
+            Assert.NotNull(await _service.ValidateCredentials("owner@studio.local", "new-password"));
+        }
+
+        [Fact]
+        public async Task Delete_ShouldRemoveOtherLogins_ButNotYourOwn()
+        {
+            var owner = await CreateOwner();
+            var other = await _service.Create(new UserCreateDto { DisplayName = "Max", Email = "max@band.de", Password = "start-password" });
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _service.Delete(owner.Id, owner.Id));
+            await _service.Delete(other.Id, owner.Id);
+
+            Assert.Equal("user.cannotDeleteSelf", exception.ErrorCode);
+            Assert.Equal("owner@studio.local", Assert.Single(_context.Users).Email);
+        }
     }
 }

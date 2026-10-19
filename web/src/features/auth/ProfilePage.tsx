@@ -2,11 +2,9 @@ import { Button, Group, Paper, PasswordInput, SimpleGrid, Stack, TextInput, Titl
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import type { ProfileInput, User } from '../../api/types'
+import { minPasswordLength } from '../../utils/form'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useChangePassword, useCurrentUser, useUpdateProfile } from './authApi'
-
-/** Minimum password length - must match [MinLength(8)] on ChangePasswordDto in C#. */
-const minPasswordLength = 8
 
 /**
  * Profile of the logged in user: name / email and password, as two independent forms.

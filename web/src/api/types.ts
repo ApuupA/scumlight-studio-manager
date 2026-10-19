@@ -17,6 +17,8 @@ export type User = Schemas['UserReadDto']
 export type LoginInput = Schemas['LoginDto']
 export type ProfileInput = Schemas['UpdateProfileDto']
 export type ChangePasswordInput = Schemas['ChangePasswordDto']
+export type UserInput = Schemas['UserCreateDto']
+export type SetPasswordInput = Schemas['SetPasswordDto']
 
 export type Client = Schemas['ClientReadDto']
 export type ClientInput = Schemas['ClientCreateDto']
