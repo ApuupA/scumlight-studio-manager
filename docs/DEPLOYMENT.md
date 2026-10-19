@@ -5,27 +5,34 @@ from Nextcloud: own containers, own PostgreSQL, own Apache site. Nextcloud is no
 
 ```
 Browser ──https──▶ Apache (port 443, already there)
-                      │  studio.example.de
+                      │  studio.scumlight-cloud.de
                       ▼
                    127.0.0.1:8081 ──▶ web container (nginx) ──▶ api container ──▶ db container
                                                                          pgAdmin (127.0.0.1:5050, SSH tunnel only)
 ```
 
-Throughout this guide `studio.example.de` stands for your subdomain – replace it everywhere.
-All commands run as `root` on the server (otherwise put `sudo` in front).
+The app runs at `studio.scumlight-cloud.de`, as user **`apu`** in **`~/studio-manager`** (next to `~/nextcloud-docker`).
+Commands for Apache and certbot need `sudo`, everything else runs as `apu`.
+
+**Never touch Nextcloud:** only run `docker compose` inside `~/studio-manager` – there it only affects the Studio Manager.
 
 ---
 
 ## 1. Subdomain
 
-In the Strato customer area: create the subdomain (e.g. `studio.example.de`) and point it to the IP address of the
+In the Strato customer area: create the subdomain (e.g. `studio.scumlight-cloud.de`) and point it to the IP address of the
 server (DNS **A record**, like the domain of Nextcloud). Check it on the server – it must print the server's IP:
 
 ```bash
-getent hosts studio.example.de
+getent hosts studio.scumlight-cloud.de
 ```
 
 It can take a while until a new DNS entry is visible.
+
+Both entries must point to **this** server: the **A record** (IPv4, `85.215.53.239`) and the **AAAA record**
+(IPv6, `2a02:2479:2b:ab00::1` – shown by `ip -6 addr show scope global`). A new subdomain may come with a default
+AAAA record of the provider – then certbot fails ("Invalid response … 204"), because Let's Encrypt checks over IPv6.
+Without an A record, browsers on IPv4-only connections can not reach the page.
 
 ## 2. Get the code
 
@@ -45,8 +52,8 @@ Host github.com
     IdentityFile ~/.ssh/studio_deploy
 EOF
 
-git clone git@github.com:ApuupA/scumlight-studio-manager.git /opt/studio-manager
-cd /opt/studio-manager
+git clone git@github.com:ApuupA/scumlight-studio-manager.git ~/studio-manager
+cd ~/studio-manager
 ```
 
 ## 3. Settings (.env)
@@ -88,7 +95,7 @@ Create the site `/etc/apache2/sites-available/studio-manager.conf`:
 
 ```apache
 <VirtualHost *:80>
-    ServerName studio.example.de
+    ServerName studio.scumlight-cloud.de
 
     # Everything goes to the web container of the Studio Manager
     ProxyPreserveHost On
@@ -107,8 +114,11 @@ Get the certificate with certbot (most likely already installed for Nextcloud �
 `apt install certbot python3-certbot-apache`). Choose **redirect** when it asks, so http always goes to https:
 
 ```bash
-certbot --apache -d studio.example.de
+certbot --apache -d studio.scumlight-cloud.de
 ```
+
+If certbot asks which virtual host to use and lists the Nextcloud sites: press **`c`** (cancel) – the
+`studio-manager.conf` site is missing or not enabled. Never choose a Nextcloud site.
 
 certbot creates `/etc/apache2/sites-available/studio-manager-le-ssl.conf` (the https copy of the site).
 Add **one line** to that file, below `ProxyPreserveHost On` – it tells the app that the browser used https,
@@ -123,7 +133,7 @@ apache2ctl configtest
 systemctl reload apache2
 ```
 
-Open https://studio.example.de – the login page should appear. Check the cookie: after logging in, the browser's
+Open https://studio.scumlight-cloud.de – the login page should appear. Check the cookie: after logging in, the browser's
 developer tools (F12 → Application / Storage → Cookies) show `studio.auth` with **Secure** ticked.
 certbot renews the certificate automatically.
 
@@ -133,7 +143,7 @@ pgAdmin is not reachable from the internet (only `127.0.0.1` on the server). Ope
 keep the window open while you work:
 
 ```bash
-ssh -L 5050:localhost:5050 root@studio.example.de
+ssh -L 5050:localhost:5050 root@studio.scumlight-cloud.de   # or the user you normally log in with
 ```
 
 Then open http://localhost:5050 on your PC and log in with `PGADMIN_EMAIL` / `PGADMIN_PASSWORD`. The database
@@ -150,13 +160,13 @@ On your PC:
 
 ```bash
 docker compose exec -T db pg_dump -U studio -d studio > studio-transfer.sql
-scp studio-transfer.sql root@studio.example.de:/opt/studio-manager/
+scp studio-transfer.sql apu@studio.scumlight-cloud.de:~/studio-manager/
 ```
 
 On the server – start only the database, load the data, then everything else:
 
 ```bash
-cd /opt/studio-manager
+cd ~/studio-manager
 docker compose up -d db
 docker compose exec -T db psql -U studio -d studio < studio-transfer.sql
 docker compose up -d --build
@@ -168,34 +178,45 @@ Uploaded files (photos) are not in the database. If you have some, copy the volu
 ```bash
 # PC
 docker run --rm -v recording-studio-tool_studio-files:/data -v "$PWD":/backup alpine tar czf /backup/studio-files.tgz -C /data .
-scp studio-files.tgz root@studio.example.de:/opt/studio-manager/
+scp studio-files.tgz apu@studio.scumlight-cloud.de:~/studio-manager/
 # Server (before "docker compose up -d --build")
-docker run --rm -v studio-manager_studio-files:/data -v /opt/studio-manager:/backup alpine tar xzf /backup/studio-files.tgz -C /data
+docker run --rm -v studio-manager_studio-files:/data -v ~/studio-manager:/backup alpine tar xzf /backup/studio-files.tgz -C /data
 ```
 
 ## 8. Updates
 
-After a merge into `main`:
-
 ```bash
-cd /opt/studio-manager
-docker compose exec -T db pg_dump -U studio -d studio > /root/studio-backup-$(date +%F).sql   # backup first
-git pull
-docker compose up -d --build
+~/studio-manager/scripts/update.sh
 ```
 
-Database changes (migrations) are applied automatically when the API starts.
+Shows what is new, asks, then: backup → new version → rebuild → checks that the app answers. Database changes
+(migrations) are applied automatically when the API starts. The whole process, including testing database changes
+on a copy of the server data first: [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md).
 
 ## 9. Backups
 
-A daily database backup at 3:00 that keeps 14 days – add it with `crontab -e`:
-
-```cron
-0 3 * * * cd /opt/studio-manager && mkdir -p /root/studio-backups && docker compose exec -T db pg_dump -U studio -d studio > /root/studio-backups/studio-$(date +\%F).sql && find /root/studio-backups -name 'studio-*.sql' -mtime +14 -delete
+```bash
+~/studio-manager/scripts/backup.sh
 ```
 
-Restore: see "Backup / restore" in the [README](../README.md). Copy a backup to your PC from time to time – a backup
-on the same server does not help if the server is lost.
+saves the database (`studio-<date>.sql`) **and** the uploaded files (`studio-files-<date>.tgz`) in `~/studio-backups`
+and deletes backups older than 14 days. Every night at 3:00 – add with `crontab -e` (as `apu`):
+
+```cron
+0 3 * * * ~/studio-manager/scripts/backup.sh >> ~/studio-backups/backup.log 2>&1
+```
+
+Restore (asks for `RESTORE` first, replaces all data):
+
+```bash
+~/studio-manager/scripts/restore.sh ~/studio-backups/studio-<date>.sql ~/studio-backups/studio-files-<date>.tgz
+```
+
+Copy the backups to your PC from time to time – a backup on the same server does not help if the server is lost.
+
+**Where the data is:** in the Docker volumes `studio-manager_db-data` (database) and `studio-manager_studio-files`
+(photos, login cookie keys) under `/var/lib/docker/volumes/`. They survive updates, rebuilds and reboots – only
+`docker compose down -v` or `docker volume rm` deletes them. Never use those on the server.
 
 ## Why the ports are safe
 

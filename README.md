@@ -42,6 +42,7 @@ Database migrations are applied automatically when the API starts.
 ## Run everything in Docker (like on the server)
 
 Setting it up on the real server (Apache, HTTPS, backups): see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+Bringing a change to the server safely (scripts `backup.sh`, `update.sh`, `restore.sh`, `load-server-data.sh`): see [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
 
 ```bash
 cp .env.example .env      # set real passwords!
