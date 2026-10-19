@@ -1,0 +1,2 @@
+# Shell scripts run on Linux: always LF line endings (CRLF breaks bash), also when checked out on Windows
+*.sh text eol=lf
