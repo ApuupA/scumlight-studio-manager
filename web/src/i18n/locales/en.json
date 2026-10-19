@@ -185,10 +185,15 @@
       "sessionNotInProject": "The session does not belong to this project.",
       "userNotFound": "The user does not exist anymore.",
       "timerRunning": "A timer is already running – stop it first.",
-      "noTimerRunning": "No timer is running."
+      "noTimerRunning": "No timer is running.",
+      "standardTaskNotFound": "The standard task does not exist anymore.",
+      "taskOrNoteRequired": "Choose a standard task or write a note."
     },
     "projectPricing": {
       "flatPriceRequired": "Enter the flat price."
+    },
+    "standardTask": {
+      "inUse": "Time is already booked on this task – archive it instead of deleting it."
     }
   },
   "profile": {
@@ -768,6 +773,63 @@
     "stopAndBook": "Stop & book",
     "timerBooked": "{{hours}} booked for {{project}}",
     "billing": "Billing",
-    "billingHint": "Used for all projects charged by the hour without an own rate."
+    "billingHint": "Used for all projects charged by the hour without an own rate.",
+    "standardTask": "Standard task",
+    "standardTaskHint": "Appears on the invoice",
+    "dayHint": "1 day = {{hours}} h",
+    "note": "Note (internal)",
+    "noteHint": "Not printed on the invoice",
+    "taskOrNote": "Choose a standard task or write a note"
+  },
+  "taskUnit": {
+    "Hour": "Per hour",
+    "Day": "Per day"
+  },
+  "standardTasks": {
+    "title": "Standard tasks",
+    "hint": "What time is booked on – the invoice shows these tasks (the notes stay internal). The price comes from the hourly rate: the default rate or the project's own rate.",
+    "new": "Add task",
+    "newTitle": "New standard task",
+    "editTitle": "Edit standard task",
+    "name": "Name",
+    "namePlaceholder": "e.g. Recording / Tag, Mixing / Stunde",
+    "unit": "Unit",
+    "hoursPerDay": "Hours per day",
+    "dayOf": "Per day ({{hours}} h)",
+    "price": "Price (default rate)",
+    "pricePreview": "{{hours}} h × {{rate}} = {{price}} per unit with the default rate",
+    "archived": "Archived",
+    "archivedHint": "No longer offered for new entries – booked time keeps it",
+    "empty": "No standard tasks yet.",
+    "deleteConfirm": "The standard task \"{{name}}\" will be deleted."
+  },
+  "business": {
+    "title": "Business data & invoices",
+    "hint": "Appears on every invoice. Stored once for the whole studio – all logins use the same data.",
+    "companyName": "Studio / company",
+    "ownerName": "Owner",
+    "street": "Street",
+    "postalCode": "Postal code",
+    "city": "City",
+    "email": "Email",
+    "phone": "Phone",
+    "website": "Website",
+    "taxAndBank": "Tax & bank",
+    "taxNumber": "Tax number",
+    "vatId": "VAT ID (optional)",
+    "bankName": "Bank",
+    "iban": "IBAN",
+    "bic": "BIC",
+    "isSmallBusiness": "Small business (§ 19 UStG)",
+    "isSmallBusinessHint": "Invoices without VAT, with the note \"Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.\"",
+    "vatRate": "VAT rate",
+    "paymentTermDays": "Payment terms (days)",
+    "invoiceNumbers": "Invoice numbers",
+    "invoiceNumberPrefix": "Prefix",
+    "invoiceNumberPrefixHint": "{YYYY} = year, e.g. {YYYY}- or RE-",
+    "nextInvoiceNumber": "Next number",
+    "nextInvoiceNumberHint": "e.g. continue from your old program",
+    "invoiceNumberDigits": "Digits",
+    "nextNumberPreview": "The next invoice gets the number"
   }
 }

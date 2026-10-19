@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BusinessSettings } from '../../api/types'
 import { notifyError, notifySuccess } from '../../utils/notify'
-import { useBusinessSettings, useUpdateBusinessSettings } from './financeApi'
+import { settingsToInput, useBusinessSettings, useUpdateBusinessSettings } from './financeApi'
 
 /**
  * Settings card "Billing": the default hourly rate (more follows with invoices).
@@ -20,7 +20,7 @@ function BillingForm({ settings }: { settings: BusinessSettings }) {
   const [rate, setRate] = useState<number | string>(settings.defaultHourlyRate)
 
   const handleSave = () =>
-    updateSettings.mutate({ defaultHourlyRate: Number(rate) || 0 }, {
+    updateSettings.mutate({ ...settingsToInput(settings), defaultHourlyRate: Number(rate) || 0 }, {
       onSuccess: () => notifySuccess(t('common.saved')),
       onError: (error) => notifyError(error, t),
     })

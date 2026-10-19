@@ -177,6 +177,22 @@ namespace StudioManager.DataLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BankName")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Bic")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CompanyName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasMaxLength(3)
@@ -191,6 +207,63 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<decimal>("DefaultHourlyRate")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Iban")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int>("InvoiceNumberDigits")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("InvoiceNumberPrefix")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<bool>("IsSmallBusiness")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("NextInvoiceNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("OwnerName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("PaymentTermDays")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Street")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("TaxNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("VatId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<decimal>("VatRate")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
@@ -240,6 +313,45 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("ProjectCostItems");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.StandardTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("HoursPerUnit")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StandardTasks");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.TimeEntry", b =>
                 {
                     b.Property<int>("Id")
@@ -275,6 +387,9 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<int?>("SessionId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("StandardTaskId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("StartedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -286,6 +401,8 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("SessionId");
+
+                    b.HasIndex("StandardTaskId");
 
                     b.HasIndex("UserId");
 
@@ -1536,6 +1653,11 @@ namespace StudioManager.DataLayer.Migrations
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("StudioManager.DataLayer.Models.FinanceModels.StandardTask", "StandardTask")
+                        .WithMany()
+                        .HasForeignKey("StandardTaskId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("StudioManager.DataLayer.Models.UserModels.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -1544,6 +1666,8 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Session");
+
+                    b.Navigation("StandardTask");
 
                     b.Navigation("User");
                 });

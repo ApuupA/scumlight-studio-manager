@@ -28,6 +28,10 @@ namespace StudioManager.DataLayer.Models.FinanceModels
         public int? SessionId { get; set; }
         public Session? Session { get; set; }
 
+        /// <summary>What was charged, e.g. "Recording / Tag" - the invoice shows the standard tasks.</summary>
+        public int? StandardTaskId { get; set; }
+        public StandardTask? StandardTask { get; set; }
+
         /// <summary>Who worked. Null if the user was deleted.</summary>
         public int? UserId { get; set; }
         public User? User { get; set; }

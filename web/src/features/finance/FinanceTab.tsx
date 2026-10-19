@@ -41,7 +41,7 @@ export default function FinanceTab({ projectId }: { projectId: number }) {
   const hours = (value: number) => formatHours(value, i18n.language)
 
   const handleDeleteEntry = (entry: TimeEntry) =>
-    confirmDelete(t, t('finance.deleteEntryConfirm', { description: entry.description || '–' }), () =>
+    confirmDelete(t, t('finance.deleteEntryConfirm', { description: entry.standardTaskName ?? entry.description ?? '–' }), () =>
       deleteEntry.mutate(entry.id, { onSuccess: () => notifySuccess(t('common.deleted')), onError: (error) => notifyError(error, t) }),
     )
 
@@ -90,8 +90,10 @@ export default function FinanceTab({ projectId }: { projectId: number }) {
                       <Table.Tr key={entry.id}>
                         <Table.Td w={100}>{formatDate(entry.date, i18n.language)}</Table.Td>
                         <Table.Td>
-                          <Text size="sm" fw={500}>{entry.description || '–'}</Text>
-                          <Text size="xs" c="dimmed">{[entry.userName, entry.sessionTitle].filter(Boolean).join(' · ')}</Text>
+                          <Text size="sm" fw={500}>{entry.standardTaskName ?? entry.description ?? '–'}</Text>
+                          <Text size="xs" c="dimmed">
+                            {[entry.standardTaskName && entry.description, entry.userName, entry.sessionTitle].filter(Boolean).join(' · ')}
+                          </Text>
                         </Table.Td>
                         <Table.Td w={140}>
                           <Group gap={4} wrap="nowrap">

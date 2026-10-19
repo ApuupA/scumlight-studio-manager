@@ -28,7 +28,8 @@ namespace StudioManager.Tests.Unit
         {
             var mapper = TestHelper.CreateMapper();
             _timeEntryService = new TimeEntryService(
-                new Repository<TimeEntry>(_context), new Repository<Project>(_context), new Repository<Session>(_context), new Repository<User>(_context), mapper);
+                new Repository<TimeEntry>(_context), new Repository<Project>(_context), new Repository<Session>(_context), new Repository<User>(_context),
+                new Repository<StandardTask>(_context), mapper);
             _costItemService = new ProjectCostItemService(new Repository<ProjectCostItem>(_context), mapper);
             _financeService = new FinanceService(
                 new Repository<BusinessSettings>(_context), new Repository<Project>(_context), new Repository<TimeEntry>(_context),
@@ -140,6 +141,82 @@ namespace StudioManager.Tests.Unit
         public void Timer_ShouldRoundUpToTheQuarterHour(int minutes, decimal expectedHours)
         {
             Assert.Equal(expectedHours, TimeEntryService.RoundUpToQuarterHour(TimeSpan.FromMinutes(minutes)));
+        }
+
+        [Fact]
+        public async Task StandardTasks_ShouldBeAppended_AndAnHourIsAlwaysOneHour()
+        {
+            var service = new StandardTaskService(new Repository<StandardTask>(_context), new Repository<TimeEntry>(_context), TestHelper.CreateMapper());
+
+            var day = await service.Insert(new StandardTaskCreateDto { Name = " Recording / Tag ", Unit = TaskUnit.Day, HoursPerUnit = 8 });
+            var hour = await service.Insert(new StandardTaskCreateDto { Name = "Mixing / Stunde", Unit = TaskUnit.Hour, HoursPerUnit = 5 });
+
+            Assert.Equal("Recording / Tag", day.Name);
+            Assert.Equal(8, day.HoursPerUnit);
+            Assert.Equal(1, hour.HoursPerUnit);
+            Assert.Equal(new[] { 1, 2 }, (await service.GetAll()).Select(t => t.SortOrder));
+        }
+
+        [Fact]
+        public async Task UsedStandardTask_ShouldNotBeDeleted_OnlyArchived()
+        {
+            var service = new StandardTaskService(new Repository<StandardTask>(_context), new Repository<TimeEntry>(_context), TestHelper.CreateMapper());
+            var task = await service.Insert(new StandardTaskCreateDto { Name = "Recording / Tag", Unit = TaskUnit.Day, HoursPerUnit = 8 });
+            var entry = Entry(8);
+            entry.StandardTaskId = task.Id;
+            var booked = await _timeEntryService.Insert(entry);
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => service.Delete(task.Id));
+            var archived = await service.Update(task.Id, new StandardTaskCreateDto { Name = task.Name, Unit = TaskUnit.Day, HoursPerUnit = 8, IsArchived = true });
+
+            Assert.Equal("standardTask.inUse", exception.ErrorCode);
+            Assert.True(archived.IsArchived);
+            Assert.Equal("Recording / Tag", booked.StandardTaskName);
+        }
+
+        [Fact]
+        public async Task TimeEntry_WithUnknownStandardTask_ShouldBeRejected()
+        {
+            var entry = Entry(2);
+            entry.StandardTaskId = 999;
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _timeEntryService.Insert(entry));
+
+            Assert.Equal("timeEntry.standardTaskNotFound", exception.ErrorCode);
+        }
+
+        [Theory]
+        [InlineData("{YYYY}-", 18, 3, 2026, "2026-018")]
+        [InlineData("RE-", 7, 4, 2026, "RE-0007")]
+        [InlineData("", 1234, 3, 2027, "1234")]
+        public void InvoiceNumber_ShouldUseYearPrefixAndDigits(string prefix, int number, int digits, int year, string expected)
+        {
+            Assert.Equal(expected, FinanceService.FormatInvoiceNumber(prefix, number, digits, year));
+        }
+
+        [Fact]
+        public async Task BusinessSettings_ShouldDefaultToSmallBusiness_AndCleanTheInput()
+        {
+            var defaults = await _financeService.GetSettings();
+
+            var saved = await _financeService.UpdateSettings(new BusinessSettingsUpdateDto
+            {
+                CompanyName = " Scumlight Studio ",
+                Street = "  ",
+                Iban = "de89 3704 0044 0532 0130 00",
+                InvoiceNumberPrefix = "{YYYY}-",
+                NextInvoiceNumber = 18,
+                InvoiceNumberDigits = 3,
+                IsSmallBusiness = true,
+                PaymentTermDays = 14
+            });
+
+            Assert.True(defaults.IsSmallBusiness);
+            Assert.Equal(14, defaults.PaymentTermDays);
+            Assert.Equal("Scumlight Studio", saved.CompanyName);
+            Assert.Null(saved.Street);
+            Assert.Equal("DE89370400440532013000", saved.Iban);
+            Assert.Equal($"{DateTime.Now.Year}-018", saved.NextInvoiceNumberPreview);
         }
     }
 }

@@ -307,7 +307,8 @@ namespace StudioManager.ServiceLayer.Mapper
 
         private void CreateFinanceMappings()
         {
-            CreateMap<BusinessSettings, BusinessSettingsReadDto>();
+            CreateMap<BusinessSettings, BusinessSettingsReadDto>()
+                .ForMember(dest => dest.NextInvoiceNumberPreview, opt => opt.Ignore()); // set by FinanceService
             CreateMap<BusinessSettingsUpdateDto, BusinessSettings>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Currency, opt => opt.Ignore())
@@ -318,13 +319,21 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.IsRunning, opt => opt.MapFrom(src => src.StartedAt != null))
                 .ForMember(dest => dest.ProjectTitle, opt => opt.MapFrom(src => src.Project != null ? src.Project.Title : string.Empty))
                 .ForMember(dest => dest.SessionTitle, opt => opt.MapFrom(src => src.Session != null ? src.Session.Title : null))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.DisplayName : null));
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.DisplayName : null))
+                .ForMember(dest => dest.StandardTaskName, opt => opt.MapFrom(src => src.StandardTask != null ? src.StandardTask.Name : null));
             CreateMap<TimeEntryCreateDto, TimeEntry>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.StandardTask, opt => opt.Ignore())
                 .ForMember(dest => dest.StartedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.Session, opt => opt.Ignore())
                 .ForMember(dest => dest.User, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<StandardTask, StandardTaskReadDto>();
+            CreateMap<StandardTaskCreateDto, StandardTask>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
 

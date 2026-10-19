@@ -14,6 +14,8 @@ namespace StudioManager.DataLayer.DTO.Read
 
         public int ProjectId { get; set; }
         public string ProjectTitle { get; set; } = string.Empty;
+        public int? StandardTaskId { get; set; }
+        public string? StandardTaskName { get; set; }
         public int? SessionId { get; set; }
         public string? SessionTitle { get; set; }
         public int? UserId { get; set; }

@@ -42,6 +42,7 @@ namespace StudioManager.DataLayer.Context
         public DbSet<InputListRow> InputListRows { get; set; } = null!;
 
         public DbSet<BusinessSettings> BusinessSettings { get; set; } = null!;
+        public DbSet<StandardTask> StandardTasks { get; set; } = null!;
         public DbSet<TimeEntry> TimeEntries { get; set; } = null!;
         public DbSet<ProjectCostItem> ProjectCostItems { get; set; } = null!;
 
@@ -508,6 +509,28 @@ namespace StudioManager.DataLayer.Context
             {
                 entity.Property(s => s.DefaultHourlyRate).HasPrecision(10, 2);
                 entity.Property(s => s.Currency).HasMaxLength(3).IsRequired();
+                entity.Property(s => s.CompanyName).HasMaxLength(200);
+                entity.Property(s => s.OwnerName).HasMaxLength(200);
+                entity.Property(s => s.Street).HasMaxLength(200);
+                entity.Property(s => s.PostalCode).HasMaxLength(20);
+                entity.Property(s => s.City).HasMaxLength(100);
+                entity.Property(s => s.Email).HasMaxLength(200);
+                entity.Property(s => s.Phone).HasMaxLength(50);
+                entity.Property(s => s.Website).HasMaxLength(200);
+                entity.Property(s => s.TaxNumber).HasMaxLength(50);
+                entity.Property(s => s.VatId).HasMaxLength(50);
+                entity.Property(s => s.BankName).HasMaxLength(100);
+                entity.Property(s => s.Iban).HasMaxLength(50);
+                entity.Property(s => s.Bic).HasMaxLength(20);
+                entity.Property(s => s.VatRate).HasPrecision(5, 2);
+                entity.Property(s => s.InvoiceNumberPrefix).HasMaxLength(30).IsRequired();
+            });
+
+            modelBuilder.Entity<StandardTask>(entity =>
+            {
+                entity.Property(t => t.Name).HasMaxLength(100).IsRequired();
+                entity.Property(t => t.Unit).HasConversion<string>().HasMaxLength(10);
+                entity.Property(t => t.HoursPerUnit).HasPrecision(5, 2);
             });
 
             modelBuilder.Entity<TimeEntry>(entity =>
@@ -530,6 +553,12 @@ namespace StudioManager.DataLayer.Context
                       .WithMany()
                       .HasForeignKey(t => t.UserId)
                       .OnDelete(DeleteBehavior.SetNull);
+
+                // A used standard task can not be deleted (StandardTaskService) - only archived
+                entity.HasOne(t => t.StandardTask)
+                      .WithMany()
+                      .HasForeignKey(t => t.StandardTaskId)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<ProjectCostItem>(entity =>

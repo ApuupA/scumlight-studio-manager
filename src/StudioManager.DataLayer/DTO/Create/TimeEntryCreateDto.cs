@@ -12,7 +12,8 @@ namespace StudioManager.DataLayer.DTO.Create
         [Range(0.01, 24)]
         public decimal Hours { get; set; }
 
-        [Required, MaxLength(500)]
+        /// <summary>Internal note what was done - optional when a standard task is chosen, not printed on the invoice.</summary>
+        [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
 
         public bool IsBillable { get; set; } = true;
@@ -21,6 +22,9 @@ namespace StudioManager.DataLayer.DTO.Create
         public int ProjectId { get; set; }
 
         public int? SessionId { get; set; }
+
+        /// <summary>The standard task the time is charged as, e.g. "Recording / Tag".</summary>
+        public int? StandardTaskId { get; set; }
 
         /// <summary>Who worked - usually the logged in user.</summary>
         public int? UserId { get; set; }

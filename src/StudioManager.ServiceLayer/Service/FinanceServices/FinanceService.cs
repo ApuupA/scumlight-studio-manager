@@ -33,15 +33,49 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
 
         public async Task<BusinessSettingsReadDto> GetSettings()
         {
-            return _mapper.Map<BusinessSettingsReadDto>(await LoadSettings());
+            return ToReadDto(await LoadSettings());
         }
 
         public async Task<BusinessSettingsReadDto> UpdateSettings(BusinessSettingsUpdateDto dto)
         {
             var settings = await LoadSettings();
+
+            // Empty texts are stored as null, so "not filled in" is always the same
+            static string? Clean(string? text) => string.IsNullOrWhiteSpace(text) ? null : text.Trim();
+            dto.CompanyName = Clean(dto.CompanyName);
+            dto.OwnerName = Clean(dto.OwnerName);
+            dto.Street = Clean(dto.Street);
+            dto.PostalCode = Clean(dto.PostalCode);
+            dto.City = Clean(dto.City);
+            dto.Email = Clean(dto.Email);
+            dto.Phone = Clean(dto.Phone);
+            dto.Website = Clean(dto.Website);
+            dto.TaxNumber = Clean(dto.TaxNumber);
+            dto.VatId = Clean(dto.VatId);
+            dto.BankName = Clean(dto.BankName);
+            dto.Iban = Clean(dto.Iban)?.Replace(" ", "").ToUpperInvariant();
+            dto.Bic = Clean(dto.Bic)?.ToUpperInvariant();
+            dto.InvoiceNumberPrefix = dto.InvoiceNumberPrefix?.Trim() ?? string.Empty;
+
             _mapper.Map(dto, settings);
             await _settingsRepository.UpdateAsync(settings);
-            return _mapper.Map<BusinessSettingsReadDto>(settings);
+            return ToReadDto(settings);
+        }
+
+        /// <summary>
+        /// An invoice number: prefix ({YYYY} = year) + number with leading zeros, e.g. "{YYYY}-" + 18 → "2026-018".
+        /// </summary>
+        public static string FormatInvoiceNumber(string prefix, int number, int digits, int year)
+        {
+            return prefix.Replace("{YYYY}", year.ToString()) + number.ToString().PadLeft(digits, '0');
+        }
+
+        private BusinessSettingsReadDto ToReadDto(BusinessSettings settings)
+        {
+            var dto = _mapper.Map<BusinessSettingsReadDto>(settings);
+            dto.NextInvoiceNumberPreview = FormatInvoiceNumber(
+                settings.InvoiceNumberPrefix, settings.NextInvoiceNumber, settings.InvoiceNumberDigits, DateTime.Now.Year);
+            return dto;
         }
 
         public async Task<ProjectFinanceDto> GetProjectFinance(int projectId)

@@ -185,6 +185,7 @@ try
     builder.Services.AddScoped<IFinanceService, FinanceService>();
     builder.Services.AddScoped<ITimeEntryService, TimeEntryService>();
     builder.Services.AddScoped<IProjectCostItemService, ProjectCostItemService>();
+    builder.Services.AddScoped<IStandardTaskService, StandardTaskService>();
     builder.Services.AddScoped<IClientService, ClientService>();
     builder.Services.AddScoped<IBandService, BandService>();
     builder.Services.AddScoped<IProjectService, ProjectService>();
