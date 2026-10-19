@@ -4969,6 +4969,162 @@
         }
       }
     },
+    "/api/StandardTask": {
+      "get": {
+        "tags": [
+          "StandardTask"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StandardTaskReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "StandardTask"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StandardTaskCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StandardTaskCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StandardTaskCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardTaskReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/StandardTask/{id}": {
+      "get": {
+        "tags": [
+          "StandardTask"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardTaskReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "StandardTask"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StandardTaskCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StandardTaskCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StandardTaskCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardTaskReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "StandardTask"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/StudioInput/bulk": {
       "post": {
         "tags": [
@@ -5833,7 +5989,14 @@
       "BusinessSettingsReadDto": {
         "required": [
           "currency",
-          "defaultHourlyRate"
+          "defaultHourlyRate",
+          "invoiceNumberDigits",
+          "invoiceNumberPrefix",
+          "isSmallBusiness",
+          "nextInvoiceNumber",
+          "nextInvoiceNumberPreview",
+          "paymentTermDays",
+          "vatRate"
         ],
         "type": "object",
         "properties": {
@@ -5843,13 +6006,96 @@
           },
           "currency": {
             "type": "string"
+          },
+          "companyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ownerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "website": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "vatId": {
+            "type": "string",
+            "nullable": true
+          },
+          "bankName": {
+            "type": "string",
+            "nullable": true
+          },
+          "iban": {
+            "type": "string",
+            "nullable": true
+          },
+          "bic": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSmallBusiness": {
+            "type": "boolean"
+          },
+          "vatRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentTermDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "invoiceNumberPrefix": {
+            "type": "string"
+          },
+          "nextInvoiceNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "invoiceNumberDigits": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextInvoiceNumberPreview": {
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "BusinessSettingsUpdateDto": {
         "required": [
-          "defaultHourlyRate"
+          "defaultHourlyRate",
+          "invoiceNumberDigits",
+          "invoiceNumberPrefix",
+          "isSmallBusiness",
+          "nextInvoiceNumber",
+          "paymentTermDays",
+          "vatRate"
         ],
         "type": "object",
         "properties": {
@@ -5858,6 +6104,103 @@
             "minimum": 0,
             "type": "number",
             "format": "double"
+          },
+          "companyName": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "ownerName": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 200,
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "phone": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "website": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "taxNumber": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "vatId": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "bankName": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "iban": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "bic": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "isSmallBusiness": {
+            "type": "boolean"
+          },
+          "vatRate": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "paymentTermDays": {
+            "maximum": 365,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "invoiceNumberPrefix": {
+            "maxLength": 30,
+            "type": "string"
+          },
+          "nextInvoiceNumber": {
+            "maximum": 999999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "invoiceNumberDigits": {
+            "maximum": 8,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -8520,6 +8863,75 @@
         ],
         "type": "string"
       },
+      "StandardTaskCreateDto": {
+        "required": [
+          "hoursPerUnit",
+          "isArchived",
+          "name",
+          "sortOrder",
+          "unit"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/TaskUnit"
+          },
+          "hoursPerUnit": {
+            "maximum": 24,
+            "minimum": 0.25,
+            "type": "number",
+            "format": "double"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isArchived": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StandardTaskReadDto": {
+        "required": [
+          "hoursPerUnit",
+          "id",
+          "isArchived",
+          "name",
+          "sortOrder",
+          "unit"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/TaskUnit"
+          },
+          "hoursPerUnit": {
+            "type": "number",
+            "format": "double"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isArchived": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "StudioInputBulkCreateDto": {
         "required": [
           "count"
@@ -8655,6 +9067,13 @@
         },
         "additionalProperties": false
       },
+      "TaskUnit": {
+        "enum": [
+          "Hour",
+          "Day"
+        ],
+        "type": "string"
+      },
       "TimeEntryCreateDto": {
         "required": [
           "date",
@@ -8677,7 +9096,6 @@
           },
           "description": {
             "maxLength": 500,
-            "minLength": 1,
             "type": "string"
           },
           "isBillable": {
@@ -8690,6 +9108,11 @@
             "format": "int32"
           },
           "sessionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "standardTaskId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -8748,6 +9171,15 @@
           "projectTitle": {
             "type": "string"
           },
+          "standardTaskId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "standardTaskName": {
+            "type": "string",
+            "nullable": true
+          },
           "sessionId": {
             "type": "integer",
             "format": "int32",
@@ -8787,6 +9219,11 @@
             "format": "int32",
             "nullable": true
           },
+          "standardTaskId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "description": {
             "maxLength": 500,
             "type": "string",
@@ -8807,7 +9244,6 @@
         "properties": {
           "description": {
             "maxLength": 500,
-            "minLength": 1,
             "type": "string"
           }
         },
@@ -8964,6 +9400,9 @@
     },
     {
       "name": "SongTrack"
+    },
+    {
+      "name": "StandardTask"
     },
     {
       "name": "StudioInput"

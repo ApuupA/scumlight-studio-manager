@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type { BusinessSettingsInput, ProjectCostItemInput, ProjectPricingInput, TimeEntryInput } from '../../api/types'
+import type { BusinessSettings, BusinessSettingsInput, ProjectCostItemInput, ProjectPricingInput, StandardTaskInput, TimeEntryInput } from '../../api/types'
 
 /**
  * Data access for time tracking, extra items and the money view of projects.
@@ -34,6 +34,48 @@ export function useUpdateBusinessSettings() {
       queryClient.setQueryData(['businessSettings'], settings)
       invalidate() // the project values depend on the default rate
     },
+  })
+}
+
+/**
+ * The settings as input for saving. The API always saves ALL settings, so every card sends the complete
+ * settings with only its own fields changed: updateSettings({ ...settingsToInput(settings), defaultHourlyRate: 40 })
+ */
+export function settingsToInput(settings: BusinessSettings): BusinessSettingsInput {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- currency and preview are not saved
+  const { currency, nextInvoiceNumberPreview, ...input } = settings
+  return input
+}
+
+// ---------- Standard tasks ----------
+
+export function useStandardTasks() {
+  return useQuery({
+    queryKey: ['standardTasks'],
+    queryFn: () => unwrap(api.GET('/api/StandardTask')),
+  })
+}
+
+/** Creates a task (id undefined) or updates it. */
+export function useSaveStandardTask() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, input }: { id?: number; input: StandardTaskInput }) =>
+      id
+        ? unwrap(api.PUT('/api/StandardTask/{id}', { params: { path: { id } }, body: input }))
+        : unwrap(api.POST('/api/StandardTask', { body: input })),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['standardTasks'] })
+      queryClient.invalidateQueries({ queryKey: ['timeEntries'] }) // they show the task name
+    },
+  })
+}
+
+export function useDeleteStandardTask() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: number) => unwrap(api.DELETE('/api/StandardTask/{id}', { params: { path: { id } } })),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['standardTasks'] }),
   })
 }
 
@@ -97,7 +139,7 @@ export function useRunningTimer() {
 export function useStartTimer() {
   const invalidate = useInvalidateFinance()
   return useMutation({
-    mutationFn: (input: { projectId: number; sessionId?: number | null; description?: string | null; date: string }) =>
+    mutationFn: (input: { projectId: number; standardTaskId?: number | null; sessionId?: number | null; description?: string | null; date: string }) =>
       unwrap(api.POST('/api/TimeEntry/timer/start', { body: input })),
     onSuccess: invalidate,
   })

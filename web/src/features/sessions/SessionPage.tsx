@@ -178,7 +178,13 @@ export default function SessionPage() {
       {bookingHours && (
         <TimeEntryFormModal
           projectId={session.projectId}
-          defaults={{ date: session.date, hours: sessionHours(session), description: session.title, sessionId: session.id }}
+          defaults={{
+            date: session.date,
+            hours: sessionHours(session),
+            description: session.title,
+            sessionId: session.id,
+            preferredUnit: session.startTime ? 'Hour' : 'Day',
+          }}
           onClose={() => setBookingHours(false)}
         />
       )}

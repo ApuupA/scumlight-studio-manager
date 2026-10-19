@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { formatHours, todayIso } from '../../utils/format'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useProjects } from '../projects/projectApi'
-import { useRunningTimer, useStartTimer, useStopTimer } from './financeApi'
+import { useRunningTimer, useStandardTasks, useStartTimer, useStopTimer } from './financeApi'
 
 /** "1:05" - hours and minutes since the start. */
 function elapsedText(startedAt: string, now: number) {
@@ -21,10 +21,12 @@ export default function TimerButton() {
   const { t, i18n } = useTranslation()
   const { data: timer } = useRunningTimer()
   const { data: projects } = useProjects()
+  const { data: allTasks } = useStandardTasks()
   const startTimer = useStartTimer()
   const stopTimer = useStopTimer()
   const [opened, setOpened] = useState(false)
   const [projectId, setProjectId] = useState<string | null>(null)
+  const [taskId, setTaskId] = useState<string | null>(null)
   const [description, setDescription] = useState('')
   const [now, setNow] = useState(() => Date.now())
 
@@ -36,11 +38,14 @@ export default function TimerButton() {
   }, [timer])
 
   const activeProjects = (projects ?? []).filter((p) => p.status !== 'Completed' && p.status !== 'Cancelled')
+  const tasks = (allTasks ?? []).filter((task) => !task.isArchived)
+  // Without a choice the first standard task is used
+  const chosenTaskId = taskId ?? (tasks[0] ? String(tasks[0].id) : null)
 
   const handleStart = () => {
     if (!projectId) return
     startTimer.mutate(
-      { projectId: Number(projectId), description: description.trim() || null, date: todayIso() },
+      { projectId: Number(projectId), standardTaskId: chosenTaskId ? Number(chosenTaskId) : null, description: description.trim() || null, date: todayIso() },
       {
         onSuccess: (started) => {
           setOpened(false)
@@ -69,7 +74,7 @@ export default function TimerButton() {
         {timer ? (
           <Button size="xs" color="red" variant="light" leftSection={<IconPlayerStop size={14} />}
             onClick={() => { setDescription(timer.description); setOpened((o) => !o) }}>
-            {elapsedText(timer.startedAt!, now)} · {timer.projectTitle}
+            {elapsedText(timer.startedAt!, now)} · {timer.standardTaskName ?? timer.projectTitle}
           </Button>
         ) : (
           <Button size="xs" variant="default" leftSection={<IconPlayerPlay size={14} />} onClick={() => setOpened((o) => !o)}>
@@ -80,11 +85,12 @@ export default function TimerButton() {
       <Popover.Dropdown>
         {timer ? (
           <Stack gap="xs">
-            <Text size="sm">{t('finance.timerRunningFor', { project: timer.projectTitle })}</Text>
-            <TextInput size="xs" label={t('finance.whatWasDone')} value={description} onChange={(e) => setDescription(e.currentTarget.value)} maxLength={500} />
+            <Text size="sm">{t('finance.timerRunningFor', { project: [timer.projectTitle, timer.standardTaskName].filter(Boolean).join(' · ') })}</Text>
+            <TextInput size="xs" label={t('finance.note')} placeholder={t('finance.descriptionPlaceholder')} value={description}
+              onChange={(e) => setDescription(e.currentTarget.value)} maxLength={500} />
             <Group justify="flex-end">
-              <Button size="xs" color="red" leftSection={<IconPlayerStop size={14} />} disabled={!description.trim()}
-                loading={stopTimer.isPending} onClick={handleStop}>
+              <Button size="xs" color="red" leftSection={<IconPlayerStop size={14} />}
+                disabled={!timer.standardTaskId && !description.trim()} loading={stopTimer.isPending} onClick={handleStop}>
                 {t('finance.stopAndBook')}
               </Button>
             </Group>
@@ -93,6 +99,8 @@ export default function TimerButton() {
           <Stack gap="xs">
             <Select size="xs" label={t('finance.project')} searchable value={projectId} onChange={setProjectId}
               data={activeProjects.map((p) => ({ value: String(p.id), label: p.title }))} comboboxProps={{ withinPortal: false }} />
+            <Select size="xs" label={t('finance.standardTask')} value={chosenTaskId} onChange={setTaskId}
+              data={tasks.map((task) => ({ value: String(task.id), label: task.name }))} comboboxProps={{ withinPortal: false }} />
             <TextInput size="xs" label={t('finance.whatAreYouDoing')} value={description} onChange={(e) => setDescription(e.currentTarget.value)} maxLength={500} />
             <Group justify="flex-end">
               <Button size="xs" leftSection={<IconPlayerPlay size={14} />} disabled={!projectId} loading={startTimer.isPending} onClick={handleStart}>

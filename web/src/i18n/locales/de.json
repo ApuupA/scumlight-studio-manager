@@ -185,10 +185,15 @@
       "sessionNotInProject": "Die Session gehört nicht zu diesem Projekt.",
       "userNotFound": "Den Benutzer gibt es nicht mehr.",
       "timerRunning": "Es läuft schon ein Timer – stopp ihn zuerst.",
-      "noTimerRunning": "Es läuft kein Timer."
+      "noTimerRunning": "Es läuft kein Timer.",
+      "standardTaskNotFound": "Die Leistung gibt es nicht mehr.",
+      "taskOrNoteRequired": "Wähle eine Leistung oder schreib eine Notiz."
     },
     "projectPricing": {
       "flatPriceRequired": "Bitte den Pauschalpreis eintragen."
+    },
+    "standardTask": {
+      "inUse": "Auf diese Leistung ist schon Zeit gebucht – archiviere sie, statt sie zu löschen."
     }
   },
   "profile": {
@@ -768,6 +773,63 @@
     "stopAndBook": "Stoppen & buchen",
     "timerBooked": "{{hours}} für {{project}} gebucht",
     "billing": "Abrechnung",
-    "billingHint": "Gilt für alle Projekte, die nach Stunden ohne eigenen Satz abgerechnet werden."
+    "billingHint": "Gilt für alle Projekte, die nach Stunden ohne eigenen Satz abgerechnet werden.",
+    "standardTask": "Leistung",
+    "standardTaskHint": "Erscheint auf der Rechnung",
+    "dayHint": "1 Tag = {{hours}} h",
+    "note": "Notiz (intern)",
+    "noteHint": "Wird nicht auf die Rechnung gedruckt",
+    "taskOrNote": "Wähle eine Leistung oder schreib eine Notiz"
+  },
+  "taskUnit": {
+    "Hour": "Pro Stunde",
+    "Day": "Pro Tag"
+  },
+  "standardTasks": {
+    "title": "Standardleistungen",
+    "hint": "Darauf wird Zeit gebucht – die Rechnung zeigt diese Leistungen (die Notizen bleiben intern). Der Preis ergibt sich aus dem Stundensatz: Standardsatz oder eigener Satz des Projekts.",
+    "new": "Leistung hinzufügen",
+    "newTitle": "Neue Standardleistung",
+    "editTitle": "Standardleistung bearbeiten",
+    "name": "Name",
+    "namePlaceholder": "z. B. Recording / Tag, Mixing / Stunde",
+    "unit": "Einheit",
+    "hoursPerDay": "Stunden pro Tag",
+    "dayOf": "Pro Tag ({{hours}} h)",
+    "price": "Preis (Standardsatz)",
+    "pricePreview": "{{hours}} h × {{rate}} = {{price}} pro Einheit mit dem Standardsatz",
+    "archived": "Archiviert",
+    "archivedHint": "Wird für neue Einträge nicht mehr angeboten – gebuchte Zeit behält sie",
+    "empty": "Noch keine Standardleistungen.",
+    "deleteConfirm": "Die Standardleistung „{{name}}\" wird gelöscht."
+  },
+  "business": {
+    "title": "Geschäftsdaten & Rechnungen",
+    "hint": "Steht auf jeder Rechnung. Wird einmal für das ganze Studio gespeichert – alle Benutzer nutzen dieselben Daten.",
+    "companyName": "Studio / Firma",
+    "ownerName": "Inhaber",
+    "street": "Straße",
+    "postalCode": "PLZ",
+    "city": "Ort",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "website": "Website",
+    "taxAndBank": "Steuer & Bank",
+    "taxNumber": "Steuernummer",
+    "vatId": "USt-IdNr. (optional)",
+    "bankName": "Bank",
+    "iban": "IBAN",
+    "bic": "BIC",
+    "isSmallBusiness": "Kleinunternehmer (§ 19 UStG)",
+    "isSmallBusinessHint": "Rechnungen ohne Umsatzsteuer, mit dem Hinweis „Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.\"",
+    "vatRate": "Umsatzsteuersatz",
+    "paymentTermDays": "Zahlungsziel (Tage)",
+    "invoiceNumbers": "Rechnungsnummern",
+    "invoiceNumberPrefix": "Präfix",
+    "invoiceNumberPrefixHint": "{YYYY} = Jahr, z. B. {YYYY}- oder RE-",
+    "nextInvoiceNumber": "Nächste Nummer",
+    "nextInvoiceNumberHint": "z. B. Nummern aus dem alten Programm fortsetzen",
+    "invoiceNumberDigits": "Stellen",
+    "nextNumberPreview": "Die nächste Rechnung bekommt die Nummer"
   }
 }

@@ -6,6 +6,7 @@ import { minPasswordLength } from '../../utils/form'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useChangePassword, useCurrentUser, useUpdateProfile } from './authApi'
 import CalendarSubscriptionCard from '../calendar/CalendarSubscriptionCard'
+import BusinessDataCard from '../finance/BusinessDataCard'
 
 /**
  * Profile of the logged in user: name / email and password, as two independent forms.
@@ -15,13 +16,14 @@ export default function ProfilePage() {
   const { data: user } = useCurrentUser() // always loaded here, RequireAuth waits for it
 
   return (
-    <Stack maw={720}>
+    <Stack maw={960}>
       <Title order={2}>{t('profile.title')}</Title>
       <SimpleGrid cols={{ base: 1, md: 2 }}>
         {/* key: re-create the form with fresh values when the user data changes */}
         {user && <ProfileForm key={user.email} user={user} />}
         <PasswordForm />
       </SimpleGrid>
+      <BusinessDataCard />
       <CalendarSubscriptionCard />
     </Stack>
   )

@@ -12,6 +12,8 @@ namespace StudioManager.DataLayer.DTO.Create
 
         public int? SessionId { get; set; }
 
+        public int? StandardTaskId { get; set; }
+
         /// <summary>What is being done - can also be filled in when stopping.</summary>
         [MaxLength(500)]
         public string? Description { get; set; }

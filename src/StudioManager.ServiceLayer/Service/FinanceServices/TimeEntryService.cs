@@ -20,22 +20,25 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
         private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<Session> _sessionRepository;
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<StandardTask> _standardTaskRepository;
 
         public TimeEntryService(
             IRepository<TimeEntry> repository,
             IRepository<Project> projectRepository,
             IRepository<Session> sessionRepository,
             IRepository<User> userRepository,
+            IRepository<StandardTask> standardTaskRepository,
             IMapper mapper) : base(repository, mapper)
         {
             _projectRepository = projectRepository;
             _sessionRepository = sessionRepository;
             _userRepository = userRepository;
+            _standardTaskRepository = standardTaskRepository;
         }
 
-        // Load project, session and user, so their names can be shown
+        // Load project, session, user and standard task, so their names can be shown
         protected override Expression<Func<TimeEntry, object>>[] DefaultIncludes =>
-            [t => t.Project!, t => t.Session!, t => t.User!];
+            [t => t.Project!, t => t.Session!, t => t.User!, t => t.StandardTask!];
 
         public async Task<IEnumerable<TimeEntryReadDto>> GetForProject(int projectId)
         {
@@ -45,15 +48,17 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
 
         public override async Task<TimeEntryReadDto> Insert(TimeEntryCreateDto createDto)
         {
-            await Validate(createDto.ProjectId, createDto.SessionId, createDto.UserId);
-            createDto.Description = createDto.Description.Trim();
+            await Validate(createDto.ProjectId, createDto.SessionId, createDto.UserId, createDto.StandardTaskId);
+            createDto.Description = createDto.Description?.Trim() ?? string.Empty;
+            RequireTaskOrNote(createDto);
             return await base.Insert(createDto);
         }
 
         public override async Task<TimeEntryReadDto> Update(int id, TimeEntryCreateDto updateDto)
         {
-            await Validate(updateDto.ProjectId, updateDto.SessionId, updateDto.UserId);
-            updateDto.Description = updateDto.Description.Trim();
+            await Validate(updateDto.ProjectId, updateDto.SessionId, updateDto.UserId, updateDto.StandardTaskId);
+            updateDto.Description = updateDto.Description?.Trim() ?? string.Empty;
+            RequireTaskOrNote(updateDto);
             return await base.Update(id, updateDto);
         }
 
@@ -69,11 +74,12 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
                 throw new BusinessRuleException("timeEntry.timerRunning", "A timer is already running - stop it first.");
             }
 
-            await Validate(dto.ProjectId, dto.SessionId, userId);
+            await Validate(dto.ProjectId, dto.SessionId, userId, dto.StandardTaskId);
 
             var entry = new TimeEntry
             {
                 Date = dto.Date,
+                StandardTaskId = dto.StandardTaskId,
                 Description = dto.Description?.Trim() ?? string.Empty,
                 ProjectId = dto.ProjectId,
                 SessionId = dto.SessionId,
@@ -91,11 +97,22 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
                 ?? throw new BusinessRuleException("timeEntry.noTimerRunning", "No timer is running.");
 
             entry.Hours = RoundUpToQuarterHour(DateTime.UtcNow - entry.StartedAt!.Value);
-            entry.Description = dto.Description.Trim();
+            entry.Description = dto.Description?.Trim() ?? string.Empty;
             entry.StartedAt = null;
             await _repository.UpdateAsync(entry);
 
             return (await Get(entry.Id))!;
+        }
+
+        /// <summary>
+        /// An entry needs a standard task or at least a note - otherwise nobody knows what the time was for.
+        /// </summary>
+        private static void RequireTaskOrNote(TimeEntryCreateDto dto)
+        {
+            if (dto.StandardTaskId == null && dto.Description.Length == 0)
+            {
+                throw new BusinessRuleException("timeEntry.taskOrNoteRequired", "Choose a standard task or write a note.");
+            }
         }
 
         /// <summary>
@@ -108,10 +125,15 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
         }
 
         /// <summary>
-        /// The project must exist, the session must belong to it, the user must exist.
+        /// The project must exist, the session must belong to it, the user and the standard task must exist.
         /// </summary>
-        private async Task Validate(int projectId, int? sessionId, int? userId)
+        private async Task Validate(int projectId, int? sessionId, int? userId, int? standardTaskId)
         {
+            if (standardTaskId != null && !await _standardTaskRepository.ExistsAsync(t => t.Id == standardTaskId))
+            {
+                throw new BusinessRuleException("timeEntry.standardTaskNotFound", $"Standard task with id {standardTaskId} does not exist.");
+            }
+
             if (!await _projectRepository.ExistsAsync(p => p.Id == projectId))
             {
                 throw new BusinessRuleException("timeEntry.projectNotFound", $"Project with id {projectId} does not exist.");

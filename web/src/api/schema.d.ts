@@ -4794,6 +4794,149 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/StandardTask": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StandardTaskReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["StandardTaskCreateDto"];
+                    "text/json": components["schemas"]["StandardTaskCreateDto"];
+                    "application/*+json": components["schemas"]["StandardTaskCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StandardTaskReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/StandardTask/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StandardTaskReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["StandardTaskCreateDto"];
+                    "text/json": components["schemas"]["StandardTaskCreateDto"];
+                    "application/*+json": components["schemas"]["StandardTaskCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StandardTaskReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/StudioInput/bulk": {
         parameters: {
             query?: never;
@@ -5487,10 +5630,58 @@ export interface components {
             /** Format: double */
             defaultHourlyRate: number;
             currency: string;
+            companyName?: string | null;
+            ownerName?: string | null;
+            street?: string | null;
+            postalCode?: string | null;
+            city?: string | null;
+            email?: string | null;
+            phone?: string | null;
+            website?: string | null;
+            taxNumber?: string | null;
+            vatId?: string | null;
+            bankName?: string | null;
+            iban?: string | null;
+            bic?: string | null;
+            isSmallBusiness: boolean;
+            /** Format: double */
+            vatRate: number;
+            /** Format: int32 */
+            paymentTermDays: number;
+            invoiceNumberPrefix: string;
+            /** Format: int32 */
+            nextInvoiceNumber: number;
+            /** Format: int32 */
+            invoiceNumberDigits: number;
+            nextInvoiceNumberPreview: string;
         };
         BusinessSettingsUpdateDto: {
             /** Format: double */
             defaultHourlyRate: number;
+            companyName?: string | null;
+            ownerName?: string | null;
+            street?: string | null;
+            postalCode?: string | null;
+            city?: string | null;
+            /** Format: email */
+            email?: string | null;
+            phone?: string | null;
+            website?: string | null;
+            taxNumber?: string | null;
+            vatId?: string | null;
+            bankName?: string | null;
+            iban?: string | null;
+            bic?: string | null;
+            isSmallBusiness: boolean;
+            /** Format: double */
+            vatRate: number;
+            /** Format: int32 */
+            paymentTermDays: number;
+            invoiceNumberPrefix: string;
+            /** Format: int32 */
+            nextInvoiceNumber: number;
+            /** Format: int32 */
+            invoiceNumberDigits: number;
         };
         CalendarTokenDto: {
             token?: string | null;
@@ -6247,6 +6438,26 @@ export interface components {
         };
         /** @enum {string} */
         SongTrackStatus: "Open" | "Recorded" | "Edited";
+        StandardTaskCreateDto: {
+            name: string;
+            unit: components["schemas"]["TaskUnit"];
+            /** Format: double */
+            hoursPerUnit: number;
+            /** Format: int32 */
+            sortOrder: number;
+            isArchived: boolean;
+        };
+        StandardTaskReadDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            unit: components["schemas"]["TaskUnit"];
+            /** Format: double */
+            hoursPerUnit: number;
+            /** Format: int32 */
+            sortOrder: number;
+            isArchived: boolean;
+        };
         StudioInputBulkCreateDto: {
             /** Format: int32 */
             count: number;
@@ -6286,6 +6497,8 @@ export interface components {
             inputGroupName?: string | null;
             inputGroupColor?: string | null;
         };
+        /** @enum {string} */
+        TaskUnit: "Hour" | "Day";
         TimeEntryCreateDto: {
             /** Format: date */
             date: string;
@@ -6297,6 +6510,8 @@ export interface components {
             projectId: number;
             /** Format: int32 */
             sessionId?: number | null;
+            /** Format: int32 */
+            standardTaskId?: number | null;
             /** Format: int32 */
             userId?: number | null;
         };
@@ -6316,6 +6531,9 @@ export interface components {
             projectId: number;
             projectTitle: string;
             /** Format: int32 */
+            standardTaskId?: number | null;
+            standardTaskName?: string | null;
+            /** Format: int32 */
             sessionId?: number | null;
             sessionTitle?: string | null;
             /** Format: int32 */
@@ -6327,6 +6545,8 @@ export interface components {
             projectId: number;
             /** Format: int32 */
             sessionId?: number | null;
+            /** Format: int32 */
+            standardTaskId?: number | null;
             description?: string | null;
             /** Format: date */
             date: string;
