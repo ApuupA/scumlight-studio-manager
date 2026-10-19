@@ -130,6 +130,8 @@ namespace StudioManager.DataLayer.Context
             modelBuilder.Entity<Project>(entity =>
             {
                 entity.Property(p => p.PhotoPath).HasMaxLength(300);
+                entity.Property(p => p.BandGearToken).HasMaxLength(64);
+                entity.HasIndex(p => p.BandGearToken).IsUnique();
                 entity.Property(p => p.Title).HasMaxLength(200).IsRequired();
                 entity.Property(p => p.Type).HasConversion<string>().HasMaxLength(20);
                 entity.Property(p => p.Status).HasConversion<string>().HasMaxLength(20);

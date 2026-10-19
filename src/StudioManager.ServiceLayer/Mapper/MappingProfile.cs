@@ -193,6 +193,7 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateMap<ProjectCreateDto, Project>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.PhotoPath, opt => opt.Ignore())
+                .ForMember(dest => dest.BandGearToken, opt => opt.Ignore())
                 .ForMember(dest => dest.Client, opt => opt.Ignore())
                 .ForMember(dest => dest.Bands, opt => opt.Ignore())
                 .ForMember(dest => dest.Songs, opt => opt.Ignore())
@@ -259,6 +260,8 @@ namespace StudioManager.ServiceLayer.Mapper
 
             CreateMap<ExternalGear, ExternalGearReadDto>();
             CreateMap<ExternalGearCreateDto, ExternalGear>()
+                // Only set by the band gear link / ExternalGearService.Accept - the form does not change it
+                .ForMember(dest => dest.IsSuggestion, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())

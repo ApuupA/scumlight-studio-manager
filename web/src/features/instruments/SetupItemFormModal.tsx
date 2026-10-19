@@ -30,7 +30,8 @@ interface SetupItemFormModalProps {
 export default function SetupItemFormModal({ instrument, item, onClose }: SetupItemFormModalProps) {
   const { t } = useTranslation()
   const { data: gearItems } = useGearItems()
-  const { data: bandGear } = useExternalGear(instrument.projectId)
+  // Only accepted band gear - suggestions of the band must be accepted first
+  const bandGear = useExternalGear(instrument.projectId).data?.filter((gear) => !gear.isSuggestion)
   const saveItem = useSaveSetupItem()
 
   const form = useForm({

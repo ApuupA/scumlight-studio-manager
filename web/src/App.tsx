@@ -20,6 +20,7 @@ import SettingsPage from './features/settings/SettingsPage'
 import SongPage from './features/songs/SongPage'
 import SongSheetPage from './features/songs/SongSheetPage'
 import AppLayout from './layout/AppLayout'
+import BandGearPage from './features/bandGearLink/BandGearPage'
 
 /**
  * All pages of the app. Comparable to the [Route] attributes of controllers:
@@ -33,6 +34,8 @@ export default function App() {
     <DatesProvider settings={{ locale: i18n.language, firstDayOfWeek: 1 }}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        {/* Public page for bands - the secret link is the key, no login */}
+        <Route path="/band-gear/:token" element={<BandGearPage />} />
 
         {/* Everything below requires a logged in user */}
         <Route element={<RequireAuth />}>

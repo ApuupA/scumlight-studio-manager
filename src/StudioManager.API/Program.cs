@@ -137,6 +137,14 @@ try
                 PermitLimit = 10,
                 Window = TimeSpan.FromMinutes(15)
             }));
+
+        options.AddPolicy(RateLimits.Public, context => RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 60,
+                Window = TimeSpan.FromMinutes(1)
+            }));
     });
 
     // ---------- Controllers, error handling, Swagger ----------
@@ -181,6 +189,7 @@ try
     builder.Services.AddScoped<IProjectLinkService, ProjectLinkService>();
     builder.Services.AddScoped<IDrumTuningService, DrumTuningService>();
     builder.Services.AddScoped<IExternalGearService, ExternalGearService>();
+    builder.Services.AddScoped<IBandGearLinkService, BandGearLinkService>();
     builder.Services.AddScoped<ISessionService, SessionService>();
     builder.Services.AddScoped<ISessionTaskService, SessionTaskService>();
     builder.Services.AddScoped<IProjectInstrumentService, ProjectInstrumentService>();

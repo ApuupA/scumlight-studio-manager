@@ -161,7 +161,8 @@
     "setupItem": {
       "oneSourceRequired": "Choose studio gear, band gear or enter a name – exactly one of them.",
       "instrumentNotFound": "The instrument does not exist anymore.",
-      "bandGearNotInProject": "This band gear does not belong to the project."
+      "bandGearNotInProject": "This band gear does not belong to the project.",
+      "bandGearNotAccepted": "Accept the band's suggestion first (tab \"Band gear\")."
     },
     "inputList": {
       "instrumentNotInProject": "All instruments must belong to the list's project.",
@@ -175,6 +176,9 @@
     "songTrack": {
       "songNotFound": "The song does not exist anymore.",
       "otherProject": "Tracks can only be copied from a song of the same project."
+    },
+    "bandGearLink": {
+      "tooManySuggestions": "There are too many open entries – please wait until the studio has checked them."
     }
   },
   "profile": {
@@ -670,5 +674,32 @@
     "secret": "Keep the link to yourself – anyone with it can see the sessions (no login needed).",
     "renew": "Create new link",
     "renewConfirm": "The current link stops working – calendars that use it must be subscribed again with the new link."
+  },
+  "bandGearLink": {
+    "title": "Link for the band",
+    "hint": "Send it to the band: they enter the gear they bring (no login). You accept or reject every entry here.",
+    "create": "Create link for the band",
+    "renew": "Create new link",
+    "renewConfirm": "The current link stops working – send the band the new one.",
+    "switchOff": "Switch link off",
+    "switchOffConfirm": "The band can not enter gear anymore. The entries stay.",
+    "newSuggestions": "The band entered new gear: {{count}} – accept (✓) or reject (delete).",
+    "suggestion": "Suggestion of the band",
+    "accept": "Accept"
+  },
+  "bandGearPage": {
+    "title": "Your gear for the studio",
+    "hint": "Please enter everything you bring: instruments, amps, cabs, pedals, cymbals, snares, ... The studio checks every entry.",
+    "invalidTitle": "Link not valid",
+    "invalid": "This link does not work (anymore). Please ask the studio for a new one.",
+    "pending": "being checked",
+    "accepted": "accepted",
+    "name": "What?",
+    "namePlaceholder": "e.g. Gibson Les Paul, Ampeg SVT, Zildjian 18\" Crash",
+    "quantity": "Quantity",
+    "owner": "Who brings it?",
+    "ownerPlaceholder": "e.g. Max (guitar)",
+    "notesPlaceholder": "e.g. needs a 9V power supply",
+    "add": "Add"
   }
 }

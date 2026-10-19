@@ -9,5 +9,10 @@ namespace StudioManager.API.Infrastructure
         /// Login: at most 10 attempts per 15 minutes per IP address, so passwords can not be guessed by trying.
         /// </summary>
         public const string Login = "login";
+
+        /// <summary>
+        /// Public pages without login (band gear link): at most 60 requests per minute per IP address.
+        /// </summary>
+        public const string Public = "public";
     }
 }

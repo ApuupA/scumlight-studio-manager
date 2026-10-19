@@ -32,7 +32,7 @@ function ProjectSheet({ project }: { project: Project }) {
   const navigate = useNavigate()
   const { data: songs } = useSongs(project.id)
   const { data: instruments } = useProjectInstruments(project.id)
-  const { data: bandGear } = useExternalGear(project.id)
+  const bandGear = useExternalGear(project.id).data?.filter((gear) => !gear.isSuggestion) // open suggestions are not printed
   const { data: drumTunings } = useDrumTunings(project.id)
   const { data: links } = useProjectLinks(project.id)
   const { data: sessions } = useSessionsOfProject(project.id)

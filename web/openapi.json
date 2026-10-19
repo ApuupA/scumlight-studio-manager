@@ -459,6 +459,200 @@
         }
       }
     },
+    "/api/BandGearLink/project/{projectId}": {
+      "get": {
+        "tags": [
+          "BandGearLink"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandGearLinkDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "BandGearLink"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandGearLinkDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BandGearLink"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/BandGearLink/{token}": {
+      "get": {
+        "tags": [
+          "BandGearLink"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandGearFormDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/BandGearLink/{token}/gear": {
+      "post": {
+        "tags": [
+          "BandGearLink"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BandGearSuggestionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BandGearSuggestionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BandGearSuggestionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandGearFormDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/BandGearLink/{token}/gear/{id}": {
+      "delete": {
+        "tags": [
+          "BandGearLink"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BandGearFormDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Calendar/token": {
       "get": {
         "tags": [
@@ -987,6 +1181,36 @@
                   "items": {
                     "$ref": "#/components/schemas/ExternalGearReadDto"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ExternalGear/{id}/accept": {
+      "post": {
+        "tags": [
+          "ExternalGear"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalGearReadDto"
                 }
               }
             }
@@ -4824,6 +5048,104 @@
         },
         "additionalProperties": false
       },
+      "BandGearEntryDto": {
+        "required": [
+          "id",
+          "isSuggestion",
+          "name",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSuggestion": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BandGearFormDto": {
+        "required": [
+          "bandNames",
+          "entries",
+          "projectTitle"
+        ],
+        "type": "object",
+        "properties": {
+          "projectTitle": {
+            "type": "string"
+          },
+          "bandNames": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BandGearEntryDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "BandGearLinkDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BandGearSuggestionDto": {
+        "required": [
+          "name",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "quantity": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "owner": {
+            "maxLength": 200,
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "BandReadDto": {
         "required": [
           "clientId",
@@ -5183,6 +5505,7 @@
           "dateCreated",
           "dateUpdated",
           "id",
+          "isSuggestion",
           "name",
           "projectId",
           "quantity"
@@ -5207,6 +5530,9 @@
           "notes": {
             "type": "string",
             "nullable": true
+          },
+          "isSuggestion": {
+            "type": "boolean"
           },
           "projectId": {
             "type": "integer",
@@ -7594,6 +7920,9 @@
     },
     {
       "name": "Band"
+    },
+    {
+      "name": "BandGearLink"
     },
     {
       "name": "Calendar"
