@@ -6,8 +6,11 @@ namespace StudioManager.DataLayer.Models.ClientModels
     /// The customer of the studio, e.g. a label, a band itself or a person. A client has one or more bands
     /// and owns the projects.
     /// </summary>
-    public class Client : BaseEntity
+    public class Client : BaseEntity, IHasPhoto
     {
+        /// <summary>Picture of the client (logo or photo), path in the file storage.</summary>
+        public string? PhotoPath { get; set; }
+
         public string Name { get; set; } = string.Empty;
         public string? ContactPerson { get; set; }
         public string? Email { get; set; }

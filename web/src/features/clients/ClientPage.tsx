@@ -1,5 +1,5 @@
-import { Alert, Anchor, Button, Card, Center, Grid, Group, Loader, Paper, Stack, Table, Text, Title } from '@mantine/core'
-import { IconArrowLeft, IconPlus, IconTrash } from '@tabler/icons-react'
+import { Alert, Anchor, Avatar, Button, Card, Center, Grid, Group, Loader, Paper, Stack, Table, Text, Title } from '@mantine/core'
+import { IconArrowLeft, IconPlus, IconTrash, IconUsersGroup } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -14,6 +14,8 @@ import { useProjectsOfClient } from '../projects/projectApi'
 import BandFormModal from './BandFormModal'
 import { useBandsOfClient, useClient, useDeleteBand, useDeleteClient, useUpdateClient } from './clientApi'
 import ClientForm from './ClientForm'
+import { photoUrl } from '../../api/photos'
+import PhotoCard from '../../components/PhotoCard'
 
 /** State of the band dialog: closed, new band, or editing a band. */
 type BandModalState = { open: false } | { open: true; band?: Band }
@@ -84,27 +86,33 @@ export default function ClientPage() {
         </Grid.Col>
 
         <Grid.Col span={{ base: 12, md: 5 }}>
-          <Card withBorder>
-            <Group justify="space-between" mb="sm">
-              <Title order={4}>{t('bands.title')}</Title>
-              <Button size="xs" variant="light" leftSection={<IconPlus size={14} />} onClick={() => setBandModal({ open: true })}>
-                {t('bands.new')}
-              </Button>
-            </Group>
+          <Stack>
+            <PhotoCard owner="Client" entity={client} invalidateKeys={['clients']} alt={client.name} height={180} />
+            <Card withBorder>
+              <Group justify="space-between" mb="sm">
+                <Title order={4}>{t('bands.title')}</Title>
+                <Button size="xs" variant="light" leftSection={<IconPlus size={14} />} onClick={() => setBandModal({ open: true })}>
+                  {t('bands.new')}
+                </Button>
+              </Group>
 
-            {bands?.length === 0 && <Text size="sm" c="dimmed">{t('bands.empty')}</Text>}
-            <Stack gap="xs">
-              {bands?.map((band) => (
-                <Group key={band.id} justify="space-between" wrap="nowrap">
-                  <div>
-                    <Text fw={500}>{band.name}</Text>
-                    <Text size="xs" c="dimmed">{[band.genre, band.members].filter(Boolean).join(' · ')}</Text>
-                  </div>
-                  <RowActions onEdit={() => setBandModal({ open: true, band })} onDelete={() => handleDeleteBand(band)} />
-                </Group>
-              ))}
-            </Stack>
-          </Card>
+              {bands?.length === 0 && <Text size="sm" c="dimmed">{t('bands.empty')}</Text>}
+              <Stack gap="xs">
+                {bands?.map((band) => (
+                  <Group key={band.id} justify="space-between" wrap="nowrap">
+                    <Group gap="sm" wrap="nowrap">
+                      <Avatar src={photoUrl('Band', band)} radius="sm"><IconUsersGroup size={18} /></Avatar>
+                      <div>
+                        <Text fw={500}>{band.name}</Text>
+                        <Text size="xs" c="dimmed">{[band.genre, band.members].filter(Boolean).join(' · ')}</Text>
+                      </div>
+                    </Group>
+                    <RowActions onEdit={() => setBandModal({ open: true, band })} onDelete={() => handleDeleteBand(band)} />
+                  </Group>
+                ))}
+              </Stack>
+            </Card>
+          </Stack>
         </Grid.Col>
       </Grid>
 
@@ -138,7 +146,7 @@ export default function ClientPage() {
         <BandFormModal
           key={bandModal.band?.id ?? 'new'}
           clientId={id}
-          band={bandModal.band}
+          band={bandModal.band && (bands?.find((b) => b.id === bandModal.band!.id) ?? bandModal.band)}
           onClose={() => setBandModal({ open: false })}
         />
       )}

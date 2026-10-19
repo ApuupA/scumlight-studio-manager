@@ -2,8 +2,11 @@ using StudioManager.DataLayer.Models.ProjectModels;
 
 namespace StudioManager.DataLayer.Models.ClientModels
 {
-    public class Band : BaseEntity
+    public class Band : BaseEntity, IHasPhoto
     {
+        /// <summary>Picture of the band (band photo or logo), path in the file storage.</summary>
+        public string? PhotoPath { get; set; }
+
         public string Name { get; set; } = string.Empty;
         public string? Genre { get; set; }
 

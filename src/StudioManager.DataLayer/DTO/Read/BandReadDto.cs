@@ -13,5 +13,8 @@ namespace StudioManager.DataLayer.DTO.Read
         public string ClientName { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+
+        /// <summary>True if a picture was uploaded (GET .../{id}/photo).</summary>
+        public bool HasPhoto { get; set; }
     }
 }

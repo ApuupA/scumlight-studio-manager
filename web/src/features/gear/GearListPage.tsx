@@ -1,4 +1,4 @@
-import { Alert, Avatar, Badge, Button, Center, Group, Loader, Select, Stack, Table, Text, TextInput, Title, UnstyledButton } from '@mantine/core'
+import { Alert, Avatar, Badge, Button, Center, Group, Loader, Select, SimpleGrid, Stack, Table, Text, TextInput, Title, UnstyledButton } from '@mantine/core'
 import { IconChevronDown, IconChevronUp, IconPlus, IconSearch, IconSelector, IconTool } from '@tabler/icons-react'
 import { useMemo, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,6 +8,9 @@ import { gearStatuses, type GearItem } from '../../api/types'
 import { useCategories } from './categoryApi'
 import { gearPhotoUrl, useGearItems } from './gearApi'
 import GearStatusBadge from './GearStatusBadge'
+import Tile from '../../components/Tile'
+import { useViewMode } from '../../components/useViewMode'
+import ViewToggle from '../../components/ViewToggle'
 
 type SortColumn = 'name' | 'category' | 'status' | 'quantity' | 'location'
 
@@ -34,6 +37,7 @@ export default function GearListPage() {
   const navigate = useNavigate()
   const { data: items, isPending, error } = useGearItems()
   const { data: categories } = useCategories()
+  const [viewMode, setViewMode] = useViewMode('gear')
 
   const [search, setSearch] = useState('')
   const [categoryId, setCategoryId] = useState<string | null>(null)
@@ -75,9 +79,12 @@ export default function GearListPage() {
     <Stack>
       <Group justify="space-between">
         <Title order={2}>{t('gear.title')}</Title>
-        <Button leftSection={<IconPlus size={18} />} onClick={() => navigate('/gear/new')}>
-          {t('gear.new')}
-        </Button>
+        <Group gap="sm">
+          <ViewToggle value={viewMode} onChange={setViewMode} />
+          <Button leftSection={<IconPlus size={18} />} onClick={() => navigate('/gear/new')}>
+            {t('gear.new')}
+          </Button>
+        </Group>
       </Group>
 
       <Group grow preventGrowOverflow={false} wrap="wrap">
@@ -113,6 +120,24 @@ export default function GearListPage() {
 
       {items.length === 0 ? (
         <Text c="dimmed" ta="center" py="xl">{t('gear.empty')}</Text>
+      ) : viewMode === 'tiles' ? (
+        <SimpleGrid cols={{ base: 2, sm: 3, md: 4, xl: 6 }}>
+          {visibleItems.map((item) => (
+            <Tile
+              key={item.id}
+              image={gearPhotoUrl(item)}
+              icon={<IconTool size={48} stroke={1.2} />}
+              title={item.name}
+              subtitle={[item.gearCategoryName, item.manufacturer, item.model].filter(Boolean).join(' · ')}
+              onClick={() => navigate(`/gear/${item.id}`)}
+            >
+              <Group gap={4}>
+                <GearStatusBadge status={item.status} />
+                {item.quantity > 1 && <Badge size="sm" variant="light" color="gray">{item.quantity}×</Badge>}
+              </Group>
+            </Tile>
+          ))}
+        </SimpleGrid>
       ) : (
         <Table.ScrollContainer minWidth={720}>
           <Table highlightOnHover verticalSpacing="xs">

@@ -96,6 +96,7 @@ namespace StudioManager.DataLayer.Context
         {
             modelBuilder.Entity<Client>(entity =>
             {
+                entity.Property(c => c.PhotoPath).HasMaxLength(300);
                 entity.Property(c => c.Name).HasMaxLength(200).IsRequired();
                 entity.Property(c => c.ContactPerson).HasMaxLength(200);
                 entity.Property(c => c.Email).HasMaxLength(200);
@@ -106,6 +107,7 @@ namespace StudioManager.DataLayer.Context
 
             modelBuilder.Entity<Band>(entity =>
             {
+                entity.Property(b => b.PhotoPath).HasMaxLength(300);
                 entity.Property(b => b.Name).HasMaxLength(200).IsRequired();
                 entity.Property(b => b.Genre).HasMaxLength(100);
                 entity.Property(b => b.Members).HasMaxLength(1000);
@@ -125,6 +127,7 @@ namespace StudioManager.DataLayer.Context
         {
             modelBuilder.Entity<Project>(entity =>
             {
+                entity.Property(p => p.PhotoPath).HasMaxLength(300);
                 entity.Property(p => p.Title).HasMaxLength(200).IsRequired();
                 entity.Property(p => p.Type).HasConversion<string>().HasMaxLength(20);
                 entity.Property(p => p.Status).HasConversion<string>().HasMaxLength(20);

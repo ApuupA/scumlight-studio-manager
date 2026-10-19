@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
 import type { GearItem, GearItemInput } from '../../api/types'
 import { categoryKeys } from './categoryApi'
+import { photoUrl } from '../../api/photos'
 
 /**
  * Data access for gear items - the frontend counterpart of GearItemController.
@@ -65,38 +66,7 @@ export function useDeleteGearItem() {
   })
 }
 
-export function useUploadGearPhoto() {
-  const invalidate = useInvalidateGear()
-  return useMutation({
-    mutationFn: ({ id, file }: { id: number; file: File }) => {
-      // File uploads are sent as multipart/form-data, the field name must match the C# parameter "file"
-      const formData = new FormData()
-      formData.append('file', file)
-
-      return unwrap(
-        api.POST('/api/GearItem/{id}/photo', {
-          params: { path: { id } },
-          body: {},
-          bodySerializer: () => formData,
-        }),
-      )
-    },
-    onSuccess: invalidate,
-  })
-}
-
-export function useDeleteGearPhoto() {
-  const invalidate = useInvalidateGear()
-  return useMutation({
-    mutationFn: (id: number) => unwrap(api.DELETE('/api/GearItem/{id}/photo', { params: { path: { id } } })),
-    onSuccess: invalidate,
-  })
-}
-
-/**
- * URL of the photo for <img src>. The browser sends the login cookie automatically.
- * dateUpdated is appended so the browser loads the new image after a photo was replaced.
- */
+/** URL of the photo for <img src>, undefined if there is none. */
 export function gearPhotoUrl(item: GearItem): string | undefined {
-  return item.hasPhoto ? `/api/GearItem/${item.id}/photo?v=${encodeURIComponent(item.dateUpdated)}` : undefined
+  return photoUrl('GearItem', item)
 }

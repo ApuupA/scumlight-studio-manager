@@ -3,7 +3,7 @@ using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.GearModels;
 using StudioManager.ServiceLayer.IService.IGearServices;
-using StudioManager.ServiceLayer.Service.GearServices;
+using StudioManager.ServiceLayer.Service.FileServices;
 
 namespace StudioManager.API.Controllers.GearControllers
 {
@@ -32,7 +32,7 @@ namespace StudioManager.API.Controllers.GearControllers
         /// Uploads a photo (JPG, PNG or WEBP, max. 10 MB) and replaces the existing one.
         /// </summary>
         [HttpPost("{id:int}/photo")]
-        [RequestSizeLimit(GearItemService.MaxPhotoSizeBytes + 1024 * 1024)]
+        [RequestSizeLimit(PhotoService.MaxPhotoSizeBytes + 1024 * 1024)]
         public async Task<ActionResult<GearItemReadDto>> UploadPhoto(int id, IFormFile file)
         {
             await using var stream = file.OpenReadStream();

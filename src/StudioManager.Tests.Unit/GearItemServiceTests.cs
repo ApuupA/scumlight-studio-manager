@@ -7,6 +7,7 @@ using StudioManager.DataLayer.Models.SessionModels;
 using StudioManager.RepositoryLayer.Repository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IFileServices;
+using StudioManager.ServiceLayer.Service.FileServices;
 using StudioManager.ServiceLayer.Service.GearServices;
 
 namespace StudioManager.Tests.Unit
@@ -25,7 +26,7 @@ namespace StudioManager.Tests.Unit
                 new Repository<GearCategory>(_context),
                 new Repository<Session>(_context),
                 new Repository<InstrumentSetupItem>(_context),
-                _mockFileStorage.Object,
+                new PhotoService(_mockFileStorage.Object),
                 TestHelper.CreateMapper());
 
             _category = new GearCategory { Name = "Microphones" };
@@ -102,7 +103,7 @@ namespace StudioManager.Tests.Unit
             var created = await _service.Insert(NewDto());
 
             var exception = await Assert.ThrowsAsync<BusinessRuleException>(
-                () => _service.SetPhoto(created.Id, Stream.Null, "photo.jpg", GearItemService.MaxPhotoSizeBytes + 1));
+                () => _service.SetPhoto(created.Id, Stream.Null, "photo.jpg", PhotoService.MaxPhotoSizeBytes + 1));
 
             Assert.Equal("photo.tooLarge", exception.ErrorCode);
         }

@@ -205,7 +205,9 @@
     "projects": "Projects of this client",
     "noProjects": "No projects yet.",
     "empty": "No clients yet. Add your first one!",
-    "deleteConfirm": "\"{{name}}\" and all its bands will be deleted."
+    "deleteConfirm": "\"{{name}}\" and all its bands will be deleted.",
+    "bandsCount": "Bands: {{count}}",
+    "projectsCount": "Projects: {{count}}"
   },
   "bands": {
     "title": "Bands",
@@ -641,5 +643,17 @@
     "Open": "Open",
     "Recorded": "Recorded",
     "Edited": "Edited"
+  },
+  "photo": {
+    "none": "No picture yet",
+    "upload": "Upload picture",
+    "replace": "Replace picture",
+    "remove": "Remove picture",
+    "hint": "JPG, PNG or WEBP, max. 10 MB"
+  },
+  "view": {
+    "list": "List",
+    "tiles": "Tiles",
+    "switch": "List or tiles"
   }
 }
