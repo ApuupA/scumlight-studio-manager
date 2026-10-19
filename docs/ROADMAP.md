@@ -57,13 +57,13 @@
 
 ## Milestone 3 – Basics for the daily work (in this order)
 
-**1. Song page**
+**✅ 1. Song page** (v1.1.0)
 - One page per song: arrangement (parts like "Chorus 1", bars, notes like "needs doubled guitars")
 - Recording checklist: the tracks of the song (Drums, Guitar L/R, Lead vocal, ...) with status open / recorded / edited,
   pre-filled from the project's instruments or copied from another song; progress per song in the song list
 - Lyrics, reference links, drum tunings and sessions of the song; printable song sheet
 
-**2. Pictures & tiles, calendar feed**
+**✅ 2. Pictures & tiles, calendar feed** (v1.2.0, v1.3.0)
 - Pictures for clients and bands, cover art for projects; list / tile view
 - Calendar subscription link: sessions show up in the Nextcloud / phone calendar
 

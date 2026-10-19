@@ -5,6 +5,7 @@ import type { ProfileInput, User } from '../../api/types'
 import { minPasswordLength } from '../../utils/form'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useChangePassword, useCurrentUser, useUpdateProfile } from './authApi'
+import CalendarSubscriptionCard from '../calendar/CalendarSubscriptionCard'
 
 /**
  * Profile of the logged in user: name / email and password, as two independent forms.
@@ -21,6 +22,7 @@ export default function ProfilePage() {
         {user && <ProfileForm key={user.email} user={user} />}
         <PasswordForm />
       </SimpleGrid>
+      <CalendarSubscriptionCard />
     </Stack>
   )
 }
