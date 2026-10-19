@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StudioManager.API.Infrastructure;
@@ -24,6 +26,7 @@ using StudioManager.ServiceLayer.Service.SettingsServices;
 using StudioManager.ServiceLayer.Service.UserServices;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 
 // Logs startup errors before the full configuration is loaded
 Log.Logger = new LoggerConfiguration()
@@ -64,6 +67,9 @@ try
             options.Cookie.Name = "studio.auth";
             options.Cookie.HttpOnly = true;
             options.Cookie.SameSite = SameSiteMode.Lax;
+            // Opened via https (on the server): the cookie is only ever sent over https.
+            // Opened via http://localhost: it still works. "https or not" comes from the proxies, see ForwardedHeaders below.
+            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             options.ExpireTimeSpan = TimeSpan.FromDays(14);
             options.SlidingExpiration = true;
 
@@ -83,6 +89,37 @@ try
     // Every endpoint requires a logged in user, unless it is marked with [AllowAnonymous]
     builder.Services.AddAuthorizationBuilder()
         .SetFallbackPolicy(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
+
+    // ---------- Running behind proxies ----------
+    // The API is only reached through nginx (web container) - on the server there is also an HTTPS proxy in front.
+    // The proxies pass on the real IP address of the browser (X-Forwarded-For) and whether it used https (X-Forwarded-Proto).
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+        // The proxies run in Docker networks with changing addresses. That is safe, because the API container
+        // itself is not reachable from outside - every request comes through nginx.
+        options.KnownIPNetworks.Clear();
+        options.KnownProxies.Clear();
+
+        // Number of proxies in front of the API: 1 locally (nginx), 2 on a server with an HTTPS proxy in front.
+        // Only that many entries are read from the right, so a browser can not fake its IP address.
+        options.ForwardLimit = builder.Configuration.GetValue("ReverseProxy:ProxyCount", 1);
+    });
+
+    // ---------- Rate limiting ----------
+    builder.Services.AddRateLimiter(options =>
+    {
+        options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+        options.AddPolicy(RateLimits.Login, context => RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10,
+                Window = TimeSpan.FromMinutes(15)
+            }));
+    });
 
     // ---------- Controllers, error handling, Swagger ----------
     builder.Services.AddControllers()
@@ -141,6 +178,9 @@ try
         await InitializeDatabase(app);
     }
 
+    // First: take the real IP address and https / http from the proxies (used by the rate limiter and the cookie)
+    app.UseForwardedHeaders();
+
     app.UseExceptionHandler();
     app.UseSerilogRequestLogging();
 
@@ -151,6 +191,7 @@ try
         app.UseSwaggerUI();
     }
 
+    app.UseRateLimiter();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();

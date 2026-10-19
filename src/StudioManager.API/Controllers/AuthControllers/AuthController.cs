@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
+using StudioManager.API.Infrastructure;
 using StudioManager.DataLayer.DTO.Auth;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.ServiceLayer.IService.IUserServices;
@@ -24,10 +26,15 @@ namespace StudioManager.API.Controllers.AuthControllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Logs in. Limited to 10 attempts per 15 minutes per IP address (then 429 Too Many Requests).
+        /// </summary>
         [AllowAnonymous]
+        [EnableRateLimiting(RateLimits.Login)]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
         public async Task<ActionResult<UserReadDto>> Login([FromBody] LoginDto dto)
         {
             var user = await _userService.ValidateCredentials(dto.Email, dto.Password);

@@ -39,6 +39,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ConnectionStrings__StudioDatabase: "Host=db;Port=5432;Database=studio;Username=studio;Password=${DB_PASSWORD:-studio}"
       FileStorage__RootPath: /data/files
+      # Proxies in front of the API: 1 = only nginx (local), 2 = with an HTTPS proxy in front (server)
+      ReverseProxy__ProxyCount: ${PROXY_COUNT:-1}
       OwnerAccount__Email: ${OWNER_EMAIL:-owner@studio.local}
       OwnerAccount__Password: ${OWNER_PASSWORD:-scumlight}
       OwnerAccount__DisplayName: ${OWNER_NAME:-Studio Owner}

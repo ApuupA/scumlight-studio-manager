@@ -2,6 +2,7 @@ import { Alert, Button, Paper, PasswordInput, Stack, TextInput } from '@mantine/
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+import { ApiError } from '../../api/errors'
 import type { LoginInput } from '../../api/types'
 import logo from '../../assets/scumlight-logo-480.webp'
 import LanguageSwitcher from '../../layout/LanguageSwitcher'
@@ -37,7 +38,12 @@ export default function LoginPage() {
       <Paper withBorder shadow="xl" p="xl" className={classes.card}>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Stack>
-            {login.isError && <Alert color="red">{t('auth.failed')}</Alert>}
+            {/* Wrong password - or too many attempts (the server allows 10 per 15 minutes) */}
+            {login.isError && (
+              <Alert color="red">
+                {login.error instanceof ApiError && login.error.status === 429 ? t('errors.tooManyRequests') : t('auth.failed')}
+              </Alert>
+            )}
 
             <TextInput label={t('auth.email')} type="email" autoComplete="username" {...form.getInputProps('email')} />
             <PasswordInput label={t('auth.password')} autoComplete="current-password" {...form.getInputProps('password')} />

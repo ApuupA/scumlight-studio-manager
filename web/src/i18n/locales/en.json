@@ -165,7 +165,8 @@
     "inputList": {
       "instrumentNotInProject": "All instruments must belong to the list's project.",
       "nothingToMove": "Nothing is plugged into this input."
-    }
+    },
+    "tooManyRequests": "Too many login attempts. Please wait 15 minutes and try again."
   },
   "profile": {
     "title": "Profile",

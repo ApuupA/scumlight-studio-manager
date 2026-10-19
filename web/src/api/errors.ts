@@ -48,6 +48,8 @@ export function getErrorMessage(error: unknown, t: TFunction): string {
       return t('errors.unauthorized')
     case 404:
       return t('errors.notFound')
+    case 429:
+      return t('errors.tooManyRequests')
     default:
       return t('errors.unknown')
   }
