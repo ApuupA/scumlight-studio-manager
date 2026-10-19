@@ -1,6 +1,6 @@
 import { Alert, Anchor, Button, Center, Grid, Group, Loader, Paper, Stack, Tabs, Text, Title } from '@mantine/core'
 import {
-  IconArrowLeft, IconBackpack, IconCalendarEvent, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconListNumbers, IconMetronome, IconPrinter, IconTrash,
+  IconArrowLeft, IconBackpack, IconCalendarEvent, IconClockDollar, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconListNumbers, IconMetronome, IconPrinter, IconTrash,
 } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
@@ -20,6 +20,7 @@ import ProjectForm from './ProjectForm'
 import ProjectSessionsTab from './ProjectSessionsTab'
 import SongsTab from './SongsTab'
 import PhotoCard from '../../components/PhotoCard'
+import FinanceTab from '../finance/FinanceTab'
 
 /**
  * Route /projects/new creates a project, /projects/:id shows one with all its tabs.
@@ -133,6 +134,7 @@ export default function ProjectPage() {
           <Tabs.Tab value="instruments" leftSection={<IconGuitarPick size={16} />}>{t('projects.tabs.instruments')}</Tabs.Tab>
           <Tabs.Tab value="bandGear" leftSection={<IconBackpack size={16} />}>{t('projects.tabs.bandGear')}</Tabs.Tab>
           <Tabs.Tab value="inputLists" leftSection={<IconListNumbers size={16} />}>{t('projects.tabs.inputLists')}</Tabs.Tab>
+          <Tabs.Tab value="finance" leftSection={<IconClockDollar size={16} />}>{t('projects.tabs.finance')}</Tabs.Tab>
           <Tabs.Tab value="links" leftSection={<IconLink size={16} />}>{t('projects.tabs.links')}</Tabs.Tab>
           <Tabs.Tab value="drums" leftSection={<IconMetronome size={16} />}>{t('projects.tabs.drums')}</Tabs.Tab>
         </Tabs.List>
@@ -154,6 +156,7 @@ export default function ProjectPage() {
         <Tabs.Panel value="instruments" pt="md"><InstrumentsTab project={project} /></Tabs.Panel>
         <Tabs.Panel value="bandGear" pt="md"><BandGearTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="inputLists" pt="md"><InputListsTab projectId={project.id} /></Tabs.Panel>
+        <Tabs.Panel value="finance" pt="md"><FinanceTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="links" pt="md"><LinksTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="drums" pt="md"><DrumTuningTab projectId={project.id} /></Tabs.Panel>
       </Tabs>

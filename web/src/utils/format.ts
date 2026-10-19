@@ -7,6 +7,11 @@ export function formatPrice(value: number | null | undefined, language: string):
   return new Intl.NumberFormat(language, { style: 'currency', currency: 'EUR' }).format(value)
 }
 
+/** "6,5 h" / "6.5 h" */
+export function formatHours(hours: number, language: string): string {
+  return `${new Intl.NumberFormat(language, { maximumFractionDigits: 2 }).format(hours)} h`
+}
+
 /**
  * "2026-10-15" (C# DateOnly) -> Date at local midnight. new Date("2026-10-15") would be UTC midnight,
  * which is the previous day in time zones west of UTC. Full date times ("...T10:00:00Z") are parsed normally.

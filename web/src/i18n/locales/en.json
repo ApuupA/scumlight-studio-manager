@@ -179,6 +179,16 @@
     },
     "bandGearLink": {
       "tooManySuggestions": "There are too many open entries – please wait until the studio has checked them."
+    },
+    "timeEntry": {
+      "projectNotFound": "The project does not exist anymore.",
+      "sessionNotInProject": "The session does not belong to this project.",
+      "userNotFound": "The user does not exist anymore.",
+      "timerRunning": "A timer is already running – stop it first.",
+      "noTimerRunning": "No timer is running."
+    },
+    "projectPricing": {
+      "flatPriceRequired": "Enter the flat price."
     }
   },
   "profile": {
@@ -268,7 +278,8 @@
       "drums": "Drum tuning",
       "instruments": "Instruments & setup",
       "bandGear": "Band gear",
-      "inputLists": "Input lists"
+      "inputLists": "Input lists",
+      "finance": "Time & costs"
     },
     "filterActive": "Active projects",
     "filterAll": "All projects"
@@ -701,5 +712,62 @@
     "ownerPlaceholder": "e.g. Max (guitar)",
     "notesPlaceholder": "e.g. needs a 9V power supply",
     "add": "Add"
+  },
+  "pricingMode": {
+    "Hourly": "By the hour",
+    "FlatPrice": "Flat price"
+  },
+  "finance": {
+    "hours": "Hours",
+    "billableHours": "{{hours}} billable",
+    "labor": "Working time",
+    "atRate": "at {{rate}} / h",
+    "actualRate": "actually {{rate}} / h",
+    "extras": "Extra items",
+    "totalValue": "Total",
+    "totalHint": "Value so far – invoices follow",
+    "pricing": "Pricing",
+    "hourlyRate": "Own hourly rate",
+    "hourlyRateHint": "Empty = the default rate from the settings",
+    "defaultRate": "Default hourly rate",
+    "flatPrice": "Flat price",
+    "hourlyHint": "Billable hours × hourly rate, plus the billable extra items.",
+    "flatHint": "The agreed price, plus the billable extra items. The hours show what the project really took.",
+    "timeEntries": "Working time",
+    "newEntry": "Add time",
+    "editEntry": "Edit time entry",
+    "noEntries": "No time recorded yet – add it here, from a session (\"Book hours\") or with the timer at the top.",
+    "date": "Date",
+    "hoursHint": "e.g. 6.5",
+    "hoursInvalid": "Between 0.25 and 24 hours",
+    "description": "What was done?",
+    "descriptionPlaceholder": "e.g. Drum recording, editing vocals",
+    "session": "Session",
+    "who": "Who",
+    "billable": "Billable",
+    "billableHint": "Off for time that is not charged, e.g. own preparation",
+    "notBillable": "not billable",
+    "running": "running",
+    "deleteEntryConfirm": "The time entry \"{{description}}\" will be deleted.",
+    "bookHours": "Book hours",
+    "newCostItem": "New extra item",
+    "editCostItem": "Edit extra item",
+    "noCostItems": "No extra items.",
+    "costItemPlaceholder": "e.g. Tape reel, rented amp, external mastering",
+    "quantity": "Quantity",
+    "unitPrice": "Unit price",
+    "total": "Total",
+    "costBillableHint": "Off for own costs that are not charged to the client",
+    "deleteCostItemConfirm": "The extra item \"{{description}}\" will be deleted.",
+    "timer": "Timer",
+    "project": "Project",
+    "whatAreYouDoing": "What are you doing? (optional)",
+    "start": "Start",
+    "timerRunningFor": "Timer running for {{project}}",
+    "whatWasDone": "What was done?",
+    "stopAndBook": "Stop & book",
+    "timerBooked": "{{hours}} booked for {{project}}",
+    "billing": "Billing",
+    "billingHint": "Used for all projects charged by the hour without an own rate."
   }
 }

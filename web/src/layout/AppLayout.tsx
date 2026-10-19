@@ -7,6 +7,7 @@ import { useCurrentUser, useLogout } from '../features/auth/authApi'
 import classes from './AppLayout.module.css'
 import Brand from './Brand'
 import LanguageSwitcher from './LanguageSwitcher'
+import TimerButton from '../features/finance/TimerButton'
 
 /** Entries of the side navigation. New features (projects, sessions, mixes, ...) are added here. */
 const navItems = [
@@ -58,6 +59,7 @@ export default function AppLayout() {
 
           {/* On phones these settings move into the navigation (see below), so the header has room for the logo */}
           <Group gap="sm" wrap="nowrap" visibleFrom="sm">
+            <TimerButton />
             <Anchor component={RouterNavLink} to="/profile" size="sm" c="dimmed">
               {user?.displayName}
             </Anchor>
