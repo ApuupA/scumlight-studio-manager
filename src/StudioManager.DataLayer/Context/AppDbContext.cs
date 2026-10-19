@@ -48,6 +48,7 @@ namespace StudioManager.DataLayer.Context
         public DbSet<Payment> Payments { get; set; } = null!;
         public DbSet<Quote> Quotes { get; set; } = null!;
         public DbSet<QuoteLine> QuoteLines { get; set; } = null!;
+        public DbSet<Expense> Expenses { get; set; } = null!;
         public DbSet<TimeEntry> TimeEntries { get; set; } = null!;
         public DbSet<ProjectCostItem> ProjectCostItems { get; set; } = null!;
 
@@ -681,6 +682,25 @@ namespace StudioManager.DataLayer.Context
                       .WithMany(q => q.Lines)
                       .HasForeignKey(l => l.QuoteId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Expense>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(300).IsRequired();
+                entity.Property(e => e.Supplier).HasMaxLength(200);
+                entity.Property(e => e.Category).HasConversion<string>().HasMaxLength(30);
+                entity.Property(e => e.GrossAmount).HasPrecision(12, 2);
+                entity.Property(e => e.VatRate).HasPrecision(5, 2);
+                entity.Property(e => e.Notes).HasMaxLength(2000);
+                entity.Property(e => e.ReceiptPath).HasMaxLength(500);
+                entity.Property(e => e.ReceiptFileName).HasMaxLength(255);
+                entity.HasIndex(e => e.Date);
+
+                // A deleted project keeps its expenses - only the link is removed
+                entity.HasOne(e => e.Project)
+                      .WithMany()
+                      .HasForeignKey(e => e.ProjectId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Payment>(entity =>

@@ -1159,6 +1159,307 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Expense/year/{year}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    year: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExpenseReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Expense/overview/{year}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    year: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["YearOverviewDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Expense/{id}/receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "multipart/form-data": {
+                        /** Format: binary */
+                        file?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExpenseReadDto"];
+                    };
+                };
+            };
+        };
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExpenseReadDto"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Expense": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExpenseReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ExpenseCreateDto"];
+                    "text/json": components["schemas"]["ExpenseCreateDto"];
+                    "application/*+json": components["schemas"]["ExpenseCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExpenseReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Expense/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExpenseReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ExpenseCreateDto"];
+                    "text/json": components["schemas"]["ExpenseCreateDto"];
+                    "application/*+json": components["schemas"]["ExpenseCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ExpenseReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/ExternalGear/project/{projectId}": {
         parameters: {
             query?: never;
@@ -6300,6 +6601,25 @@ export interface components {
             id: number;
             name: string;
         };
+        BookingDto: {
+            /** Format: date */
+            date: string;
+            isIncome: boolean;
+            /** Format: int32 */
+            sourceId: number;
+            invoiceNumber?: string | null;
+            description: string;
+            party?: string | null;
+            category?: components["schemas"]["ExpenseCategory"];
+            projectTitle?: string | null;
+            /** Format: double */
+            net: number;
+            /** Format: double */
+            vat: number;
+            /** Format: double */
+            gross: number;
+            hasReceipt: boolean;
+        };
         BusinessSettingsReadDto: {
             /** Format: double */
             defaultHourlyRate: number;
@@ -6371,6 +6691,11 @@ export interface components {
         CalendarTokenDto: {
             token?: string | null;
         };
+        CategoryTotalDto: {
+            category: components["schemas"]["ExpenseCategory"];
+            /** Format: double */
+            amount: number;
+        };
         ChangePasswordDto: {
             currentPassword: string;
             newPassword: string;
@@ -6433,6 +6758,48 @@ export interface components {
             songTitle?: string | null;
             /** Format: date-time */
             dateCreated: string;
+            /** Format: date-time */
+            dateUpdated: string;
+        };
+        /** @enum {string} */
+        ExpenseCategory: "Equipment" | "Software" | "Material" | "ExternalServices" | "Rent" | "Marketing" | "Travel" | "Insurance" | "Office" | "Other";
+        ExpenseCreateDto: {
+            /** Format: date */
+            date: string;
+            description: string;
+            supplier?: string | null;
+            category: components["schemas"]["ExpenseCategory"];
+            /** Format: double */
+            grossAmount: number;
+            /** Format: double */
+            vatRate: number;
+            notes?: string | null;
+            /** Format: int32 */
+            projectId?: number | null;
+        };
+        ExpenseReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: date */
+            date: string;
+            description: string;
+            supplier?: string | null;
+            category: components["schemas"]["ExpenseCategory"];
+            /** Format: double */
+            grossAmount: number;
+            /** Format: double */
+            vatRate: number;
+            /** Format: double */
+            netAmount: number;
+            /** Format: double */
+            vatAmount: number;
+            isAboveDepreciationLimit: boolean;
+            notes?: string | null;
+            /** Format: int32 */
+            projectId?: number | null;
+            projectTitle?: string | null;
+            hasReceipt: boolean;
+            receiptFileName?: string | null;
             /** Format: date-time */
             dateUpdated: string;
         };
@@ -6753,6 +7120,14 @@ export interface components {
             /** Format: email */
             email: string;
             password: string;
+        };
+        MonthTotalDto: {
+            /** Format: int32 */
+            month: number;
+            /** Format: double */
+            income: number;
+            /** Format: double */
+            expenses: number;
         };
         MoveDto: {
             /** Format: int32 */
@@ -7410,6 +7785,24 @@ export interface components {
         };
         /** @enum {string} */
         UserRole: "Owner" | "Client";
+        YearOverviewDto: {
+            /** Format: int32 */
+            year: number;
+            isSmallBusiness: boolean;
+            /** Format: double */
+            incomeTotal: number;
+            /** Format: double */
+            expensesTotal: number;
+            /** Format: double */
+            result: number;
+            /** Format: double */
+            incomeVat: number;
+            /** Format: double */
+            expensesVat: number;
+            months: components["schemas"]["MonthTotalDto"][];
+            categories: components["schemas"]["CategoryTotalDto"][];
+            bookings: components["schemas"]["BookingDto"][];
+        };
     };
     responses: never;
     parameters: never;
