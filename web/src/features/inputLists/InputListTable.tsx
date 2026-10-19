@@ -147,8 +147,8 @@ function InputListLine({ listId, row, drag }: { listId: number; row: InputListRo
 
 /**
  * The input list as editable table - one line per studio input, colored by preamp group, like the Excel list.
- * Source, microphone and stand can be dragged to another input (e.g. the snare to another preamp);
- * snake, preamp, DAW channel and the settings (+48V, HPF, ...) stay at their input.
+ * Source, microphone, stand and +48V can be dragged to another input (e.g. the snare to another preamp);
+ * snake, preamp, DAW channel and the channel settings (HPF, Tone, EQ, insert, comment) stay at their input.
  */
 export default function InputListTable({ list }: { list: InputList }) {
   const { t } = useTranslation()

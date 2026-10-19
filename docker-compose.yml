@@ -2,6 +2,9 @@
 #
 #   Everything (production-like):   docker compose up -d --build      -> http://localhost:8080
 #   Only the database (development): docker compose up -d db
+#   Database browser (pgAdmin):       http://localhost:5050
+#
+# The database and pgAdmin are only reachable from this computer (127.0.0.1), never from the network.
 #
 # Passwords below are defaults for local use. On a real server put them into a .env file (see .env.example).
 
@@ -14,7 +17,8 @@ services:
       POSTGRES_USER: studio
       POSTGRES_PASSWORD: ${DB_PASSWORD:-studio}
     ports:
-      - "5433:5432"   # 5433 on the host, so it does not clash with a locally installed PostgreSQL
+      # 5433 on the host, so it does not clash with a locally installed PostgreSQL
+      - "127.0.0.1:5433:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
@@ -48,8 +52,27 @@ services:
     depends_on:
       - api
     ports:
-      - "8080:80"
+      # WEB_PORT in .env if 8080 is already taken (e.g. on a server)
+      - "${WEB_PORT:-8080}:80"
+
+  # Look into the database in the browser. Login with PGADMIN_EMAIL / PGADMIN_PASSWORD,
+  # the server "Studio Manager" is already registered (database password = DB_PASSWORD).
+  pgadmin:
+    image: dpage/pgadmin4:9
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@scumlight.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-scumlight}
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "127.0.0.1:5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json:ro
 
 volumes:
   db-data:
   studio-files:
+  pgadmin-data:

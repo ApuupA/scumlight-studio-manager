@@ -70,7 +70,7 @@ export function useFillInputList() {
   })
 }
 
-/** Moves source, microphone and stand to another studio input (drag and drop). A used target swaps places. */
+/** Moves source, microphone, stand and +48V to another studio input (drag and drop). A used target swaps places. */
 export function useMoveInputListEntry() {
   const invalidate = useInvalidateInputLists()
   return useMutation({

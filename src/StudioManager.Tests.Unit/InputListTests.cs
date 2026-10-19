@@ -138,7 +138,7 @@ namespace StudioManager.Tests.Unit
             await _studioInputService.BulkCreate(new StudioInputBulkCreateDto { Count = 3 });
             var listId = await CreateList();
             var inputIds = _context.StudioInputs.OrderBy(i => i.SortOrder).Select(i => i.Id).ToList();
-            await _inputListService.SaveRow(listId, inputIds[0], new InputListRowSaveDto { Source = "Snare Top", Microphone = "SM57", Stand = "Short" });
+            await _inputListService.SaveRow(listId, inputIds[0], new InputListRowSaveDto { Source = "Snare Top", Microphone = "SM57", Stand = "Short", Phantom = true });
             await _inputListService.SaveRow(listId, inputIds[2], new InputListRowSaveDto { Hpf = true, Comment = "Neve" });
 
             var list = await _inputListService.MoveEntry(listId, new InputListMoveDto { FromStudioInputId = inputIds[0], ToStudioInputId = inputIds[2] });
@@ -147,7 +147,8 @@ namespace StudioManager.Tests.Unit
             Assert.Equal("Snare Top", list.Rows[2].Source);
             Assert.Equal("SM57", list.Rows[2].Microphone);
             Assert.Equal("Short", list.Rows[2].Stand);
-            Assert.True(list.Rows[2].Hpf);                  // the settings of input 3 stay
+            Assert.True(list.Rows[2].Phantom);              // +48V moves with the mic
+            Assert.True(list.Rows[2].Hpf);                  // the channel settings of input 3 stay
             Assert.Equal("Neve", list.Rows[2].Comment);
         }
 
@@ -163,7 +164,7 @@ namespace StudioManager.Tests.Unit
             var list = await _inputListService.MoveEntry(listId, new InputListMoveDto { FromStudioInputId = inputIds[1], ToStudioInputId = inputIds[0] });
 
             Assert.Equal(new[] { "Snare", "Kick" }, list.Rows.Select(r => r.Source));
-            Assert.Equal(new[] { false, true }, list.Rows.Select(r => r.Phantom)); // +48V stays at its input
+            Assert.Equal(new[] { true, false }, list.Rows.Select(r => r.Phantom)); // +48V moves with the mic
         }
 
         [Fact]

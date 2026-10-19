@@ -184,10 +184,12 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
                 await _rowRepository.AddAsync(to);
             }
 
-            // Only what is plugged in changes places - +48V, HPF, Tone, EQ, insert and comment stay at their input
+            // The mic changes places with its stand and +48V (a condenser needs phantom power wherever it is plugged in).
+            // HPF, Tone, EQ, insert and comment are settings of the preamp channel - they stay at their input.
             (from.Source, to.Source) = (to.Source, from.Source);
             (from.Microphone, to.Microphone) = (to.Microphone, from.Microphone);
             (from.Stand, to.Stand) = (to.Stand, from.Stand);
+            (from.Phantom, to.Phantom) = (to.Phantom, from.Phantom);
             (from.SetupItemId, to.SetupItemId) = (to.SetupItemId, from.SetupItemId);
             await _rowRepository.UpdateRangeAsync([from, to]);
 
