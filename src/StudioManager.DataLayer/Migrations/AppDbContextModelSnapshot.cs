@@ -270,6 +270,189 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("BusinessSettings");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CancelsInvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ClosingText")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date");
+
+                    b.Property<decimal>("GrossTotal")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<bool>("IncludesFlatPrice")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("IntroText")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateOnly>("InvoiceDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsSmallBusiness")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("NetTotal")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<string>("Number")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RecipientAddress")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("RecipientName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("SenderJson")
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly?>("ServiceFrom")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("ServiceTo")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<decimal>("VatAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<decimal>("VatRate")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CancelsInvoiceId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.InvoiceLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Quantity")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<string>("Unit")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("InvoiceLines");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.ProjectCostItem", b =>
                 {
                     b.Property<int>("Id")
@@ -292,6 +475,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsBillable")
                         .HasColumnType("boolean");
 
@@ -307,6 +493,8 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("numeric(10,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("ProjectId");
 
@@ -378,6 +566,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasPrecision(5, 2)
                         .HasColumnType("numeric(5,2)");
 
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsBillable")
                         .HasColumnType("boolean");
 
@@ -397,6 +588,8 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("ProjectId");
 
@@ -1629,19 +1822,79 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.Invoice", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.FinanceModels.Invoice", "CancelsInvoice")
+                        .WithMany()
+                        .HasForeignKey("CancelsInvoiceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("StudioManager.DataLayer.Models.ClientModels.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CancelsInvoice");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.InvoiceLine", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.FinanceModels.Invoice", "Invoice")
+                        .WithMany("Lines")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.Payment", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.FinanceModels.Invoice", "Invoice")
+                        .WithMany("Payments")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.ProjectCostItem", b =>
                 {
+                    b.HasOne("StudioManager.DataLayer.Models.FinanceModels.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Invoice");
+
                     b.Navigation("Project");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.TimeEntry", b =>
                 {
+                    b.HasOne("StudioManager.DataLayer.Models.FinanceModels.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
@@ -1662,6 +1915,8 @@ namespace StudioManager.DataLayer.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Invoice");
 
                     b.Navigation("Project");
 
@@ -1934,6 +2189,13 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Bands");
 
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.Invoice", b =>
+                {
+                    b.Navigation("Lines");
+
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.GearModels.GearCategory", b =>

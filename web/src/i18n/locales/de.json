@@ -13,7 +13,8 @@
     "calendar": "Kalender",
     "projects": "Projekte",
     "clients": "Kunden",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "invoices": "Rechnungen"
   },
   "common": {
     "save": "Speichern",
@@ -140,7 +141,8 @@
     },
     "project": {
       "clientNotFound": "Der Kunde existiert nicht mehr.",
-      "bandNotOfClient": "Alle Bands eines Projekts müssen zum Kunden des Projekts gehören."
+      "bandNotOfClient": "Alle Bands eines Projekts müssen zum Kunden des Projekts gehören.",
+      "hasInvoices": "Das Projekt hat Rechnungen und kann nicht gelöscht werden (Rechnungen müssen aufbewahrt werden)."
     },
     "song": {
       "projectNotFound": "Das Projekt existiert nicht mehr.",
@@ -187,13 +189,25 @@
       "timerRunning": "Es läuft schon ein Timer – stopp ihn zuerst.",
       "noTimerRunning": "Es läuft kein Timer.",
       "standardTaskNotFound": "Die Leistung gibt es nicht mehr.",
-      "taskOrNoteRequired": "Wähle eine Leistung oder schreib eine Notiz."
+      "taskOrNoteRequired": "Wähle eine Leistung oder schreib eine Notiz.",
+      "invoiced": "Diese Zeit steht auf einer Rechnung – lösch zuerst den Entwurf oder storniere die Rechnung."
     },
     "projectPricing": {
       "flatPriceRequired": "Bitte den Pauschalpreis eintragen."
     },
     "standardTask": {
       "inUse": "Auf diese Leistung ist schon Zeit gebucht – archiviere sie, statt sie zu löschen."
+    },
+    "invoice": {
+      "noLines": "Die Rechnung hat keine Positionen.",
+      "recipientMissing": "Die Rechnung braucht einen Empfänger.",
+      "businessDataMissing": "Trag zuerst deine Geschäftsdaten ein (Profil): Name, Adresse und Steuernummer.",
+      "notDraft": "Eine ausgestellte Rechnung kann nicht geändert oder gelöscht werden – storniere sie stattdessen.",
+      "cannotBeCancelled": "Nur ausgestellte Rechnungen können storniert werden.",
+      "noPaymentPossible": "Zahlungen gibt es nur für ausgestellte Rechnungen."
+    },
+    "costItem": {
+      "invoiced": "Dieser Posten steht auf einer Rechnung – lösch zuerst den Entwurf oder storniere die Rechnung."
     }
   },
   "profile": {
@@ -779,7 +793,8 @@
     "dayHint": "1 Tag = {{hours}} h",
     "note": "Notiz (intern)",
     "noteHint": "Wird nicht auf die Rechnung gedruckt",
-    "taskOrNote": "Wähle eine Leistung oder schreib eine Notiz"
+    "taskOrNote": "Wähle eine Leistung oder schreib eine Notiz",
+    "invoicedHint": "Abgerechnet {{invoiced}} · bezahlt {{paid}}"
   },
   "taskUnit": {
     "Hour": "Pro Stunde",
@@ -831,5 +846,85 @@
     "nextInvoiceNumberHint": "z. B. Nummern aus dem alten Programm fortsetzen",
     "invoiceNumberDigits": "Stellen",
     "nextNumberPreview": "Die nächste Rechnung bekommt die Nummer"
+  },
+  "invoiceStatus": {
+    "Draft": "Entwurf",
+    "Open": "Offen",
+    "PartiallyPaid": "Teilbezahlt",
+    "Paid": "Bezahlt",
+    "Overdue": "Überfällig",
+    "Cancelled": "Storniert",
+    "Cancellation": "Storno"
+  },
+  "invoices": {
+    "title": "Rechnungen",
+    "invoice": "Rechnung",
+    "cancellationInvoice": "Stornorechnung",
+    "draft": "Entwurf",
+    "draftMark": "Entwurf – noch nicht ausgestellt",
+    "draftHint": "Ein Entwurf kann noch geändert werden. „Ausstellen\" gibt ihm die nächste Nummer – danach ist er gesperrt; Korrekturen nur per Storno.",
+    "create": "Rechnung erstellen",
+    "createHint": "Neue Rechnungen erstellst du im Projekt (Tab „Zeit & Kosten\").",
+    "projectEmpty": "Noch keine Rechnungen. „Rechnung erstellen\" übernimmt alles, was noch nicht abgerechnet ist.",
+    "empty": "Keine Rechnungen hier.",
+    "recipient": "Empfänger",
+    "recipientName": "Name",
+    "recipientAddress": "Adresse",
+    "dates": "Daten",
+    "invoiceDate": "Rechnungsdatum",
+    "invoiceDateHint": "Wird beim Ausstellen auf den Tag gesetzt",
+    "serviceFrom": "Leistung von",
+    "serviceTo": "Leistung bis",
+    "servicePeriod": "Leistungszeitraum",
+    "introText": "Text über den Positionen",
+    "closingText": "Text darunter",
+    "closingTextPlaceholder": "z. B. Danke für die tollen Sessions!",
+    "position": "Pos.",
+    "description": "Beschreibung",
+    "quantity": "Menge",
+    "unit": "Einheit",
+    "unitPrice": "Einzelpreis",
+    "total": "Gesamt",
+    "addLine": "Position hinzufügen",
+    "net": "Netto",
+    "vat": "USt. {{rate}} %",
+    "gross": "Gesamtbetrag",
+    "number": "Rechnungsnr.",
+    "project": "Projekt",
+    "dueDate": "Fällig",
+    "status": "Status",
+    "saveDraft": "Entwurf speichern",
+    "deleteDraft": "Entwurf löschen",
+    "deleteDraftConfirm": "Der Entwurf wird gelöscht. Seine Stunden und Zusatzposten sind dann wieder offen.",
+    "issue": "Ausstellen",
+    "issueTitle": "Rechnung ausstellen",
+    "issueConfirm": "Die Rechnung bekommt die Nummer {{number}} und das heutige Datum. Danach kann sie nicht mehr geändert werden – nur storniert.",
+    "issued": "Rechnung {{number}} ausgestellt",
+    "preview": "Vorschau",
+    "print": "Drucken / PDF",
+    "cancel": "Stornieren",
+    "cancelTitle": "Rechnung stornieren",
+    "cancelConfirm": "Eine Stornorechnung mit eigener Nummer hebt Rechnung {{number}} auf. Ihre Stunden und Zusatzposten sind dann wieder offen und können neu abgerechnet werden.",
+    "cancelled": "Stornorechnung {{number}} erstellt",
+    "cancelledBy": "Storniert durch {{number}}",
+    "cancels": "Storniert Rechnung {{number}}",
+    "payments": "Zahlungen",
+    "noPayments": "Noch keine Zahlung.",
+    "paid": "Bezahlt",
+    "open": "Offen",
+    "paymentDate": "Datum",
+    "amount": "Betrag",
+    "paymentAdded": "Zahlung erfasst",
+    "smallBusinessNote": "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.",
+    "paymentNote": "Bitte überweisen Sie {{amount}} bis zum {{date}} auf das unten genannte Konto.",
+    "openTotal": "Offen",
+    "overdueTotal": "Überfällig",
+    "yearTotal": "Abgerechnet {{year}}",
+    "filter": {
+      "open": "Offen",
+      "overdue": "Überfällig",
+      "drafts": "Entwürfe",
+      "all": "Alle"
+    }
   }
 }

@@ -31,6 +31,12 @@ namespace StudioManager.DataLayer.DTO.Read
         /// <summary>Flat price only: what one worked hour actually earns (flat price / all hours). Null without hours.</summary>
         public decimal? ActualHourlyRate { get; set; }
 
+        /// <summary>Sum of the issued invoices (gross, cancellations subtracted).</summary>
+        public decimal InvoicedTotal { get; set; }
+
+        /// <summary>Sum of the payments received.</summary>
+        public decimal PaidTotal { get; set; }
+
         public string Currency { get; set; } = "EUR";
     }
 }

@@ -75,7 +75,7 @@
   price per project (hourly rate or flat price, extra items); hours, value, invoiced and open amount per project
 - ✅ b1) (v1.6.0) Standard tasks (settings, e.g. "Recording / Tag" = 8 h × hourly rate) for time entries and the timer;
   business data, small business / VAT, payment terms and invoice number range on the profile page
-- b2) Invoices from open hours / items (grouped by standard task, notes stay internal): gap-free numbers, all required content, locked once issued (corrections by
+- ✅ b2) (v1.7.0) Invoices from open hours / items (grouped by standard task, notes stay internal): gap-free numbers, all required content, locked once issued (corrections by
   cancellation invoice), PDF via print; payments and partial payments, open / overdue overview;
   small business (§ 19 UStG) or VAT switchable
 - c) Quotes that turn into invoices

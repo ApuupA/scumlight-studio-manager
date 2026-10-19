@@ -13,7 +13,8 @@
     "calendar": "Calendar",
     "projects": "Projects",
     "clients": "Clients",
-    "settings": "Settings"
+    "settings": "Settings",
+    "invoices": "Invoices"
   },
   "common": {
     "save": "Save",
@@ -140,7 +141,8 @@
     },
     "project": {
       "clientNotFound": "The client does not exist anymore.",
-      "bandNotOfClient": "All bands of a project must belong to its client."
+      "bandNotOfClient": "All bands of a project must belong to its client.",
+      "hasInvoices": "The project has invoices and can not be deleted (invoices must be kept)."
     },
     "song": {
       "projectNotFound": "The project does not exist anymore.",
@@ -187,13 +189,25 @@
       "timerRunning": "A timer is already running – stop it first.",
       "noTimerRunning": "No timer is running.",
       "standardTaskNotFound": "The standard task does not exist anymore.",
-      "taskOrNoteRequired": "Choose a standard task or write a note."
+      "taskOrNoteRequired": "Choose a standard task or write a note.",
+      "invoiced": "This time is on an invoice – delete the draft or cancel the invoice first."
     },
     "projectPricing": {
       "flatPriceRequired": "Enter the flat price."
     },
     "standardTask": {
       "inUse": "Time is already booked on this task – archive it instead of deleting it."
+    },
+    "invoice": {
+      "noLines": "The invoice has no lines.",
+      "recipientMissing": "The invoice needs a recipient.",
+      "businessDataMissing": "Fill in your business data first (profile page): name, address and tax number.",
+      "notDraft": "An issued invoice can not be changed or deleted – cancel it instead.",
+      "cannotBeCancelled": "Only issued invoices can be cancelled.",
+      "noPaymentPossible": "Payments can only be recorded for issued invoices."
+    },
+    "costItem": {
+      "invoiced": "This item is on an invoice – delete the draft or cancel the invoice first."
     }
   },
   "profile": {
@@ -779,7 +793,8 @@
     "dayHint": "1 day = {{hours}} h",
     "note": "Note (internal)",
     "noteHint": "Not printed on the invoice",
-    "taskOrNote": "Choose a standard task or write a note"
+    "taskOrNote": "Choose a standard task or write a note",
+    "invoicedHint": "Invoiced {{invoiced}} · paid {{paid}}"
   },
   "taskUnit": {
     "Hour": "Per hour",
@@ -831,5 +846,85 @@
     "nextInvoiceNumberHint": "e.g. continue from your old program",
     "invoiceNumberDigits": "Digits",
     "nextNumberPreview": "The next invoice gets the number"
+  },
+  "invoiceStatus": {
+    "Draft": "Draft",
+    "Open": "Open",
+    "PartiallyPaid": "Partly paid",
+    "Paid": "Paid",
+    "Overdue": "Overdue",
+    "Cancelled": "Cancelled",
+    "Cancellation": "Cancellation"
+  },
+  "invoices": {
+    "title": "Invoices",
+    "invoice": "Invoice",
+    "cancellationInvoice": "Cancellation invoice",
+    "draft": "Draft",
+    "draftMark": "Draft – not issued yet",
+    "draftHint": "A draft can still be changed. \"Issue\" gives it the next number – then it is locked; corrections only by cancellation.",
+    "create": "Create invoice",
+    "createHint": "New invoices are created in the project (tab \"Time & costs\").",
+    "projectEmpty": "No invoices yet. \"Create invoice\" takes everything that was not invoiced yet.",
+    "empty": "No invoices here.",
+    "recipient": "Recipient",
+    "recipientName": "Name",
+    "recipientAddress": "Address",
+    "dates": "Dates",
+    "invoiceDate": "Invoice date",
+    "invoiceDateHint": "Set to the day of issuing",
+    "serviceFrom": "Service from",
+    "serviceTo": "Service to",
+    "servicePeriod": "Service period",
+    "introText": "Text above the lines",
+    "closingText": "Text below",
+    "closingTextPlaceholder": "e.g. Thank you for the great sessions!",
+    "position": "Pos.",
+    "description": "Description",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "unitPrice": "Unit price",
+    "total": "Total",
+    "addLine": "Add line",
+    "net": "Net",
+    "vat": "VAT {{rate}} %",
+    "gross": "Total amount",
+    "number": "Invoice no.",
+    "project": "Project",
+    "dueDate": "Due",
+    "status": "Status",
+    "saveDraft": "Save draft",
+    "deleteDraft": "Delete draft",
+    "deleteDraftConfirm": "The draft will be deleted. Its hours and extra items are open again.",
+    "issue": "Issue",
+    "issueTitle": "Issue invoice",
+    "issueConfirm": "The invoice gets the number {{number}} and today's date. After that it can not be changed anymore – only cancelled.",
+    "issued": "Invoice {{number}} issued",
+    "preview": "Preview",
+    "print": "Print / PDF",
+    "cancel": "Cancel invoice",
+    "cancelTitle": "Cancel invoice",
+    "cancelConfirm": "A cancellation invoice with its own number cancels invoice {{number}}. Its hours and extra items are open again and can be invoiced anew.",
+    "cancelled": "Cancellation invoice {{number}} created",
+    "cancelledBy": "Cancelled by {{number}}",
+    "cancels": "Cancels invoice {{number}}",
+    "payments": "Payments",
+    "noPayments": "No payment yet.",
+    "paid": "Paid",
+    "open": "Open",
+    "paymentDate": "Date",
+    "amount": "Amount",
+    "paymentAdded": "Payment recorded",
+    "smallBusinessNote": "According to § 19 UStG no VAT is charged (small business).",
+    "paymentNote": "Please transfer {{amount}} by {{date}} to the account below.",
+    "openTotal": "Open",
+    "overdueTotal": "Overdue",
+    "yearTotal": "Invoiced {{year}}",
+    "filter": {
+      "open": "Open",
+      "overdue": "Overdue",
+      "drafts": "Drafts",
+      "all": "All"
+    }
   }
 }

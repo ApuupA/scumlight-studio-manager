@@ -32,6 +32,10 @@ namespace StudioManager.DataLayer.Models.FinanceModels
         public int? StandardTaskId { get; set; }
         public StandardTask? StandardTask { get; set; }
 
+        /// <summary>The invoice (or draft) this time is on - then it can not be changed anymore.</summary>
+        public int? InvoiceId { get; set; }
+        public Invoice? Invoice { get; set; }
+
         /// <summary>Who worked. Null if the user was deleted.</summary>
         public int? UserId { get; set; }
         public User? User { get; set; }

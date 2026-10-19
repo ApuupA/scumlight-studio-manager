@@ -20,5 +20,9 @@ namespace StudioManager.DataLayer.Models.FinanceModels
 
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
+
+        /// <summary>The invoice (or draft) this item is on - then it can not be changed anymore.</summary>
+        public int? InvoiceId { get; set; }
+        public Invoice? Invoice { get; set; }
     }
 }

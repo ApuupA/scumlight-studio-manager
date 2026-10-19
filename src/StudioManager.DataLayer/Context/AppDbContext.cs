@@ -43,6 +43,9 @@ namespace StudioManager.DataLayer.Context
 
         public DbSet<BusinessSettings> BusinessSettings { get; set; } = null!;
         public DbSet<StandardTask> StandardTasks { get; set; } = null!;
+        public DbSet<Invoice> Invoices { get; set; } = null!;
+        public DbSet<InvoiceLine> InvoiceLines { get; set; } = null!;
+        public DbSet<Payment> Payments { get; set; } = null!;
         public DbSet<TimeEntry> TimeEntries { get; set; } = null!;
         public DbSet<ProjectCostItem> ProjectCostItems { get; set; } = null!;
 
@@ -559,6 +562,12 @@ namespace StudioManager.DataLayer.Context
                       .WithMany()
                       .HasForeignKey(t => t.StandardTaskId)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                // Deleting a draft releases the time (InvoiceService does it, the database as safety net)
+                entity.HasOne(t => t.Invoice)
+                      .WithMany()
+                      .HasForeignKey(t => t.InvoiceId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<ProjectCostItem>(entity =>
@@ -570,6 +579,69 @@ namespace StudioManager.DataLayer.Context
                 entity.HasOne(c => c.Project)
                       .WithMany()
                       .HasForeignKey(c => c.ProjectId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(c => c.Invoice)
+                      .WithMany()
+                      .HasForeignKey(c => c.InvoiceId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<Invoice>(entity =>
+            {
+                // Every number only once - also protects against two invoices issued at the same moment
+                entity.Property(i => i.Number).HasMaxLength(50);
+                entity.HasIndex(i => i.Number).IsUnique();
+
+                entity.Property(i => i.Status).HasConversion<string>().HasMaxLength(20);
+                entity.Property(i => i.RecipientName).HasMaxLength(200).IsRequired();
+                entity.Property(i => i.RecipientAddress).HasMaxLength(500);
+                entity.Property(i => i.IntroText).HasMaxLength(2000);
+                entity.Property(i => i.ClosingText).HasMaxLength(2000);
+                entity.Property(i => i.VatRate).HasPrecision(5, 2);
+                entity.Property(i => i.NetTotal).HasPrecision(12, 2);
+                entity.Property(i => i.VatAmount).HasPrecision(12, 2);
+                entity.Property(i => i.GrossTotal).HasPrecision(12, 2);
+
+                // Invoices must be kept - a project or client with invoices can not be deleted
+                entity.HasOne(i => i.Project)
+                      .WithMany()
+                      .HasForeignKey(i => i.ProjectId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(i => i.Client)
+                      .WithMany()
+                      .HasForeignKey(i => i.ClientId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(i => i.CancelsInvoice)
+                      .WithMany()
+                      .HasForeignKey(i => i.CancelsInvoiceId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<InvoiceLine>(entity =>
+            {
+                entity.Property(l => l.Description).HasMaxLength(300).IsRequired();
+                entity.Property(l => l.Unit).HasMaxLength(20);
+                entity.Property(l => l.Quantity).HasPrecision(10, 2);
+                entity.Property(l => l.UnitPrice).HasPrecision(12, 2);
+                entity.Property(l => l.Total).HasPrecision(12, 2);
+
+                entity.HasOne(l => l.Invoice)
+                      .WithMany(i => i.Lines)
+                      .HasForeignKey(l => l.InvoiceId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.Property(p => p.Amount).HasPrecision(12, 2);
+                entity.Property(p => p.Note).HasMaxLength(300);
+
+                entity.HasOne(p => p.Invoice)
+                      .WithMany(i => i.Payments)
+                      .HasForeignKey(p => p.InvoiceId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
         }

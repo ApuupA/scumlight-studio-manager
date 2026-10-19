@@ -7,6 +7,14 @@ export function formatPrice(value: number | null | undefined, language: string):
   return new Intl.NumberFormat(language, { style: 'currency', currency: 'EUR' }).format(value)
 }
 
+/**
+ * Decimal separator for NumberInput fields: "45,50" in German, "45.50" in English.
+ * Usage: <NumberInput {...decimalSeparator(i18n.language)} ... />
+ */
+export function decimalSeparator(language: string): { decimalSeparator: string } {
+  return { decimalSeparator: language.startsWith('de') ? ',' : '.' }
+}
+
 /** "6,5 h" / "6.5 h" */
 export function formatHours(hours: number, language: string): string {
   return `${new Intl.NumberFormat(language, { maximumFractionDigits: 2 }).format(hours)} h`

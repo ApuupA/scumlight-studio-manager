@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { BusinessSettings } from '../../api/types'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { settingsToInput, useBusinessSettings, useUpdateBusinessSettings } from './financeApi'
+import { decimalSeparator } from '../../utils/format'
 
 /**
  * Settings card "Billing": the default hourly rate (more follows with invoices).
@@ -15,7 +16,7 @@ export default function BillingSettingsCard() {
 }
 
 function BillingForm({ settings }: { settings: BusinessSettings }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const updateSettings = useUpdateBusinessSettings()
   const [rate, setRate] = useState<number | string>(settings.defaultHourlyRate)
 
@@ -30,7 +31,7 @@ function BillingForm({ settings }: { settings: BusinessSettings }) {
       <Title order={4}>{t('finance.billing')}</Title>
       <Text size="sm" c="dimmed" mb="sm">{t('finance.billingHint')}</Text>
       <Group align="flex-end">
-        <NumberInput label={t('finance.defaultRate')} min={0} decimalScale={2} suffix=" €" w={200} value={rate} onChange={setRate} />
+        <NumberInput {...decimalSeparator(i18n.language)} label={t('finance.defaultRate')} min={0} decimalScale={2} suffix=" €" w={200} value={rate} onChange={setRate} />
         <Button onClick={handleSave} loading={updateSettings.isPending}>{t('common.save')}</Button>
       </Group>
     </Card>

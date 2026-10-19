@@ -15,6 +15,7 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
         private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<TimeEntry> _timeEntryRepository;
         private readonly IRepository<ProjectCostItem> _costItemRepository;
+        private readonly IRepository<Invoice> _invoiceRepository;
         private readonly IMapper _mapper;
 
         public FinanceService(
@@ -22,12 +23,14 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
             IRepository<Project> projectRepository,
             IRepository<TimeEntry> timeEntryRepository,
             IRepository<ProjectCostItem> costItemRepository,
+            IRepository<Invoice> invoiceRepository,
             IMapper mapper)
         {
             _settingsRepository = settingsRepository;
             _projectRepository = projectRepository;
             _timeEntryRepository = timeEntryRepository;
             _costItemRepository = costItemRepository;
+            _invoiceRepository = invoiceRepository;
             _mapper = mapper;
         }
 
@@ -95,6 +98,11 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
                 : billableHours * hourlyRate;
             var extrasValue = costItems.Sum(c => c.Quantity * c.UnitPrice);
 
+            // Issued invoices (cancellations have negative totals, so a cancelled invoice counts zero) and payments
+            var invoices = (await _invoiceRepository.GetAllWithPathsAsync(i => i.ProjectId == projectId && i.Number != null, "Payments")).ToList();
+            var invoicedTotal = invoices.Sum(i => i.GrossTotal);
+            var paidTotal = invoices.SelectMany(i => i.Payments).Sum(p => p.Amount);
+
             return new ProjectFinanceDto
             {
                 PricingMode = project.PricingMode,
@@ -110,6 +118,8 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
                 ActualHourlyRate = project.PricingMode == PricingMode.FlatPrice && totalHours > 0
                     ? Math.Round((project.FlatPrice ?? 0) / totalHours, 2)
                     : null,
+                InvoicedTotal = invoicedTotal,
+                PaidTotal = paidTotal,
                 Currency = settings.Currency
             };
         }
@@ -130,16 +140,18 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
             return await GetProjectFinance(projectId);
         }
 
+        private Task<BusinessSettings> LoadSettings() => LoadSettings(_settingsRepository);
+
         /// <summary>
-        /// The one settings row - created with defaults the first time.
+        /// The one settings row - created with defaults the first time. Also used by InvoiceService.
         /// </summary>
-        private async Task<BusinessSettings> LoadSettings()
+        public static async Task<BusinessSettings> LoadSettings(IRepository<BusinessSettings> settingsRepository)
         {
-            var settings = (await _settingsRepository.GetAllAsync()).OrderBy(s => s.Id).FirstOrDefault();
+            var settings = (await settingsRepository.GetAllAsync()).OrderBy(s => s.Id).FirstOrDefault();
             if (settings == null)
             {
                 settings = new BusinessSettings();
-                await _settingsRepository.AddAsync(settings);
+                await settingsRepository.AddAsync(settings);
             }
 
             return settings;

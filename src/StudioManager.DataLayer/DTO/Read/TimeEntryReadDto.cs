@@ -13,6 +13,10 @@ namespace StudioManager.DataLayer.DTO.Read
         public DateTime? StartedAt { get; set; }
 
         public int ProjectId { get; set; }
+
+        /// <summary>On an invoice: its id and number (number null = still a draft).</summary>
+        public int? InvoiceId { get; set; }
+        public string? InvoiceNumber { get; set; }
         public string ProjectTitle { get; set; } = string.Empty;
         public int? StandardTaskId { get; set; }
         public string? StandardTaskName { get; set; }
