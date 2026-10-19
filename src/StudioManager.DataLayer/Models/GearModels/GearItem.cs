@@ -1,6 +1,6 @@
 namespace StudioManager.DataLayer.Models.GearModels
 {
-    public class GearItem : BaseEntity
+    public class GearItem : BaseEntity, IHasPhoto
     {
         public string Name { get; set; } = string.Empty;
         public string? Manufacturer { get; set; }

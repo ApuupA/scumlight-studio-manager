@@ -57,6 +57,7 @@ try
         ?? throw new InvalidOperationException("FileStorage:RootPath must be set in configuration.");
 
     builder.Services.AddSingleton<IFileStorageService>(new LocalFileStorageService(fileStorageRoot));
+    builder.Services.AddScoped<IPhotoService, PhotoService>();
 
     // The keys that encrypt the login cookie are stored on disk, so logins survive a restart of the container
     builder.Services.AddDataProtection()

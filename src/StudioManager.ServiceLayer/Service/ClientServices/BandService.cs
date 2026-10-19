@@ -5,6 +5,8 @@ using StudioManager.DataLayer.Models.ClientModels;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IClientServices;
+using StudioManager.ServiceLayer.IService.IFileServices;
+using StudioManager.ServiceLayer.Results;
 using System.Linq.Expressions;
 
 namespace StudioManager.ServiceLayer.Service.ClientServices
@@ -13,10 +15,15 @@ namespace StudioManager.ServiceLayer.Service.ClientServices
     {
         private readonly IRepository<Client> _clientRepository;
 
-        public BandService(IRepository<Band> repository, IRepository<Client> clientRepository, IMapper mapper)
+        public const string PhotoFolder = "band-photos";
+
+        private readonly IPhotoService _photos;
+
+        public BandService(IRepository<Band> repository, IRepository<Client> clientRepository, IPhotoService photos, IMapper mapper)
             : base(repository, mapper)
         {
             _clientRepository = clientRepository;
+            _photos = photos;
         }
 
         // Load the client, so ClientName can be filled
@@ -52,6 +59,30 @@ namespace StudioManager.ServiceLayer.Service.ClientServices
             {
                 throw new BusinessRuleException("band.clientNotFound", $"Client with id {clientId} does not exist.");
             }
+        }
+
+        public override async Task Delete(int id)
+        {
+            var band = await _repository.GetAsync(id);
+            await base.Delete(id);
+            _photos.DeleteFile(band?.PhotoPath);
+        }
+
+        public async Task<BandReadDto> SetPhoto(int id, Stream content, string fileName, long length)
+        {
+            await _photos.SetPhoto(_repository, id, content, fileName, length, PhotoFolder);
+            return (await Get(id))!;
+        }
+
+        public async Task<FileDownload?> GetPhoto(int id)
+        {
+            return await _photos.GetPhoto(_repository, id);
+        }
+
+        public async Task<BandReadDto> DeletePhoto(int id)
+        {
+            await _photos.DeletePhoto(_repository, id);
+            return (await Get(id))!;
         }
     }
 }

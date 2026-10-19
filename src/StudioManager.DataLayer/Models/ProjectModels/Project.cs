@@ -6,8 +6,11 @@ namespace StudioManager.DataLayer.Models.ProjectModels
     /// <summary>
     /// A production (album, EP, ...) for a client. Collects everything about recording, mixing and mastering.
     /// </summary>
-    public class Project : BaseEntity
+    public class Project : BaseEntity, IHasPhoto
     {
+        /// <summary>Cover art of the project, path in the file storage.</summary>
+        public string? PhotoPath { get; set; }
+
         public string Title { get; set; } = string.Empty;
         public ProjectType Type { get; set; } = ProjectType.Album;
         public ProjectStatus Status { get; set; } = ProjectStatus.Planning;

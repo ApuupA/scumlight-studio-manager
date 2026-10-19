@@ -205,7 +205,9 @@
     "projects": "Projekte dieses Kunden",
     "noProjects": "Noch keine Projekte.",
     "empty": "Noch keine Kunden. Leg den ersten an!",
-    "deleteConfirm": "\"{{name}}\" und alle zugehörigen Bands werden gelöscht."
+    "deleteConfirm": "\"{{name}}\" und alle zugehörigen Bands werden gelöscht.",
+    "bandsCount": "Bands: {{count}}",
+    "projectsCount": "Projekte: {{count}}"
   },
   "bands": {
     "title": "Bands",
@@ -641,5 +643,17 @@
     "Open": "Offen",
     "Recorded": "Aufgenommen",
     "Edited": "Editiert"
+  },
+  "photo": {
+    "none": "Noch kein Bild",
+    "upload": "Bild hochladen",
+    "replace": "Bild ersetzen",
+    "remove": "Bild entfernen",
+    "hint": "JPG, PNG oder WEBP, max. 10 MB"
+  },
+  "view": {
+    "list": "Liste",
+    "tiles": "Kacheln",
+    "switch": "Liste oder Kacheln"
   }
 }

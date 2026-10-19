@@ -1,6 +1,6 @@
-import { Alert, Button, Center, Group, Loader, Modal, Stack, Table, Text, TextInput, Title } from '@mantine/core'
+import { Alert, Badge, Button, Center, Group, Loader, Modal, SimpleGrid, Stack, Table, Text, TextInput, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconPlus, IconSearch } from '@tabler/icons-react'
+import { IconPlus, IconSearch, IconUsersGroup } from '@tabler/icons-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -9,6 +9,10 @@ import type { ClientInput } from '../../api/types'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useClients, useCreateClient } from './clientApi'
 import ClientForm from './ClientForm'
+import { photoUrl } from '../../api/photos'
+import Tile from '../../components/Tile'
+import { useViewMode } from '../../components/useViewMode'
+import ViewToggle from '../../components/ViewToggle'
 
 export default function ClientListPage() {
   const { t } = useTranslation()
@@ -17,6 +21,7 @@ export default function ClientListPage() {
   const createClient = useCreateClient()
   const [modalOpened, { open: openModal, close: closeModal }] = useDisclosure()
   const [search, setSearch] = useState('')
+  const [viewMode, setViewMode] = useViewMode('clients')
 
   const visibleClients = useMemo(() => {
     const searchText = search.trim().toLowerCase()
@@ -42,7 +47,10 @@ export default function ClientListPage() {
     <Stack>
       <Group justify="space-between">
         <Title order={2}>{t('clients.title')}</Title>
-        <Button leftSection={<IconPlus size={18} />} onClick={openModal}>{t('clients.new')}</Button>
+        <Group gap="sm">
+          <ViewToggle value={viewMode} onChange={setViewMode} />
+          <Button leftSection={<IconPlus size={18} />} onClick={openModal}>{t('clients.new')}</Button>
+        </Group>
       </Group>
 
       {clients.length === 0 ? (
@@ -56,30 +64,50 @@ export default function ClientListPage() {
             onChange={(event) => setSearch(event.currentTarget.value)}
             maw={360}
           />
-          <Table.ScrollContainer minWidth={640}>
-            <Table highlightOnHover>
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>{t('clients.name')}</Table.Th>
-                  <Table.Th>{t('clients.contactPerson')}</Table.Th>
-                  <Table.Th>{t('clients.email')}</Table.Th>
-                  <Table.Th w={80}>{t('clients.bandCount')}</Table.Th>
-                  <Table.Th w={80}>{t('clients.projectCount')}</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {visibleClients.map((client) => (
-                  <Table.Tr key={client.id} onClick={() => navigate(`/clients/${client.id}`)} style={{ cursor: 'pointer' }}>
-                    <Table.Td fw={500}>{client.name}</Table.Td>
-                    <Table.Td>{client.contactPerson}</Table.Td>
-                    <Table.Td>{client.email}</Table.Td>
-                    <Table.Td>{client.bandCount}</Table.Td>
-                    <Table.Td>{client.projectCount}</Table.Td>
+          {viewMode === 'tiles' ? (
+            <SimpleGrid cols={{ base: 2, sm: 3, md: 4, xl: 6 }}>
+              {visibleClients.map((client) => (
+                <Tile
+                  key={client.id}
+                  image={photoUrl('Client', client)}
+                  icon={<IconUsersGroup size={48} stroke={1.2} />}
+                  title={client.name}
+                  subtitle={client.contactPerson}
+                  onClick={() => navigate(`/clients/${client.id}`)}
+                >
+                  <Group gap={4}>
+                    <Badge size="xs" variant="light" color="gray">{t('clients.bandsCount', { count: client.bandCount })}</Badge>
+                    <Badge size="xs" variant="light" color="gray">{t('clients.projectsCount', { count: client.projectCount })}</Badge>
+                  </Group>
+                </Tile>
+              ))}
+            </SimpleGrid>
+          ) : (
+            <Table.ScrollContainer minWidth={640}>
+              <Table highlightOnHover>
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th>{t('clients.name')}</Table.Th>
+                    <Table.Th>{t('clients.contactPerson')}</Table.Th>
+                    <Table.Th>{t('clients.email')}</Table.Th>
+                    <Table.Th w={80}>{t('clients.bandCount')}</Table.Th>
+                    <Table.Th w={80}>{t('clients.projectCount')}</Table.Th>
                   </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
-          </Table.ScrollContainer>
+                </Table.Thead>
+                <Table.Tbody>
+                  {visibleClients.map((client) => (
+                    <Table.Tr key={client.id} onClick={() => navigate(`/clients/${client.id}`)} style={{ cursor: 'pointer' }}>
+                      <Table.Td fw={500}>{client.name}</Table.Td>
+                      <Table.Td>{client.contactPerson}</Table.Td>
+                      <Table.Td>{client.email}</Table.Td>
+                      <Table.Td>{client.bandCount}</Table.Td>
+                      <Table.Td>{client.projectCount}</Table.Td>
+                    </Table.Tr>
+                  ))}
+                </Table.Tbody>
+              </Table>
+            </Table.ScrollContainer>
+          )}
         </>
       )}
 

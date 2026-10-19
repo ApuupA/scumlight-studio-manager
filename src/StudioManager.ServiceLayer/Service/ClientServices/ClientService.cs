@@ -6,6 +6,8 @@ using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IClientServices;
+using StudioManager.ServiceLayer.IService.IFileServices;
+using StudioManager.ServiceLayer.Results;
 using System.Linq.Expressions;
 
 namespace StudioManager.ServiceLayer.Service.ClientServices
@@ -14,10 +16,15 @@ namespace StudioManager.ServiceLayer.Service.ClientServices
     {
         private readonly IRepository<Project> _projectRepository;
 
-        public ClientService(IRepository<Client> repository, IRepository<Project> projectRepository, IMapper mapper)
+        public const string PhotoFolder = "client-photos";
+
+        private readonly IPhotoService _photos;
+
+        public ClientService(IRepository<Client> repository, IRepository<Project> projectRepository, IPhotoService photos, IMapper mapper)
             : base(repository, mapper)
         {
             _projectRepository = projectRepository;
+            _photos = photos;
         }
 
         // Load bands and projects, so BandCount and ProjectCount can be filled
@@ -37,8 +44,32 @@ namespace StudioManager.ServiceLayer.Service.ClientServices
                     "The client still has projects. Delete the projects first.");
             }
 
-            // The bands of the client are deleted by the database (cascade)
+            // The bands of the client are deleted by the database (cascade) - their pictures here
+            var client = await _repository.GetAsync(c => c.Id == id, c => c.Bands);
             await base.Delete(id);
+
+            _photos.DeleteFile(client?.PhotoPath);
+            foreach (var band in client?.Bands ?? [])
+            {
+                _photos.DeleteFile(band.PhotoPath);
+            }
+        }
+
+        public async Task<ClientReadDto> SetPhoto(int id, Stream content, string fileName, long length)
+        {
+            await _photos.SetPhoto(_repository, id, content, fileName, length, PhotoFolder);
+            return (await Get(id))!;
+        }
+
+        public async Task<FileDownload?> GetPhoto(int id)
+        {
+            return await _photos.GetPhoto(_repository, id);
+        }
+
+        public async Task<ClientReadDto> DeletePhoto(int id)
+        {
+            await _photos.DeletePhoto(_repository, id);
+            return (await Get(id))!;
         }
     }
 }

@@ -106,6 +106,10 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("character varying(4000)");
 
+                    b.Property<string>("PhotoPath")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
                     b.Property<string>("Website")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
@@ -155,6 +159,10 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<string>("Phone")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PhotoPath")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
 
                     b.HasKey("Id");
 
@@ -677,6 +685,10 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<string>("MixingNotes")
                         .HasMaxLength(8000)
                         .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("PhotoPath")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
 
                     b.Property<string>("RecordingNotes")
                         .HasMaxLength(8000)

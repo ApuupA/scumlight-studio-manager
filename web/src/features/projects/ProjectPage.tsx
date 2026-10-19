@@ -1,4 +1,4 @@
-import { Alert, Anchor, Button, Center, Group, Loader, Paper, Stack, Tabs, Text, Title } from '@mantine/core'
+import { Alert, Anchor, Button, Center, Grid, Group, Loader, Paper, Stack, Tabs, Text, Title } from '@mantine/core'
 import {
   IconArrowLeft, IconBackpack, IconCalendarEvent, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconListNumbers, IconMetronome, IconPrinter, IconTrash,
 } from '@tabler/icons-react'
@@ -19,6 +19,7 @@ import { useCreateProject, useDeleteProject, useProject, useUpdateProject } from
 import ProjectForm from './ProjectForm'
 import ProjectSessionsTab from './ProjectSessionsTab'
 import SongsTab from './SongsTab'
+import PhotoCard from '../../components/PhotoCard'
 
 /**
  * Route /projects/new creates a project, /projects/:id shows one with all its tabs.
@@ -137,9 +138,16 @@ export default function ProjectPage() {
         </Tabs.List>
 
         <Tabs.Panel value="overview" pt="md">
-          <Paper withBorder p="md">
-            <ProjectForm key={project.dateUpdated} project={project} isSaving={updateProject.isPending} onSubmit={handleSubmit} />
-          </Paper>
+          <Grid gap="lg">
+            <Grid.Col span={{ base: 12, lg: 8 }}>
+              <Paper withBorder p="md">
+                <ProjectForm key={project.dateUpdated} project={project} isSaving={updateProject.isPending} onSubmit={handleSubmit} />
+              </Paper>
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, lg: 4 }}>
+              <PhotoCard owner="Project" entity={project} invalidateKeys={['projects']} alt={project.title} height={300} />
+            </Grid.Col>
+          </Grid>
         </Tabs.Panel>
         <Tabs.Panel value="songs" pt="md"><SongsTab project={project} /></Tabs.Panel>
         <Tabs.Panel value="sessions" pt="md"><ProjectSessionsTab projectId={project.id} /></Tabs.Panel>

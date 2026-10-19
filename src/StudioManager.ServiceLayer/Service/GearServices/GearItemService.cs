@@ -16,36 +16,24 @@ namespace StudioManager.ServiceLayer.Service.GearServices
     public class GearItemService : BaseService<GearItem, GearItemReadDto, GearItemCreateDto>, IGearItemService
     {
         public const string PhotoFolder = "gear-photos";
-        public const long MaxPhotoSizeBytes = 10 * 1024 * 1024;
-
-        /// <summary>
-        /// Allowed photo file extensions and the content type they are delivered with.
-        /// </summary>
-        private static readonly Dictionary<string, string> PhotoContentTypes = new(StringComparer.OrdinalIgnoreCase)
-        {
-            [".jpg"] = "image/jpeg",
-            [".jpeg"] = "image/jpeg",
-            [".png"] = "image/png",
-            [".webp"] = "image/webp"
-        };
 
         private readonly IRepository<GearCategory> _categoryRepository;
         private readonly IRepository<Session> _sessionRepository;
         private readonly IRepository<InstrumentSetupItem> _setupItemRepository;
-        private readonly IFileStorageService _fileStorage;
+        private readonly IPhotoService _photos;
 
         public GearItemService(
             IRepository<GearItem> repository,
             IRepository<GearCategory> categoryRepository,
             IRepository<Session> sessionRepository,
             IRepository<InstrumentSetupItem> setupItemRepository,
-            IFileStorageService fileStorage,
+            IPhotoService photos,
             IMapper mapper) : base(repository, mapper)
         {
             _categoryRepository = categoryRepository;
             _sessionRepository = sessionRepository;
             _setupItemRepository = setupItemRepository;
-            _fileStorage = fileStorage;
+            _photos = photos;
         }
 
         // Load the category as well, so GearCategoryName can be filled
@@ -107,71 +95,23 @@ namespace StudioManager.ServiceLayer.Service.GearServices
 
             await base.Delete(id);
 
-            if (item.PhotoPath != null)
-            {
-                _fileStorage.Delete(item.PhotoPath);
-            }
+            _photos.DeleteFile(item.PhotoPath);
         }
 
         public async Task<GearItemReadDto> SetPhoto(int id, Stream content, string fileName, long length)
         {
-            var item = await GetEntity(id);
-            var extension = Path.GetExtension(fileName).ToLowerInvariant();
-
-            if (!PhotoContentTypes.ContainsKey(extension))
-            {
-                throw new BusinessRuleException("photo.invalidType", "Only JPG, PNG and WEBP images are allowed.");
-            }
-
-            if (length > MaxPhotoSizeBytes)
-            {
-                throw new BusinessRuleException("photo.tooLarge", "The photo must not be larger than 10 MB.");
-            }
-
-            var oldPhotoPath = item.PhotoPath;
-
-            item.PhotoPath = await _fileStorage.SaveAsync(content, PhotoFolder, extension);
-            await _repository.UpdateAsync(item);
-
-            // Delete the old file only after the new one is saved successfully
-            if (oldPhotoPath != null)
-            {
-                _fileStorage.Delete(oldPhotoPath);
-            }
-
+            await _photos.SetPhoto(_repository, id, content, fileName, length, PhotoFolder);
             return (await Get(id))!;
         }
 
         public async Task<FileDownload?> GetPhoto(int id)
         {
-            var item = await GetEntity(id);
-
-            if (item.PhotoPath == null)
-            {
-                return null;
-            }
-
-            var stream = _fileStorage.OpenRead(item.PhotoPath);
-            if (stream == null)
-            {
-                return null;
-            }
-
-            var contentType = PhotoContentTypes.GetValueOrDefault(Path.GetExtension(item.PhotoPath), "application/octet-stream");
-            return new FileDownload(stream, contentType);
+            return await _photos.GetPhoto(_repository, id);
         }
 
         public async Task<GearItemReadDto> DeletePhoto(int id)
         {
-            var item = await GetEntity(id);
-
-            if (item.PhotoPath != null)
-            {
-                _fileStorage.Delete(item.PhotoPath);
-                item.PhotoPath = null;
-                await _repository.UpdateAsync(item);
-            }
-
+            await _photos.DeletePhoto(_repository, id);
             return (await Get(id))!;
         }
 

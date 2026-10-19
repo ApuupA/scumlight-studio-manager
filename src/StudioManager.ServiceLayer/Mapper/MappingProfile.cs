@@ -151,21 +151,25 @@ namespace StudioManager.ServiceLayer.Mapper
         {
             CreateMap<Client, ClientReadDto>()
                 .ForMember(dest => dest.BandCount, opt => opt.MapFrom(src => src.Bands.Count))
-                .ForMember(dest => dest.ProjectCount, opt => opt.MapFrom(src => src.Projects.Count));
+                .ForMember(dest => dest.ProjectCount, opt => opt.MapFrom(src => src.Projects.Count))
+                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null));
 
             CreateMap<ClientCreateDto, Client>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.PhotoPath, opt => opt.Ignore())
                 .ForMember(dest => dest.Bands, opt => opt.Ignore())
                 .ForMember(dest => dest.Projects, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
 
             CreateMap<Band, BandReadDto>()
-                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : string.Empty));
+                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : string.Empty))
+                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null));
             CreateMap<Band, BandShortDto>();
 
             CreateMap<BandCreateDto, Band>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.PhotoPath, opt => opt.Ignore())
                 .ForMember(dest => dest.Client, opt => opt.Ignore())
                 .ForMember(dest => dest.Projects, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
@@ -179,6 +183,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.SongCount, opt => opt.MapFrom(src => src.Songs.Count))
                 .ForMember(dest => dest.SongsDoneCount, opt => opt.MapFrom(src => src.Songs.Count(s => s.Status == SongStatus.Done)))
                 .ForMember(dest => dest.SessionCount, opt => opt.MapFrom(src => src.Sessions.Count))
+                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null))
                 .ForMember(dest => dest.NextSessionDate, opt => opt.MapFrom(src => src.Sessions
                     .Where(s => s.Status != SessionStatus.Cancelled && s.LastDate >= DateOnly.FromDateTime(DateTime.Now))
                     .Select(s => (DateOnly?)s.Date)
@@ -187,6 +192,7 @@ namespace StudioManager.ServiceLayer.Mapper
             // The bands are set by ProjectService (they have to be loaded from the database)
             CreateMap<ProjectCreateDto, Project>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.PhotoPath, opt => opt.Ignore())
                 .ForMember(dest => dest.Client, opt => opt.Ignore())
                 .ForMember(dest => dest.Bands, opt => opt.Ignore())
                 .ForMember(dest => dest.Songs, opt => opt.Ignore())
