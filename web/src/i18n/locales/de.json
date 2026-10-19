@@ -165,7 +165,8 @@
     "inputList": {
       "instrumentNotInProject": "Alle Instrumente müssen zum Projekt der Liste gehören.",
       "nothingToMove": "In diesem Input steckt nichts."
-    }
+    },
+    "tooManyRequests": "Zu viele Anmeldeversuche. Bitte warte 15 Minuten und versuche es dann erneut."
   },
   "profile": {
     "title": "Profil",
