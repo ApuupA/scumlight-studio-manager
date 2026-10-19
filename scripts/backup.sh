@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Backs up the database and the uploaded files (photos) of the Studio Manager.
+# Backs up the database and the uploaded files (photos, receipts) of the Studio Manager.
 #
 #   ./scripts/backup.sh                -> ~/studio-backups/studio-2026-10-19-0300.sql
 #                                         ~/studio-backups/studio-files-2026-10-19-0300.tgz

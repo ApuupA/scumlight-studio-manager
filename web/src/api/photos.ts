@@ -24,8 +24,8 @@ export function photoUrl(owner: PhotoOwner, entity: WithPhoto): string | undefin
   return entity.hasPhoto ? `/api/${owner}/${entity.id}/photo?v=${encodeURIComponent(entity.dateUpdated)}` : undefined
 }
 
-/** Sends the request and throws an ApiError (like unwrap) if it failed. */
-async function send(url: string, init: RequestInit) {
+/** Sends the request and throws an ApiError (like unwrap) if it failed. Also used for the expense receipts. */
+export async function send(url: string, init: RequestInit) {
   const response = await fetch(url, init)
   if (!response.ok) {
     throw new ApiError(response.status, await response.json().catch(() => null))

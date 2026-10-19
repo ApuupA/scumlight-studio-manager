@@ -41,7 +41,9 @@
     "name": "Name",
     "quantity": "Qty",
     "noEntries": "No entries yet.",
-    "general": "General"
+    "general": "General",
+    "yes": "Yes",
+    "no": "No"
   },
   "auth": {
     "title": "Sign in",
@@ -216,6 +218,10 @@
       "notDraft": "An issued quote can not be changed or deleted.",
       "statusNotPossible": "This status can not be set for this quote.",
       "cannotBeInvoiced": "Only a sent or accepted quote can become an invoice."
+    },
+    "receipt": {
+      "invalidType": "Only PDF, JPG, PNG and WEBP files are allowed.",
+      "tooLarge": "The receipt must not be larger than 10 MB."
     }
   },
   "profile": {
@@ -982,5 +988,71 @@
       "drafts": "Drafts",
       "all": "All"
     }
+  },
+  "expenseCategory": {
+    "Equipment": "Equipment & instruments",
+    "Software": "Software & plugins",
+    "Material": "Consumables",
+    "ExternalServices": "External services",
+    "Rent": "Rent & utilities",
+    "Marketing": "Advertising & website",
+    "Travel": "Travel",
+    "Insurance": "Insurance & fees",
+    "Office": "Office, phone & internet",
+    "Other": "Other"
+  },
+  "expenses": {
+    "title": "Expenses",
+    "new": "Add expense",
+    "edit": "Edit expense",
+    "empty": "No expenses here.",
+    "year": "Year",
+    "allCategories": "All categories",
+    "description": "Description",
+    "descriptionPlaceholder": "e.g. Shure SM7B",
+    "supplier": "Supplier",
+    "supplierPlaceholder": "e.g. Thomann",
+    "category": "Category",
+    "grossAmount": "Amount (gross)",
+    "vatRate": "VAT",
+    "netAndVat": "Net {{net}} + VAT {{vat}}",
+    "project": "Project",
+    "projectHint": "Optional, e.g. for external mastering of an album.",
+    "notes": "Notes",
+    "receipt": "Receipt",
+    "replaceReceipt": "Replace receipt",
+    "removeReceipt": "Remove",
+    "receiptHint": "PDF or photo (JPG, PNG, WEBP), max. 10 MB.",
+    "chooseFile": "Choose file …",
+    "noReceipt": "missing",
+    "total": "Total",
+    "deleteConfirm": "The expense \"{{description}}\" and its receipt will be deleted.",
+    "depreciationBadge": "over 800 € net",
+    "depreciationHint": "Over 800 € net: equipment and software usually has to be depreciated over several years (AfA) instead of counting as an expense of one year. Ask your tax advisor."
+  },
+  "overview": {
+    "title": "Yearly overview",
+    "incomeTotal": "Income",
+    "expensesTotal": "Expenses",
+    "result": "Profit",
+    "containsVat": "incl. {{amount}} VAT",
+    "containsInputVat": "incl. {{amount}} input VAT",
+    "hint": "Income = payments received in the year, expenses = the recorded expenses (by date). This is the basis for your EÜR - it does not replace a tax advisor.",
+    "perMonth": "Per month",
+    "perCategory": "Expenses per category",
+    "month": "Month",
+    "income": "Income",
+    "expense": "Expense",
+    "bookings": "All bookings",
+    "noBookings": "No payments or expenses in this year.",
+    "paymentFor": "Payment invoice {{number}}",
+    "exportCsv": "Export CSV",
+    "csvFileName": "income-expenses-{{year}}.csv",
+    "kind": "Type",
+    "party": "Client / supplier",
+    "net": "Net",
+    "vat": "VAT",
+    "gross": "Gross",
+    "missingReceipts": "Expenses without a receipt: {{count}}"
   }
 }

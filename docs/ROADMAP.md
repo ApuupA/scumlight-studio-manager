@@ -80,7 +80,8 @@
   small business (§ 19 UStG) or VAT switchable
 - ✅ c) (v1.8.0) Quotes per project with standard tasks (project rate), own number range, validity, print; status sent / accepted /
   declined; "Create invoice" turns an accepted quote into an invoice draft. Navigation "Invoices" became "Finance" (tabs)
-- d) Expenses with receipts; yearly overview of income and expenses (basis for the EÜR), CSV export
+- ✅ d) (v1.9.0) Expenses with receipts (PDF / photo), categories, optional project, AfA hint over 800 € net; yearly overview
+  of payments received and expenses per month and category (basis for the EÜR), CSV export
 
 ## Later
 - **Start page**: today's session, next sessions, open tasks, unpaid invoices, album progress

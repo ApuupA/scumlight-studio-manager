@@ -8,6 +8,7 @@ using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.DataLayer.Models.SessionModels;
 using StudioManager.DataLayer.Models.SettingsModels;
 using StudioManager.DataLayer.Models.UserModels;
+using StudioManager.ServiceLayer.Service.FinanceServices;
 
 namespace StudioManager.ServiceLayer.Mapper
 {
@@ -344,6 +345,20 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateMap<ProjectCostItem, ProjectCostItemReadDto>()
                 .ForMember(dest => dest.Total, opt => opt.MapFrom(src => Math.Round(src.Quantity * src.UnitPrice, 2)))
                 .ForMember(dest => dest.InvoiceNumber, opt => opt.MapFrom(src => src.Invoice != null ? src.Invoice.Number : null));
+            CreateMap<Expense, ExpenseReadDto>()
+                .ForMember(dest => dest.NetAmount, opt => opt.MapFrom(src => ExpenseService.NetOf(src.GrossAmount, src.VatRate)))
+                .ForMember(dest => dest.VatAmount, opt => opt.MapFrom(src => src.GrossAmount - ExpenseService.NetOf(src.GrossAmount, src.VatRate)))
+                .ForMember(dest => dest.IsAboveDepreciationLimit, opt => opt.MapFrom(src => ExpenseService.IsAboveDepreciationLimit(src)))
+                .ForMember(dest => dest.ProjectTitle, opt => opt.MapFrom(src => src.Project != null ? src.Project.Title : null))
+                .ForMember(dest => dest.HasReceipt, opt => opt.MapFrom(src => src.ReceiptPath != null));
+            CreateMap<ExpenseCreateDto, Expense>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.ReceiptPath, opt => opt.Ignore())
+                .ForMember(dest => dest.ReceiptFileName, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
             CreateMap<ProjectCostItemCreateDto, ProjectCostItem>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.InvoiceId, opt => opt.Ignore())

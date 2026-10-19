@@ -41,7 +41,9 @@
     "name": "Name",
     "quantity": "Anzahl",
     "noEntries": "Noch keine Einträge.",
-    "general": "Allgemein"
+    "general": "Allgemein",
+    "yes": "Ja",
+    "no": "Nein"
   },
   "auth": {
     "title": "Anmelden",
@@ -216,6 +218,10 @@
       "notDraft": "Ein ausgestelltes Angebot kann nicht geändert oder gelöscht werden.",
       "statusNotPossible": "Dieser Status ist für dieses Angebot nicht möglich.",
       "cannotBeInvoiced": "Nur ein versendetes oder angenommenes Angebot kann zur Rechnung werden."
+    },
+    "receipt": {
+      "invalidType": "Nur PDF-, JPG-, PNG- und WEBP-Dateien sind erlaubt.",
+      "tooLarge": "Der Beleg darf nicht größer als 10 MB sein."
     }
   },
   "profile": {
@@ -982,5 +988,71 @@
       "drafts": "Entwürfe",
       "all": "Alle"
     }
+  },
+  "expenseCategory": {
+    "Equipment": "Technik & Instrumente",
+    "Software": "Software & Plugins",
+    "Material": "Verbrauchsmaterial",
+    "ExternalServices": "Fremdleistungen",
+    "Rent": "Miete & Nebenkosten",
+    "Marketing": "Werbung & Website",
+    "Travel": "Fahrtkosten & Reisen",
+    "Insurance": "Versicherungen & Beiträge",
+    "Office": "Büro, Telefon & Internet",
+    "Other": "Sonstiges"
+  },
+  "expenses": {
+    "title": "Ausgaben",
+    "new": "Ausgabe erfassen",
+    "edit": "Ausgabe bearbeiten",
+    "empty": "Keine Ausgaben hier.",
+    "year": "Jahr",
+    "allCategories": "Alle Kategorien",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "z. B. Shure SM7B",
+    "supplier": "Lieferant",
+    "supplierPlaceholder": "z. B. Thomann",
+    "category": "Kategorie",
+    "grossAmount": "Betrag (brutto)",
+    "vatRate": "USt.",
+    "netAndVat": "Netto {{net}} + USt. {{vat}}",
+    "project": "Projekt",
+    "projectHint": "Optional, z. B. für ein externes Mastering eines Albums.",
+    "notes": "Notizen",
+    "receipt": "Beleg",
+    "replaceReceipt": "Beleg ersetzen",
+    "removeReceipt": "Entfernen",
+    "receiptHint": "PDF oder Foto (JPG, PNG, WEBP), max. 10 MB.",
+    "chooseFile": "Datei auswählen …",
+    "noReceipt": "fehlt",
+    "total": "Summe",
+    "deleteConfirm": "Die Ausgabe „{{description}}\" und ihr Beleg werden gelöscht.",
+    "depreciationBadge": "über 800 € netto",
+    "depreciationHint": "Über 800 € netto: Technik und Software müssen meist über mehrere Jahre abgeschrieben werden (AfA), statt komplett in einem Jahr als Ausgabe zu zählen. Frag im Zweifel deine Steuerberatung."
+  },
+  "overview": {
+    "title": "Jahresübersicht",
+    "incomeTotal": "Einnahmen",
+    "expensesTotal": "Ausgaben",
+    "result": "Gewinn",
+    "containsVat": "darin {{amount}} USt.",
+    "containsInputVat": "darin {{amount}} Vorsteuer",
+    "hint": "Einnahmen = im Jahr eingegangene Zahlungen, Ausgaben = die erfassten Ausgaben (nach Datum). Das ist die Grundlage für deine EÜR – ersetzt aber keine Steuerberatung.",
+    "perMonth": "Pro Monat",
+    "perCategory": "Ausgaben nach Kategorie",
+    "month": "Monat",
+    "income": "Einnahme",
+    "expense": "Ausgabe",
+    "bookings": "Alle Buchungen",
+    "noBookings": "Keine Zahlungen oder Ausgaben in diesem Jahr.",
+    "paymentFor": "Zahlung Rechnung {{number}}",
+    "exportCsv": "CSV exportieren",
+    "csvFileName": "einnahmen-ausgaben-{{year}}.csv",
+    "kind": "Art",
+    "party": "Kunde / Lieferant",
+    "net": "Netto",
+    "vat": "USt.",
+    "gross": "Brutto",
+    "missingReceipts": "Ausgaben ohne Beleg: {{count}}"
   }
 }
