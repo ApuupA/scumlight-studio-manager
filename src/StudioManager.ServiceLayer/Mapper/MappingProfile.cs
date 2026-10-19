@@ -201,15 +201,35 @@ namespace StudioManager.ServiceLayer.Mapper
 
             CreateMap<Song, SongReadDto>()
                 .ForMember(dest => dest.BandName, opt => opt.MapFrom(src => src.Band != null ? src.Band.Name : null))
-                .ForMember(dest => dest.Tempos, opt => opt.MapFrom(src => src.Tempos.OrderBy(t => t.SortOrder)));
+                .ForMember(dest => dest.Tempos, opt => opt.MapFrom(src => src.Tempos.OrderBy(t => t.SortOrder)))
+                .ForMember(dest => dest.TrackCount, opt => opt.MapFrom(src => src.Tracks.Count))
+                .ForMember(dest => dest.TracksRecordedCount, opt => opt.MapFrom(src => src.Tracks.Count(t => t.Status != SongTrackStatus.Open)));
             CreateMap<SongTempo, SongTempoReadDto>();
             // The tempos are replaced by SongService (ReplaceTempos)
+            // Lyrics, arrangement and recording checklist are edited on the song page with their own endpoints
             CreateMap<SongCreateDto, Song>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Tempos, opt => opt.Ignore())
+                .ForMember(dest => dest.Lyrics, opt => opt.Ignore())
+                .ForMember(dest => dest.Sections, opt => opt.Ignore())
+                .ForMember(dest => dest.Tracks, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.Band, opt => opt.Ignore())
                 .ForMember(dest => dest.Sessions, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<SongSection, SongSectionReadDto>();
+            CreateMap<SongSectionCreateDto, SongSection>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Song, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<SongTrack, SongTrackReadDto>();
+            CreateMap<SongTrackCreateDto, SongTrack>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Song, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
 

@@ -51,25 +51,42 @@
 - Songs: several tempos per song (tempo changes), optionally from which bar
 
 
-## Milestone 3 – Mix revision tool
-- Upload mix versions per song (WAV/MP3), server-side conversion for streaming (FFmpeg)
-- Waveform player (wavesurfer.js), seamless A/B switching between versions at the same position
-- Timestamped comments with replies, open / resolved state
-- Share link for clients without account, approval per song
-- Optional loudness matching between versions
+## ✅ v1.0.0 – in production (2026-10-19)
+- Running at studio.scumlight-cloud.de; more users, login limit, secure cookie
+- Update / backup / restore scripts and a release checklist ([RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md))
 
-## Milestone 4 – Patchbay & outboard
-- Input lists moved to Milestone 2, phase C
+## Milestone 3 – Basics for the daily work (in this order)
+
+**1. Song page**
+- One page per song: arrangement (parts like "Chorus 1", bars, notes like "needs doubled guitars")
+- Recording checklist: the tracks of the song (Drums, Guitar L/R, Lead vocal, ...) with status open / recorded / edited,
+  pre-filled from the project's instruments or copied from another song; progress per song in the song list
+- Lyrics, reference links, drum tunings and sessions of the song; printable song sheet
+
+**2. Pictures & tiles, calendar feed**
+- Pictures for clients and bands, cover art for projects; list / tile view
+- Calendar subscription link: sessions show up in the Nextcloud / phone calendar
+
+**3. Band gear via link**
+- A link per project (no login) where the band enters the gear it brings; you accept the entries
+
+**4. Finance** (replaces Papierkram) – step by step
+- a) Business data in the settings; time tracking (entries, start / stop timer, "session done → book the hours");
+  price per project (hourly rate or flat price, extra items); hours, value, invoiced and open amount per project
+- b) Invoices from open hours / items: gap-free numbers, all required content, locked once issued (corrections by
+  cancellation invoice), PDF via print; payments and partial payments, open / overdue overview;
+  small business (§ 19 UStG) or VAT switchable
+- c) Quotes that turn into invoices
+- d) Expenses with receipts; yearly overview of income and expenses (basis for the EÜR), CSV export
+
+## Later
+- **Start page**: today's session, next sessions, open tasks, unpaid invoices, album progress
+- **Recall photos** per session / instrument setup (mic positions, amp settings)
+- Contacts per client / band, global search
+- Gear: maintenance log, lending (who has which mic), QR code labels, wishlist / budget
+- **Nextcloud**: link a Nextcloud folder per project (lyrics, references, contracts – replaces own file storage)
+- **Mix revision tool** (separate big task, maybe on top of Nextcloud): mix versions per song, waveform player with
+  A/B switching, timestamped comments, share link for clients with approval per song, loudness matching
 - Patchbay and outboard inserts in the studio I/O, reusable input list templates
-
-## Milestone 5 – Documents & templates
-- File storage per project (lyrics, charts, references, contracts)
-- Printable templates filled with session data: take sheets, track sheets, recall sheets
-
-## Ideas for later
-- Status history of songs (who changed what when)
-- Client accounts with access to their own projects only
-- Maintenance log per gear item (tube swaps, repairs, recalibration)
-- QR code labels for gear
-- Time tracking & invoicing per project
-- Gear wishlist / budget
+- Printable take / track / recall sheets
+- Status history of songs, client accounts with access to their own projects only

@@ -167,7 +167,15 @@
       "instrumentNotInProject": "All instruments must belong to the list's project.",
       "nothingToMove": "Nothing is plugged into this input."
     },
-    "tooManyRequests": "Too many login attempts. Please wait 15 minutes and try again."
+    "tooManyRequests": "Too many login attempts. Please wait 15 minutes and try again.",
+    "songSection": {
+      "songNotFound": "The song does not exist anymore.",
+      "barsInvalid": "The last bar must not be before the first bar."
+    },
+    "songTrack": {
+      "songNotFound": "The song does not exist anymore.",
+      "otherProject": "Tracks can only be copied from a song of the same project."
+    }
   },
   "profile": {
     "title": "Profile",
@@ -588,5 +596,50 @@
     "setPassword": "Set new password",
     "setPasswordTitle": "New password for {{name}}",
     "deleteConfirm": "{{name}} will be deleted and can not log in anymore. The data stays."
+  },
+  "songPage": {
+    "arrangement": "Arrangement",
+    "arrangementHint": "The parts of the song with bars and notes, e.g. \"needs doubled guitars\". Changes are saved when you leave a field.",
+    "part": "Part",
+    "newPart": "New part",
+    "bars": "Bars",
+    "fromBar": "From bar",
+    "toBar": "To bar",
+    "notesPlaceholder": "Notes, e.g. needs doubled guitars",
+    "parts": {
+      "intro": "Intro",
+      "verse": "Verse",
+      "preChorus": "Pre-chorus",
+      "chorus": "Chorus",
+      "bridge": "Bridge",
+      "solo": "Solo",
+      "breakdown": "Breakdown",
+      "outro": "Outro"
+    },
+    "recording": "Recording",
+    "track": "Track",
+    "newTrack": "New track, e.g. Guitar L",
+    "trackNotesPlaceholder": "Note",
+    "noTracks": "No tracks yet – add them below or fill the list from the instruments.",
+    "progress": "{{recorded}} of {{total}} recorded",
+    "fill": "Fill",
+    "fromInstruments": "From the project's instruments",
+    "copyFrom": "Copy from song",
+    "lyrics": "Lyrics",
+    "lyricsHint": "Saved when you leave the field.",
+    "info": "More about the song",
+    "sessions": "Sessions",
+    "noSessions": "Not planned in any session yet.",
+    "noLinks": "No references for this song.",
+    "noTunings": "No drum tuning yet.",
+    "editInProject": "edit in project",
+    "sheet": "Song sheet",
+    "previous": "Previous song",
+    "next": "Next song"
+  },
+  "songTrackStatus": {
+    "Open": "Open",
+    "Recorded": "Recorded",
+    "Edited": "Edited"
   }
 }

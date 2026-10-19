@@ -12,6 +12,11 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
         Task<IEnumerable<SongReadDto>> GetForProject(int projectId);
 
         /// <summary>
+        /// Saves the lyrics of a song (empty text = no lyrics).
+        /// </summary>
+        Task<SongReadDto> SetLyrics(int id, SongLyricsDto dto);
+
+        /// <summary>
         /// Sets the same status for several songs at once (e.g. four songs to "Mixing"). Returns the changed songs.
         /// </summary>
         Task<IEnumerable<SongReadDto>> SetStatus(SongStatusUpdateDto dto);

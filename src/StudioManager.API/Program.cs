@@ -172,6 +172,8 @@ try
     builder.Services.AddScoped<IBandService, BandService>();
     builder.Services.AddScoped<IProjectService, ProjectService>();
     builder.Services.AddScoped<ISongService, SongService>();
+    builder.Services.AddScoped<ISongSectionService, SongSectionService>();
+    builder.Services.AddScoped<ISongTrackService, SongTrackService>();
     builder.Services.AddScoped<IProjectLinkService, ProjectLinkService>();
     builder.Services.AddScoped<IDrumTuningService, DrumTuningService>();
     builder.Services.AddScoped<IExternalGearService, ExternalGearService>();

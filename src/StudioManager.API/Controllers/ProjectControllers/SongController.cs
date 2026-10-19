@@ -25,6 +25,15 @@ namespace StudioManager.API.Controllers.ProjectControllers
         }
 
         /// <summary>
+        /// Saves the lyrics of a song (song page).
+        /// </summary>
+        [HttpPut("{id:int}/lyrics")]
+        public async Task<ActionResult<SongReadDto>> SetLyrics(int id, [FromBody] SongLyricsDto dto)
+        {
+            return Ok(await _service.SetLyrics(id, dto));
+        }
+
+        /// <summary>
         /// Sets the same status for several songs at once.
         /// </summary>
         [HttpPut("status")]
