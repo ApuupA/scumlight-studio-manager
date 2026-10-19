@@ -49,6 +49,18 @@ docker compose up -d --build
 The app is then available on http://localhost:8080. Uploaded files and the database live in the Docker volumes
 `studio-files` and `db-data`.
 
+**Look into the database:** pgAdmin runs on http://localhost:5050 (login `PGADMIN_EMAIL` / `PGADMIN_PASSWORD`,
+default `admin@scumlight.com` / `scumlight`). The server "Studio Manager" is already registered under "Servers" –
+the database password is `DB_PASSWORD` (default `studio`). Database and pgAdmin only listen on 127.0.0.1,
+so they are never reachable from the network. Careful: changes in pgAdmin go straight into the real data.
+
+**Backup / restore:**
+
+```bash
+docker compose exec -T db pg_dump -U studio -d studio > data/backups/studio-YYYY-MM-DD.sql
+docker compose exec -T db psql -U studio -d studio < data/backups/studio-YYYY-MM-DD.sql   # into an empty database
+```
+
 ---
 
 ## Project structure

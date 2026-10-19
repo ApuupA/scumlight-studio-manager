@@ -570,6 +570,6 @@
     "cleared": "List cleared",
     "deleteConfirm": "The input list \"{{name}}\" will be deleted. Sessions using it keep running without input list.",
     "dragHint": "Drag to another input",
-    "moveHint": "drag ⋮⋮ to move source, microphone and stand to another input"
+    "moveHint": "drag ⋮⋮ to move source, microphone, stand and +48V to another input"
   }
 }

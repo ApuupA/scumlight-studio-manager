@@ -45,8 +45,8 @@
 - Sessions pick their input list; printable input sheet
 
 **✅ Feedback round after the first real use**
-- Input lists: a pair (quantity 2, e.g. overheads) becomes "L" / "R"; source, microphone and stand can be
-  dragged to another input (e.g. the snare to another preamp) – the input's settings stay
+- Input lists: a pair (quantity 2, e.g. overheads) becomes "L" / "R"; source, microphone, stand and +48V can
+  be dragged to another input (e.g. the snare to another preamp) – the channel settings (HPF, EQ, ...) stay
 - Setups: lists show "mics / DIs" and "other gear" separately; chains highlight the mics and show the notes
 - Songs: several tempos per song (tempo changes), optionally from which bar
 

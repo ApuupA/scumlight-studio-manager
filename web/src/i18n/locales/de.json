@@ -570,6 +570,6 @@
     "cleared": "Liste geleert",
     "deleteConfirm": "Die Input-Liste \"{{name}}\" wird gelöscht. Sessions, die sie nutzen, haben dann keine Input-Liste mehr.",
     "dragHint": "Auf einen anderen Input ziehen",
-    "moveHint": "mit ⋮⋮ Quelle, Mikrofon und Stativ auf einen anderen Input ziehen"
+    "moveHint": "mit ⋮⋮ Quelle, Mikrofon, Stativ und +48V auf einen anderen Input ziehen"
   }
 }
