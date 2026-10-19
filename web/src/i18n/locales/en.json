@@ -655,5 +655,20 @@
     "list": "List",
     "tiles": "Tiles",
     "switch": "List or tiles"
+  },
+  "calendar": {
+    "title": "Calendar subscription",
+    "hint": "Shows all sessions in your calendar (Nextcloud, phone, Outlook, ...) and updates itself – changes appear after about an hour.",
+    "create": "Create subscription link",
+    "link": "Subscription link",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "howTo": "How to add it:",
+    "nextcloud": "Nextcloud: Calendar → \"+\" → \"New subscription from link (read-only)\" → paste the link",
+    "iphone": "iPhone: Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar",
+    "google": "Google Calendar (also Android): calendar.google.com → \"Other calendars\" \"+\" → \"From URL\"",
+    "secret": "Keep the link to yourself – anyone with it can see the sessions (no login needed).",
+    "renew": "Create new link",
+    "renewConfirm": "The current link stops working – calendars that use it must be subscribed again with the new link."
   }
 }

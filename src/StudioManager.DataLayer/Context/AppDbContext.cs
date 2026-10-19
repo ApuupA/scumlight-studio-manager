@@ -77,6 +77,8 @@ namespace StudioManager.DataLayer.Context
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.Property(u => u.CalendarToken).HasMaxLength(64);
+                entity.HasIndex(u => u.CalendarToken).IsUnique();
                 entity.Property(u => u.Email).HasMaxLength(200).IsRequired();
                 entity.Property(u => u.DisplayName).HasMaxLength(100).IsRequired();
                 entity.Property(u => u.Role).HasConversion<string>().HasMaxLength(20);

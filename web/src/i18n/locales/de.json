@@ -655,5 +655,20 @@
     "list": "Liste",
     "tiles": "Kacheln",
     "switch": "Liste oder Kacheln"
+  },
+  "calendar": {
+    "title": "Kalender-Abo",
+    "hint": "Zeigt alle Sessions in deinem Kalender (Nextcloud, Handy, Outlook, …) und aktualisiert sich selbst – Änderungen erscheinen nach etwa einer Stunde.",
+    "create": "Abo-Link erstellen",
+    "link": "Abo-Link",
+    "copy": "Link kopieren",
+    "copied": "Kopiert",
+    "howTo": "So fügst du ihn hinzu:",
+    "nextcloud": "Nextcloud: Kalender → „+\" → „Neues Abonnement aus Link (schreibgeschützt)\" → Link einfügen",
+    "iphone": "iPhone: Einstellungen → Kalender → Accounts → Account hinzufügen → Andere → Kalenderabo hinzufügen",
+    "google": "Google Kalender (auch Android): calendar.google.com → „Weitere Kalender\" „+\" → „Per URL\"",
+    "secret": "Behalte den Link für dich – wer ihn hat, kann die Sessions sehen (ohne Anmeldung).",
+    "renew": "Neuen Link erzeugen",
+    "renewConfirm": "Der aktuelle Link funktioniert dann nicht mehr – Kalender, die ihn nutzen, müssen mit dem neuen Link neu abonniert werden."
   }
 }

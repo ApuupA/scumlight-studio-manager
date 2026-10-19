@@ -459,6 +459,64 @@
         }
       }
     },
+    "/api/Calendar/token": {
+      "get": {
+        "tags": [
+          "Calendar"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarTokenDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Calendar"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarTokenDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Calendar/{token}.ics": {
+      "get": {
+        "tags": [
+          "Calendar"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Client/{id}/photo": {
       "get": {
         "tags": [
@@ -4843,6 +4901,16 @@
         },
         "additionalProperties": false
       },
+      "CalendarTokenDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ChangePasswordDto": {
         "required": [
           "currentPassword",
@@ -7526,6 +7594,9 @@
     },
     {
       "name": "Band"
+    },
+    {
+      "name": "Calendar"
     },
     {
       "name": "Client"
