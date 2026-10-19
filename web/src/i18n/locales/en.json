@@ -163,7 +163,8 @@
       "bandGearNotInProject": "This band gear does not belong to the project."
     },
     "inputList": {
-      "instrumentNotInProject": "All instruments must belong to the list's project."
+      "instrumentNotInProject": "All instruments must belong to the list's project.",
+      "nothingToMove": "Nothing is plugged into this input."
     }
   },
   "profile": {
@@ -291,7 +292,12 @@
     "selected": "{{count}} selected",
     "selectAll": "Select all songs",
     "setStatus": "Set status",
-    "statusChanged": "{{count}} songs set to \"{{status}}\""
+    "statusChanged": "{{count}} songs set to \"{{status}}\"",
+    "tempos": "Tempo",
+    "temposHint": "One line per tempo if the tempo changes – the bar is optional",
+    "fromBar": "from bar",
+    "atBar": "bar {{bar}}",
+    "addTempo": "Tempo change"
   },
   "songStatus": {
     "Planned": "Planned",
@@ -466,7 +472,9 @@
     "noStudioGear": "No studio gear yet – add it under \"Gear\".",
     "empty": "No gear yet.",
     "moveUp": "Move up",
-    "moveDown": "Move down"
+    "moveDown": "Move down",
+    "groupMics": "Mics / DIs (need an input)",
+    "groupOther": "Other gear"
   },
   "setupSource": {
     "Studio": "Studio gear",
@@ -560,6 +568,8 @@
     "clear": "Clear list",
     "clearConfirm": "All entries of \"{{name}}\" will be removed.",
     "cleared": "List cleared",
-    "deleteConfirm": "The input list \"{{name}}\" will be deleted. Sessions using it keep running without input list."
+    "deleteConfirm": "The input list \"{{name}}\" will be deleted. Sessions using it keep running without input list.",
+    "dragHint": "Drag to another input",
+    "moveHint": "drag ⋮⋮ to move source, microphone and stand to another input"
   }
 }

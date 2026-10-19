@@ -163,7 +163,8 @@
       "bandGearNotInProject": "Dieses Band-Equipment gehört nicht zum Projekt."
     },
     "inputList": {
-      "instrumentNotInProject": "Alle Instrumente müssen zum Projekt der Liste gehören."
+      "instrumentNotInProject": "Alle Instrumente müssen zum Projekt der Liste gehören.",
+      "nothingToMove": "In diesem Input steckt nichts."
     }
   },
   "profile": {
@@ -291,7 +292,12 @@
     "selected": "{{count}} ausgewählt",
     "selectAll": "Alle Songs auswählen",
     "setStatus": "Status setzen",
-    "statusChanged": "{{count}} Songs auf \"{{status}}\" gesetzt"
+    "statusChanged": "{{count}} Songs auf \"{{status}}\" gesetzt",
+    "tempos": "Tempo",
+    "temposHint": "Eine Zeile pro Tempo, falls sich das Tempo ändert – der Takt ist optional",
+    "fromBar": "ab Takt",
+    "atBar": "T. {{bar}}",
+    "addTempo": "Tempowechsel"
   },
   "songStatus": {
     "Planned": "Geplant",
@@ -466,7 +472,9 @@
     "noStudioGear": "Noch kein Studio-Equipment – leg es unter \"Equipment\" an.",
     "empty": "Noch kein Equipment.",
     "moveUp": "Nach oben",
-    "moveDown": "Nach unten"
+    "moveDown": "Nach unten",
+    "groupMics": "Mikrofone / DIs (brauchen einen Input)",
+    "groupOther": "Weiteres Equipment"
   },
   "setupSource": {
     "Studio": "Studio",
@@ -560,6 +568,8 @@
     "clear": "Liste leeren",
     "clearConfirm": "Alle Einträge von \"{{name}}\" werden entfernt.",
     "cleared": "Liste geleert",
-    "deleteConfirm": "Die Input-Liste \"{{name}}\" wird gelöscht. Sessions, die sie nutzen, haben dann keine Input-Liste mehr."
+    "deleteConfirm": "Die Input-Liste \"{{name}}\" wird gelöscht. Sessions, die sie nutzen, haben dann keine Input-Liste mehr.",
+    "dragHint": "Auf einen anderen Input ziehen",
+    "moveHint": "mit ⋮⋮ Quelle, Mikrofon und Stativ auf einen anderen Input ziehen"
   }
 }

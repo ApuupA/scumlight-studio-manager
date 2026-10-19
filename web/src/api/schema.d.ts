@@ -1526,6 +1526,49 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/InputList/{id}/move": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["InputListMoveDto"];
+                    "text/json": components["schemas"]["InputListMoveDto"];
+                    "application/*+json": components["schemas"]["InputListMoveDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["InputListReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/InputList/{id}/rows": {
         parameters: {
             query?: never;
@@ -3718,6 +3761,12 @@ export interface components {
             /** Format: int32 */
             notPlacedCount: number;
         };
+        InputListMoveDto: {
+            /** Format: int32 */
+            fromStudioInputId: number;
+            /** Format: int32 */
+            toStudioInputId: number;
+        };
         InputListReadDto: {
             /** Format: int32 */
             id: number;
@@ -4085,8 +4134,7 @@ export interface components {
             /** Format: int32 */
             trackNumber: number;
             status: components["schemas"]["SongStatus"];
-            /** Format: double */
-            bpm?: number | null;
+            tempos: components["schemas"]["SongTempoCreateDto"][];
             tuning?: string | null;
             notes?: string | null;
             /** Format: int32 */
@@ -4101,8 +4149,7 @@ export interface components {
             /** Format: int32 */
             trackNumber: number;
             status: components["schemas"]["SongStatus"];
-            /** Format: double */
-            bpm?: number | null;
+            tempos: components["schemas"]["SongTempoReadDto"][];
             tuning?: string | null;
             notes?: string | null;
             /** Format: int32 */
@@ -4120,6 +4167,18 @@ export interface components {
         SongStatusUpdateDto: {
             songIds: number[];
             status: components["schemas"]["SongStatus"];
+        };
+        SongTempoCreateDto: {
+            /** Format: double */
+            bpm: number;
+            /** Format: int32 */
+            fromBar?: number | null;
+        };
+        SongTempoReadDto: {
+            /** Format: double */
+            bpm: number;
+            /** Format: int32 */
+            fromBar?: number | null;
         };
         StudioInputBulkCreateDto: {
             /** Format: int32 */

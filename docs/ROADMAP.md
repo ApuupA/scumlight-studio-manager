@@ -44,6 +44,12 @@
 - Several input lists per project (tabs), pre-filled from the instrument setups; +48V / HPF / Tone / EQ, insert, comment
 - Sessions pick their input list; printable input sheet
 
+**✅ Feedback round after the first real use**
+- Input lists: a pair (quantity 2, e.g. overheads) becomes "L" / "R"; source, microphone and stand can be
+  dragged to another input (e.g. the snare to another preamp) – the input's settings stay
+- Setups: lists show "mics / DIs" and "other gear" separately; chains highlight the mics and show the notes
+- Songs: several tempos per song (tempo changes), optionally from which bar
+
 
 ## Milestone 3 – Mix revision tool
 - Upload mix versions per song (WAV/MP3), server-side conversion for streaming (FFmpeg)

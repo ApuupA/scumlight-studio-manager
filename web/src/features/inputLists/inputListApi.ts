@@ -70,6 +70,16 @@ export function useFillInputList() {
   })
 }
 
+/** Moves source, microphone and stand to another studio input (drag and drop). A used target swaps places. */
+export function useMoveInputListEntry() {
+  const invalidate = useInvalidateInputLists()
+  return useMutation({
+    mutationFn: ({ listId, fromStudioInputId, toStudioInputId }: { listId: number; fromStudioInputId: number; toStudioInputId: number }) =>
+      unwrap(api.POST('/api/InputList/{id}/move', { params: { path: { id: listId } }, body: { fromStudioInputId, toStudioInputId } })),
+    onSuccess: invalidate,
+  })
+}
+
 export function useClearInputList() {
   const invalidate = useInvalidateInputLists()
   return useMutation({

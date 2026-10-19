@@ -1,6 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import type { ProjectInstrument } from '../../api/types'
+import type { ProjectInstrument, SetupItem } from '../../api/types'
 import classes from '../../components/PrintSheet.module.css'
+
+function micsFirst(items: SetupItem[]) {
+  return [...items.filter((item) => item.needsInput), ...items.filter((item) => !item.needsInput)]
+}
 
 /**
  * The setups of instruments for the printable sheets: one block per instrument, one row per entry
@@ -19,7 +23,8 @@ export default function SetupPrintTable({ instruments }: { instruments: ProjectI
               {instrument.bandName && <span className={classes.muted}> · {instrument.bandName}</span>}
             </td>
           </tr>,
-          ...instrument.setupItems.map((item, index) => (
+          // A chain keeps its order (signal flow), a list shows the mics / DIs first - like on the project page
+          ...(instrument.isChain ? instrument.setupItems : micsFirst(instrument.setupItems)).map((item, index) => (
             <tr key={item.id}>
               <td className={classes.check}>☐</td>
               <td>{instrument.isChain ? (index === 0 ? '' : '→') : `${item.quantity}×`}</td>

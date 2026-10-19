@@ -13,8 +13,8 @@ namespace StudioManager.DataLayer.DTO.Create
 
         public SongStatus Status { get; set; } = SongStatus.Planned;
 
-        [Range(1, 400)]
-        public decimal? Bpm { get; set; }
+        /// <summary>Tempo(s) in song order, e.g. 190, then 120 from bar 121. Empty if unknown.</summary>
+        public List<SongTempoCreateDto> Tempos { get; set; } = new();
 
         [MaxLength(50)]
         public string? Tuning { get; set; }

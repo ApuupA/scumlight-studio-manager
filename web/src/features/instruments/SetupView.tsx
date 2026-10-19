@@ -16,6 +16,12 @@ interface SetupViewProps {
   actions?: SetupActions
 }
 
+/** Frame of a microphone / DI in a chain. */
+const micHighlight = {
+  borderColor: 'var(--mantine-primary-color-filled)',
+  background: 'var(--mantine-primary-color-light)',
+}
+
 /** Small colored hint where a setup entry comes from, and a warning if studio gear is not available. */
 function ItemBadges({ item }: { item: SetupItem }) {
   const { t } = useTranslation()
@@ -74,13 +80,16 @@ export default function SetupView({ instrument, actions }: SetupViewProps) {
         {items.map((item, index) => (
           <Group key={item.id} gap={6} wrap="nowrap" align="center">
             {index > 0 && <IconArrowRight size={18} color="var(--mantine-primary-color-filled)" />}
-            <Paper withBorder px="sm" py={6}>
+            {/* Microphones / DIs (they need an input) are highlighted */}
+            <Paper withBorder px="sm" py={6} maw={260} style={item.needsInput ? micHighlight : undefined}>
               <Stack gap={2}>
                 <Group gap={4} wrap="nowrap">
                   <Text size="sm" fw={600}>{item.quantity > 1 && `${item.quantity}× `}{item.displayName}</Text>
                   <ItemBadges item={item} />
                 </Group>
                 {item.usedFor && <Text size="xs" c="dimmed">{item.usedFor}</Text>}
+                {/* Notes often hold the settings, e.g. "Gain 7, Bass 4, Treble 6" */}
+                {item.notes && <Text size="xs" style={{ whiteSpace: 'pre-line' }}>{item.notes}</Text>}
                 {actions && <ItemActions item={item} index={index} count={items.length} actions={actions} isChain />}
               </Stack>
             </Paper>
@@ -90,28 +99,41 @@ export default function SetupView({ instrument, actions }: SetupViewProps) {
     )
   }
 
-  // ---------- List: e.g. the mics of a drum kit ----------
+  // ---------- List: e.g. a drum kit - first the mics / DIs, then the other gear ----------
+  const groups = [
+    { key: 'mics', title: t('setup.groupMics'), items: items.filter((item) => item.needsInput) },
+    { key: 'other', title: t('setup.groupOther'), items: items.filter((item) => !item.needsInput) },
+  ]
+
   return (
     <Table verticalSpacing={4}>
       <Table.Tbody>
-        {items.map((item, index) => (
-          <Table.Tr key={item.id}>
-            <Table.Td w={50} c="dimmed">{item.quantity}×</Table.Td>
-            <Table.Td>
-              <Group gap={6} wrap="nowrap">
-                <Text size="sm" fw={500}>{item.displayName}</Text>
-                <ItemBadges item={item} />
-              </Group>
-              {item.notes && <Text size="xs" c="dimmed">{item.notes}</Text>}
+        {groups.filter((group) => group.items.length > 0).map((group) => [
+          <Table.Tr key={group.key}>
+            <Table.Td colSpan={4} pt="sm">
+              <Text size="xs" fw={700} c="dimmed" tt="uppercase">{group.title}</Text>
             </Table.Td>
-            <Table.Td><Text size="sm">{item.usedFor}</Text></Table.Td>
-            {actions && (
-              <Table.Td w={120}>
-                <ItemActions item={item} index={index} count={items.length} actions={actions} isChain={false} />
+          </Table.Tr>,
+          ...group.items.map((item, index) => (
+            <Table.Tr key={item.id}>
+              <Table.Td w={50} c="dimmed">{item.quantity}×</Table.Td>
+              <Table.Td>
+                <Group gap={6} wrap="nowrap">
+                  <Text size="sm" fw={500}>{item.displayName}</Text>
+                  <ItemBadges item={item} />
+                </Group>
+                {item.notes && <Text size="xs" c="dimmed" style={{ whiteSpace: 'pre-line' }}>{item.notes}</Text>}
               </Table.Td>
-            )}
-          </Table.Tr>
-        ))}
+              <Table.Td><Text size="sm">{item.usedFor}</Text></Table.Td>
+              {actions && (
+                <Table.Td w={120}>
+                  {/* Up / down moves within the group */}
+                  <ItemActions item={item} index={index} count={group.items.length} actions={actions} isChain={false} />
+                </Table.Td>
+              )}
+            </Table.Tr>
+          )),
+        ])}
       </Table.Tbody>
     </Table>
   )

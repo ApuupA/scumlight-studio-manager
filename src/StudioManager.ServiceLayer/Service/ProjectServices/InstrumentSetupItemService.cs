@@ -49,9 +49,10 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
         public async Task Move(int id, SetupItemMoveDto dto)
         {
-            var item = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(InstrumentSetupItem), id);
+            var item = await _repository.GetAsync(s => s.Id == id, s => s.ProjectInstrument!)
+                ?? throw new EntityNotFoundException(nameof(InstrumentSetupItem), id);
 
-            // Number all entries of the instrument 1, 2, 3, ... - then swap with the neighbour
+            // Number all entries of the instrument 1, 2, 3, ...
             var siblings = (await _repository.GetAllAsync(s => s.ProjectInstrumentId == item.ProjectInstrumentId))
                 .OrderBy(s => s.SortOrder)
                 .ThenBy(s => s.Id)
@@ -61,12 +62,18 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
                 siblings[i].SortOrder = i + 1;
             }
 
-            var index = siblings.FindIndex(s => s.Id == id);
+            // A list is shown in two groups (mics / DIs and other gear): swap with the neighbour in the same group.
+            // A chain is shown in one row: swap with the direct neighbour.
+            var group = item.ProjectInstrument!.IsChain
+                ? siblings
+                : siblings.Where(s => s.NeedsInput == item.NeedsInput).ToList();
+
+            var index = group.FindIndex(s => s.Id == id);
             var neighbourIndex = index + dto.Direction;
-            if (neighbourIndex >= 0 && neighbourIndex < siblings.Count)
+            if (neighbourIndex >= 0 && neighbourIndex < group.Count)
             {
-                (siblings[index].SortOrder, siblings[neighbourIndex].SortOrder) =
-                    (siblings[neighbourIndex].SortOrder, siblings[index].SortOrder);
+                (group[index].SortOrder, group[neighbourIndex].SortOrder) =
+                    (group[neighbourIndex].SortOrder, group[index].SortOrder);
             }
 
             await _repository.UpdateRangeAsync(siblings);

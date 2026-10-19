@@ -114,7 +114,7 @@ namespace StudioManager.Tests.Unit
             Assert.Equal(3, result.AddedCount); // D6 + 2x C414, the drum rug needs no input
             Assert.Equal(0, result.NotPlacedCount);
             Assert.Equal(
-                new[] { "Talkback", "Kick In", "OH 1", "OH 2", null },
+                new[] { "Talkback", "Kick In", "OH L", "OH R", null }, // a pair is stereo: L / R
                 result.InputList.Rows.Select(r => r.Source));
             Assert.Equal("C414", result.InputList.Rows[2].Microphone);
             Assert.Equal(0, again.AddedCount); // nothing new - already in the list
@@ -130,6 +130,53 @@ namespace StudioManager.Tests.Unit
 
             Assert.Equal(2, result.AddedCount);
             Assert.Equal(1, result.NotPlacedCount);
+        }
+
+        [Fact]
+        public async Task MoveEntry_ToAFreeInput_ShouldMoveOnlyWhatIsPluggedIn()
+        {
+            await _studioInputService.BulkCreate(new StudioInputBulkCreateDto { Count = 3 });
+            var listId = await CreateList();
+            var inputIds = _context.StudioInputs.OrderBy(i => i.SortOrder).Select(i => i.Id).ToList();
+            await _inputListService.SaveRow(listId, inputIds[0], new InputListRowSaveDto { Source = "Snare Top", Microphone = "SM57", Stand = "Short" });
+            await _inputListService.SaveRow(listId, inputIds[2], new InputListRowSaveDto { Hpf = true, Comment = "Neve" });
+
+            var list = await _inputListService.MoveEntry(listId, new InputListMoveDto { FromStudioInputId = inputIds[0], ToStudioInputId = inputIds[2] });
+
+            Assert.Null(list.Rows[0].RowId);                // input 1 is free again
+            Assert.Equal("Snare Top", list.Rows[2].Source);
+            Assert.Equal("SM57", list.Rows[2].Microphone);
+            Assert.Equal("Short", list.Rows[2].Stand);
+            Assert.True(list.Rows[2].Hpf);                  // the settings of input 3 stay
+            Assert.Equal("Neve", list.Rows[2].Comment);
+        }
+
+        [Fact]
+        public async Task MoveEntry_ToAUsedInput_ShouldSwapTheEntries()
+        {
+            await _studioInputService.BulkCreate(new StudioInputBulkCreateDto { Count = 2 });
+            var listId = await CreateList();
+            var inputIds = _context.StudioInputs.OrderBy(i => i.SortOrder).Select(i => i.Id).ToList();
+            await _inputListService.SaveRow(listId, inputIds[0], new InputListRowSaveDto { Source = "Kick", Phantom = false });
+            await _inputListService.SaveRow(listId, inputIds[1], new InputListRowSaveDto { Source = "Snare", Phantom = true });
+
+            var list = await _inputListService.MoveEntry(listId, new InputListMoveDto { FromStudioInputId = inputIds[1], ToStudioInputId = inputIds[0] });
+
+            Assert.Equal(new[] { "Snare", "Kick" }, list.Rows.Select(r => r.Source));
+            Assert.Equal(new[] { false, true }, list.Rows.Select(r => r.Phantom)); // +48V stays at its input
+        }
+
+        [Fact]
+        public async Task MoveEntry_FromAFreeInput_ShouldBeRejected()
+        {
+            await _studioInputService.BulkCreate(new StudioInputBulkCreateDto { Count = 2 });
+            var listId = await CreateList();
+            var inputIds = _context.StudioInputs.Select(i => i.Id).ToList();
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(
+                () => _inputListService.MoveEntry(listId, new InputListMoveDto { FromStudioInputId = inputIds[0], ToStudioInputId = inputIds[1] }));
+
+            Assert.Equal("inputList.nothingToMove", exception.ErrorCode);
         }
 
         [Fact]

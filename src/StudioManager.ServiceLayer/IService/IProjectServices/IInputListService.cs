@@ -24,6 +24,12 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
         Task<InputListFillResultDto> FillFromSetups(int inputListId, InputListFillDto dto);
 
         /// <summary>
+        /// Moves source, microphone and stand to another studio input (e.g. the snare to another preamp).
+        /// If the target input is used, the two entries swap places. Returns the whole updated list.
+        /// </summary>
+        Task<InputListReadDto> MoveEntry(int inputListId, InputListMoveDto dto);
+
+        /// <summary>
         /// Removes all rows - the list is empty again.
         /// </summary>
         Task<InputListReadDto> ClearRows(int inputListId);
