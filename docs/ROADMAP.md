@@ -71,7 +71,7 @@
 - A link per project (no login) where the band enters the gear it brings; you accept the entries
 
 **4. Finance** (replaces Papierkram) – step by step
-- a) Business data in the settings; time tracking (entries, start / stop timer, "session done → book the hours");
+- ✅ a) (v1.5.0) Default hourly rate in the settings; time tracking (entries, start / stop timer, "session done → book the hours");
   price per project (hourly rate or flat price, extra items); hours, value, invoiced and open amount per project
 - b) Invoices from open hours / items: gap-free numbers, all required content, locked once issued (corrections by
   cancellation invoice), PDF via print; payments and partial payments, open / overdue overview;

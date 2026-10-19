@@ -1,5 +1,5 @@
 import { Alert, Anchor, Badge, Button, Center, Grid, Group, Loader, Paper, Select, Stack, Text, Title } from '@mantine/core'
-import { IconArrowLeft, IconCopy, IconListNumbers, IconPrinter, IconTrash } from '@tabler/icons-react'
+import { IconArrowLeft, IconClockPlus, IconCopy, IconListNumbers, IconPrinter, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
@@ -11,10 +11,11 @@ import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import DuplicateSessionModal from './DuplicateSessionModal'
 import { useCreateSession, useDeleteSession, useSession, useSessions, useUpdateSession } from './sessionApi'
-import { formatSessionDates } from './sessionDates'
+import { formatSessionDates, sessionHours } from './sessionDates'
 import SessionForm from './SessionForm'
 import SessionEquipment from './SessionEquipment'
 import SessionTasks from './SessionTasks'
+import TimeEntryFormModal from '../finance/TimeEntryFormModal'
 
 /**
  * Route /sessions/new creates a session (optionally with ?projectId= and ?date=), /sessions/:id shows one:
@@ -36,6 +37,7 @@ export default function SessionPage() {
 
   // The session the duplicate dialog is open for (this one, or the one chosen under "copy from" on a new session)
   const [sessionToCopy, setSessionToCopy] = useState<Session | null>(null)
+  const [bookingHours, setBookingHours] = useState(false)
 
   const handleSubmit = (input: SessionInput) => {
     if (isNew) {
@@ -133,6 +135,10 @@ export default function SessionPage() {
           </Text>
         </div>
         <Group gap="xs">
+          {/* Time tracking: the session's hours as suggestion */}
+          <Button variant="light" leftSection={<IconClockPlus size={16} />} onClick={() => setBookingHours(true)}>
+            {t('finance.bookHours')}
+          </Button>
           <Button variant="light" leftSection={<IconCopy size={16} />} onClick={() => setSessionToCopy(session)}>
             {t('sessions.duplicate')}
           </Button>
@@ -169,6 +175,13 @@ export default function SessionPage() {
       </Grid>
 
       {sessionToCopy && <DuplicateSessionModal session={sessionToCopy} onClose={() => setSessionToCopy(null)} />}
+      {bookingHours && (
+        <TimeEntryFormModal
+          projectId={session.projectId}
+          defaults={{ date: session.date, hours: sessionHours(session), description: session.title, sessionId: session.id }}
+          onClose={() => setBookingHours(false)}
+        />
+      )}
     </Stack>
   )
 }

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StudioManager.DataLayer.Models;
 using StudioManager.DataLayer.Models.ClientModels;
+using StudioManager.DataLayer.Models.FinanceModels;
 using StudioManager.DataLayer.Models.GearModels;
 using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.DataLayer.Models.SessionModels;
@@ -39,6 +40,10 @@ namespace StudioManager.DataLayer.Context
         public DbSet<StudioInput> StudioInputs { get; set; } = null!;
         public DbSet<InputList> InputLists { get; set; } = null!;
         public DbSet<InputListRow> InputListRows { get; set; } = null!;
+
+        public DbSet<BusinessSettings> BusinessSettings { get; set; } = null!;
+        public DbSet<TimeEntry> TimeEntries { get; set; } = null!;
+        public DbSet<ProjectCostItem> ProjectCostItems { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -90,6 +95,7 @@ namespace StudioManager.DataLayer.Context
             ConfigureSessions(modelBuilder);
             ConfigureInstruments(modelBuilder);
             ConfigureInputLists(modelBuilder);
+            ConfigureFinance(modelBuilder);
 
             SeedGearCategories(modelBuilder);
         }
@@ -138,6 +144,9 @@ namespace StudioManager.DataLayer.Context
                 entity.Property(p => p.Description).HasMaxLength(4000);
                 entity.Property(p => p.Daw).HasMaxLength(200);
                 entity.Property(p => p.TargetLufs).HasPrecision(4, 1);
+                entity.Property(p => p.PricingMode).HasConversion<string>().HasMaxLength(20);
+                entity.Property(p => p.HourlyRate).HasPrecision(10, 2);
+                entity.Property(p => p.FlatPrice).HasPrecision(12, 2);
                 entity.Property(p => p.RecordingNotes).HasMaxLength(8000);
                 entity.Property(p => p.MixingNotes).HasMaxLength(8000);
                 entity.Property(p => p.MasteringNotes).HasMaxLength(8000);
@@ -488,6 +497,52 @@ namespace StudioManager.DataLayer.Context
                     entry.Property(e => e.DateCreated).IsModified = false;
                 }
             }
+        }
+
+        /// <summary>
+        /// Time tracking and project costs.
+        /// </summary>
+        private static void ConfigureFinance(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BusinessSettings>(entity =>
+            {
+                entity.Property(s => s.DefaultHourlyRate).HasPrecision(10, 2);
+                entity.Property(s => s.Currency).HasMaxLength(3).IsRequired();
+            });
+
+            modelBuilder.Entity<TimeEntry>(entity =>
+            {
+                entity.Property(t => t.Hours).HasPrecision(5, 2);
+                entity.Property(t => t.Description).HasMaxLength(500).IsRequired();
+
+                entity.HasOne(t => t.Project)
+                      .WithMany()
+                      .HasForeignKey(t => t.ProjectId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // A deleted session or user keeps the time - only the link is removed
+                entity.HasOne(t => t.Session)
+                      .WithMany()
+                      .HasForeignKey(t => t.SessionId)
+                      .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(t => t.User)
+                      .WithMany()
+                      .HasForeignKey(t => t.UserId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<ProjectCostItem>(entity =>
+            {
+                entity.Property(c => c.Description).HasMaxLength(300).IsRequired();
+                entity.Property(c => c.Quantity).HasPrecision(10, 2);
+                entity.Property(c => c.UnitPrice).HasPrecision(10, 2);
+
+                entity.HasOne(c => c.Project)
+                      .WithMany()
+                      .HasForeignKey(c => c.ProjectId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 }

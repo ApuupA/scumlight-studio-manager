@@ -12,6 +12,7 @@ import InputGroupFormModal from './InputGroupFormModal'
 import { useDeleteInputGroup, useDeleteStudioInput, useInputGroups, useStudioInputs } from './settingsApi'
 import UsersCard from '../users/UsersCard'
 import StudioInputFormModal from './StudioInputFormModal'
+import BillingSettingsCard from '../finance/BillingSettingsCard'
 
 /** Which dialog is open. */
 type Dialog =
@@ -124,6 +125,7 @@ export default function SettingsPage() {
         )}
       </Card>
 
+      <BillingSettingsCard />
       <UsersCard />
 
       {dialog.type === 'group' && <InputGroupFormModal group={dialog.group} onClose={close} />}

@@ -2,6 +2,7 @@ using AutoMapper;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.ClientModels;
+using StudioManager.DataLayer.Models.FinanceModels;
 using StudioManager.DataLayer.Models.GearModels;
 using StudioManager.DataLayer.Models.ProjectModels;
 using StudioManager.DataLayer.Models.SessionModels;
@@ -48,6 +49,7 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateSessionMappings();
             CreateInstrumentMappings();
             CreateInputListMappings();
+            CreateFinanceMappings();
         }
 
         private void CreateInputListMappings()
@@ -190,8 +192,12 @@ namespace StudioManager.ServiceLayer.Mapper
                     .Min()));
 
             // The bands are set by ProjectService (they have to be loaded from the database)
+            // Pricing is set in the tab "Time & costs" (FinanceService.SetPricing)
             CreateMap<ProjectCreateDto, Project>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.PricingMode, opt => opt.Ignore())
+                .ForMember(dest => dest.HourlyRate, opt => opt.Ignore())
+                .ForMember(dest => dest.FlatPrice, opt => opt.Ignore())
                 .ForMember(dest => dest.PhotoPath, opt => opt.Ignore())
                 .ForMember(dest => dest.BandGearToken, opt => opt.Ignore())
                 .ForMember(dest => dest.Client, opt => opt.Ignore())
@@ -295,6 +301,38 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateMap<SessionTaskCreateDto, SessionTask>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Session, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+        }
+
+        private void CreateFinanceMappings()
+        {
+            CreateMap<BusinessSettings, BusinessSettingsReadDto>();
+            CreateMap<BusinessSettingsUpdateDto, BusinessSettings>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Currency, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<TimeEntry, TimeEntryReadDto>()
+                .ForMember(dest => dest.IsRunning, opt => opt.MapFrom(src => src.StartedAt != null))
+                .ForMember(dest => dest.ProjectTitle, opt => opt.MapFrom(src => src.Project != null ? src.Project.Title : string.Empty))
+                .ForMember(dest => dest.SessionTitle, opt => opt.MapFrom(src => src.Session != null ? src.Session.Title : null))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.DisplayName : null));
+            CreateMap<TimeEntryCreateDto, TimeEntry>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.StartedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.Session, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<ProjectCostItem, ProjectCostItemReadDto>()
+                .ForMember(dest => dest.Total, opt => opt.MapFrom(src => Math.Round(src.Quantity * src.UnitPrice, 2)));
+            CreateMap<ProjectCostItemCreateDto, ProjectCostItem>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
         }

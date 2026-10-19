@@ -1376,6 +1376,146 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Finance/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BusinessSettingsReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["BusinessSettingsUpdateDto"];
+                    "text/json": components["schemas"]["BusinessSettingsUpdateDto"];
+                    "application/*+json": components["schemas"]["BusinessSettingsUpdateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BusinessSettingsReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Finance/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectFinanceDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Finance/project/{projectId}/pricing": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectPricingDto"];
+                    "text/json": components["schemas"]["ProjectPricingDto"];
+                    "application/*+json": components["schemas"]["ProjectPricingDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectFinanceDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/GearCategory": {
         parameters: {
             query?: never;
@@ -2702,6 +2842,186 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["ProjectReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectCostItem/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectCostItemReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectCostItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectCostItemReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectCostItemCreateDto"];
+                    "text/json": components["schemas"]["ProjectCostItemCreateDto"];
+                    "application/*+json": components["schemas"]["ProjectCostItemCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectCostItemReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectCostItem/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectCostItemReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectCostItemCreateDto"];
+                    "text/json": components["schemas"]["ProjectCostItemCreateDto"];
+                    "application/*+json": components["schemas"]["ProjectCostItemCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectCostItemReadDto"];
                     };
                 };
             };
@@ -4658,6 +4978,303 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/TimeEntry/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TimeEntry/timer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TimeEntry/timer/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["TimerStartDto"];
+                    "text/json": components["schemas"]["TimerStartDto"];
+                    "application/*+json": components["schemas"]["TimerStartDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TimeEntry/timer/stop": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["TimerStopDto"];
+                    "text/json": components["schemas"]["TimerStopDto"];
+                    "application/*+json": components["schemas"]["TimerStopDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TimeEntry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["TimeEntryCreateDto"];
+                    "text/json": components["schemas"]["TimeEntryCreateDto"];
+                    "application/*+json": components["schemas"]["TimeEntryCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TimeEntry/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["TimeEntryCreateDto"];
+                    "text/json": components["schemas"]["TimeEntryCreateDto"];
+                    "application/*+json": components["schemas"]["TimeEntryCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["TimeEntryReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/User": {
         parameters: {
             query?: never;
@@ -4865,6 +5482,15 @@ export interface components {
             /** Format: int32 */
             id: number;
             name: string;
+        };
+        BusinessSettingsReadDto: {
+            /** Format: double */
+            defaultHourlyRate: number;
+            currency: string;
+        };
+        BusinessSettingsUpdateDto: {
+            /** Format: double */
+            defaultHourlyRate: number;
         };
         CalendarTokenDto: {
             token?: string | null;
@@ -5180,6 +5806,8 @@ export interface components {
             /** Format: int32 */
             direction: number;
         };
+        /** @enum {string} */
+        PricingMode: "Hourly" | "FlatPrice";
         ProblemDetails: {
             type?: string | null;
             title?: string | null;
@@ -5189,6 +5817,34 @@ export interface components {
             instance?: string | null;
         } & {
             [key: string]: unknown;
+        };
+        ProjectCostItemCreateDto: {
+            /** Format: date */
+            date: string;
+            description: string;
+            /** Format: double */
+            quantity: number;
+            /** Format: double */
+            unitPrice: number;
+            isBillable: boolean;
+            /** Format: int32 */
+            projectId: number;
+        };
+        ProjectCostItemReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: date */
+            date: string;
+            description: string;
+            /** Format: double */
+            quantity: number;
+            /** Format: double */
+            unitPrice: number;
+            /** Format: double */
+            total: number;
+            isBillable: boolean;
+            /** Format: int32 */
+            projectId: number;
         };
         ProjectCreateDto: {
             title: string;
@@ -5212,6 +5868,28 @@ export interface components {
             /** Format: int32 */
             clientId: number;
             bandIds: number[];
+        };
+        ProjectFinanceDto: {
+            pricingMode: components["schemas"]["PricingMode"];
+            /** Format: double */
+            hourlyRate?: number | null;
+            /** Format: double */
+            effectiveHourlyRate: number;
+            /** Format: double */
+            flatPrice?: number | null;
+            /** Format: double */
+            totalHours: number;
+            /** Format: double */
+            billableHours: number;
+            /** Format: double */
+            laborValue: number;
+            /** Format: double */
+            extrasValue: number;
+            /** Format: double */
+            totalValue: number;
+            /** Format: double */
+            actualHourlyRate?: number | null;
+            currency: string;
         };
         ProjectInstrumentCreateDto: {
             name: string;
@@ -5273,6 +5951,13 @@ export interface components {
         };
         /** @enum {string} */
         ProjectLinkType: "Reference" | "RoughMix" | "Demo" | "Other";
+        ProjectPricingDto: {
+            pricingMode: components["schemas"]["PricingMode"];
+            /** Format: double */
+            hourlyRate?: number | null;
+            /** Format: double */
+            flatPrice?: number | null;
+        };
         ProjectReadDto: {
             /** Format: int32 */
             id: number;
@@ -5600,6 +6285,54 @@ export interface components {
             inputGroupId?: number | null;
             inputGroupName?: string | null;
             inputGroupColor?: string | null;
+        };
+        TimeEntryCreateDto: {
+            /** Format: date */
+            date: string;
+            /** Format: double */
+            hours: number;
+            description: string;
+            isBillable: boolean;
+            /** Format: int32 */
+            projectId: number;
+            /** Format: int32 */
+            sessionId?: number | null;
+            /** Format: int32 */
+            userId?: number | null;
+        };
+        TimeEntryReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: date */
+            date: string;
+            /** Format: double */
+            hours: number;
+            description: string;
+            isBillable: boolean;
+            isRunning: boolean;
+            /** Format: date-time */
+            startedAt?: string | null;
+            /** Format: int32 */
+            projectId: number;
+            projectTitle: string;
+            /** Format: int32 */
+            sessionId?: number | null;
+            sessionTitle?: string | null;
+            /** Format: int32 */
+            userId?: number | null;
+            userName?: string | null;
+        };
+        TimerStartDto: {
+            /** Format: int32 */
+            projectId: number;
+            /** Format: int32 */
+            sessionId?: number | null;
+            description?: string | null;
+            /** Format: date */
+            date: string;
+        };
+        TimerStopDto: {
+            description: string;
         };
         UpdateProfileDto: {
             displayName: string;

@@ -53,3 +53,17 @@ export function formatSessionDates(session: SessionDates, language: string, allD
   const timePart = session.startTime ? `${time} (${dailyText})` : time
   return `${format(session.date, false)} – ${format(session.endDate, true)} · ${timePart}`
 }
+
+/**
+ * Working hours of a session, as suggestion for the time tracking: the time span × the number of days.
+ * An all-day session counts 8 hours per day.
+ */
+export function sessionHours(session: SessionDates): number {
+  const days = allDays(session).length
+  if (!session.startTime || !session.endTime) return 8 * days
+
+  const toMinutes = (time: string) => Number(time.slice(0, 2)) * 60 + Number(time.slice(3, 5))
+  let minutes = toMinutes(session.endTime) - toMinutes(session.startTime)
+  if (minutes <= 0) minutes += 24 * 60 // e.g. 20:00 - 02:00
+  return Math.round((minutes / 60) * days * 4) / 4 // to the quarter hour
+}

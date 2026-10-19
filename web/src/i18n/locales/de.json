@@ -179,6 +179,16 @@
     },
     "bandGearLink": {
       "tooManySuggestions": "Es gibt zu viele offene Einträge – bitte warte, bis das Studio sie geprüft hat."
+    },
+    "timeEntry": {
+      "projectNotFound": "Das Projekt gibt es nicht mehr.",
+      "sessionNotInProject": "Die Session gehört nicht zu diesem Projekt.",
+      "userNotFound": "Den Benutzer gibt es nicht mehr.",
+      "timerRunning": "Es läuft schon ein Timer – stopp ihn zuerst.",
+      "noTimerRunning": "Es läuft kein Timer."
+    },
+    "projectPricing": {
+      "flatPriceRequired": "Bitte den Pauschalpreis eintragen."
     }
   },
   "profile": {
@@ -268,7 +278,8 @@
       "drums": "Drum-Tuning",
       "instruments": "Instrumente & Setup",
       "bandGear": "Mitgebrachtes Equipment",
-      "inputLists": "Input-Listen"
+      "inputLists": "Input-Listen",
+      "finance": "Zeit & Kosten"
     },
     "filterActive": "Aktive Projekte",
     "filterAll": "Alle Projekte"
@@ -701,5 +712,62 @@
     "ownerPlaceholder": "z. B. Max (Gitarre)",
     "notesPlaceholder": "z. B. braucht ein 9-V-Netzteil",
     "add": "Hinzufügen"
+  },
+  "pricingMode": {
+    "Hourly": "Nach Stunden",
+    "FlatPrice": "Pauschale"
+  },
+  "finance": {
+    "hours": "Stunden",
+    "billableHours": "davon {{hours}} abrechenbar",
+    "labor": "Arbeitszeit",
+    "atRate": "zu {{rate}} / h",
+    "actualRate": "effektiv {{rate}} / h",
+    "extras": "Zusatzposten",
+    "totalValue": "Gesamt",
+    "totalHint": "Bisheriger Wert – Rechnungen folgen",
+    "pricing": "Abrechnung",
+    "hourlyRate": "Eigener Stundensatz",
+    "hourlyRateHint": "Leer = Standardsatz aus den Einstellungen",
+    "defaultRate": "Standard-Stundensatz",
+    "flatPrice": "Pauschalpreis",
+    "hourlyHint": "Abrechenbare Stunden × Stundensatz, plus die abrechenbaren Zusatzposten.",
+    "flatHint": "Der vereinbarte Preis, plus die abrechenbaren Zusatzposten. Die Stunden zeigen, was das Projekt wirklich gekostet hat.",
+    "timeEntries": "Arbeitszeit",
+    "newEntry": "Zeit erfassen",
+    "editEntry": "Zeiteintrag bearbeiten",
+    "noEntries": "Noch keine Zeit erfasst – hier eintragen, aus einer Session („Stunden buchen\") oder mit dem Timer oben.",
+    "date": "Datum",
+    "hoursHint": "z. B. 6,5",
+    "hoursInvalid": "Zwischen 0,25 und 24 Stunden",
+    "description": "Was wurde gemacht?",
+    "descriptionPlaceholder": "z. B. Drum-Recording, Vocals editieren",
+    "session": "Session",
+    "who": "Wer",
+    "billable": "Abrechenbar",
+    "billableHint": "Aus für Zeit, die nicht berechnet wird, z. B. eigene Vorbereitung",
+    "notBillable": "nicht abrechenbar",
+    "running": "läuft",
+    "deleteEntryConfirm": "Der Zeiteintrag „{{description}}\" wird gelöscht.",
+    "bookHours": "Stunden buchen",
+    "newCostItem": "Neuer Zusatzposten",
+    "editCostItem": "Zusatzposten bearbeiten",
+    "noCostItems": "Keine Zusatzposten.",
+    "costItemPlaceholder": "z. B. Tonband, gemieteter Amp, externes Mastering",
+    "quantity": "Menge",
+    "unitPrice": "Einzelpreis",
+    "total": "Summe",
+    "costBillableHint": "Aus für eigene Kosten, die dem Kunden nicht berechnet werden",
+    "deleteCostItemConfirm": "Der Zusatzposten „{{description}}\" wird gelöscht.",
+    "timer": "Timer",
+    "project": "Projekt",
+    "whatAreYouDoing": "Was machst du? (optional)",
+    "start": "Starten",
+    "timerRunningFor": "Timer läuft für {{project}}",
+    "whatWasDone": "Was wurde gemacht?",
+    "stopAndBook": "Stoppen & buchen",
+    "timerBooked": "{{hours}} für {{project}} gebucht",
+    "billing": "Abrechnung",
+    "billingHint": "Gilt für alle Projekte, die nach Stunden ohne eigenen Satz abgerechnet werden."
   }
 }

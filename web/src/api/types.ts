@@ -89,3 +89,14 @@ export const sessionTypes: SessionType[] = [
   'PreProduction', 'Recording', 'Overdubs', 'Editing', 'Mixing', 'Mastering', 'Production', 'Other',
 ]
 export const sessionStatuses: SessionStatus[] = ['Planned', 'Confirmed', 'Completed', 'Cancelled']
+
+// ---------- Finance ----------
+export type BusinessSettings = Schemas['BusinessSettingsReadDto']
+export type BusinessSettingsInput = Schemas['BusinessSettingsUpdateDto']
+export type TimeEntry = Schemas['TimeEntryReadDto']
+export type TimeEntryInput = Schemas['TimeEntryCreateDto']
+export type ProjectCostItem = Schemas['ProjectCostItemReadDto']
+export type ProjectCostItemInput = Schemas['ProjectCostItemCreateDto']
+export type ProjectFinance = Schemas['ProjectFinanceDto']
+export type ProjectPricingInput = Schemas['ProjectPricingDto']
+export type PricingMode = Schemas['PricingMode']

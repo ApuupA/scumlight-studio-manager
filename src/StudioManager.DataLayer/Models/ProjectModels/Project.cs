@@ -46,6 +46,15 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public string? MixingNotes { get; set; }
         public string? MasteringNotes { get; set; }
 
+        /// <summary>How the project is charged - set in the tab "Time & costs".</summary>
+        public PricingMode PricingMode { get; set; } = PricingMode.Hourly;
+
+        /// <summary>Own hourly rate, null = the default rate from the settings.</summary>
+        public decimal? HourlyRate { get; set; }
+
+        /// <summary>Agreed total price (pricing mode FlatPrice).</summary>
+        public decimal? FlatPrice { get; set; }
+
         public int ClientId { get; set; }
         public Client? Client { get; set; }
 
