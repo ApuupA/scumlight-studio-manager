@@ -4731,6 +4731,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/SessionTask/open": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["OpenSessionTaskDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/SessionTask": {
         parameters: {
             query?: never;
@@ -7132,6 +7167,19 @@ export interface components {
         MoveDto: {
             /** Format: int32 */
             direction: number;
+        };
+        OpenSessionTaskDto: {
+            /** Format: int32 */
+            id: number;
+            text: string;
+            /** Format: int32 */
+            sortOrder: number;
+            /** Format: int32 */
+            sessionId: number;
+            sessionTitle: string;
+            /** Format: date */
+            sessionDate: string;
+            projectTitle: string;
         };
         PaymentCreateDto: {
             /** Format: date */

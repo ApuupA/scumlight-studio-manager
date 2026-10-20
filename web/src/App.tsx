@@ -21,6 +21,7 @@ import SongPage from './features/songs/SongPage'
 import SongSheetPage from './features/songs/SongSheetPage'
 import AppLayout from './layout/AppLayout'
 import BandGearPage from './features/bandGearLink/BandGearPage'
+import DashboardPage from './features/dashboard/DashboardPage'
 import FinancePage from './features/finance/FinancePage'
 import InvoicePage from './features/invoices/InvoicePage'
 import InvoicePrintPage from './features/invoices/InvoicePrintPage'
@@ -54,7 +55,7 @@ export default function App() {
 
           {/* Normal pages inside the app layout */}
           <Route element={<AppLayout />}>
-            <Route path="/" element={<Navigate to="/sessions" replace />} />
+            <Route path="/" element={<DashboardPage />} />
             <Route path="/sessions" element={<SessionCalendarPage />} />
             <Route path="/sessions/new" element={<SessionPage />} />
             <Route path="/sessions/:id" element={<SessionPage />} />

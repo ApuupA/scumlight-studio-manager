@@ -10,5 +10,10 @@ namespace StudioManager.ServiceLayer.IService.ISessionServices
         /// All SessionTask entries of one session.
         /// </summary>
         Task<IEnumerable<SessionTaskReadDto>> GetForSession(int sessionId);
+
+        /// <summary>
+        /// All to-dos that are not done yet (cancelled sessions left out), oldest session first.
+        /// </summary>
+        Task<IEnumerable<OpenSessionTaskDto>> GetOpen();
     }
 }

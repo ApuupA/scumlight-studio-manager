@@ -15,7 +15,8 @@
     "clients": "Clients",
     "settings": "Settings",
     "invoices": "Invoices",
-    "finance": "Finance"
+    "finance": "Finance",
+    "start": "Start"
   },
   "common": {
     "save": "Save",
@@ -1054,5 +1055,29 @@
     "vat": "VAT",
     "gross": "Gross",
     "missingReceipts": "Expenses without a receipt: {{count}}"
+  },
+  "dashboard": {
+    "greeting": "Hello {{name}}!",
+    "today": "Today",
+    "noSessionToday": "No session today.",
+    "nextSessions": "Next sessions",
+    "noNextSessions": "No sessions planned.",
+    "tasksDone": "{{done}}/{{total}} to-dos",
+    "openTasks": "Open to-dos",
+    "noOpenTasks": "Everything done!",
+    "markDone": "Mark as done",
+    "showAll": "Show all ({{count}})",
+    "showLess": "Show less",
+    "money": "Money",
+    "openInvoices": "Open invoices",
+    "overdue": "of which overdue",
+    "allPaid": "All invoices are paid.",
+    "dueOn": "due {{date}}",
+    "waitingQuotes": "Open quotes",
+    "validUntil": "valid until {{date}}",
+    "activeProjects": "Projects in progress",
+    "noActiveProjects": "No projects in progress.",
+    "nextSession": "next session {{date}}",
+    "songsDone": "{{done}}/{{total}} songs done"
   }
 }

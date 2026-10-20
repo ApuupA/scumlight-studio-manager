@@ -23,5 +23,14 @@ namespace StudioManager.API.Controllers.SessionControllers
         {
             return Ok(await _service.GetForSession(sessionId));
         }
+
+        /// <summary>
+        /// All to-dos that are not done yet, with session and project - for the start page.
+        /// </summary>
+        [HttpGet("open")]
+        public async Task<ActionResult<IEnumerable<OpenSessionTaskDto>>> GetOpen()
+        {
+            return Ok(await _service.GetOpen());
+        }
     }
 }

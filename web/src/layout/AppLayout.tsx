@@ -1,6 +1,6 @@
 import { ActionIcon, Anchor, AppShell, Burger, Button, Group, NavLink, useMantineColorScheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconCalendarEvent, IconCategory, IconDisc, IconFileInvoice, IconLogout, IconMoon, IconSettings, IconSun, IconTool, IconUser, IconUsersGroup } from '@tabler/icons-react'
+import { IconCalendarEvent, IconCategory, IconDisc, IconFileInvoice, IconHome, IconLogout, IconMoon, IconSettings, IconSun, IconTool, IconUser, IconUsersGroup } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { NavLink as RouterNavLink, Outlet, useNavigate } from 'react-router'
 import { useCurrentUser, useLogout } from '../features/auth/authApi'
@@ -11,6 +11,7 @@ import TimerButton from '../features/finance/TimerButton'
 
 /** Entries of the side navigation. New features (projects, sessions, mixes, ...) are added here. */
 const navItems = [
+  { to: '/', labelKey: 'nav.start', icon: IconHome },
   { to: '/sessions', labelKey: 'nav.calendar', icon: IconCalendarEvent },
   { to: '/projects', labelKey: 'nav.projects', icon: IconDisc },
   { to: '/clients', labelKey: 'nav.clients', icon: IconUsersGroup },
@@ -76,6 +77,8 @@ export default function AppLayout() {
               key={item.to}
               component={RouterNavLink}
               to={item.to}
+              // "/" would otherwise be highlighted on every page (all addresses start with "/")
+              end={item.to === '/'}
               label={t(item.labelKey)}
               leftSection={<item.icon size={18} />}
               onClick={closeNavbar}

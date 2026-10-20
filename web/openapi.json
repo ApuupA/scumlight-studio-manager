@@ -4913,6 +4913,28 @@
         }
       }
     },
+    "/api/SessionTask/open": {
+      "get": {
+        "tags": [
+          "SessionTask"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpenSessionTaskDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/SessionTask": {
       "get": {
         "tags": [
@@ -8860,6 +8882,46 @@
             "minimum": -1,
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OpenSessionTaskDto": {
+        "required": [
+          "id",
+          "projectTitle",
+          "sessionDate",
+          "sessionId",
+          "sessionTitle",
+          "sortOrder",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sessionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sessionTitle": {
+            "type": "string"
+          },
+          "sessionDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "projectTitle": {
+            "type": "string"
           }
         },
         "additionalProperties": false
