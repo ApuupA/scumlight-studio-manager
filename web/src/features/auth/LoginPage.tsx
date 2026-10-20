@@ -23,7 +23,7 @@ export default function LoginPage() {
   })
 
   const handleSubmit = (values: LoginInput) => {
-    login.mutate(values, { onSuccess: () => navigate('/gear', { replace: true }) })
+    login.mutate(values, { onSuccess: () => navigate('/', { replace: true }) })
   }
 
   return (

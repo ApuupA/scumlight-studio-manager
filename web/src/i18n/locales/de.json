@@ -15,7 +15,8 @@
     "clients": "Kunden",
     "settings": "Einstellungen",
     "invoices": "Rechnungen",
-    "finance": "Finanzen"
+    "finance": "Finanzen",
+    "start": "Start"
   },
   "common": {
     "save": "Speichern",
@@ -1054,5 +1055,29 @@
     "vat": "USt.",
     "gross": "Brutto",
     "missingReceipts": "Ausgaben ohne Beleg: {{count}}"
+  },
+  "dashboard": {
+    "greeting": "Hallo {{name}}!",
+    "today": "Heute",
+    "noSessionToday": "Heute keine Session.",
+    "nextSessions": "Nächste Sessions",
+    "noNextSessions": "Keine Sessions geplant.",
+    "tasksDone": "{{done}}/{{total}} To-dos",
+    "openTasks": "Offene To-dos",
+    "noOpenTasks": "Alles erledigt!",
+    "markDone": "Als erledigt markieren",
+    "showAll": "Alle anzeigen ({{count}})",
+    "showLess": "Weniger anzeigen",
+    "money": "Geld",
+    "openInvoices": "Offene Rechnungen",
+    "overdue": "davon überfällig",
+    "allPaid": "Alle Rechnungen sind bezahlt.",
+    "dueOn": "fällig am {{date}}",
+    "waitingQuotes": "Offene Angebote",
+    "validUntil": "gültig bis {{date}}",
+    "activeProjects": "Laufende Projekte",
+    "noActiveProjects": "Keine laufenden Projekte.",
+    "nextSession": "nächste Session {{date}}",
+    "songsDone": "{{done}}/{{total}} Songs fertig"
   }
 }

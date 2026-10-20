@@ -84,7 +84,7 @@
   of payments received and expenses per month and category (basis for the EÜR), CSV export
 
 ## Later
-- **Start page**: today's session, next sessions, open tasks, unpaid invoices, album progress
+- ✅ **Start page** (v1.10.0): today's sessions, next sessions, open to-dos (tick off), unpaid invoices and open quotes, projects in progress with song progress
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search
 - Gear: maintenance log, lending (who has which mic), QR code labels, wishlist / budget
