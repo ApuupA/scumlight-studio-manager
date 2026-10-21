@@ -1,5 +1,5 @@
 import { Alert, Center, Loader, Paper, Stack, Tabs, Text, TextInput, Title } from '@mantine/core'
-import { IconBackpack, IconHeadphones, IconLink, IconUser } from '@tabler/icons-react'
+import { IconBackpack, IconBulb, IconHeadphones, IconLink, IconUser } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useSearchParams } from 'react-router'
@@ -39,10 +39,13 @@ export default function ClientLinkPage() {
   }
 
   const tabs = page
-    ? [...(page.showMixing ? ['mixes'] : []), 'references', ...(page.showGear ? ['gear'] : [])]
+    ? [...(page.showDemos ? ['demos'] : []), ...(page.showMixing ? ['mixes'] : []), 'references', ...(page.showGear ? ['gear'] : [])]
     : []
+  // Without a choice: the mixes as soon as there is one (the demos are the older stage), otherwise the first tab
+  const hasMixes = page?.showMixing && page.mixVersions.some((v) => !v.isDemo)
+  const defaultTab = hasMixes ? 'mixes' : tabs[0]
   const requested = searchParams.get('tab')
-  const activeTab = requested && tabs.includes(requested) ? requested : tabs[0]
+  const activeTab = requested && tabs.includes(requested) ? requested : defaultTab
 
   return (
     <div className={classes.page}>
@@ -77,12 +80,17 @@ export default function ClientLinkPage() {
 
             <Tabs value={activeTab} onChange={(tab) => setSearchParams({ tab: tab ?? tabs[0] }, { replace: true })} keepMounted={false}>
               <Tabs.List>
+                {page.showDemos && <Tabs.Tab value="demos" leftSection={<IconBulb size={16} />}>{t('clientPage.demos')}</Tabs.Tab>}
                 {page.showMixing && <Tabs.Tab value="mixes" leftSection={<IconHeadphones size={16} />}>{t('clientPage.mixes')}</Tabs.Tab>}
                 <Tabs.Tab value="references" leftSection={<IconLink size={16} />}>{t('clientPage.references')}</Tabs.Tab>
                 {page.showGear && <Tabs.Tab value="gear" leftSection={<IconBackpack size={16} />}>{t('clientPage.gear')}</Tabs.Tab>}
               </Tabs.List>
+              <Tabs.Panel value="demos" pt="md">
+                <ClientMixesSection token={token} versions={page.mixVersions.filter((v) => v.isDemo)} authorName={name.trim()}
+                  requireName={requireName} isDemo />
+              </Tabs.Panel>
               <Tabs.Panel value="mixes" pt="md">
-                <ClientMixesSection token={token} versions={page.mixVersions} authorName={name.trim()} requireName={requireName} />
+                <ClientMixesSection token={token} versions={page.mixVersions.filter((v) => !v.isDemo)} authorName={name.trim()} requireName={requireName} />
               </Tabs.Panel>
               <Tabs.Panel value="references" pt="md">
                 <ClientReferencesSection token={token} references={page.references} songs={page.songs} authorName={name.trim()} requireName={requireName} />

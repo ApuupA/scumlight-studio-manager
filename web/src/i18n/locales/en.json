@@ -1241,7 +1241,12 @@
     "referenceNotesPlaceholder": "e.g. the snare sound, the wide guitars",
     "allSongs": "All songs",
     "addReference": "Add reference",
-    "addedBy": "from {{name}}"
+    "addedBy": "from {{name}}",
+    "demos": "Demos",
+    "noDemos": "No demo to listen to yet.",
+    "demosHint": "Listen to the demos and write what you notice – ideally with the position in the song (e.g. 1:23).",
+    "approveDemo": "Approve demo",
+    "approveDemoConfirm": "The studio then sees that this demo works for you."
   },
   "clientNews": {
     "title": "New from clients",
@@ -1279,6 +1284,16 @@
     "memosOf": "Memos for \"{{part}}\"",
     "unlink": "Unlink",
     "linkMemo": "Link a memo…",
-    "ofSong": "Memos of the song"
+    "ofSong": "Memos of the song",
+    "demos": "Demos",
+    "newDemo": "New demo",
+    "demosHint": "Rehearsal recordings and pre-production – with a link, the band listens and comments on the client link (tab \"Demos\"). Does not count as a mix revision.",
+    "noDemos": "No demos yet."
+  },
+  "songbook": {
+    "title": "Songbook",
+    "overview": "Overview",
+    "songCount": "{{count}} songs",
+    "tuning": "Tuning"
   }
 }

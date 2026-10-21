@@ -16,12 +16,13 @@ namespace StudioManager.DataLayer.DTO.Read
 
         /// <summary>Tabs of the page - from the project scope.</summary>
         public bool ShowMixing { get; set; }
+        public bool ShowDemos { get; set; }
         public bool ShowGear { get; set; }
 
         /// <summary>All songs of the project, for choosing the song of a comment or a reference.</summary>
         public List<SongShortDto> Songs { get; set; } = new();
 
-        /// <summary>Newest first.</summary>
+        /// <summary>Mix versions and demos (IsDemo), newest first.</summary>
         public List<ClientMixVersionDto> MixVersions { get; set; } = new();
 
         public List<ClientReferenceDto> References { get; set; } = new();
@@ -30,6 +31,7 @@ namespace StudioManager.DataLayer.DTO.Read
     public class ClientMixVersionDto
     {
         public int Id { get; set; }
+        public bool IsDemo { get; set; }
         public string Name { get; set; } = string.Empty;
         public DateOnly Date { get; set; }
         public MixVersionStatus Status { get; set; }

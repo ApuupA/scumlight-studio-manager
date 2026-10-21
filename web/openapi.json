@@ -8848,6 +8848,7 @@
           "feedback",
           "id",
           "isAllSongs",
+          "isDemo",
           "name",
           "songs",
           "status"
@@ -8857,6 +8858,9 @@
           "id": {
             "type": "integer",
             "format": "int32"
+          },
+          "isDemo": {
+            "type": "boolean"
           },
           "name": {
             "type": "string"
@@ -8943,6 +8947,7 @@
           "mixVersions",
           "projectTitle",
           "references",
+          "showDemos",
           "showGear",
           "showMixing",
           "songs"
@@ -8956,6 +8961,9 @@
             "type": "string"
           },
           "showMixing": {
+            "type": "boolean"
+          },
+          "showDemos": {
             "type": "boolean"
           },
           "showGear": {
@@ -10657,6 +10665,7 @@
       "MixVersionCreateDto": {
         "required": [
           "date",
+          "isDemo",
           "projectId",
           "songIds",
           "status"
@@ -10668,6 +10677,9 @@
             "minimum": 1,
             "type": "integer",
             "format": "int32"
+          },
+          "isDemo": {
+            "type": "boolean"
           },
           "name": {
             "maxLength": 30,
@@ -10710,6 +10722,7 @@
           "feedback",
           "id",
           "isAllSongs",
+          "isDemo",
           "name",
           "number",
           "projectId",
@@ -10721,6 +10734,9 @@
           "id": {
             "type": "integer",
             "format": "int32"
+          },
+          "isDemo": {
+            "type": "boolean"
           },
           "number": {
             "type": "integer",

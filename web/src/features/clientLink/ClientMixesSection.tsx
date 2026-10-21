@@ -18,22 +18,24 @@ interface ClientMixesSectionProps {
   authorName: string
   /** Asks for the name if it is missing; false = no name yet. */
   requireName: () => boolean
+  /** True: the tab "Demos" (songwriting) - same functions, other texts. */
+  isDemo?: boolean
 }
 
 /**
  * Tab "Mixes" of the client page: every mix version with a link to listen, what changed, the comments -
  * and a form for new comments (song, timecode, text) and the button "Approve mix".
  */
-export default function ClientMixesSection({ token, versions, authorName, requireName }: ClientMixesSectionProps) {
+export default function ClientMixesSection({ token, versions, authorName, requireName, isDemo = false }: ClientMixesSectionProps) {
   const { t } = useTranslation()
 
   if (versions.length === 0) {
-    return <Text c="dimmed" ta="center" py="xl">{t('clientPage.noVersions')}</Text>
+    return <Text c="dimmed" ta="center" py="xl">{isDemo ? t('clientPage.noDemos') : t('clientPage.noVersions')}</Text>
   }
 
   return (
     <Stack>
-      <Text size="sm">{t('clientPage.mixesHint')}</Text>
+      <Text size="sm">{isDemo ? t('clientPage.demosHint') : t('clientPage.mixesHint')}</Text>
       {versions.map((version) => (
         <VersionCard key={version.id} token={token} version={version} authorName={authorName} requireName={requireName} />
       ))}
@@ -66,12 +68,14 @@ function VersionCard({ token, version, authorName, requireName }: { token: strin
     )
   }
 
+  const approveLabel = version.isDemo ? t('clientPage.approveDemo') : t('clientPage.approve')
+
   const handleApprove = () => {
     if (!requireName()) return
     modals.openConfirmModal({
       title: t('clientPage.approveTitle', { name: version.name }),
-      children: <Text size="sm">{t('clientPage.approveConfirm')}</Text>,
-      labels: { confirm: t('clientPage.approve'), cancel: t('common.cancel') },
+      children: <Text size="sm">{version.isDemo ? t('clientPage.approveDemoConfirm') : t('clientPage.approveConfirm')}</Text>,
+      labels: { confirm: approveLabel, cancel: t('common.cancel') },
       confirmProps: { color: 'green' },
       onConfirm: () => approve.mutate({ mixVersionId: version.id, input: { authorName } }, { onError: (error) => notifyError(error, t) }),
     })
@@ -149,7 +153,7 @@ function VersionCard({ token, version, authorName, requireName }: { token: strin
       {version.status !== 'Approved' && !isCompleted && (
         <Group justify="flex-end" mt="sm">
           <Button size="xs" variant="light" color="green" leftSection={<IconCircleCheck size={14} />} onClick={handleApprove} loading={approve.isPending}>
-            {t('clientPage.approve')}
+            {approveLabel}
           </Button>
         </Group>
       )}

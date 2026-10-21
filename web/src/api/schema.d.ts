@@ -8088,6 +8088,7 @@ export interface components {
         ClientMixVersionDto: {
             /** Format: int32 */
             id: number;
+            isDemo: boolean;
             name: string;
             /** Format: date */
             date: string;
@@ -8115,6 +8116,7 @@ export interface components {
             projectTitle: string;
             bandNames: string;
             showMixing: boolean;
+            showDemos: boolean;
             showGear: boolean;
             songs: components["schemas"]["SongShortDto"][];
             mixVersions: components["schemas"]["ClientMixVersionDto"][];
@@ -8600,6 +8602,7 @@ export interface components {
         MixVersionCreateDto: {
             /** Format: int32 */
             projectId: number;
+            isDemo: boolean;
             name?: string | null;
             /** Format: date */
             date: string;
@@ -8612,6 +8615,7 @@ export interface components {
         MixVersionReadDto: {
             /** Format: int32 */
             id: number;
+            isDemo: boolean;
             /** Format: int32 */
             number: number;
             name: string;

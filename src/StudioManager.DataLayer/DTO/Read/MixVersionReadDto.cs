@@ -5,6 +5,7 @@ namespace StudioManager.DataLayer.DTO.Read
     public class MixVersionReadDto
     {
         public int Id { get; set; }
+        public bool IsDemo { get; set; }
         public int Number { get; set; }
         public string Name { get; set; } = string.Empty;
         public DateOnly Date { get; set; }

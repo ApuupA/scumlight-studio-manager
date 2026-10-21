@@ -1,12 +1,15 @@
 import { Anchor, Badge, Button, Grid, Group, Paper, SegmentedControl, Select, Stack, Table, Text, Title } from '@mantine/core'
-import { IconMicrophone, IconPlus } from '@tabler/icons-react'
-import { useState } from 'react'
+import { IconMicrophone, IconPlus, IconPrinter } from '@tabler/icons-react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { songStatuses, type Project, type SongStatus } from '../../api/types'
 import { notifyError } from '../../utils/notify'
+import ClientLinkCard from '../clientLink/ClientLinkCard'
+import { useMarkClientNewsRead } from '../clientLink/clientLinkApi'
 import { useSetSongStatus, useSongs } from '../projects/projectApi'
 import SongFormModal from '../projects/SongFormModal'
+import DemosCard from './DemosCard'
 import { songwritingStatuses, useVoiceMemos } from './songwritingApi'
 import VoiceMemoRow from './VoiceMemoRow'
 import VoiceMemoUploadButton from './VoiceMemoUploadButton'
@@ -15,6 +18,7 @@ import VoiceMemoUploadButton from './VoiceMemoUploadButton'
  * Project tab "Songwriting" (own bands): the songs with their writing status, and the voice memos.
  * New memos land in the inbox and are sorted to a song (and a part of its arrangement) from there.
  * The arrangement, lyrics and tempo are on the song page - recording, mixing and mastering use the same song later.
+ * Demos are listened to and commented by the band on the client link; the songbook prints all songs for the rehearsal room.
  */
 export default function SongwritingTab({ project }: { project: Project }) {
   const { t } = useTranslation()
@@ -23,6 +27,11 @@ export default function SongwritingTab({ project }: { project: Project }) {
   const setSongStatus = useSetSongStatus()
   const [filter, setFilter] = useState<'inbox' | 'all'>('inbox')
   const [newSong, setNewSong] = useState(false)
+  const navigate = useNavigate()
+
+  // Opening the tab = the comments of the band on the demos are seen
+  const { mutate: markRead } = useMarkClientNewsRead()
+  useEffect(() => markRead(project.id), [markRead, project.id])
 
   const inbox = (memos ?? []).filter((m) => m.songId == null)
   const shownMemos = filter === 'inbox' ? inbox : memos ?? []
@@ -34,51 +43,61 @@ export default function SongwritingTab({ project }: { project: Project }) {
   return (
     <Grid gap="lg">
       <Grid.Col span={{ base: 12, lg: 5 }}>
-        <Paper withBorder p="md">
-          <Group justify="space-between" mb="xs">
-            <Title order={4}>{t('songwriting.songs')}</Title>
-            <Button size="xs" variant="light" leftSection={<IconPlus size={14} />} onClick={() => setNewSong(true)}>
-              {t('songwriting.newSong')}
-            </Button>
-          </Group>
-          <Text size="sm" c="dimmed" mb="xs">{t('songwriting.songsHint')}</Text>
-
-          {songs && songs.length > 0 ? (
-            <Table verticalSpacing={4}>
-              <Table.Tbody>
-                {songs.map((song) => {
-                  const memoCount = (memos ?? []).filter((m) => m.songId === song.id).length
-                  return (
-                    <Table.Tr key={song.id}>
-                      <Table.Td>
-                        <Anchor component={Link} to={`/songs/${song.id}`} fw={600} size="sm">{song.title}</Anchor>
-                      </Table.Td>
-                      <Table.Td w={70}>
-                        {memoCount > 0 && (
-                          <Badge size="sm" variant="light" color="gray" leftSection={<IconMicrophone size={10} />}>{memoCount}</Badge>
-                        )}
-                      </Table.Td>
-                      <Table.Td w={150}>
-                        {/* The writing steps first, the later ones (recording, mix, ...) are there as well */}
-                        <Select size="xs" allowDeselect={false} aria-label={t('songs.status')} value={song.status}
-                          data={[
-                            { group: t('songwriting.title'), items: songwritingStatuses.map((s) => ({ value: s, label: t(`songStatus.${s}`) })) },
-                            {
-                              group: t('songwriting.production'),
-                              items: songStatuses.filter((s) => !songwritingStatuses.includes(s)).map((s) => ({ value: s, label: t(`songStatus.${s}`) })),
-                            },
-                          ]}
-                          onChange={(value) => value && handleStatus(song.id, value as SongStatus)} />
-                      </Table.Td>
-                    </Table.Tr>
-                  )
-                })}
-              </Table.Tbody>
-            </Table>
-          ) : (
-            <Text c="dimmed" ta="center" py="md">{t('songwriting.noSongs')}</Text>
-          )}
-        </Paper>
+        <Stack>
+          <Paper withBorder p="md">
+            <Group justify="space-between" mb="xs">
+              <Title order={4}>{t('songwriting.songs')}</Title>
+              <Group gap="xs">
+                <Button size="xs" variant="subtle" leftSection={<IconPrinter size={14} />} disabled={!songs?.length}
+                  onClick={() => navigate(`/projects/${project.id}/songbook`)}>
+                  {t('songbook.title')}
+                </Button>
+                <Button size="xs" variant="light" leftSection={<IconPlus size={14} />} onClick={() => setNewSong(true)}>
+                  {t('songwriting.newSong')}
+                </Button>
+              </Group>
+            </Group>
+            <Text size="sm" c="dimmed" mb="xs">{t('songwriting.songsHint')}</Text>
+  
+            {songs && songs.length > 0 ? (
+              <Table verticalSpacing={4}>
+                <Table.Tbody>
+                  {songs.map((song) => {
+                    const memoCount = (memos ?? []).filter((m) => m.songId === song.id).length
+                    return (
+                      <Table.Tr key={song.id}>
+                        <Table.Td>
+                          <Anchor component={Link} to={`/songs/${song.id}`} fw={600} size="sm">{song.title}</Anchor>
+                        </Table.Td>
+                        <Table.Td w={70}>
+                          {memoCount > 0 && (
+                            <Badge size="sm" variant="light" color="gray" leftSection={<IconMicrophone size={10} />}>{memoCount}</Badge>
+                          )}
+                        </Table.Td>
+                        <Table.Td w={150}>
+                          {/* The writing steps first, the later ones (recording, mix, ...) are there as well */}
+                          <Select size="xs" allowDeselect={false} aria-label={t('songs.status')} value={song.status}
+                            data={[
+                              { group: t('songwriting.title'), items: songwritingStatuses.map((s) => ({ value: s, label: t(`songStatus.${s}`) })) },
+                              {
+                                group: t('songwriting.production'),
+                                items: songStatuses.filter((s) => !songwritingStatuses.includes(s)).map((s) => ({ value: s, label: t(`songStatus.${s}`) })),
+                              },
+                            ]}
+                            onChange={(value) => value && handleStatus(song.id, value as SongStatus)} />
+                        </Table.Td>
+                      </Table.Tr>
+                    )
+                  })}
+                </Table.Tbody>
+              </Table>
+            ) : (
+              <Text c="dimmed" ta="center" py="md">{t('songwriting.noSongs')}</Text>
+            )}
+          </Paper>
+          <DemosCard project={project} songs={songs ?? []} />
+          <ClientLinkCard projectId={project.id} />
+        </Stack>
       </Grid.Col>
 
       <Grid.Col span={{ base: 12, lg: 7 }}>

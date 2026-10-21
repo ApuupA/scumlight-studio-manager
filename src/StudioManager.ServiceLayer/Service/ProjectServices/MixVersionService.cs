@@ -9,8 +9,8 @@ using StudioManager.ServiceLayer.IService.IProjectServices;
 namespace StudioManager.ServiceLayer.Service.ProjectServices
 {
     /// <summary>
-    /// Mix versions of a project. The DTOs are always built for the whole project, because whether a version is
-    /// an extra revision depends on the earlier versions of its songs.
+    /// Mix versions (and songwriting demos, IsDemo) of a project. The DTOs are always built for the whole project,
+    /// because whether a version is an extra revision depends on the earlier versions of its songs.
     /// </summary>
     public class MixVersionService : BaseService<MixVersion, MixVersionReadDto, MixVersionCreateDto>, IMixVersionService
     {
@@ -35,7 +35,8 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         {
             var song = await _songRepository.GetAsync(songId) ?? throw new EntityNotFoundException(nameof(Song), songId);
             var versions = await BuildDtos(song.ProjectId);
-            return versions.Where(v => v.Songs.Any(s => s.Id == songId)).OrderByDescending(v => v.Number);
+            // The song page shows the mixes - the demos are in the tab "Songwriting"
+            return versions.Where(v => !v.IsDemo && v.Songs.Any(s => s.Id == songId)).OrderByDescending(v => v.Number);
         }
 
         public override async Task<IEnumerable<MixVersionReadDto>> GetAll()
@@ -66,9 +67,10 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             Clean(createDto);
 
             var version = _mapper.Map<MixVersion>(createDto);
-            var existing = await _repository.GetAllAsync(v => v.ProjectId == createDto.ProjectId);
+            // Mixes and demos are counted separately: v1, v2, ... and Demo 1, Demo 2, ...
+            var existing = await _repository.GetAllAsync(v => v.ProjectId == createDto.ProjectId && v.IsDemo == createDto.IsDemo);
             version.Number = existing.Select(v => v.Number).DefaultIfEmpty(0).Max() + 1;
-            version.Name = createDto.Name ?? $"v{version.Number}";
+            version.Name = createDto.Name ?? (createDto.IsDemo ? $"Demo {version.Number}" : $"v{version.Number}");
             version.Songs = songs;
 
             await _repository.AddAsync(version);
@@ -86,6 +88,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
             var songs = await LoadSongs(updateDto);
             Clean(updateDto);
+            updateDto.IsDemo = version.IsDemo; // a version stays a mix or a demo (own numbering)
 
             _mapper.Map(updateDto, version);
             version.Name = updateDto.Name ?? version.Name;
@@ -121,6 +124,13 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             {
                 var dto = _mapper.Map<MixVersionReadDto>(version);
                 dto.IsAllSongs = songCount > 0 && version.Songs.Count == songCount;
+                result.Add(dto);
+
+                // Demos are no mix revisions
+                if (version.IsDemo)
+                {
+                    continue;
+                }
 
                 foreach (var song in version.Songs.OrderBy(s => s.TrackNumber))
                 {
@@ -132,8 +142,6 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
                         dto.ExtraRevisionSongs.Add(_mapper.Map<SongShortDto>(song));
                     }
                 }
-
-                result.Add(dto);
             }
 
             return result;

@@ -66,6 +66,30 @@ namespace StudioManager.Tests.Unit
         }
 
         [Fact]
+        public async Task Demos_ShouldBeNumberedSeparately_AndNotCountAsRevisions()
+        {
+            // 1 revision included - three demos of the ballad must not use it up
+            for (var i = 0; i < 3; i++)
+            {
+                var demo = Version(null, _ballad);
+                demo.IsDemo = true;
+                await _versionService.Insert(demo);
+            }
+            var demos = (await _versionService.GetForProject(_project.Id)).ToList();
+            var v1 = await _versionService.Insert(Version(null, _opener, _ballad));
+            var v2 = await _versionService.Insert(Version(null, _ballad));
+
+            Assert.Equal(["Demo 3", "Demo 2", "Demo 1"], demos.Select(d => d.Name));
+            Assert.All(demos, d => Assert.Empty(d.ExtraRevisionSongs));
+            Assert.Equal("v1", v1.Name);
+            Assert.Equal("v2", v2.Name);
+            Assert.Empty(v2.ExtraRevisionSongs);
+
+            // The song page shows only the mixes
+            Assert.Equal(["v2", "v1"], (await _versionService.GetForSong(_ballad.Id)).Select(v => v.Name));
+        }
+
+        [Fact]
         public async Task Revisions_ShouldBeCountedPerSong()
         {
             // 1 revision included: the 2nd version of a song is free, the 3rd is extra

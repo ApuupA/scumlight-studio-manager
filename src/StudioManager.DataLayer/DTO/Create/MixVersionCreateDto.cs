@@ -11,7 +11,10 @@ namespace StudioManager.DataLayer.DTO.Create
         [Range(1, int.MaxValue)]
         public int ProjectId { get; set; }
 
-        /// <summary>e.g. "v1.1" - empty = "v" + the next number.</summary>
+        /// <summary>True = a demo of the songwriting. Set when creating - a version stays a mix or a demo.</summary>
+        public bool IsDemo { get; set; }
+
+        /// <summary>e.g. "v1.1" - empty = "v" + the next number ("Demo " + number for demos).</summary>
         [MaxLength(30)]
         public string? Name { get; set; }
 

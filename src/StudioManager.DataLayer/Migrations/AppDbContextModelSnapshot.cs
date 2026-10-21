@@ -1401,6 +1401,9 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("IsDemo")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Link")
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)");
@@ -1427,7 +1430,7 @@ namespace StudioManager.DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId", "Number")
+                    b.HasIndex("ProjectId", "IsDemo", "Number")
                         .IsUnique();
 
                     b.ToTable("MixVersions");
