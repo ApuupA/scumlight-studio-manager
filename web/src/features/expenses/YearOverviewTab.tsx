@@ -1,10 +1,11 @@
 import { Alert, Anchor, Badge, Button, Center, Group, Loader, Paper, Progress, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core'
-import { IconDownload, IconInfoCircle } from '@tabler/icons-react'
+import { IconDownload, IconFileZip, IconInfoCircle } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
 import { formatDate, formatPrice } from '../../utils/format'
+import { archiveUrl } from '../dataSafety/dataSafetyApi'
 import { bookingDescription, bookingsToCsv, downloadCsv } from './bookingsCsv'
 import { useYearOverview } from './expenseApi'
 import YearSelect from './YearSelect'
@@ -46,9 +47,15 @@ export default function YearOverviewTab() {
     <Stack>
       <Group justify="space-between">
         <YearSelect value={year} onChange={setYear} />
-        <Button variant="light" leftSection={<IconDownload size={16} />} onClick={handleExport} disabled={!overview?.bookings.length}>
-          {t('overview.exportCsv')}
-        </Button>
+        <Group gap="xs">
+          <Button variant="light" leftSection={<IconDownload size={16} />} onClick={handleExport} disabled={!overview?.bookings.length}>
+            {t('overview.exportCsv')}
+          </Button>
+          {/* Everything of the year in one ZIP: CSV lists, invoices as HTML, receipts - for the tax advisor */}
+          <Button component="a" href={archiveUrl(year)} variant="light" leftSection={<IconFileZip size={16} />}>
+            {t('overview.exportArchive')}
+          </Button>
+        </Group>
       </Group>
 
       {isPending && <Center py="xl"><Loader /></Center>}

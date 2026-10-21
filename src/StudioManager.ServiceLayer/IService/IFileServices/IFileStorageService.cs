@@ -1,3 +1,5 @@
+using StudioManager.ServiceLayer.Results;
+
 namespace StudioManager.ServiceLayer.IService.IFileServices
 {
     /// <summary>
@@ -23,5 +25,15 @@ namespace StudioManager.ServiceLayer.IService.IFileServices
         /// Deletes the file. Does nothing if it does not exist.
         /// </summary>
         void Delete(string relativePath);
+
+        /// <summary>
+        /// Saves the content under a fixed name and replaces an existing file, e.g. "exports/finanzen-2026.zip".
+        /// </summary>
+        Task WriteAsync(string relativePath, Stream content);
+
+        /// <summary>
+        /// The files directly in a folder (no sub folders), empty if the folder does not exist.
+        /// </summary>
+        IEnumerable<StoredFileInfo> List(string folder);
     }
 }

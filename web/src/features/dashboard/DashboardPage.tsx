@@ -4,6 +4,7 @@ import { formatDateLong, todayIso } from '../../utils/format'
 import { useCurrentUser } from '../auth/authApi'
 import { coversDay } from '../sessions/sessionDates'
 import { useSessions } from '../sessions/sessionApi'
+import BackupWarning from '../dataSafety/BackupWarning'
 import ActiveProjectsCard from './ActiveProjectsCard'
 import MoneyCard from './MoneyCard'
 import OpenTasksCard from './OpenTasksCard'
@@ -34,6 +35,8 @@ export default function DashboardPage() {
         <Title order={2}>{t('dashboard.greeting', { name: user?.displayName ?? '' })}</Title>
         <Text c="dimmed">{formatDateLong(today, i18n.language)}</Text>
       </div>
+
+      <BackupWarning />
 
       <Grid>
         <Grid.Col span={{ base: 12, md: 6 }}>

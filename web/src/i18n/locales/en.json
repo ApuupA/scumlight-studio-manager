@@ -1078,7 +1078,8 @@
     "net": "Net",
     "vat": "VAT",
     "gross": "Gross",
-    "missingReceipts": "Expenses without a receipt: {{count}}"
+    "missingReceipts": "Expenses without a receipt: {{count}}",
+    "exportArchive": "Archive (ZIP)"
   },
   "dashboard": {
     "greeting": "Hello {{name}}!",
@@ -1162,5 +1163,26 @@
     "sequence": "Album sequence",
     "sequenceHint": "Enter the values right here - the check button saves the row. True peak above -1 dBTP is orange (can distort as MP3 / AAC).",
     "target": "Target: {{lufs}} LUFS."
+  },
+  "dataSafety": {
+    "title": "Data safety",
+    "lastBackup": "Last backup",
+    "noBackupYet": "none known yet",
+    "database": "database",
+    "offsite": "Off the server",
+    "onlyOnServer": "no - only on the server",
+    "offsiteOk": "yes, {{target}}",
+    "offsiteFailed": "FAILED ({{target}})",
+    "attentionHint": "The backup runs every night with scripts/backup.sh on the server (cron). Check backup.log on the server; how to copy the backups off the server is in docs/DEPLOYMENT.md.",
+    "archives": "Finance archives",
+    "archivesHint": "One ZIP per year with all lists (CSV), every invoice as HTML file and all receipts - readable without the app. Written every night and saved with the backup.",
+    "archiveCreated": "written {{date}}",
+    "download": "Download",
+    "createArchive": "Download archive {{year}} now",
+    "warningTitle": "Check the backup",
+    "warningNoBackup": "No backup is known yet.",
+    "warningOld": "The last backup is from {{date}} - older than 2 days.",
+    "warningOffsite": "The copy off the server ({{target}}) failed.",
+    "toProfile": "Details on the profile page"
   }
 }

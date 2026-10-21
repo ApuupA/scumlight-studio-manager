@@ -979,6 +979,76 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/DataSafety/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DataSafetyStatusDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/DataSafety/archive/{year}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    year: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/DrumTuning/project/{projectId}": {
         parameters: {
             query?: never;
@@ -7514,6 +7584,15 @@ export interface components {
             hasPhoto: boolean;
             fallbackPhoto?: components["schemas"]["PhotoRefDto"];
         };
+        DataSafetyStatusDto: {
+            /** Format: date-time */
+            lastBackupAt?: string | null;
+            /** Format: int64 */
+            lastBackupDatabaseBytes?: number | null;
+            offsiteTarget?: string | null;
+            offsiteOk?: boolean | null;
+            archives: components["schemas"]["FinanceArchiveDto"][];
+        };
         DrumTuningCreateDto: {
             drum: string;
             /** Format: double */
@@ -7613,6 +7692,14 @@ export interface components {
             dateCreated: string;
             /** Format: date-time */
             dateUpdated: string;
+        };
+        FinanceArchiveDto: {
+            /** Format: int32 */
+            year: number;
+            /** Format: int64 */
+            sizeBytes: number;
+            /** Format: date-time */
+            createdAt: string;
         };
         GearCategoryCreateDto: {
             name: string;

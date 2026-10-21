@@ -7,6 +7,7 @@ import { notifyError, notifySuccess } from '../../utils/notify'
 import { useChangePassword, useCurrentUser, useUpdateProfile } from './authApi'
 import CalendarSubscriptionCard from '../calendar/CalendarSubscriptionCard'
 import BusinessDataCard from '../finance/BusinessDataCard'
+import DataSafetyCard from '../dataSafety/DataSafetyCard'
 
 /**
  * Profile of the logged in user: name / email and password, as two independent forms.
@@ -25,6 +26,7 @@ export default function ProfilePage() {
       </SimpleGrid>
       <BusinessDataCard />
       <CalendarSubscriptionCard />
+      <DataSafetyCard />
     </Stack>
   )
 }
