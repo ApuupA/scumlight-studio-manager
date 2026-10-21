@@ -242,10 +242,11 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.Tempos, opt => opt.MapFrom(src => src.Tempos.OrderBy(t => t.SortOrder)))
                 .ForMember(dest => dest.TrackCount, opt => opt.MapFrom(src => src.Tracks.Count))
                 .ForMember(dest => dest.TracksRecordedCount, opt => opt.MapFrom(src => src.Tracks.Count(t => t.Status != SongTrackStatus.Open)))
+                // Only mixes - demos of the songwriting are no mix versions
                 .ForMember(dest => dest.LatestMixName, opt => opt.MapFrom(src =>
-                    src.MixVersions.Count > 0 ? src.MixVersions.OrderByDescending(v => v.Number).First().Name : null))
+                    src.MixVersions.Any(v => !v.IsDemo) ? src.MixVersions.Where(v => !v.IsDemo).OrderByDescending(v => v.Number).First().Name : null))
                 .ForMember(dest => dest.LatestMixStatus, opt => opt.MapFrom(src =>
-                    src.MixVersions.Count > 0 ? src.MixVersions.OrderByDescending(v => v.Number).First().Status : (MixVersionStatus?)null));
+                    src.MixVersions.Any(v => !v.IsDemo) ? src.MixVersions.Where(v => !v.IsDemo).OrderByDescending(v => v.Number).First().Status : (MixVersionStatus?)null));
             CreateMap<SongTempo, SongTempoReadDto>();
 
             // Mix versions: "extra" = a revision beyond the ones included in the price of the project

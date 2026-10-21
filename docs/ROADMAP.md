@@ -98,7 +98,10 @@
 - ✅ **Songwriting** (v1.15.0): fourth scope "Songwriting" (own bands) with its own tab: song statuses Idea / Writing / Demo,
   voice memos (upload many from the phone, play, inbox -> song -> part of the arrangement); the song page links the memos
   to the parts of the arrangement (microphone button)
-- Later for songwriting: lyrics with chords + lead sheet, demo versions via the client link, GEMA shares (split sheet)
+- ✅ **Songbook & demos** (v1.16.0): printable songbook of a project (overview + every song with arrangement, memos and
+  lyrics on its own page); demo versions like mix versions (own numbering "Demo 1", no mix revisions), the band listens,
+  comments and approves them on the client link (tab "Demos")
+- Later for songwriting: lyrics with chords, GEMA shares (split sheet)
 - **Next**: AfA (depreciation of equipment over its useful life) in the expenses and the yearly overview
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search

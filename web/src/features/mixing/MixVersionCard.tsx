@@ -12,8 +12,8 @@ interface MixVersionCardProps {
   version: MixVersion
   onEdit: () => void
   onDelete: () => void
-  /** Opens the extra item for the revisions beyond the included ones. */
-  onBookExtra: () => void
+  /** Opens the extra item for the revisions beyond the included ones (not for demos - they are no revisions). */
+  onBookExtra?: () => void
 }
 
 /**

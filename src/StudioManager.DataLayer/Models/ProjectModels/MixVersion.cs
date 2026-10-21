@@ -6,7 +6,13 @@ namespace StudioManager.DataLayer.Models.ProjectModels
     /// </summary>
     public class MixVersion : BaseEntity
     {
-        /// <summary>Order of the versions in the project (1, 2, 3, ...) - given automatically.</summary>
+        /// <summary>
+        /// True = a demo of the songwriting (rehearsal recording, pre-production) instead of a mix. Works the same
+        /// (songs, link, feedback from the band), but is shown in the tab "Songwriting" and does not count as a mix revision.
+        /// </summary>
+        public bool IsDemo { get; set; }
+
+        /// <summary>Order of the versions in the project (1, 2, 3, ...), counted separately for mixes and demos - given automatically.</summary>
         public int Number { get; set; }
 
         /// <summary>The name shown to everyone, e.g. "v1", "v1.1", "v2 Final".</summary>

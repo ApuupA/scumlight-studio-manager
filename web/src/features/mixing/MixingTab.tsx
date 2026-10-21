@@ -25,7 +25,9 @@ type Dialog = { type: 'none' } | { type: 'version'; version?: MixVersion } | { t
 export default function MixingTab({ project }: { project: Project }) {
   const { t } = useTranslation()
   const { data: songs } = useSongs(project.id)
-  const { data: versions } = useProjectMixVersions(project.id)
+  const { data: allVersions } = useProjectMixVersions(project.id)
+  // The demos of the songwriting are in the tab "Songwriting"
+  const versions = allVersions?.filter((v) => !v.isDemo)
   const { data: finance } = useProjectFinance(project.id)
   const deleteVersion = useDeleteMixVersion()
   const [dialog, setDialog] = useState<Dialog>({ type: 'none' })

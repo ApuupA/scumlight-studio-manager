@@ -157,6 +157,14 @@
   print-color-adjust: exact;
 }
 
+/* ---------- Songbook: one song after the other, each song on a new page when printed ---------- */
+
+.songbookSong {
+  margin-top: 28px;
+  padding-top: 12px;
+  border-top: 3px solid #cc3300;
+}
+
 /* When printing: only the white sheet, no toolbar, no grey background */
 @media print {
   .page {
@@ -180,5 +188,10 @@
 
   .sheet tr {
     break-inside: avoid;
+  }
+
+  .songbookSong {
+    break-before: page;
+    margin-top: 0;
   }
 }

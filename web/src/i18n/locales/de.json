@@ -1241,7 +1241,12 @@
     "referenceNotesPlaceholder": "z. B. der Snare-Sound, die breiten Gitarren",
     "allSongs": "Alle Songs",
     "addReference": "Referenz hinzufügen",
-    "addedBy": "von {{name}}"
+    "addedBy": "von {{name}}",
+    "demos": "Demos",
+    "noDemos": "Noch keine Demo zum Anhören.",
+    "demosHint": "Hör dir die Demos an und schreib, was dir auffällt – am besten mit der Stelle im Song (z. B. 1:23).",
+    "approveDemo": "Demo freigeben",
+    "approveDemoConfirm": "Das Studio sieht dann, dass diese Demo für euch so passt."
   },
   "clientNews": {
     "title": "Neues von Kunden",
@@ -1279,6 +1284,16 @@
     "memosOf": "Memos zu „{{part}}“",
     "unlink": "Verknüpfung lösen",
     "linkMemo": "Memo verknüpfen…",
-    "ofSong": "Memos des Songs"
+    "ofSong": "Memos des Songs",
+    "demos": "Demos",
+    "newDemo": "Neue Demo",
+    "demosHint": "Proberaum-Aufnahmen und Pre-Production – mit Link, die Band hört und kommentiert sie über den Kunden-Link (Tab „Demos“). Zählt nicht als Mix-Revision.",
+    "noDemos": "Noch keine Demos."
+  },
+  "songbook": {
+    "title": "Songbook",
+    "overview": "Übersicht",
+    "songCount": "{{count}} Songs",
+    "tuning": "Stimmung"
   }
 }

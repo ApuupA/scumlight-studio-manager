@@ -14,8 +14,10 @@ interface MixVersionFormModalProps {
   songs: Song[]
   /** The version to edit, undefined for a new one. */
   version?: MixVersion
-  /** Suggested name of a new version, e.g. "v3". */
+  /** Suggested name of a new version, e.g. "v3" or "Demo 2". */
   suggestedName: string
+  /** True: a new demo of the songwriting (tab "Songwriting") instead of a mix. */
+  isDemo?: boolean
   onClose: () => void
 }
 
@@ -23,7 +25,7 @@ interface MixVersionFormModalProps {
  * Create or edit a mix version of the project: name ("v1", "v1.1"), date, status, link, what changed -
  * and which songs were exported (usually all of them).
  */
-export default function MixVersionFormModal({ projectId, songs, version, suggestedName, onClose }: MixVersionFormModalProps) {
+export default function MixVersionFormModal({ projectId, songs, version, suggestedName, isDemo = false, onClose }: MixVersionFormModalProps) {
   const { t } = useTranslation()
   const saveVersion = useSaveMixVersion()
 
@@ -50,6 +52,7 @@ export default function MixVersionFormModal({ projectId, songs, version, suggest
         id: version?.id,
         input: {
           projectId,
+          isDemo: version?.isDemo ?? isDemo,
           name: textOrNull(values.name),
           date: values.date,
           status: values.status,
@@ -68,7 +71,7 @@ export default function MixVersionFormModal({ projectId, songs, version, suggest
     )
 
   return (
-    <Modal opened onClose={onClose} title={version ? t('mixing.editVersion', { name: version.name }) : t('mixing.newVersion')}>
+    <Modal opened onClose={onClose} title={version ? t('mixing.editVersion', { name: version.name }) : isDemo ? t('songwriting.newDemo') : t('mixing.newVersion')}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <SimpleGrid cols={3}>

@@ -242,7 +242,8 @@ namespace StudioManager.DataLayer.Context
                 entity.Property(v => v.Status).HasConversion<string>().HasMaxLength(20);
                 entity.Property(v => v.Link).HasMaxLength(2000);
                 entity.Property(v => v.Notes).HasMaxLength(4000);
-                entity.HasIndex(v => new { v.ProjectId, v.Number }).IsUnique();
+                // Mixes (v1, v2, ...) and demos (Demo 1, Demo 2, ...) are numbered separately
+                entity.HasIndex(v => new { v.ProjectId, v.IsDemo, v.Number }).IsUnique();
 
                 entity.HasOne(v => v.Project)
                       .WithMany(p => p.MixVersions)

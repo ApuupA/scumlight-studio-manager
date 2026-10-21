@@ -16,6 +16,9 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         /// <summary>The comment written when the client approves a mix (shown in the feedback of the version).</summary>
         public const string ApprovedText = "Mix freigegeben";
 
+        /// <summary>The same for a demo of the songwriting.</summary>
+        public const string DemoApprovedText = "Demo freigegeben";
+
         private readonly IRepository<Project> _projectRepository;
         private readonly IRepository<Song> _songRepository;
         private readonly IRepository<MixVersion> _versionRepository;
@@ -86,7 +89,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             await _feedbackRepository.AddAsync(new MixFeedback
             {
                 MixVersionId = version.Id,
-                Text = ApprovedText,
+                Text = version.IsDemo ? DemoApprovedText : ApprovedText,
                 Author = version.ApprovedBy,
                 IsDone = true,
                 IsFromClient = true,
@@ -189,11 +192,13 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
                 ProjectTitle = project.Title,
                 BandNames = string.Join(", ", project.Bands.OrderBy(b => b.Name).Select(b => b.Name)),
                 ShowMixing = project.IncludesMixing,
+                ShowDemos = project.IncludesSongwriting,
                 ShowGear = project.IncludesRecording,
                 Songs = songs,
                 MixVersions = versions.Select(v => new ClientMixVersionDto
                 {
                     Id = v.Id,
+                    IsDemo = v.IsDemo,
                     Name = v.Name,
                     Date = v.Date,
                     Status = v.Status,
