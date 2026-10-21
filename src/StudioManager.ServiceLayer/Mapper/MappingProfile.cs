@@ -155,7 +155,11 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateMap<Client, ClientReadDto>()
                 .ForMember(dest => dest.BandCount, opt => opt.MapFrom(src => src.Bands.Count))
                 .ForMember(dest => dest.ProjectCount, opt => opt.MapFrom(src => src.Projects.Count))
-                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null));
+                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null))
+                .ForMember(dest => dest.FallbackPhoto, opt => opt.MapFrom(src =>
+                    src.PhotoPath == null && src.Bands.Count == 1 && src.Bands.First().PhotoPath != null
+                        ? new PhotoRefDto { Id = src.Bands.First().Id, DateUpdated = src.Bands.First().DateUpdated }
+                        : null));
 
             CreateMap<ClientCreateDto, Client>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -167,7 +171,11 @@ namespace StudioManager.ServiceLayer.Mapper
 
             CreateMap<Band, BandReadDto>()
                 .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : string.Empty))
-                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null));
+                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null))
+                .ForMember(dest => dest.FallbackPhoto, opt => opt.MapFrom(src =>
+                    src.PhotoPath == null && src.Client != null && src.Client.PhotoPath != null
+                        ? new PhotoRefDto { Id = src.Client.Id, DateUpdated = src.Client.DateUpdated }
+                        : null));
             CreateMap<Band, BandShortDto>();
 
             CreateMap<BandCreateDto, Band>()

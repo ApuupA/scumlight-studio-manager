@@ -16,5 +16,11 @@ namespace StudioManager.DataLayer.DTO.Read
 
         /// <summary>True if a picture was uploaded (GET .../{id}/photo).</summary>
         public bool HasPhoto { get; set; }
+
+        /// <summary>
+        /// Without an own picture: the picture of the client's only band (most clients are exactly one band),
+        /// so it does not have to be uploaded twice. Null if there is none.
+        /// </summary>
+        public PhotoRefDto? FallbackPhoto { get; set; }
     }
 }

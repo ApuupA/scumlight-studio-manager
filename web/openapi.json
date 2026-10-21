@@ -6985,6 +6985,9 @@
           },
           "hasPhoto": {
             "type": "boolean"
+          },
+          "fallbackPhoto": {
+            "$ref": "#/components/schemas/PhotoRefDto"
           }
         },
         "additionalProperties": false
@@ -7465,6 +7468,9 @@
           },
           "hasPhoto": {
             "type": "boolean"
+          },
+          "fallbackPhoto": {
+            "$ref": "#/components/schemas/PhotoRefDto"
           }
         },
         "additionalProperties": false
@@ -8974,6 +8980,24 @@
           "note": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PhotoRefDto": {
+        "required": [
+          "dateUpdated",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dateUpdated": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

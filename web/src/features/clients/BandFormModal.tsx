@@ -5,6 +5,7 @@ import type { Band } from '../../api/types'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { textOrNull } from '../../utils/form'
 import { useCreateBand, useUpdateBand } from './clientApi'
+import { photoRefUrl } from '../../api/photos'
 import PhotoCard from '../../components/PhotoCard'
 
 interface BandFormModalProps {
@@ -65,7 +66,10 @@ export default function BandFormModal({ clientId, band, onClose }: BandFormModal
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           {/* The picture can be added once the band exists */}
-          {band && <PhotoCard owner="Band" entity={band} invalidateKeys={['bands', 'clients']} alt={band.name} height={160} />}
+          {band && (
+            <PhotoCard owner="Band" entity={band} invalidateKeys={['bands', 'clients']} alt={band.name} height={160}
+              fallbackUrl={photoRefUrl('Client', band.fallbackPhoto)} fallbackHint={t('photo.fromClient')} />
+          )}
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <TextInput label={t('bands.name')} withAsterisk maxLength={200} data-autofocus {...form.getInputProps('name')} />
             <TextInput label={t('bands.genre')} maxLength={100} {...form.getInputProps('genre')} />

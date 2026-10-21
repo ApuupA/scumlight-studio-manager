@@ -698,7 +698,9 @@
     "upload": "Bild hochladen",
     "replace": "Bild ersetzen",
     "remove": "Bild entfernen",
-    "hint": "JPG, PNG oder WEBP, max. 10 MB"
+    "hint": "JPG, PNG oder WEBP, max. 10 MB",
+    "fromBand": "Bild der Band – lade ein eigenes hoch, um es hier zu ersetzen.",
+    "fromClient": "Bild des Kunden – lade ein eigenes hoch, um es hier zu ersetzen."
   },
   "view": {
     "list": "Liste",

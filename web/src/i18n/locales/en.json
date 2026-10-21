@@ -698,7 +698,9 @@
     "upload": "Upload picture",
     "replace": "Replace picture",
     "remove": "Remove picture",
-    "hint": "JPG, PNG or WEBP, max. 10 MB"
+    "hint": "JPG, PNG or WEBP, max. 10 MB",
+    "fromBand": "Picture of the band - upload an own one to replace it here.",
+    "fromClient": "Picture of the client - upload an own one to replace it here."
   },
   "view": {
     "list": "List",

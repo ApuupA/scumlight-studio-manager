@@ -6630,6 +6630,7 @@ export interface components {
             /** Format: date-time */
             dateUpdated: string;
             hasPhoto: boolean;
+            fallbackPhoto?: components["schemas"]["PhotoRefDto"];
         };
         BandShortDto: {
             /** Format: int32 */
@@ -6762,6 +6763,7 @@ export interface components {
             /** Format: date-time */
             dateUpdated: string;
             hasPhoto: boolean;
+            fallbackPhoto?: components["schemas"]["PhotoRefDto"];
         };
         DrumTuningCreateDto: {
             drum: string;
@@ -7196,6 +7198,12 @@ export interface components {
             /** Format: double */
             amount: number;
             note?: string | null;
+        };
+        PhotoRefDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: date-time */
+            dateUpdated: string;
         };
         /** @enum {string} */
         PricingMode: "Hourly" | "FlatPrice";
