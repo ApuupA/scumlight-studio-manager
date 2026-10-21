@@ -11,12 +11,15 @@ interface PhotoCardProps {
   invalidateKeys: string[]
   alt: string
   height?: number
+  /** Shown (with the hint below it) when the entity has no own picture, e.g. the client's picture for a band. */
+  fallbackUrl?: string
+  fallbackHint?: string
 }
 
 /**
  * The picture of a gear item, client, band or project with buttons to upload / replace / remove it.
  */
-export default function PhotoCard({ owner, entity, invalidateKeys, alt, height = 220 }: PhotoCardProps) {
+export default function PhotoCard({ owner, entity, invalidateKeys, alt, height = 220, fallbackUrl, fallbackHint }: PhotoCardProps) {
   const { t } = useTranslation()
   const { upload, remove } = usePhoto(owner, invalidateKeys)
 
@@ -29,8 +32,8 @@ export default function PhotoCard({ owner, entity, invalidateKeys, alt, height =
   return (
     <Card withBorder>
       <Card.Section>
-        {entity.hasPhoto ? (
-          <Image src={photoUrl(owner, entity)} alt={alt} h={height} fit="contain" bg="var(--mantine-color-default-hover)" />
+        {entity.hasPhoto || fallbackUrl ? (
+          <Image src={photoUrl(owner, entity) ?? fallbackUrl} alt={alt} h={height} fit="contain" bg="var(--mantine-color-default-hover)" />
         ) : (
           <Center h={height} bg="var(--mantine-color-default-hover)">
             <Stack align="center" gap={4}>
@@ -62,6 +65,7 @@ export default function PhotoCard({ owner, entity, invalidateKeys, alt, height =
           </Button>
         )}
       </Group>
+      {!entity.hasPhoto && fallbackUrl && fallbackHint && <Text size="xs" c="dimmed" mt="xs">{fallbackHint}</Text>}
       <Text size="xs" c="dimmed" mt="xs">{t('photo.hint')}</Text>
     </Card>
   )

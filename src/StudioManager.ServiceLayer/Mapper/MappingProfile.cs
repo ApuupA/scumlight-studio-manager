@@ -140,6 +140,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectInstrument!.ProjectId))
                 .ForMember(dest => dest.ProjectTitle, opt => opt.MapFrom(src => src.ProjectInstrument!.Project!.Title))
                 .ForMember(dest => dest.ProjectStatus, opt => opt.MapFrom(src => src.ProjectInstrument!.Project!.Status))
+                .ForMember(dest => dest.ProjectStartDate, opt => opt.MapFrom(src => src.ProjectInstrument!.Project!.StartDate))
                 .ForMember(dest => dest.InstrumentName, opt => opt.MapFrom(src => src.ProjectInstrument!.Name));
 
             CreateMap<SetupTemplate, SetupTemplateReadDto>()
@@ -155,7 +156,11 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateMap<Client, ClientReadDto>()
                 .ForMember(dest => dest.BandCount, opt => opt.MapFrom(src => src.Bands.Count))
                 .ForMember(dest => dest.ProjectCount, opt => opt.MapFrom(src => src.Projects.Count))
-                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null));
+                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null))
+                .ForMember(dest => dest.FallbackPhoto, opt => opt.MapFrom(src =>
+                    src.PhotoPath == null && src.Bands.Count == 1 && src.Bands.First().PhotoPath != null
+                        ? new PhotoRefDto { Id = src.Bands.First().Id, DateUpdated = src.Bands.First().DateUpdated }
+                        : null));
 
             CreateMap<ClientCreateDto, Client>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -167,7 +172,11 @@ namespace StudioManager.ServiceLayer.Mapper
 
             CreateMap<Band, BandReadDto>()
                 .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : string.Empty))
-                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null));
+                .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null))
+                .ForMember(dest => dest.FallbackPhoto, opt => opt.MapFrom(src =>
+                    src.PhotoPath == null && src.Client != null && src.Client.PhotoPath != null
+                        ? new PhotoRefDto { Id = src.Client.Id, DateUpdated = src.Client.DateUpdated }
+                        : null));
             CreateMap<Band, BandShortDto>();
 
             CreateMap<BandCreateDto, Band>()
@@ -196,6 +205,10 @@ namespace StudioManager.ServiceLayer.Mapper
             // Pricing is set in the tab "Time & costs" (FinanceService.SetPricing)
             CreateMap<ProjectCreateDto, Project>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                // The scope is changed with its own endpoint (PUT api/Project/{id}/scope)
+                .ForMember(dest => dest.IncludesRecording, opt => opt.Ignore())
+                .ForMember(dest => dest.IncludesMixing, opt => opt.Ignore())
+                .ForMember(dest => dest.IncludesMastering, opt => opt.Ignore())
                 .ForMember(dest => dest.PricingMode, opt => opt.Ignore())
                 .ForMember(dest => dest.HourlyRate, opt => opt.Ignore())
                 .ForMember(dest => dest.FlatPrice, opt => opt.Ignore())

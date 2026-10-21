@@ -10,6 +10,12 @@ namespace StudioManager.DataLayer.Models.GearModels
         /// </summary>
         public int SortOrder { get; set; }
 
+        /// <summary>
+        /// Software and plugins (e.g. NAM, amp sims): can be used in any number of setups at the same time,
+        /// so they never count as "in session today".
+        /// </summary>
+        public bool IsSoftware { get; set; }
+
         public ICollection<GearItem> GearItems { get; set; } = new List<GearItem>();
     }
 }

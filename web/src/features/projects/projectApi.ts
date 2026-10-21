@@ -1,8 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type {
-  DrumTuningInput, ExternalGearInput, ProjectInput, ProjectLinkInput, SongInput, SongStatusUpdateInput,
-} from '../../api/types'
+import type { DrumTuningInput, ExternalGearInput, ProjectInput, ProjectLinkInput, ProjectScopeInput, SongInput, SongStatusUpdateInput } from '../../api/types'
 
 /**
  * Data access for projects and everything that belongs to a project:
@@ -87,6 +85,16 @@ export function useUpdateProject() {
   return useMutation({
     mutationFn: ({ id, input }: { id: number; input: ProjectInput }) =>
       unwrap(api.PUT('/api/Project/{id}', { params: { path: { id } }, body: input })),
+    onSuccess: invalidate,
+  })
+}
+
+/** Recording / mixing / mastering of a project - decides which tabs are shown. */
+export function useSetProjectScope() {
+  const invalidate = useInvalidate()
+  return useMutation({
+    mutationFn: ({ id, input }: { id: number; input: ProjectScopeInput }) =>
+      unwrap(api.PUT('/api/Project/{id}/scope', { params: { path: { id } }, body: input })),
     onSuccess: invalidate,
   })
 }

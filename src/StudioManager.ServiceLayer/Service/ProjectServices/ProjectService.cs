@@ -140,6 +140,22 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             _photos.DeleteFile(project?.PhotoPath);
         }
 
+        public async Task<ProjectReadDto> SetScope(int id, ProjectScopeDto dto)
+        {
+            if (!dto.IncludesRecording && !dto.IncludesMixing && !dto.IncludesMastering)
+            {
+                throw new BusinessRuleException("project.scopeEmpty", "At least one of recording, mixing and mastering must be on.");
+            }
+
+            var project = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Project), id);
+            project.IncludesRecording = dto.IncludesRecording;
+            project.IncludesMixing = dto.IncludesMixing;
+            project.IncludesMastering = dto.IncludesMastering;
+            await _repository.UpdateAsync(project);
+
+            return (await Get(id))!;
+        }
+
         public async Task<ProjectReadDto> SetPhoto(int id, Stream content, string fileName, long length)
         {
             await _photos.SetPhoto(_repository, id, content, fileName, length, PhotoFolder);

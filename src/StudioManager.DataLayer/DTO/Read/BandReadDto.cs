@@ -16,5 +16,8 @@ namespace StudioManager.DataLayer.DTO.Read
 
         /// <summary>True if a picture was uploaded (GET .../{id}/photo).</summary>
         public bool HasPhoto { get; set; }
+
+        /// <summary>Without an own picture: the picture of the client. Null if the client has none either.</summary>
+        public PhotoRefDto? FallbackPhoto { get; set; }
     }
 }

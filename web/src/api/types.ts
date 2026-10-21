@@ -26,6 +26,7 @@ export type Band = Schemas['BandReadDto']
 export type BandInput = Schemas['BandCreateDto']
 
 export type Project = Schemas['ProjectReadDto']
+export type ProjectScopeInput = Schemas['ProjectScopeDto']
 export type ProjectInput = Schemas['ProjectCreateDto']
 export type ProjectType = Schemas['ProjectType']
 export type ProjectStatus = Schemas['ProjectStatus']

@@ -106,7 +106,10 @@
     "sortOrderHint": "Lower numbers are shown first",
     "itemCount": "Items",
     "deleteConfirm": "The category \"{{name}}\" will be deleted.",
-    "empty": "No categories yet."
+    "empty": "No categories yet.",
+    "isSoftware": "Software / plugins",
+    "isSoftwareHint": "Can be used in any number of setups at the same time - never counts as \"in session today\".",
+    "software": "Software"
   },
   "validation": {
     "required": "Required",
@@ -147,7 +150,8 @@
       "clientNotFound": "The client does not exist anymore.",
       "bandNotOfClient": "All bands of a project must belong to its client.",
       "hasInvoices": "The project has invoices and can not be deleted (invoices must be kept).",
-      "hasQuotes": "The project has quotes and can not be deleted."
+      "hasQuotes": "The project has quotes and can not be deleted.",
+      "scopeEmpty": "At least one of recording, mixing and mastering must be on."
     },
     "song": {
       "projectNotFound": "The project does not exist anymore.",
@@ -316,7 +320,13 @@
       "finance": "Time & costs"
     },
     "filterActive": "Active projects",
-    "filterAll": "All projects"
+    "filterAll": "All projects",
+    "scope": {
+      "recording": "Recording",
+      "mixing": "Mixing",
+      "mastering": "Mastering"
+    },
+    "scopeHint": "What belongs to the project (or what you are doing right now). Switching a part off only hides its tabs - the data stays."
   },
   "projectType": {
     "Album": "Album",
@@ -698,7 +708,9 @@
     "upload": "Upload picture",
     "replace": "Replace picture",
     "remove": "Remove picture",
-    "hint": "JPG, PNG or WEBP, max. 10 MB"
+    "hint": "JPG, PNG or WEBP, max. 10 MB",
+    "fromBand": "Picture of the band - upload an own one to replace it here.",
+    "fromClient": "Picture of the client - upload an own one to replace it here."
   },
   "view": {
     "list": "List",

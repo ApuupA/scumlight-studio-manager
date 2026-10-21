@@ -9,7 +9,7 @@ import type { ClientInput } from '../../api/types'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useClients, useCreateClient } from './clientApi'
 import ClientForm from './ClientForm'
-import { photoUrl } from '../../api/photos'
+import { photoRefUrl, photoUrl } from '../../api/photos'
 import Tile from '../../components/Tile'
 import { useViewMode } from '../../components/useViewMode'
 import ViewToggle from '../../components/ViewToggle'
@@ -69,7 +69,7 @@ export default function ClientListPage() {
               {visibleClients.map((client) => (
                 <Tile
                   key={client.id}
-                  image={photoUrl('Client', client)}
+                  image={photoUrl('Client', client) ?? photoRefUrl('Band', client.fallbackPhoto)}
                   icon={<IconUsersGroup size={48} stroke={1.2} />}
                   title={client.name}
                   subtitle={client.contactPerson}

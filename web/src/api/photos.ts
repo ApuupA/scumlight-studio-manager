@@ -24,6 +24,14 @@ export function photoUrl(owner: PhotoOwner, entity: WithPhoto): string | undefin
   return entity.hasPhoto ? `/api/${owner}/${entity.id}/photo?v=${encodeURIComponent(entity.dateUpdated)}` : undefined
 }
 
+/**
+ * The picture of another entity that is shown when the entity has none of its own (C# PhotoRefDto),
+ * e.g. photoRefUrl('Client', band.fallbackPhoto) for a band without a picture.
+ */
+export function photoRefUrl(owner: PhotoOwner, ref: { id: number; dateUpdated: string } | null | undefined): string | undefined {
+  return ref ? `/api/${owner}/${ref.id}/photo?v=${encodeURIComponent(ref.dateUpdated)}` : undefined
+}
+
 /** Sends the request and throws an ApiError (like unwrap) if it failed. Also used for the expense receipts. */
 export async function send(url: string, init: RequestInit) {
   const response = await fetch(url, init)

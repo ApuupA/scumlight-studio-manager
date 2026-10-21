@@ -14,7 +14,7 @@ import { useProjectsOfClient } from '../projects/projectApi'
 import BandFormModal from './BandFormModal'
 import { useBandsOfClient, useClient, useDeleteBand, useDeleteClient, useUpdateClient } from './clientApi'
 import ClientForm from './ClientForm'
-import { photoUrl } from '../../api/photos'
+import { photoRefUrl, photoUrl } from '../../api/photos'
 import PhotoCard from '../../components/PhotoCard'
 
 /** State of the band dialog: closed, new band, or editing a band. */
@@ -87,7 +87,8 @@ export default function ClientPage() {
 
         <Grid.Col span={{ base: 12, md: 5 }}>
           <Stack>
-            <PhotoCard owner="Client" entity={client} invalidateKeys={['clients']} alt={client.name} height={180} />
+            <PhotoCard owner="Client" entity={client} invalidateKeys={['clients', 'bands']} alt={client.name} height={180}
+              fallbackUrl={photoRefUrl('Band', client.fallbackPhoto)} fallbackHint={t('photo.fromBand')} />
             <Card withBorder>
               <Group justify="space-between" mb="sm">
                 <Title order={4}>{t('bands.title')}</Title>
@@ -101,7 +102,7 @@ export default function ClientPage() {
                 {bands?.map((band) => (
                   <Group key={band.id} justify="space-between" wrap="nowrap">
                     <Group gap="sm" wrap="nowrap">
-                      <Avatar src={photoUrl('Band', band)} radius="sm"><IconUsersGroup size={18} /></Avatar>
+                      <Avatar src={photoUrl('Band', band) ?? photoRefUrl('Client', band.fallbackPhoto)} radius="sm"><IconUsersGroup size={18} /></Avatar>
                       <div>
                         <Text fw={500}>{band.name}</Text>
                         <Text size="xs" c="dimmed">{[band.genre, band.members].filter(Boolean).join(' · ')}</Text>

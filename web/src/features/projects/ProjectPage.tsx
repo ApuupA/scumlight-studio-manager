@@ -21,6 +21,7 @@ import ProjectSessionsTab from './ProjectSessionsTab'
 import SongsTab from './SongsTab'
 import PhotoCard from '../../components/PhotoCard'
 import FinanceTab from '../finance/FinanceTab'
+import ProjectScopeChips from './ProjectScopeChips'
 
 /**
  * Route /projects/new creates a project, /projects/:id shows one with all its tabs.
@@ -96,6 +97,15 @@ export default function ProjectPage() {
     )
   }
 
+  // Tabs by scope: the setup also documents mixing (plugins, amp sims), the rest is only needed for recording.
+  // Hidden tabs keep their data - they come back when the part is switched on again.
+  const showInstruments = project.includesRecording || project.includesMixing
+  const hiddenTabs = [
+    ...(showInstruments ? [] : ['instruments']),
+    ...(project.includesRecording ? [] : ['bandGear', 'inputLists', 'drums']),
+  ]
+  const currentTab = hiddenTabs.includes(activeTab) ? 'overview' : activeTab
+
   return (
     <Stack>
       {backLink}
@@ -111,6 +121,7 @@ export default function ProjectPage() {
             {project.bands.length > 0 && ` · ${project.bands.map((b) => b.name).join(', ')}`}
             {` · ${t(`projectType.${project.type}`)}`}
           </Text>
+          <Group mt="xs"><ProjectScopeChips project={project} /></Group>
         </div>
         <Group gap="xs">
           <Button variant="light" leftSection={<IconPrinter size={16} />} onClick={() => navigate(`/projects/${project.id}/sheet`)}>
@@ -122,7 +133,7 @@ export default function ProjectPage() {
         </Group>
       </Group>
 
-      <Tabs value={activeTab} onChange={(tab) => setSearchParams({ tab: tab ?? 'overview' }, { replace: true })} keepMounted={false}>
+      <Tabs value={currentTab} onChange={(tab) => setSearchParams({ tab: tab ?? 'overview' }, { replace: true })} keepMounted={false}>
         <Tabs.List>
           <Tabs.Tab value="overview" leftSection={<IconInfoCircle size={16} />}>{t('projects.tabs.overview')}</Tabs.Tab>
           <Tabs.Tab value="songs" leftSection={<IconDisc size={16} />}>
@@ -131,12 +142,20 @@ export default function ProjectPage() {
           <Tabs.Tab value="sessions" leftSection={<IconCalendarEvent size={16} />}>
             {t('projects.tabs.sessions')} ({project.sessionCount})
           </Tabs.Tab>
-          <Tabs.Tab value="instruments" leftSection={<IconGuitarPick size={16} />}>{t('projects.tabs.instruments')}</Tabs.Tab>
-          <Tabs.Tab value="bandGear" leftSection={<IconBackpack size={16} />}>{t('projects.tabs.bandGear')}</Tabs.Tab>
-          <Tabs.Tab value="inputLists" leftSection={<IconListNumbers size={16} />}>{t('projects.tabs.inputLists')}</Tabs.Tab>
+          {showInstruments && (
+            <Tabs.Tab value="instruments" leftSection={<IconGuitarPick size={16} />}>{t('projects.tabs.instruments')}</Tabs.Tab>
+          )}
+          {project.includesRecording && (
+            <>
+              <Tabs.Tab value="bandGear" leftSection={<IconBackpack size={16} />}>{t('projects.tabs.bandGear')}</Tabs.Tab>
+              <Tabs.Tab value="inputLists" leftSection={<IconListNumbers size={16} />}>{t('projects.tabs.inputLists')}</Tabs.Tab>
+            </>
+          )}
           <Tabs.Tab value="finance" leftSection={<IconClockDollar size={16} />}>{t('projects.tabs.finance')}</Tabs.Tab>
           <Tabs.Tab value="links" leftSection={<IconLink size={16} />}>{t('projects.tabs.links')}</Tabs.Tab>
-          <Tabs.Tab value="drums" leftSection={<IconMetronome size={16} />}>{t('projects.tabs.drums')}</Tabs.Tab>
+          {project.includesRecording && (
+            <Tabs.Tab value="drums" leftSection={<IconMetronome size={16} />}>{t('projects.tabs.drums')}</Tabs.Tab>
+          )}
         </Tabs.List>
 
         <Tabs.Panel value="overview" pt="md">
