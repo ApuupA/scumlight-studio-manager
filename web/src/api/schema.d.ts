@@ -8367,7 +8367,7 @@ export interface components {
             feedback: components["schemas"]["MixFeedbackReadDto"][];
         };
         /** @enum {string} */
-        MixVersionStatus: "InProgress" | "Sent" | "ChangesRequested" | "Approved";
+        MixVersionStatus: "InProgress" | "Sent" | "ChangesRequested" | "Approved" | "Completed";
         MonthTotalDto: {
             /** Format: int32 */
             month: number;

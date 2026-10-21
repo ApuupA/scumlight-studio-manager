@@ -1112,7 +1112,8 @@
     "InProgress": "In Arbeit",
     "Sent": "Verschickt",
     "ChangesRequested": "Änderungswünsche",
-    "Approved": "Freigegeben"
+    "Approved": "Freigegeben",
+    "Completed": "Abgeschlossen"
   },
   "mixing": {
     "mix": "Mix",
@@ -1155,7 +1156,9 @@
     "extraRevisions": "Extra-Revision ({{count}})",
     "openMaterial": "Öffnen",
     "materialGeneralNotes": "Notizen",
-    "materialGeneralNotesPlaceholder": "z. B. 48 kHz / 24 Bit, alle Songs starten bei Takt 1"
+    "materialGeneralNotesPlaceholder": "z. B. 48 kHz / 24 Bit, alle Songs starten bei Takt 1",
+    "showFeedback": "Kommentare anzeigen ({{count}})",
+    "openCount": "{{open}} von {{total}} offen"
   },
   "mastering": {
     "gap": "Pause",

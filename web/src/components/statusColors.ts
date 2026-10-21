@@ -54,4 +54,5 @@ export const mixVersionStatusColors: Record<MixVersionStatus, string> = {
   Sent: 'blue',
   ChangesRequested: 'ember',
   Approved: 'green',
+  Completed: 'gray',
 }

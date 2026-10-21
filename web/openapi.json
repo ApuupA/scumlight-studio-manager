@@ -10503,7 +10503,8 @@
           "InProgress",
           "Sent",
           "ChangesRequested",
-          "Approved"
+          "Approved",
+          "Completed"
         ],
         "type": "string"
       },
