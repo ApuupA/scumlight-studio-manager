@@ -34,6 +34,12 @@ namespace StudioManager.DataLayer.DTO.Read
         public bool IncludesMixing { get; set; }
         public bool IncludesMastering { get; set; }
 
+        /// <summary>The material for the mix (tab "Mixing").</summary>
+        public DateOnly? MaterialReceivedOn { get; set; }
+        public string? MaterialLink { get; set; }
+        public int? MaterialTrackCount { get; set; }
+        public string? MaterialNotes { get; set; }
+
         public int SessionCount { get; set; }
 
         /// <summary>Date of the next upcoming (not cancelled) session, null if none is planned.</summary>

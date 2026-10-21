@@ -17,9 +17,14 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
         Task<SongReadDto> SetLyrics(int id, SongLyricsDto dto);
 
         /// <summary>
-        /// Saves the mixing and mastering details of a song (material, mix recall, LUFS, ISRC, ...).
+        /// Saves the mixing notes of a song: problems in the material and the mix recall (song page).
         /// </summary>
         Task<SongReadDto> SetMixInfo(int id, SongMixInfoDto dto);
+
+        /// <summary>
+        /// Saves the master values of a song: ISRC, LUFS, true peak, pause (tab "Mastering").
+        /// </summary>
+        Task<SongReadDto> SetMasterInfo(int id, SongMasterInfoDto dto);
 
         /// <summary>
         /// Sets the same status for several songs at once (e.g. four songs to "Mixing"). Returns the changed songs.

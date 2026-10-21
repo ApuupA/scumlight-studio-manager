@@ -4,12 +4,16 @@ using System.ComponentModel.DataAnnotations;
 namespace StudioManager.DataLayer.DTO.Create
 {
     /// <summary>
-    /// A mix version of a song. The number (v1, v2, ...) is given automatically.
+    /// A mix version of the project. The order number is given automatically.
     /// </summary>
     public class MixVersionCreateDto
     {
         [Range(1, int.MaxValue)]
-        public int SongId { get; set; }
+        public int ProjectId { get; set; }
+
+        /// <summary>e.g. "v1.1" - empty = "v" + the next number.</summary>
+        [MaxLength(30)]
+        public string? Name { get; set; }
 
         public DateOnly Date { get; set; }
 
@@ -20,5 +24,9 @@ namespace StudioManager.DataLayer.DTO.Create
 
         [MaxLength(4000)]
         public string? Notes { get; set; }
+
+        /// <summary>The exported songs - at least one, all of them belong to the project.</summary>
+        [MinLength(1)]
+        public List<int> SongIds { get; set; } = new();
     }
 }

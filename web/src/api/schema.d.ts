@@ -3448,6 +3448,43 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/MixVersion/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixVersionReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/MixVersion/song/{songId}": {
         parameters: {
             query?: never;
@@ -3687,6 +3724,49 @@ export interface paths {
                     "application/json": components["schemas"]["ProjectScopeDto"];
                     "text/json": components["schemas"]["ProjectScopeDto"];
                     "application/*+json": components["schemas"]["ProjectScopeDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Project/{id}/material": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectMaterialDto"];
+                    "text/json": components["schemas"]["ProjectMaterialDto"];
+                    "application/*+json": components["schemas"]["ProjectMaterialDto"];
                 };
             };
             responses: {
@@ -5705,6 +5785,49 @@ export interface paths {
                     "application/json": components["schemas"]["SongMixInfoDto"];
                     "text/json": components["schemas"]["SongMixInfoDto"];
                     "application/*+json": components["schemas"]["SongMixInfoDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SongReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Song/{id}/master-info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SongMasterInfoDto"];
+                    "text/json": components["schemas"]["SongMasterInfoDto"];
+                    "application/*+json": components["schemas"]["SongMasterInfoDto"];
                 };
             };
             responses: {
@@ -7792,6 +7915,8 @@ export interface components {
         MixFeedbackCreateDto: {
             /** Format: int32 */
             mixVersionId: number;
+            /** Format: int32 */
+            songId?: number | null;
             timecode?: string | null;
             text: string;
             isDone: boolean;
@@ -7799,6 +7924,9 @@ export interface components {
         MixFeedbackReadDto: {
             /** Format: int32 */
             id: number;
+            /** Format: int32 */
+            songId?: number | null;
+            songTitle?: string | null;
             timecode?: string | null;
             text: string;
             isDone: boolean;
@@ -7807,27 +7935,32 @@ export interface components {
         };
         MixVersionCreateDto: {
             /** Format: int32 */
-            songId: number;
+            projectId: number;
+            name?: string | null;
             /** Format: date */
             date: string;
             status: components["schemas"]["MixVersionStatus"];
             /** Format: uri */
             link?: string | null;
             notes?: string | null;
+            songIds: number[];
         };
         MixVersionReadDto: {
             /** Format: int32 */
             id: number;
             /** Format: int32 */
             number: number;
+            name: string;
             /** Format: date */
             date: string;
             status: components["schemas"]["MixVersionStatus"];
             link?: string | null;
             notes?: string | null;
             /** Format: int32 */
-            songId: number;
-            isExtraRevision: boolean;
+            projectId: number;
+            songs: components["schemas"]["SongShortDto"][];
+            isAllSongs: boolean;
+            extraRevisionSongs: components["schemas"]["SongShortDto"][];
             feedback: components["schemas"]["MixFeedbackReadDto"][];
         };
         /** @enum {string} */
@@ -8055,6 +8188,15 @@ export interface components {
         };
         /** @enum {string} */
         ProjectLinkType: "Reference" | "RoughMix" | "Demo" | "Other";
+        ProjectMaterialDto: {
+            /** Format: date */
+            materialReceivedOn?: string | null;
+            /** Format: uri */
+            materialLink?: string | null;
+            /** Format: int32 */
+            materialTrackCount?: number | null;
+            materialNotes?: string | null;
+        };
         ProjectPricingDto: {
             pricingMode: components["schemas"]["PricingMode"];
             /** Format: double */
@@ -8098,6 +8240,12 @@ export interface components {
             includesRecording: boolean;
             includesMixing: boolean;
             includesMastering: boolean;
+            /** Format: date */
+            materialReceivedOn?: string | null;
+            materialLink?: string | null;
+            /** Format: int32 */
+            materialTrackCount?: number | null;
+            materialNotes?: string | null;
             /** Format: int32 */
             sessionCount: number;
             /** Format: date */
@@ -8315,15 +8463,7 @@ export interface components {
         SongLyricsDto: {
             lyrics?: string | null;
         };
-        SongMixInfoDto: {
-            /** Format: date */
-            materialReceivedOn?: string | null;
-            /** Format: uri */
-            materialLink?: string | null;
-            /** Format: int32 */
-            materialTrackCount?: number | null;
-            materialNotes?: string | null;
-            mixNotes?: string | null;
+        SongMasterInfoDto: {
             isrc?: string | null;
             /** Format: double */
             measuredLufs?: number | null;
@@ -8331,6 +8471,10 @@ export interface components {
             truePeak?: number | null;
             /** Format: double */
             gapBeforeSeconds?: number | null;
+        };
+        SongMixInfoDto: {
+            materialNotes?: string | null;
+            mixNotes?: string | null;
         };
         SongReadDto: {
             /** Format: int32 */
@@ -8347,11 +8491,6 @@ export interface components {
             trackCount: number;
             /** Format: int32 */
             tracksRecordedCount: number;
-            /** Format: date */
-            materialReceivedOn?: string | null;
-            materialLink?: string | null;
-            /** Format: int32 */
-            materialTrackCount?: number | null;
             materialNotes?: string | null;
             mixNotes?: string | null;
             isrc?: string | null;
@@ -8361,8 +8500,7 @@ export interface components {
             truePeak?: number | null;
             /** Format: double */
             gapBeforeSeconds?: number | null;
-            /** Format: int32 */
-            latestMixNumber?: number | null;
+            latestMixName?: string | null;
             latestMixStatus?: components["schemas"]["MixVersionStatus"];
             /** Format: int32 */
             projectId: number;
@@ -8399,6 +8537,13 @@ export interface components {
             sortOrder: number;
             /** Format: int32 */
             songId: number;
+        };
+        SongShortDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            trackNumber: number;
+            title: string;
         };
         /** @enum {string} */
         SongStatus: "Planned" | "Recording" | "Editing" | "Mixing" | "Mastering" | "Done";

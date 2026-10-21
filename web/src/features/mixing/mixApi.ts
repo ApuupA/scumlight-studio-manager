@@ -1,11 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type { MixFeedbackInput, MixVersionInput, MixVersionStatus, ProjectDeliverableInput, SongMixInfoInput } from '../../api/types'
+import type {
+  MixFeedbackInput, MixVersionInput, MixVersionStatus, ProjectDeliverableInput, ProjectMaterialInput, SongMasterInfoInput, SongMixInfoInput,
+} from '../../api/types'
 
 /**
- * Data access for mixing and mastering: mix versions with feedback, the mix / master details of a song
- * and the deliverables checklist of a project.
+ * Data access for mixing and mastering: the mix versions of a project (with song selection and feedback),
+ * the material, the mix notes and master values of the songs, and the deliverables checklist.
  */
+
+/** All statuses in workflow order (same as the C# enum MixVersionStatus). */
+export const mixVersionStatuses: MixVersionStatus[] = ['InProgress', 'Sent', 'ChangesRequested', 'Approved']
 
 /** Reloads the versions and the songs (the song list shows the newest version). */
 function useInvalidateMix() {
@@ -18,12 +23,18 @@ function useInvalidateMix() {
 
 // ---------- Mix versions ----------
 
-/** All statuses in workflow order (same as the C# enum MixVersionStatus). */
-export const mixVersionStatuses: MixVersionStatus[] = ['InProgress', 'Sent', 'ChangesRequested', 'Approved']
-
-export function useMixVersions(songId: number) {
+/** The versions of a project, newest first (tab "Mixing"). */
+export function useProjectMixVersions(projectId: number) {
   return useQuery({
-    queryKey: ['mixVersions', songId],
+    queryKey: ['mixVersions', 'project', projectId],
+    queryFn: () => unwrap(api.GET('/api/MixVersion/project/{projectId}', { params: { path: { projectId } } })),
+  })
+}
+
+/** The versions a song was exported in, newest first (song page). */
+export function useSongMixVersions(songId: number) {
+  return useQuery({
+    queryKey: ['mixVersions', 'song', songId],
     queryFn: () => unwrap(api.GET('/api/MixVersion/song/{songId}', { params: { path: { songId } } })),
   })
 }
@@ -70,14 +81,33 @@ export function useDeleteFeedback() {
   })
 }
 
-// ---------- Mix / master details of a song ----------
+// ---------- Material (project) ----------
 
-/** Saves ALL mix / master fields of the song at once. */
+export function useSetProjectMaterial() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ projectId, input }: { projectId: number; input: ProjectMaterialInput }) =>
+      unwrap(api.PUT('/api/Project/{id}/material', { params: { path: { id: projectId } }, body: input })),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
+  })
+}
+
+// ---------- Songs: mix notes (song page) and master values (tab "Mastering") ----------
+
 export function useSetMixInfo() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ songId, input }: { songId: number; input: SongMixInfoInput }) =>
       unwrap(api.PUT('/api/Song/{id}/mix-info', { params: { path: { id: songId } }, body: input })),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['songs'] }),
+  })
+}
+
+export function useSetMasterInfo() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ songId, input }: { songId: number; input: SongMasterInfoInput }) =>
+      unwrap(api.PUT('/api/Song/{id}/master-info', { params: { path: { id: songId } }, body: input })),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['songs'] }),
   })
 }

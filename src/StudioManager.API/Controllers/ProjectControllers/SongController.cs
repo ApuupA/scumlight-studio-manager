@@ -34,12 +34,21 @@ namespace StudioManager.API.Controllers.ProjectControllers
         }
 
         /// <summary>
-        /// Saves the mixing and mastering details of a song (song page). Always saves all fields.
+        /// Saves the mixing notes of a song: problems in the material and the mix recall (song page).
         /// </summary>
         [HttpPut("{id:int}/mix-info")]
         public async Task<ActionResult<SongReadDto>> SetMixInfo(int id, [FromBody] SongMixInfoDto dto)
         {
             return Ok(await _service.SetMixInfo(id, dto));
+        }
+
+        /// <summary>
+        /// Saves the master values of a song: ISRC, LUFS, true peak, pause before the song (tab "Mastering").
+        /// </summary>
+        [HttpPut("{id:int}/master-info")]
+        public async Task<ActionResult<SongReadDto>> SetMasterInfo(int id, [FromBody] SongMasterInfoDto dto)
+        {
+            return Ok(await _service.SetMasterInfo(id, dto));
         }
 
         /// <summary>

@@ -35,6 +35,15 @@ namespace StudioManager.API.Controllers.ProjectControllers
         }
 
         /// <summary>
+        /// Saves the material for the mix: received on, link, number of tracks, notes.
+        /// </summary>
+        [HttpPut("{id:int}/material")]
+        public async Task<ActionResult<ProjectReadDto>> SetMaterial(int id, [FromBody] ProjectMaterialDto dto)
+        {
+            return Ok(await _service.SetMaterial(id, dto));
+        }
+
+        /// <summary>
         /// The picture as image file (404 if there is none).
         /// </summary>
         [HttpGet("{id:int}/photo")]

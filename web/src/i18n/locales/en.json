@@ -229,7 +229,11 @@
       "tooLarge": "The receipt must not be larger than 10 MB."
     },
     "mixVersion": {
-      "otherSong": "A mix version can not be moved to another song."
+      "otherProject": "A mix version can not be moved to another project.",
+      "invalidSongs": "Choose at least one song of the project."
+    },
+    "mixFeedback": {
+      "songNotInVersion": "The song is not in this mix version."
     }
   },
   "profile": {
@@ -321,7 +325,8 @@
       "bandGear": "Band gear",
       "inputLists": "Input lists",
       "finance": "Time & costs",
-      "mastering": "Mastering"
+      "mastering": "Mastering",
+      "mixing": "Mixing"
     },
     "filterActive": "Active projects",
     "filterAll": "All projects",
@@ -1108,20 +1113,19 @@
   "mixing": {
     "mix": "Mix",
     "versions": "Mix versions",
-    "noVersions": "No mix version yet.",
+    "noVersions": "No mix version yet - \"New version\" when you send the first mix.",
     "newVersion": "New version",
-    "editVersion": "Edit v{{number}}",
-    "deleteVersionConfirm": "Version v{{number}} and its feedback will be deleted.",
+    "editVersion": "Edit {{name}}",
+    "deleteVersionConfirm": "Version {{name}} and its feedback will be deleted.",
     "status": "Status",
     "link": "Link to the bounce",
     "linkInvalid": "The link must start with http:// or https://",
     "listen": "Listen",
     "changes": "What changed",
     "changesPlaceholder": "e.g. Vocals +1 dB, less reverb on the snare",
-    "includedRevisions": "Revisions included per song: {{count}}",
-    "extraRevision": "extra revision",
+    "includedRevisions": "Revisions included per song: {{count}} (counted per song)",
     "bookExtraRevision": "Book as extra item",
-    "extraRevisionItem": "Extra mix revision: {{title}} v{{number}}",
+    "extraRevisionItem": "Extra mix revision {{name}}: {{songs}}",
     "feedback": "Feedback",
     "feedbackPlaceholder": "Feedback from the client, e.g. vocals too quiet",
     "feedbackDone": "Done",
@@ -1129,25 +1133,34 @@
     "material": "Material",
     "materialReceivedOn": "Received on",
     "materialTrackCount": "Number of tracks",
-    "materialLink": "Link to the files",
-    "materialNotes": "Problems in the material",
+    "materialLink": "Link to the multitracks",
+    "materialNotes": "Problems in the material of this song",
     "materialNotesPlaceholder": "e.g. Bass clipped in the chorus, kick track missing",
     "mixNotes": "Mix recall",
     "mixNotesHint": "Plugin chain, bus settings, ... to repeat the mix later.",
-    "isrcInvalid": "Invalid ISRC (e.g. DE-A12-26-00001)"
+    "title": "Mixing",
+    "toMixingTab": "Versions in the tab \"Mixing\"",
+    "songNotExported": "This song is not in a mix version yet.",
+    "noSongs": "Add the songs of the project first (tab \"Songs\").",
+    "versionName": "Name",
+    "allSongs": "All songs",
+    "exportedSongs": "Exported songs",
+    "chooseSongs": "Choose at least one song.",
+    "general": "General",
+    "song": "Song",
+    "extraRevisions": "Extra revision ({{count}})",
+    "openMaterial": "Open",
+    "materialGeneralNotes": "Notes",
+    "materialGeneralNotesPlaceholder": "e.g. 48 kHz / 24 bit, all songs start at bar 1"
   },
   "mastering": {
-    "title": "Mastering",
-    "measuredLufs": "Loudness (measured)",
-    "truePeak": "True peak",
-    "gapBefore": "Pause before the song",
     "gap": "Pause",
     "deliverables": "Deliverables",
     "deliverablesDone": "{{done}} of {{total}} delivered",
     "addDefaults": "Add usual ones",
     "deliverablePlaceholder": "e.g. Instrumental of song 3",
     "sequence": "Album sequence",
-    "sequenceHint": "Values are entered on the song pages. True peak above -1 dBTP is orange (can distort as MP3 / AAC).",
+    "sequenceHint": "Enter the values right here - the check button saves the row. True peak above -1 dBTP is orange (can distort as MP3 / AAC).",
     "target": "Target: {{lufs}} LUFS."
   }
 }

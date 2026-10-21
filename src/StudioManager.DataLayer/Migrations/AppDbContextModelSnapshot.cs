@@ -38,6 +38,21 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("ProjectBands", (string)null);
                 });
 
+            modelBuilder.Entity("MixVersionSong", b =>
+                {
+                    b.Property<int>("MixVersionsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SongsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MixVersionsId", "SongsId");
+
+                    b.HasIndex("SongsId");
+
+                    b.ToTable("MixVersionSongs", (string)null);
+                });
+
             modelBuilder.Entity("ProjectInstrumentSession", b =>
                 {
                     b.Property<int>("InstrumentsId")
@@ -1334,6 +1349,9 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<int>("MixVersionId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("SongId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -1346,6 +1364,8 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MixVersionId");
+
+                    b.HasIndex("SongId");
 
                     b.ToTable("MixFeedback");
                 });
@@ -1371,6 +1391,11 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("Notes")
                         .HasMaxLength(4000)
                         .HasColumnType("character varying(4000)");
@@ -1378,7 +1403,7 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SongId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Status")
@@ -1388,7 +1413,7 @@ namespace StudioManager.DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SongId", "Number")
+                    b.HasIndex("ProjectId", "Number")
                         .IsUnique();
 
                     b.ToTable("MixVersions");
@@ -1456,6 +1481,20 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<string>("MasteringNotes")
                         .HasMaxLength(8000)
                         .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("MaterialLink")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("MaterialNotes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateOnly?>("MaterialReceivedOn")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("MaterialTrackCount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("MixingNotes")
                         .HasMaxLength(8000)
@@ -1750,19 +1789,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(20000)
                         .HasColumnType("character varying(20000)");
 
-                    b.Property<string>("MaterialLink")
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
                     b.Property<string>("MaterialNotes")
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)");
-
-                    b.Property<DateOnly?>("MaterialReceivedOn")
-                        .HasColumnType("date");
-
-                    b.Property<int?>("MaterialTrackCount")
-                        .HasColumnType("integer");
 
                     b.Property<decimal?>("MeasuredLufs")
                         .HasPrecision(5, 2)
@@ -2181,6 +2210,21 @@ namespace StudioManager.DataLayer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MixVersionSong", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.MixVersion", null)
+                        .WithMany()
+                        .HasForeignKey("MixVersionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Song", null)
+                        .WithMany()
+                        .HasForeignKey("SongsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ProjectInstrumentSession", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", null)
@@ -2484,18 +2528,25 @@ namespace StudioManager.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Song", "Song")
+                        .WithMany()
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("MixVersion");
+
+                    b.Navigation("Song");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.MixVersion", b =>
                 {
-                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Song", "Song")
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
                         .WithMany("MixVersions")
-                        .HasForeignKey("SongId")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Song");
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Project", b =>
@@ -2714,6 +2765,8 @@ namespace StudioManager.DataLayer.Migrations
 
                     b.Navigation("Links");
 
+                    b.Navigation("MixVersions");
+
                     b.Navigation("Sessions");
 
                     b.Navigation("Songs");
@@ -2731,8 +2784,6 @@ namespace StudioManager.DataLayer.Migrations
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Song", b =>
                 {
-                    b.Navigation("MixVersions");
-
                     b.Navigation("Sections");
 
                     b.Navigation("Tempos");

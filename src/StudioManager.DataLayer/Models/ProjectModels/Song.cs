@@ -23,21 +23,18 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public string? Lyrics { get; set; }
 
         // ---------- Mixing (song page, only with scope "Mixing") ----------
+        // The material itself (link, number of tracks) is stored once per project.
 
-        public DateOnly? MaterialReceivedOn { get; set; }
-
-        /// <summary>Where the multitracks / stems are, e.g. a WeTransfer or Nextcloud link.</summary>
-        public string? MaterialLink { get; set; }
-
-        public int? MaterialTrackCount { get; set; }
-
-        /// <summary>Problems found in the material, e.g. "Bass clipped in the chorus".</summary>
+        /// <summary>Problems found in the material of this song, e.g. "Bass clipped in the chorus".</summary>
         public string? MaterialNotes { get; set; }
 
         /// <summary>Mix recall: plugin chain, bus settings, ...</summary>
         public string? MixNotes { get; set; }
 
-        // ---------- Mastering (only with scope "Mastering") ----------
+        /// <summary>The mix versions of the project this song was exported in (many-to-many).</summary>
+        public ICollection<MixVersion> MixVersions { get; set; } = new List<MixVersion>();
+
+        // ---------- Mastering (edited in the project tab "Mastering") ----------
 
         public string? Isrc { get; set; }
         public decimal? MeasuredLufs { get; set; }
@@ -45,8 +42,6 @@ namespace StudioManager.DataLayer.Models.ProjectModels
 
         /// <summary>Pause before the song on the album in seconds.</summary>
         public decimal? GapBeforeSeconds { get; set; }
-
-        public ICollection<MixVersion> MixVersions { get; set; } = new List<MixVersion>();
 
         public int ProjectId { get; set; }
         public Project? Project { get; set; }

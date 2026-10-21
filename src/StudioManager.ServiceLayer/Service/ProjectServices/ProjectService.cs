@@ -156,6 +156,18 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             return (await Get(id))!;
         }
 
+        public async Task<ProjectReadDto> SetMaterial(int id, ProjectMaterialDto dto)
+        {
+            var project = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Project), id);
+            project.MaterialReceivedOn = dto.MaterialReceivedOn;
+            project.MaterialLink = string.IsNullOrWhiteSpace(dto.MaterialLink) ? null : dto.MaterialLink.Trim();
+            project.MaterialTrackCount = dto.MaterialTrackCount;
+            project.MaterialNotes = string.IsNullOrWhiteSpace(dto.MaterialNotes) ? null : dto.MaterialNotes.Trim();
+            await _repository.UpdateAsync(project);
+
+            return (await Get(id))!;
+        }
+
         public async Task<ProjectReadDto> SetPhoto(int id, Stream content, string fileName, long length)
         {
             await _photos.SetPhoto(_repository, id, content, fileName, length, PhotoFolder);
