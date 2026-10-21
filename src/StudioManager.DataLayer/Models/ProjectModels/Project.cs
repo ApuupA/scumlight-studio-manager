@@ -28,6 +28,13 @@ namespace StudioManager.DataLayer.Models.ProjectModels
 
         public string? Description { get; set; }
 
+        // ---------- Scope: which parts of the work belong to the project ----------
+        // Switching a part off only hides its tabs (e.g. input lists for a mix-only project) - the data stays.
+
+        public bool IncludesRecording { get; set; } = true;
+        public bool IncludesMixing { get; set; } = true;
+        public bool IncludesMastering { get; set; } = true;
+
         // ---------- Technical settings of the production ----------
         /// <summary>Sample rate in Hz, e.g. 48000.</summary>
         public int? SampleRate { get; set; }

@@ -82,8 +82,10 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         public async Task<IEnumerable<GearUsageDto>> GetUsagesOfGearItem(int gearItemId)
         {
             var items = await _repository.GetAllWithPathsAsync(s => s.GearItemId == gearItemId, "ProjectInstrument.Project");
+            // Newest projects first, projects without a start date at the end
             return _mapper.Map<IEnumerable<GearUsageDto>>(items)
-                .OrderBy(u => u.ProjectTitle)
+                .OrderByDescending(u => u.ProjectStartDate ?? DateOnly.MinValue)
+                .ThenBy(u => u.ProjectTitle)
                 .ThenBy(u => u.InstrumentName);
         }
 

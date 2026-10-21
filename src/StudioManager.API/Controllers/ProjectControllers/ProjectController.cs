@@ -26,6 +26,15 @@ namespace StudioManager.API.Controllers.ProjectControllers
         }
 
         /// <summary>
+        /// Sets which parts of the work belong to the project: recording, mixing, mastering (at least one).
+        /// </summary>
+        [HttpPut("{id:int}/scope")]
+        public async Task<ActionResult<ProjectReadDto>> SetScope(int id, [FromBody] ProjectScopeDto dto)
+        {
+            return Ok(await _service.SetScope(id, dto));
+        }
+
+        /// <summary>
         /// The picture as image file (404 if there is none).
         /// </summary>
         [HttpGet("{id:int}/photo")]

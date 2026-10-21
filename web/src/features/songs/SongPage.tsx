@@ -91,7 +91,7 @@ function SongView({ song }: { song: Song }) {
         </Grid.Col>
         <Grid.Col span={{ base: 12, lg: 5 }}>
           <Stack>
-            <RecordingChecklistCard song={song} />
+            {project?.includesRecording && <RecordingChecklistCard song={song} />}
             <SongInfoCard song={song} />
           </Stack>
         </Grid.Col>

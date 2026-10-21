@@ -833,6 +833,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<bool>("IsSoftware")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -854,6 +857,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 1,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Microphones",
                             SortOrder = 10
                         },
@@ -862,6 +866,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 2,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Preamps",
                             SortOrder = 20
                         },
@@ -870,6 +875,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 3,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Dynamics",
                             SortOrder = 30
                         },
@@ -878,6 +884,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 4,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Equalizers",
                             SortOrder = 40
                         },
@@ -886,6 +893,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 5,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Effects",
                             SortOrder = 50
                         },
@@ -894,6 +902,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 6,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Interfaces & Converters",
                             SortOrder = 60
                         },
@@ -902,6 +911,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 7,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Monitoring",
                             SortOrder = 70
                         },
@@ -910,6 +920,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 8,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Headphones",
                             SortOrder = 80
                         },
@@ -918,6 +929,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 9,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Instruments",
                             SortOrder = 90
                         },
@@ -926,6 +938,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 10,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Amplifiers",
                             SortOrder = 100
                         },
@@ -934,6 +947,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 11,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Drums & Percussion",
                             SortOrder = 110
                         },
@@ -942,6 +956,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 12,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "DI Boxes",
                             SortOrder = 120
                         },
@@ -950,6 +965,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 13,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Cables",
                             SortOrder = 130
                         },
@@ -958,6 +974,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 14,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Stands",
                             SortOrder = 140
                         },
@@ -966,6 +983,7 @@ namespace StudioManager.DataLayer.Migrations
                             Id = 15,
                             DateCreated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateUpdated = new DateTime(2026, 10, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSoftware = false,
                             Name = "Other",
                             SortOrder = 150
                         });
@@ -1338,6 +1356,15 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<decimal?>("HourlyRate")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
+
+                    b.Property<bool>("IncludesMastering")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IncludesMixing")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IncludesRecording")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("MasteringNotes")
                         .HasMaxLength(8000)

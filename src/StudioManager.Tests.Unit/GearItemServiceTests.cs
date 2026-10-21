@@ -163,6 +163,12 @@ namespace StudioManager.Tests.Unit
             var item = Assert.Single(await _service.GetAll());
 
             Assert.Equal(2, item.InSessionTodayQuantity);
+
+            // Software (e.g. an amp sim plugin) can run in any number of setups - never "in session today"
+            _category.IsSoftware = true;
+            await _context.SaveChangesAsync();
+
+            Assert.Equal(0, Assert.Single(await _service.GetAll()).InSessionTodayQuantity);
         }
 
         [Fact]

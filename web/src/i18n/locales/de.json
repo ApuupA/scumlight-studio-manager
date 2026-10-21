@@ -106,7 +106,10 @@
     "sortOrderHint": "Kleinere Zahlen werden zuerst angezeigt",
     "itemCount": "Einträge",
     "deleteConfirm": "Die Kategorie \"{{name}}\" wird gelöscht.",
-    "empty": "Noch keine Kategorien."
+    "empty": "Noch keine Kategorien.",
+    "isSoftware": "Software / Plugins",
+    "isSoftwareHint": "Kann in beliebig vielen Setups gleichzeitig laufen – zählt nie als „heute in Session\".",
+    "software": "Software"
   },
   "validation": {
     "required": "Pflichtfeld",
@@ -147,7 +150,8 @@
       "clientNotFound": "Der Kunde existiert nicht mehr.",
       "bandNotOfClient": "Alle Bands eines Projekts müssen zum Kunden des Projekts gehören.",
       "hasInvoices": "Das Projekt hat Rechnungen und kann nicht gelöscht werden (Rechnungen müssen aufbewahrt werden).",
-      "hasQuotes": "Das Projekt hat Angebote und kann nicht gelöscht werden."
+      "hasQuotes": "Das Projekt hat Angebote und kann nicht gelöscht werden.",
+      "scopeEmpty": "Mindestens Recording, Mixing oder Mastering muss eingeschaltet sein."
     },
     "song": {
       "projectNotFound": "Das Projekt existiert nicht mehr.",
@@ -316,7 +320,13 @@
       "finance": "Zeit & Kosten"
     },
     "filterActive": "Aktive Projekte",
-    "filterAll": "Alle Projekte"
+    "filterAll": "Alle Projekte",
+    "scope": {
+      "recording": "Recording",
+      "mixing": "Mixing",
+      "mastering": "Mastering"
+    },
+    "scopeHint": "Was zum Projekt gehört (oder woran du gerade arbeitest). Ausschalten blendet nur die Tabs aus – die Daten bleiben erhalten."
   },
   "projectType": {
     "Album": "Album",

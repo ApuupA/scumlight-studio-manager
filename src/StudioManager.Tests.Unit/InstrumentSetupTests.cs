@@ -150,13 +150,16 @@ namespace StudioManager.Tests.Unit
         public async Task GearUsages_ShouldListProjectAndInstrument()
         {
             var drums = await CreateInstrument("Drums");
-            await _setupItemService.Insert(Item(drums, gearItemId: _sm57.Id));
+            var item = Item(drums, gearItemId: _sm57.Id);
+            item.Notes = "Off axis, 2 cm from the grill";
+            await _setupItemService.Insert(item);
 
             var usage = Assert.Single(await _setupItemService.GetUsagesOfGearItem(_sm57.Id));
 
             Assert.Equal("Album", usage.ProjectTitle);
             Assert.Equal("Drums", usage.InstrumentName);
             Assert.Equal("Cab", usage.UsedFor);
+            Assert.Equal("Off axis, 2 cm from the grill", usage.Notes);
         }
     }
 }

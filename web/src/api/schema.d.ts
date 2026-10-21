@@ -3342,6 +3342,49 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Project/{id}/scope": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectScopeDto"];
+                    "text/json": components["schemas"]["ProjectScopeDto"];
+                    "application/*+json": components["schemas"]["ProjectScopeDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Project/{id}/photo": {
         parameters: {
             query?: never;
@@ -6870,6 +6913,7 @@ export interface components {
             description?: string | null;
             /** Format: int32 */
             sortOrder: number;
+            isSoftware: boolean;
         };
         GearCategoryReadDto: {
             /** Format: int32 */
@@ -6878,6 +6922,7 @@ export interface components {
             description?: string | null;
             /** Format: int32 */
             sortOrder: number;
+            isSoftware: boolean;
             /** Format: int32 */
             gearItemCount: number;
             /** Format: date-time */
@@ -6938,12 +6983,15 @@ export interface components {
             projectId: number;
             projectTitle: string;
             projectStatus: components["schemas"]["ProjectStatus"];
+            /** Format: date */
+            projectStartDate?: string | null;
             /** Format: int32 */
             projectInstrumentId: number;
             instrumentName: string;
             usedFor?: string | null;
             /** Format: int32 */
             quantity: number;
+            notes?: string | null;
         };
         InputGroupCreateDto: {
             name: string;
@@ -7393,6 +7441,9 @@ export interface components {
             songCount: number;
             /** Format: int32 */
             songsDoneCount: number;
+            includesRecording: boolean;
+            includesMixing: boolean;
+            includesMastering: boolean;
             /** Format: int32 */
             sessionCount: number;
             /** Format: date */
@@ -7402,6 +7453,11 @@ export interface components {
             /** Format: date-time */
             dateUpdated: string;
             hasPhoto: boolean;
+        };
+        ProjectScopeDto: {
+            includesRecording: boolean;
+            includesMixing: boolean;
+            includesMastering: boolean;
         };
         /** @enum {string} */
         ProjectStatus: "Planning" | "PreProduction" | "Recording" | "Editing" | "Mixing" | "Mastering" | "Completed" | "OnHold" | "Cancelled";

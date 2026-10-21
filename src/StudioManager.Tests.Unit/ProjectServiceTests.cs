@@ -53,6 +53,30 @@ namespace StudioManager.Tests.Unit
         };
 
         [Fact]
+        public async Task SetScope_ShouldFail_WhenEverythingIsSwitchedOff()
+        {
+            var project = await _projectService.Insert(NewDto());
+
+            var exception = await Assert.ThrowsAsync<BusinessRuleException>(() => _projectService.SetScope(project.Id, new ProjectScopeDto()));
+
+            Assert.Equal("project.scopeEmpty", exception.ErrorCode);
+        }
+
+        [Fact]
+        public async Task SetScope_ShouldStay_WhenTheProjectIsSaved()
+        {
+            var project = await _projectService.Insert(NewDto());
+            Assert.True(project.IncludesRecording && project.IncludesMixing && project.IncludesMastering);
+
+            await _projectService.SetScope(project.Id, new ProjectScopeDto { IncludesMixing = true });
+            var saved = await _projectService.Update(project.Id, NewDto());
+
+            Assert.False(saved.IncludesRecording);
+            Assert.True(saved.IncludesMixing);
+            Assert.False(saved.IncludesMastering);
+        }
+
+        [Fact]
         public async Task Insert_ShouldLinkSeveralBandsOfTheClient()
         {
             var result = await _projectService.Insert(NewDto(_bandA.Id, _bandB.Id));

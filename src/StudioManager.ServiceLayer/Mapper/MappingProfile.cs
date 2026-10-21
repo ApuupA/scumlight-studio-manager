@@ -140,6 +140,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectInstrument!.ProjectId))
                 .ForMember(dest => dest.ProjectTitle, opt => opt.MapFrom(src => src.ProjectInstrument!.Project!.Title))
                 .ForMember(dest => dest.ProjectStatus, opt => opt.MapFrom(src => src.ProjectInstrument!.Project!.Status))
+                .ForMember(dest => dest.ProjectStartDate, opt => opt.MapFrom(src => src.ProjectInstrument!.Project!.StartDate))
                 .ForMember(dest => dest.InstrumentName, opt => opt.MapFrom(src => src.ProjectInstrument!.Name));
 
             CreateMap<SetupTemplate, SetupTemplateReadDto>()
@@ -204,6 +205,10 @@ namespace StudioManager.ServiceLayer.Mapper
             // Pricing is set in the tab "Time & costs" (FinanceService.SetPricing)
             CreateMap<ProjectCreateDto, Project>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                // The scope is changed with its own endpoint (PUT api/Project/{id}/scope)
+                .ForMember(dest => dest.IncludesRecording, opt => opt.Ignore())
+                .ForMember(dest => dest.IncludesMixing, opt => opt.Ignore())
+                .ForMember(dest => dest.IncludesMastering, opt => opt.Ignore())
                 .ForMember(dest => dest.PricingMode, opt => opt.Ignore())
                 .ForMember(dest => dest.HourlyRate, opt => opt.Ignore())
                 .ForMember(dest => dest.FlatPrice, opt => opt.Ignore())

@@ -29,6 +29,11 @@ namespace StudioManager.DataLayer.DTO.Read
         /// <summary>Songs with status Done - for the progress bar.</summary>
         public int SongsDoneCount { get; set; }
 
+        /// <summary>Scope of the project - decides which tabs are shown.</summary>
+        public bool IncludesRecording { get; set; }
+        public bool IncludesMixing { get; set; }
+        public bool IncludesMastering { get; set; }
+
         public int SessionCount { get; set; }
 
         /// <summary>Date of the next upcoming (not cancelled) session, null if none is planned.</summary>

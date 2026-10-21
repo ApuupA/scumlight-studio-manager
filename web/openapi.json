@@ -3449,6 +3449,55 @@
         }
       }
     },
+    "/api/Project/{id}/scope": {
+      "put": {
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectScopeDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectScopeDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectScopeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Project/{id}/photo": {
       "get": {
         "tags": [
@@ -7820,6 +7869,7 @@
       },
       "GearCategoryCreateDto": {
         "required": [
+          "isSoftware",
           "name",
           "sortOrder"
         ],
@@ -7838,6 +7888,9 @@
           "sortOrder": {
             "type": "integer",
             "format": "int32"
+          },
+          "isSoftware": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -7848,6 +7901,7 @@
           "dateUpdated",
           "gearItemCount",
           "id",
+          "isSoftware",
           "name",
           "sortOrder"
         ],
@@ -7867,6 +7921,9 @@
           "sortOrder": {
             "type": "integer",
             "format": "int32"
+          },
+          "isSoftware": {
+            "type": "boolean"
           },
           "gearItemCount": {
             "type": "integer",
@@ -8082,6 +8139,11 @@
           "projectStatus": {
             "$ref": "#/components/schemas/ProjectStatus"
           },
+          "projectStartDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
           "projectInstrumentId": {
             "type": "integer",
             "format": "int32"
@@ -8096,6 +8158,10 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -9539,6 +9605,9 @@
           "dateUpdated",
           "hasPhoto",
           "id",
+          "includesMastering",
+          "includesMixing",
+          "includesRecording",
           "sessionCount",
           "songCount",
           "songsDoneCount",
@@ -9627,6 +9696,15 @@
             "type": "integer",
             "format": "int32"
           },
+          "includesRecording": {
+            "type": "boolean"
+          },
+          "includesMixing": {
+            "type": "boolean"
+          },
+          "includesMastering": {
+            "type": "boolean"
+          },
           "sessionCount": {
             "type": "integer",
             "format": "int32"
@@ -9645,6 +9723,26 @@
             "format": "date-time"
           },
           "hasPhoto": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectScopeDto": {
+        "required": [
+          "includesMastering",
+          "includesMixing",
+          "includesRecording"
+        ],
+        "type": "object",
+        "properties": {
+          "includesRecording": {
+            "type": "boolean"
+          },
+          "includesMixing": {
+            "type": "boolean"
+          },
+          "includesMastering": {
             "type": "boolean"
           }
         },

@@ -117,20 +117,22 @@ namespace StudioManager.ServiceLayer.Service.GearServices
 
         /// <summary>
         /// Fills InSessionTodayQuantity: pieces used today - from the setups of the instruments recorded
-        /// in today's (not cancelled) sessions.
+        /// in today's (not cancelled) sessions. Software is left out.
         /// </summary>
         private async Task SetInSessionToday(List<GearItemReadDto> items)
         {
             var today = DateOnly.FromDateTime(DateTime.Now);
             var todaysSessions = await _sessionRepository.GetAllWithPathsAsync(
                 s => s.Date <= today && (s.EndDate ?? s.Date) >= today && s.Status != SessionStatus.Cancelled,
-                "Instruments.SetupItems");
+                "Instruments.SetupItems.GearItem.GearCategory");
 
             var quantityPerItem = todaysSessions
                 .SelectMany(session => session.Instruments)
                 .DistinctBy(instrument => instrument.Id) // an instrument in two sessions today needs its gear only once
                 .SelectMany(instrument => instrument.SetupItems)
                 .Where(setupItem => setupItem.GearItemId != null)
+                // Software can run in any number of setups at the same time
+                .Where(setupItem => setupItem.GearItem?.GearCategory?.IsSoftware != true)
                 .GroupBy(setupItem => setupItem.GearItemId!.Value)
                 .ToDictionary(group => group.Key, group => group.Sum(setupItem => setupItem.Quantity));
 

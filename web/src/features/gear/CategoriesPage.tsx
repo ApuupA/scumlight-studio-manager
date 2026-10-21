@@ -1,4 +1,4 @@
-import { ActionIcon, Alert, Button, Center, Group, Loader, Stack, Table, Text, Title, Tooltip } from '@mantine/core'
+import { ActionIcon, Alert, Badge, Button, Center, Group, Loader, Stack, Table, Text, Title, Tooltip } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
@@ -88,7 +88,10 @@ export default function CategoriesPage() {
             <Table.Tbody>
               {categories.map((category) => (
                 <Table.Tr key={category.id}>
-                  <Table.Td fw={500}>{category.name}</Table.Td>
+                  <Table.Td fw={500}>
+                    {category.name}
+                    {category.isSoftware && <Badge size="xs" variant="light" ml="xs">{t('categories.software')}</Badge>}
+                  </Table.Td>
                   <Table.Td c="dimmed">{category.description}</Table.Td>
                   <Table.Td>{category.sortOrder}</Table.Td>
                   <Table.Td>{category.gearItemCount}</Table.Td>

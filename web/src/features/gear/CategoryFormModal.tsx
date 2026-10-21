@@ -1,4 +1,4 @@
-import { Button, Group, Modal, NumberInput, Stack, Textarea, TextInput } from '@mantine/core'
+import { Button, Checkbox, Group, Modal, NumberInput, Stack, Textarea, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import type { GearCategory, GearCategoryInput } from '../../api/types'
@@ -22,6 +22,7 @@ export default function CategoryFormModal({ opened, category, nextSortOrder, isS
       name: category?.name ?? '',
       description: category?.description ?? '',
       sortOrder: category?.sortOrder ?? nextSortOrder,
+      isSoftware: category?.isSoftware ?? false,
     },
     validate: {
       name: (value) => (value.trim() ? null : t('validation.required')),
@@ -44,6 +45,8 @@ export default function CategoryFormModal({ opened, category, nextSortOrder, isS
             allowDecimal={false}
             {...form.getInputProps('sortOrder')}
           />
+          <Checkbox label={t('categories.isSoftware')} description={t('categories.isSoftwareHint')}
+            {...form.getInputProps('isSoftware', { type: 'checkbox' })} />
           <Group justify="flex-end">
             <Button variant="default" onClick={onClose}>{t('common.cancel')}</Button>
             <Button type="submit" loading={isSaving}>{t('common.save')}</Button>

@@ -14,5 +14,8 @@ namespace StudioManager.DataLayer.DTO.Create
         public string? Description { get; set; }
 
         public int SortOrder { get; set; }
+
+        /// <summary>Software and plugins - never "in session today".</summary>
+        public bool IsSoftware { get; set; }
     }
 }

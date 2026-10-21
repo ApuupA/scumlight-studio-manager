@@ -18,6 +18,11 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
         Task<ProjectReadDto> SetPhoto(int id, Stream content, string fileName, long length);
 
         /// <summary>
+        /// Sets which parts of the work (recording, mixing, mastering) belong to the project. At least one must stay on.
+        /// </summary>
+        Task<ProjectReadDto> SetScope(int id, ProjectScopeDto dto);
+
+        /// <summary>
         /// The picture for downloading, null if there is none.
         /// </summary>
         Task<FileDownload?> GetPhoto(int id);
