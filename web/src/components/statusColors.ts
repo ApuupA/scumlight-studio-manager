@@ -1,4 +1,4 @@
-import type { InvoicePaymentStatus, ProjectStatus, SessionStatus, SongStatus, SongTrackStatus } from '../api/types'
+import type { InvoicePaymentStatus, MixVersionStatus, ProjectStatus, SessionStatus, SongStatus, SongTrackStatus } from '../api/types'
 
 /**
  * Badge colors per status value. When a C# enum gets a new value, TypeScript reports the missing color here.
@@ -47,4 +47,11 @@ export const invoicePaymentStatusColors: Record<InvoicePaymentStatus, string> = 
   Overdue: 'red',
   Cancelled: 'dark',
   Cancellation: 'dark',
+}
+
+export const mixVersionStatusColors: Record<MixVersionStatus, string> = {
+  InProgress: 'gray',
+  Sent: 'blue',
+  ChangesRequested: 'ember',
+  Approved: 'green',
 }

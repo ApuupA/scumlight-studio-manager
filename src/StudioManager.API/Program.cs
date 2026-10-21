@@ -196,6 +196,9 @@ try
     builder.Services.AddScoped<ISongSectionService, SongSectionService>();
     builder.Services.AddScoped<ISongTrackService, SongTrackService>();
     builder.Services.AddScoped<IProjectLinkService, ProjectLinkService>();
+    builder.Services.AddScoped<IMixVersionService, MixVersionService>();
+    builder.Services.AddScoped<IMixFeedbackService, MixFeedbackService>();
+    builder.Services.AddScoped<IProjectDeliverableService, ProjectDeliverableService>();
     builder.Services.AddScoped<IDrumTuningService, DrumTuningService>();
     builder.Services.AddScoped<IExternalGearService, ExternalGearService>();
     builder.Services.AddScoped<IBandGearLinkService, BandGearLinkService>();

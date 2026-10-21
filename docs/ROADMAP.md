@@ -85,6 +85,10 @@
 
 ## Later
 - ✅ **Start page** (v1.10.0): today's sessions, next sessions, open to-dos (tick off), unpaid invoices and open quotes, projects in progress with song progress
+- ✅ **Project scope** (v1.11.0): Recording / Mixing / Mastering per project hides the tabs that are not needed;
+  software gear categories; gear "used in" with settings
+- ✅ **Mix & master** (v1.12.0): mix versions per song with timestamped client feedback, included revisions and
+  extra revision as cost item; material + mix recall; LUFS / true peak / ISRC / pause per song; deliverables checklist
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search
 - Gear: maintenance log, lending (who has which mic), QR code labels, wishlist / budget

@@ -1314,6 +1314,86 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("InstrumentSetupItems");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.MixFeedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MixVersionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Timecode")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MixVersionId");
+
+                    b.ToTable("MixFeedback");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.MixVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Link")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SongId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SongId", "Number")
+                        .IsUnique();
+
+                    b.ToTable("MixVersions");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -1349,6 +1429,10 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<DateOnly?>("DueDate")
                         .HasColumnType("date");
 
+                    b.Property<decimal?>("ExtraRevisionPrice")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
                     b.Property<decimal?>("FlatPrice")
                         .HasPrecision(12, 2)
                         .HasColumnType("numeric(12,2)");
@@ -1356,6 +1440,9 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<decimal?>("HourlyRate")
                         .HasPrecision(10, 2)
                         .HasColumnType("numeric(10,2)");
+
+                    b.Property<int?>("IncludedRevisions")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IncludesMastering")
                         .HasColumnType("boolean");
@@ -1420,6 +1507,45 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectDeliverable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectDeliverables");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", b =>
@@ -1612,9 +1738,39 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<decimal?>("GapBeforeSeconds")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<string>("Isrc")
+                        .HasMaxLength(12)
+                        .HasColumnType("character varying(12)");
+
                     b.Property<string>("Lyrics")
                         .HasMaxLength(20000)
                         .HasColumnType("character varying(20000)");
+
+                    b.Property<string>("MaterialLink")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("MaterialNotes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateOnly?>("MaterialReceivedOn")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("MaterialTrackCount")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("MeasuredLufs")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<string>("MixNotes")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(4000)
@@ -1635,6 +1791,10 @@ namespace StudioManager.DataLayer.Migrations
 
                     b.Property<int>("TrackNumber")
                         .HasColumnType("integer");
+
+                    b.Property<decimal?>("TruePeak")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
 
                     b.Property<string>("Tuning")
                         .HasMaxLength(50)
@@ -2316,6 +2476,28 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("ProjectInstrument");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.MixFeedback", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.MixVersion", "MixVersion")
+                        .WithMany("Feedback")
+                        .HasForeignKey("MixVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MixVersion");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.MixVersion", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Song", "Song")
+                        .WithMany("MixVersions")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Song");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Project", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.ClientModels.Client", "Client")
@@ -2325,6 +2507,17 @@ namespace StudioManager.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectDeliverable", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
+                        .WithMany("Deliverables")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectInstrument", b =>
@@ -2502,8 +2695,15 @@ namespace StudioManager.DataLayer.Migrations
                     b.Navigation("Sessions");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.MixVersion", b =>
+                {
+                    b.Navigation("Feedback");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Project", b =>
                 {
+                    b.Navigation("Deliverables");
+
                     b.Navigation("DrumTunings");
 
                     b.Navigation("ExternalGear");
@@ -2531,6 +2731,8 @@ namespace StudioManager.DataLayer.Migrations
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.Song", b =>
                 {
+                    b.Navigation("MixVersions");
+
                     b.Navigation("Sections");
 
                     b.Navigation("Tempos");

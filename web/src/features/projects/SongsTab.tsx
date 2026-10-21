@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 import { songStatuses, type Project, type Song, type SongStatus } from '../../api/types'
 import RowActions from '../../components/RowActions'
 import StatusBadge from '../../components/StatusBadge'
-import { songStatusColors } from '../../components/statusColors'
+import { mixVersionStatusColors, songStatusColors } from '../../components/statusColors'
 import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useDeleteSong, useSetSongStatus, useSongs } from './projectApi'
@@ -110,6 +110,7 @@ export default function SongsTab({ project }: { project: Project }) {
                 <Table.Th>{t('songs.bpm')}</Table.Th>
                 <Table.Th>{t('songs.tuning')}</Table.Th>
                 {project.includesRecording && <Table.Th w={130}>{t('songPage.recording')}</Table.Th>}
+                {project.includesMixing && <Table.Th w={150}>{t('mixing.mix')}</Table.Th>}
                 <Table.Th w={90} />
               </Table.Tr>
             </Table.Thead>
@@ -140,6 +141,17 @@ export default function SongsTab({ project }: { project: Project }) {
                           <Text size="xs" c="dimmed">{song.tracksRecordedCount} / {song.trackCount}</Text>
                           <Progress size="sm" value={(song.tracksRecordedCount / song.trackCount) * 100} />
                         </>
+                      )}
+                    </Table.Td>
+                  )}
+                  {project.includesMixing && (
+                    <Table.Td>
+                      {/* The newest mix version, e.g. "v3 · Approved" */}
+                      {song.latestMixNumber != null && song.latestMixStatus && (
+                        <Group gap={6} wrap="nowrap">
+                          <Text size="sm" fw={600}>v{song.latestMixNumber}</Text>
+                          <StatusBadge value={song.latestMixStatus} translationKey="mixVersionStatus" colors={mixVersionStatusColors} size="xs" />
+                        </Group>
                       )}
                     </Table.Td>
                   )}

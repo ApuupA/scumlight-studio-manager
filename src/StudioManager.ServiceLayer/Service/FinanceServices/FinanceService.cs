@@ -126,6 +126,8 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
                 HourlyRate = project.HourlyRate,
                 EffectiveHourlyRate = hourlyRate,
                 FlatPrice = project.FlatPrice,
+                IncludedRevisions = project.IncludedRevisions,
+                ExtraRevisionPrice = project.ExtraRevisionPrice,
                 TotalHours = totalHours,
                 BillableHours = billableHours,
                 LaborValue = Math.Round(laborValue, 2),
@@ -152,6 +154,8 @@ namespace StudioManager.ServiceLayer.Service.FinanceServices
             project.PricingMode = dto.PricingMode;
             project.HourlyRate = dto.HourlyRate;
             project.FlatPrice = dto.FlatPrice;
+            project.IncludedRevisions = dto.IncludedRevisions;
+            project.ExtraRevisionPrice = dto.ExtraRevisionPrice;
             await _projectRepository.UpdateAsync(project);
 
             return await GetProjectFinance(projectId);

@@ -10,16 +10,25 @@ import { useSaveCostItem } from './financeApi'
 /**
  * Create or edit an extra item of a project, e.g. "Tape reel" 2 × 45 €.
  */
-export default function CostItemFormModal({ projectId, item, onClose }: { projectId: number; item?: ProjectCostItem; onClose: () => void }) {
+interface CostItemFormModalProps {
+  projectId: number
+  /** The item to edit, undefined for a new one. */
+  item?: ProjectCostItem
+  /** Prefilled values for a new item, e.g. an extra mix revision. */
+  defaults?: { description: string; unitPrice?: number | null }
+  onClose: () => void
+}
+
+export default function CostItemFormModal({ projectId, item, defaults, onClose }: CostItemFormModalProps) {
   const { t, i18n } = useTranslation()
   const saveItem = useSaveCostItem()
 
   const form = useForm({
     initialValues: {
       date: item?.date ?? todayIso(),
-      description: item?.description ?? '',
+      description: item?.description ?? defaults?.description ?? '',
       quantity: (item?.quantity ?? 1) as number | string,
-      unitPrice: (item?.unitPrice ?? '') as number | string,
+      unitPrice: (item?.unitPrice ?? defaults?.unitPrice ?? '') as number | string,
       isBillable: item?.isBillable ?? true,
     },
     validate: {

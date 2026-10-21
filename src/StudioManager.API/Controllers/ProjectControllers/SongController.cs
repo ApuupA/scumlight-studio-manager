@@ -34,6 +34,15 @@ namespace StudioManager.API.Controllers.ProjectControllers
         }
 
         /// <summary>
+        /// Saves the mixing and mastering details of a song (song page). Always saves all fields.
+        /// </summary>
+        [HttpPut("{id:int}/mix-info")]
+        public async Task<ActionResult<SongReadDto>> SetMixInfo(int id, [FromBody] SongMixInfoDto dto)
+        {
+            return Ok(await _service.SetMixInfo(id, dto));
+        }
+
+        /// <summary>
         /// Sets the same status for several songs at once.
         /// </summary>
         [HttpPut("status")]

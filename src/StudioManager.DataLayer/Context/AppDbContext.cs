@@ -25,6 +25,9 @@ namespace StudioManager.DataLayer.Context
         public DbSet<SongSection> SongSections { get; set; } = null!;
         public DbSet<SongTrack> SongTracks { get; set; } = null!;
         public DbSet<ProjectLink> ProjectLinks { get; set; } = null!;
+        public DbSet<MixVersion> MixVersions { get; set; } = null!;
+        public DbSet<MixFeedback> MixFeedback { get; set; } = null!;
+        public DbSet<ProjectDeliverable> ProjectDeliverables { get; set; } = null!;
         public DbSet<DrumTuning> DrumTunings { get; set; } = null!;
         public DbSet<ExternalGear> ExternalGear { get; set; } = null!;
 
@@ -142,6 +145,7 @@ namespace StudioManager.DataLayer.Context
         {
             modelBuilder.Entity<Project>(entity =>
             {
+                entity.Property(p => p.ExtraRevisionPrice).HasPrecision(10, 2);
                 entity.Property(p => p.PhotoPath).HasMaxLength(300);
                 entity.Property(p => p.BandGearToken).HasMaxLength(64);
                 entity.HasIndex(p => p.BandGearToken).IsUnique();
@@ -171,6 +175,13 @@ namespace StudioManager.DataLayer.Context
 
             modelBuilder.Entity<Song>(entity =>
             {
+                entity.Property(s => s.MaterialLink).HasMaxLength(2000);
+                entity.Property(s => s.MaterialNotes).HasMaxLength(2000);
+                entity.Property(s => s.MixNotes).HasMaxLength(8000);
+                entity.Property(s => s.Isrc).HasMaxLength(12);
+                entity.Property(s => s.MeasuredLufs).HasPrecision(5, 2);
+                entity.Property(s => s.TruePeak).HasPrecision(5, 2);
+                entity.Property(s => s.GapBeforeSeconds).HasPrecision(5, 2);
                 entity.Property(s => s.Title).HasMaxLength(200).IsRequired();
                 entity.Property(s => s.Status).HasConversion<string>().HasMaxLength(20);
                 entity.Property(s => s.Tuning).HasMaxLength(50);
@@ -219,6 +230,41 @@ namespace StudioManager.DataLayer.Context
                 entity.HasOne(t => t.Song)
                       .WithMany(s => s.Tempos)
                       .HasForeignKey(t => t.SongId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<MixVersion>(entity =>
+            {
+                entity.Property(v => v.Status).HasConversion<string>().HasMaxLength(20);
+                entity.Property(v => v.Link).HasMaxLength(2000);
+                entity.Property(v => v.Notes).HasMaxLength(4000);
+                entity.HasIndex(v => new { v.SongId, v.Number }).IsUnique();
+
+                entity.HasOne(v => v.Song)
+                      .WithMany(s => s.MixVersions)
+                      .HasForeignKey(v => v.SongId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<MixFeedback>(entity =>
+            {
+                entity.Property(f => f.Timecode).HasMaxLength(10);
+                entity.Property(f => f.Text).HasMaxLength(1000).IsRequired();
+
+                entity.HasOne(f => f.MixVersion)
+                      .WithMany(v => v.Feedback)
+                      .HasForeignKey(f => f.MixVersionId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<ProjectDeliverable>(entity =>
+            {
+                entity.Property(d => d.Name).HasMaxLength(200).IsRequired();
+                entity.Property(d => d.Notes).HasMaxLength(1000);
+
+                entity.HasOne(d => d.Project)
+                      .WithMany(p => p.Deliverables)
+                      .HasForeignKey(d => d.ProjectId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
