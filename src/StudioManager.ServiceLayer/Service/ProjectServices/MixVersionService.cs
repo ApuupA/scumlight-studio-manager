@@ -89,6 +89,10 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
             _mapper.Map(updateDto, version);
             version.Name = updateDto.Name ?? version.Name;
+            if (version.Status != MixVersionStatus.Approved)
+            {
+                version.ApprovedBy = null; // "approved by Simon" only as long as it is approved
+            }
             // The song list is replaced (EF removes the rows of the songs that are not exported anymore)
             version.Songs.Clear();
             foreach (var song in songs)

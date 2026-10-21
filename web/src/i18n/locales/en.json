@@ -234,6 +234,9 @@
     },
     "mixFeedback": {
       "songNotInVersion": "The song is not in this mix version."
+    },
+    "clientLink": {
+      "tooManyEntries": "There are too many entries - please contact the studio."
     }
   },
   "profile": {
@@ -1184,5 +1187,52 @@
     "warningOld": "The last backup is from {{date}} - older than 2 days.",
     "warningOffsite": "The copy off the server ({{target}}) failed.",
     "toProfile": "Details on the profile page"
+  },
+  "clientLink": {
+    "title": "Client link",
+    "hint": "One link for the band: listen to the mix versions and comment, approve mixes, add references, enter the gear they bring - no login.",
+    "open": "Open",
+    "create": "Create link",
+    "renew": "New link",
+    "renewConfirm": "The link the band has stops working. They need the new one.",
+    "switchOff": "Switch off link",
+    "switchOffConfirm": "The client page can not be opened anymore. Everything entered stays."
+  },
+  "clientPage": {
+    "yourName": "Your name",
+    "yourNameHint": "Every comment is signed with it - remembered on this device.",
+    "yourNamePlaceholder": "e.g. Simon (guitar)",
+    "nameRequired": "Please enter your name first.",
+    "mixes": "Mixes",
+    "references": "References",
+    "gear": "Equipment",
+    "noVersions": "No mix to listen to yet.",
+    "mixesHint": "Listen to a version and write what should change - best with the time in the song (e.g. 1:23). When everything fits: \"Approve mix\".",
+    "changes": "New in this version",
+    "studio": "Studio",
+    "done": "done",
+    "feedbackPlaceholder": "What should change? e.g. vocals a bit louder",
+    "send": "Send",
+    "approve": "Approve mix",
+    "approveTitle": "Approve {{name}}?",
+    "approveConfirm": "The studio sees that this mix is fine for you as it is.",
+    "approvedBy": "Approved by {{name}}",
+    "referencesHint": "Songs that sound the way you want yours to sound - with a link (Spotify, YouTube, ...) and what you like about it.",
+    "noReferences": "No references yet.",
+    "referenceTitle": "Artist - song",
+    "referenceTitlePlaceholder": "e.g. Mastodon - Blood and Thunder",
+    "referenceUrl": "Link",
+    "referenceNotes": "What do you like about it?",
+    "referenceNotesPlaceholder": "e.g. the snare sound, the wide guitars",
+    "allSongs": "All songs",
+    "addReference": "Add reference",
+    "addedBy": "from {{name}}"
+  },
+  "clientNews": {
+    "title": "New from clients",
+    "from": "from {{names}}",
+    "comments": "Comments: {{count}}",
+    "references": "References: {{count}}",
+    "new": "new"
   }
 }

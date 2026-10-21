@@ -979,6 +979,243 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/ClientLink/news": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ClientNewsDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ClientLink/project/{projectId}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ClientLink/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    token: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ClientPageDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ClientLink/{token}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    token: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ClientFeedbackCreateDto"];
+                    "text/json": components["schemas"]["ClientFeedbackCreateDto"];
+                    "application/*+json": components["schemas"]["ClientFeedbackCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ClientPageDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ClientLink/{token}/versions/{mixVersionId}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    token: string;
+                    mixVersionId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ClientApproveDto"];
+                    "text/json": components["schemas"]["ClientApproveDto"];
+                    "application/*+json": components["schemas"]["ClientApproveDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ClientPageDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ClientLink/{token}/references": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    token: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ClientReferenceCreateDto"];
+                    "text/json": components["schemas"]["ClientReferenceCreateDto"];
+                    "application/*+json": components["schemas"]["ClientReferenceCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ClientPageDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/DataSafety/status": {
         parameters: {
             query?: never;
@@ -7555,6 +7792,9 @@ export interface components {
             currentPassword: string;
             newPassword: string;
         };
+        ClientApproveDto: {
+            authorName: string;
+        };
         ClientCreateDto: {
             name: string;
             contactPerson?: string | null;
@@ -7563,6 +7803,60 @@ export interface components {
             phone?: string | null;
             address?: string | null;
             notes?: string | null;
+        };
+        ClientFeedbackCreateDto: {
+            /** Format: int32 */
+            mixVersionId: number;
+            /** Format: int32 */
+            songId?: number | null;
+            timecode?: string | null;
+            text: string;
+            authorName: string;
+        };
+        ClientFeedbackDto: {
+            author?: string | null;
+            isFromClient: boolean;
+            songTitle?: string | null;
+            timecode?: string | null;
+            text: string;
+            isDone: boolean;
+            /** Format: date-time */
+            dateCreated: string;
+        };
+        ClientMixVersionDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: date */
+            date: string;
+            status: components["schemas"]["MixVersionStatus"];
+            link?: string | null;
+            notes?: string | null;
+            isAllSongs: boolean;
+            songs: components["schemas"]["SongShortDto"][];
+            approvedBy?: string | null;
+            feedback: components["schemas"]["ClientFeedbackDto"][];
+        };
+        ClientNewsDto: {
+            /** Format: int32 */
+            projectId: number;
+            projectTitle: string;
+            /** Format: int32 */
+            feedbackCount: number;
+            /** Format: int32 */
+            referenceCount: number;
+            authors: string[];
+            /** Format: date-time */
+            latestAt: string;
+        };
+        ClientPageDto: {
+            projectTitle: string;
+            bandNames: string;
+            showMixing: boolean;
+            showGear: boolean;
+            songs: components["schemas"]["SongShortDto"][];
+            mixVersions: components["schemas"]["ClientMixVersionDto"][];
+            references: components["schemas"]["ClientReferenceDto"][];
         };
         ClientReadDto: {
             /** Format: int32 */
@@ -7583,6 +7877,22 @@ export interface components {
             dateUpdated: string;
             hasPhoto: boolean;
             fallbackPhoto?: components["schemas"]["PhotoRefDto"];
+        };
+        ClientReferenceCreateDto: {
+            title: string;
+            /** Format: uri */
+            url: string;
+            notes?: string | null;
+            /** Format: int32 */
+            songId?: number | null;
+            authorName: string;
+        };
+        ClientReferenceDto: {
+            title: string;
+            url: string;
+            notes?: string | null;
+            songTitle?: string | null;
+            addedBy?: string | null;
         };
         DataSafetyStatusDto: {
             /** Format: date-time */
@@ -8017,6 +8327,11 @@ export interface components {
             timecode?: string | null;
             text: string;
             isDone: boolean;
+            author?: string | null;
+            isFromClient: boolean;
+            isUnread: boolean;
+            /** Format: date-time */
+            dateCreated: string;
             /** Format: int32 */
             mixVersionId: number;
         };
@@ -8043,6 +8358,7 @@ export interface components {
             status: components["schemas"]["MixVersionStatus"];
             link?: string | null;
             notes?: string | null;
+            approvedBy?: string | null;
             /** Format: int32 */
             projectId: number;
             songs: components["schemas"]["SongShortDto"][];
@@ -8268,6 +8584,8 @@ export interface components {
             /** Format: int32 */
             songId?: number | null;
             songTitle?: string | null;
+            addedBy?: string | null;
+            isUnread: boolean;
             /** Format: date-time */
             dateCreated: string;
             /** Format: date-time */

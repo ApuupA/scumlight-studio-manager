@@ -5,6 +5,7 @@ import { useCurrentUser } from '../auth/authApi'
 import { coversDay } from '../sessions/sessionDates'
 import { useSessions } from '../sessions/sessionApi'
 import BackupWarning from '../dataSafety/BackupWarning'
+import ClientNewsCard from '../clientLink/ClientNewsCard'
 import ActiveProjectsCard from './ActiveProjectsCard'
 import MoneyCard from './MoneyCard'
 import OpenTasksCard from './OpenTasksCard'
@@ -48,6 +49,7 @@ export default function DashboardPage() {
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6 }}>
           <Stack>
+            <ClientNewsCard />
             <MoneyCard />
             <ActiveProjectsCard />
           </Stack>

@@ -1,14 +1,17 @@
-import { ActionIcon, Button, CopyButton, Group, Menu, Paper, Text, TextInput, Tooltip } from '@mantine/core'
+import { ActionIcon, Anchor, Button, CopyButton, Group, Menu, Paper, Text, TextInput, Tooltip } from '@mantine/core'
 import { modals } from '@mantine/modals'
-import { IconCheck, IconCopy, IconDots, IconLink, IconLinkOff, IconRefresh } from '@tabler/icons-react'
+import { IconCheck, IconCopy, IconDots, IconExternalLink, IconLink, IconLinkOff, IconRefresh } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { notifyError } from '../../utils/notify'
-import { bandGearUrl, useBandGearLink, useCreateBandGearLink, useDeleteBandGearLink } from './bandGearLinkApi'
+import { useBandGearLink, useCreateBandGearLink, useDeleteBandGearLink } from '../bandGearLink/bandGearLinkApi'
+import { clientUrl } from './clientLinkApi'
 
 /**
- * In the project tab "Band gear": the link for the band - create, copy, renew or switch it off.
+ * The client link of a project - create, copy, renew or switch it off. The client sees the mix versions
+ * (with feedback and approving), the references and the band gear form, depending on the project scope.
+ * Shown in the tabs "Mixing", "References & mixes" and "Band gear" (always the same link).
  */
-export default function BandGearLinkCard({ projectId }: { projectId: number }) {
+export default function ClientLinkCard({ projectId }: { projectId: number }) {
   const { t } = useTranslation()
   const { data } = useBandGearLink(projectId)
   const createLink = useCreateBandGearLink()
@@ -16,7 +19,7 @@ export default function BandGearLinkCard({ projectId }: { projectId: number }) {
 
   const create = () => createLink.mutate(projectId, { onError: (error) => notifyError(error, t) })
 
-  // Renewing or switching off makes the link the band has useless - ask first
+  // Renewing or switching off makes the link the client has useless - ask first
   const confirm = (title: string, message: string, onConfirm: () => void) =>
     modals.openConfirmModal({
       title,
@@ -26,16 +29,21 @@ export default function BandGearLinkCard({ projectId }: { projectId: number }) {
       onConfirm,
     })
 
-  const url = data?.token ? bandGearUrl(data.token) : null
+  const url = data?.token ? clientUrl(data.token) : null
 
   return (
     <Paper withBorder p="sm">
-      <Text size="sm" fw={600}>{t('bandGearLink.title')}</Text>
-      <Text size="xs" c="dimmed" mb="xs">{t('bandGearLink.hint')}</Text>
+      <Group justify="space-between">
+        <Text size="sm" fw={600}>{t('clientLink.title')}</Text>
+        {url && (
+          <Anchor href={url} target="_blank" size="xs">{t('clientLink.open')} <IconExternalLink size={10} /></Anchor>
+        )}
+      </Group>
+      <Text size="xs" c="dimmed" mb="xs">{t('clientLink.hint')}</Text>
 
       {url ? (
         <Group gap="xs" wrap="nowrap">
-          <TextInput size="xs" value={url} readOnly style={{ flex: 1 }} aria-label={t('bandGearLink.title')}
+          <TextInput size="xs" value={url} readOnly style={{ flex: 1 }} aria-label={t('clientLink.title')}
             onFocus={(e) => e.currentTarget.select()} />
           <CopyButton value={url}>
             {({ copied, copy }) => (
@@ -52,20 +60,20 @@ export default function BandGearLinkCard({ projectId }: { projectId: number }) {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item leftSection={<IconRefresh size={14} />}
-                onClick={() => confirm(t('bandGearLink.renew'), t('bandGearLink.renewConfirm'), create)}>
-                {t('bandGearLink.renew')}
+                onClick={() => confirm(t('clientLink.renew'), t('clientLink.renewConfirm'), create)}>
+                {t('clientLink.renew')}
               </Menu.Item>
               <Menu.Item leftSection={<IconLinkOff size={14} />} color="red"
-                onClick={() => confirm(t('bandGearLink.switchOff'), t('bandGearLink.switchOffConfirm'),
+                onClick={() => confirm(t('clientLink.switchOff'), t('clientLink.switchOffConfirm'),
                   () => deleteLink.mutate(projectId, { onError: (error) => notifyError(error, t) }))}>
-                {t('bandGearLink.switchOff')}
+                {t('clientLink.switchOff')}
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Group>
       ) : (
         <Button size="xs" variant="light" leftSection={<IconLink size={14} />} loading={createLink.isPending} onClick={create}>
-          {t('bandGearLink.create')}
+          {t('clientLink.create')}
         </Button>
       )}
     </Paper>

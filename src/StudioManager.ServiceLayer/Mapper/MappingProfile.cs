@@ -258,6 +258,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Number, opt => opt.Ignore()) // given by MixVersionService
                 .ForMember(dest => dest.Name, opt => opt.Ignore())   // "v" + number if empty, set by MixVersionService
+                .ForMember(dest => dest.ApprovedBy, opt => opt.Ignore()) // set when the client approves
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.Songs, opt => opt.Ignore())
                 .ForMember(dest => dest.Feedback, opt => opt.Ignore())
@@ -267,6 +268,10 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.SongTitle, opt => opt.MapFrom(src => src.Song != null ? src.Song.Title : null));
             CreateMap<MixFeedbackCreateDto, MixFeedback>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                // The author is set once when the comment is written (MixFeedbackService / ClientLinkService)
+                .ForMember(dest => dest.Author, opt => opt.Ignore())
+                .ForMember(dest => dest.IsFromClient, opt => opt.Ignore())
+                .ForMember(dest => dest.IsUnread, opt => opt.Ignore())
                 .ForMember(dest => dest.MixVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.Song, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
@@ -317,6 +322,9 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.SongTitle, opt => opt.MapFrom(src => src.Song != null ? src.Song.Title : null));
             CreateMap<ProjectLinkCreateDto, ProjectLink>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                // Set when the client adds a link on the client page - editing it in the studio keeps them
+                .ForMember(dest => dest.AddedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.IsUnread, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.Song, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())

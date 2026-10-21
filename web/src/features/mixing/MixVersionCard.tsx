@@ -46,6 +46,7 @@ export default function MixVersionCard({ version, onEdit, onDelete, onBookExtra 
               <> · <Anchor href={version.link} target="_blank" size="xs">{t('mixing.listen')} <IconExternalLink size={10} /></Anchor></>
             )}
           </Text>
+          {version.approvedBy && <Text size="xs" c="green">{t('clientPage.approvedBy', { name: version.approvedBy })}</Text>}
           {version.notes && <Text size="sm" mt={4}>{version.notes}</Text>}
         </div>
         <Group gap={2} wrap="nowrap">

@@ -12,7 +12,9 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public string? PhotoPath { get; set; }
 
         /// <summary>
-        /// Secret of the band gear link (/band-gear/{token}), where the band enters its gear. Null = no link.
+        /// Secret of the client link (/client/{token}): the client sees the mix versions, gives feedback, adds references
+        /// and enters the gear the band brings - no login. Null = no link. (Started as band gear link - the name is kept,
+        /// so the database column and old /band-gear/ links stay valid.)
         /// </summary>
         public string? BandGearToken { get; set; }
 

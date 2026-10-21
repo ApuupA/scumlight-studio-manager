@@ -3,7 +3,8 @@ import { api, unwrap } from '../../api/client'
 import type { BandGearSuggestionInput } from '../../api/types'
 
 /**
- * Band gear link: the studio creates a link per project, the band enters its gear on a public page (no login).
+ * Band gear: the studio creates the client link of a project (these endpoints), the band enters its gear in the
+ * tab "Equipment" of the client page (no login). See clientLinkApi.ts for the rest of the client page.
  */
 
 // ---------- For the studio (logged in) ----------
@@ -41,11 +42,6 @@ export function useAcceptBandGear() {
     mutationFn: (id: number) => unwrap(api.POST('/api/ExternalGear/{id}/accept', { params: { path: { id } } })),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['externalGear'] }),
   })
-}
-
-/** The full link for the band, e.g. https://studio.example.de/band-gear/abc... */
-export function bandGearUrl(token: string) {
-  return `${window.location.origin}/band-gear/${token}`
 }
 
 // ---------- For the band (public page) ----------

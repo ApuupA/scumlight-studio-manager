@@ -966,6 +966,233 @@
         }
       }
     },
+    "/api/ClientLink/news": {
+      "get": {
+        "tags": [
+          "ClientLink"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientNewsDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ClientLink/project/{projectId}/read": {
+      "post": {
+        "tags": [
+          "ClientLink"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ClientLink/{token}": {
+      "get": {
+        "tags": [
+          "ClientLink"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientPageDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ClientLink/{token}/feedback": {
+      "post": {
+        "tags": [
+          "ClientLink"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientFeedbackCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientFeedbackCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientFeedbackCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientPageDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ClientLink/{token}/versions/{mixVersionId}/approve": {
+      "post": {
+        "tags": [
+          "ClientLink"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mixVersionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientApproveDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientApproveDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientApproveDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientPageDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ClientLink/{token}/references": {
+      "post": {
+        "tags": [
+          "ClientLink"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientReferenceCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientReferenceCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientReferenceCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientPageDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/DataSafety/status": {
       "get": {
         "tags": [
@@ -3459,26 +3686,6 @@
       }
     },
     "/api/MixFeedback": {
-      "get": {
-        "tags": [
-          "MixFeedback"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MixFeedbackReadDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "post": {
         "tags": [
           "MixFeedback"
@@ -3509,6 +3716,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MixFeedbackReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "MixFeedback"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MixFeedbackReadDto"
+                  }
                 }
               }
             }
@@ -8209,6 +8436,20 @@
         },
         "additionalProperties": false
       },
+      "ClientApproveDto": {
+        "required": [
+          "authorName"
+        ],
+        "type": "object",
+        "properties": {
+          "authorName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "ClientCreateDto": {
         "required": [
           "name"
@@ -8245,6 +8486,220 @@
             "maxLength": 4000,
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientFeedbackCreateDto": {
+        "required": [
+          "authorName",
+          "mixVersionId",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "mixVersionId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "songId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "timecode": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "authorName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientFeedbackDto": {
+        "required": [
+          "dateCreated",
+          "isDone",
+          "isFromClient",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string",
+            "nullable": true
+          },
+          "isFromClient": {
+            "type": "boolean"
+          },
+          "songTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "timecode": {
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientMixVersionDto": {
+        "required": [
+          "date",
+          "feedback",
+          "id",
+          "isAllSongs",
+          "name",
+          "songs",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MixVersionStatus"
+          },
+          "link": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "isAllSongs": {
+            "type": "boolean"
+          },
+          "songs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SongShortDto"
+            }
+          },
+          "approvedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "feedback": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientFeedbackDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientNewsDto": {
+        "required": [
+          "authors",
+          "feedbackCount",
+          "latestAt",
+          "projectId",
+          "projectTitle",
+          "referenceCount"
+        ],
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectTitle": {
+            "type": "string"
+          },
+          "feedbackCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "referenceCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "latestAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientPageDto": {
+        "required": [
+          "bandNames",
+          "mixVersions",
+          "projectTitle",
+          "references",
+          "showGear",
+          "showMixing",
+          "songs"
+        ],
+        "type": "object",
+        "properties": {
+          "projectTitle": {
+            "type": "string"
+          },
+          "bandNames": {
+            "type": "string"
+          },
+          "showMixing": {
+            "type": "boolean"
+          },
+          "showGear": {
+            "type": "boolean"
+          },
+          "songs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SongShortDto"
+            }
+          },
+          "mixVersions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientMixVersionDto"
+            }
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientReferenceDto"
+            }
           }
         },
         "additionalProperties": false
@@ -8309,6 +8764,71 @@
           },
           "fallbackPhoto": {
             "$ref": "#/components/schemas/PhotoRefDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientReferenceCreateDto": {
+        "required": [
+          "authorName",
+          "title",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "url": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "notes": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "songId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "authorName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientReferenceDto": {
+        "required": [
+          "title",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "songTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "addedBy": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -9802,8 +10322,11 @@
       },
       "MixFeedbackReadDto": {
         "required": [
+          "dateCreated",
           "id",
           "isDone",
+          "isFromClient",
+          "isUnread",
           "mixVersionId",
           "text"
         ],
@@ -9831,6 +10354,20 @@
           },
           "isDone": {
             "type": "boolean"
+          },
+          "author": {
+            "type": "string",
+            "nullable": true
+          },
+          "isFromClient": {
+            "type": "boolean"
+          },
+          "isUnread": {
+            "type": "boolean"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time"
           },
           "mixVersionId": {
             "type": "integer",
@@ -9926,6 +10463,10 @@
             "nullable": true
           },
           "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "approvedBy": {
             "type": "string",
             "nullable": true
           },
@@ -10639,6 +11180,7 @@
           "dateCreated",
           "dateUpdated",
           "id",
+          "isUnread",
           "projectId",
           "title",
           "type",
@@ -10675,6 +11217,13 @@
           "songTitle": {
             "type": "string",
             "nullable": true
+          },
+          "addedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "isUnread": {
+            "type": "boolean"
           },
           "dateCreated": {
             "type": "string",
@@ -12689,6 +13238,9 @@
     },
     {
       "name": "Client"
+    },
+    {
+      "name": "ClientLink"
     },
     {
       "name": "DataSafety"
