@@ -8,6 +8,17 @@ export MSYS_NO_PATHCONV=1
 # Every script works in the repository folder (where docker-compose.yml is), wherever it is started from
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
+# A setting from the environment or from .env, e.g. env_value OFFSITE_REMOTE (empty if not set).
+# Trailing spaces and Windows line ends are removed.
+env_value() {
+  local name="$1"
+  local value="${!name:-}"
+  if [ -z "$value" ] && [ -f .env ]; then
+    value="$(grep -E "^$name=" .env | tail -n 1 | cut -d= -f2- | sed 's/[[:space:]]*$//')"
+  fi
+  echo "$value"
+}
+
 # Port of the app on this machine: WEB_PORT from the environment or from .env ("127.0.0.1:8081" -> 8081), default 8080
 web_port() {
   local value="${WEB_PORT:-$(grep -E '^WEB_PORT=' .env 2>/dev/null | cut -d= -f2 | tr -d '[:space:]')}"

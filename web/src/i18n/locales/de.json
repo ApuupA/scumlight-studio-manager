@@ -1078,7 +1078,8 @@
     "net": "Netto",
     "vat": "USt.",
     "gross": "Brutto",
-    "missingReceipts": "Ausgaben ohne Beleg: {{count}}"
+    "missingReceipts": "Ausgaben ohne Beleg: {{count}}",
+    "exportArchive": "Archiv (ZIP)"
   },
   "dashboard": {
     "greeting": "Hallo {{name}}!",
@@ -1162,5 +1163,26 @@
     "sequence": "Album-Reihenfolge",
     "sequenceHint": "Trag die Werte direkt hier ein – der Haken speichert die Zeile. True Peak über -1 dBTP ist orange (kann als MP3 / AAC verzerren).",
     "target": "Ziel: {{lufs}} LUFS."
+  },
+  "dataSafety": {
+    "title": "Datensicherung",
+    "lastBackup": "Letzte Sicherung",
+    "noBackupYet": "noch keine bekannt",
+    "database": "Datenbank",
+    "offsite": "Außerhalb des Servers",
+    "onlyOnServer": "nein – nur auf dem Server",
+    "offsiteOk": "ja, {{target}}",
+    "offsiteFailed": "FEHLGESCHLAGEN ({{target}})",
+    "attentionHint": "Die Sicherung läuft jede Nacht mit scripts/backup.sh auf dem Server (Cron). Schau in backup.log auf dem Server; wie die Sicherung zusätzlich außerhalb des Servers landet, steht in docs/DEPLOYMENT.md.",
+    "archives": "Finanzarchive",
+    "archivesHint": "Ein ZIP pro Jahr mit allen Listen (CSV), jeder Rechnung als HTML-Datei und allen Belegen – lesbar auch ohne die App. Wird jede Nacht geschrieben und mit der Sicherung gesichert.",
+    "archiveCreated": "geschrieben {{date}}",
+    "download": "Herunterladen",
+    "createArchive": "Archiv {{year}} jetzt herunterladen",
+    "warningTitle": "Datensicherung prüfen",
+    "warningNoBackup": "Es ist noch keine Datensicherung bekannt.",
+    "warningOld": "Die letzte Sicherung ist vom {{date}} – älter als 2 Tage.",
+    "warningOffsite": "Die Kopie außerhalb des Servers ({{target}}) ist fehlgeschlagen.",
+    "toProfile": "Details auf der Profilseite"
   }
 }

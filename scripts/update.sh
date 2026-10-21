@@ -27,7 +27,15 @@ if [ "${1:-}" != "-y" ]; then
 fi
 
 echo "== 2/5 Backup"
-bash scripts/backup.sh before-update
+# Exit code 2 of backup.sh: saved on the server, only the copy off the server failed - that does not stop the update
+backup_status=0
+bash scripts/backup.sh before-update || backup_status=$?
+if [ "$backup_status" -eq 2 ]; then
+  echo "Warning: the copy off the server failed - the backup on the server is fine, the update continues."
+elif [ "$backup_status" -ne 0 ]; then
+  echo "Backup failed - nothing was updated." >&2
+  exit "$backup_status"
+fi
 
 echo "== 3/5 Getting the new version"
 # --ff-only: only moves forward to origin/main, never merges - the server has no own changes

@@ -90,6 +90,9 @@
 - ✅ **Mix & master** (v1.12.0): tab "Mixing" with the material (once per project) and mix versions of the project
   ("v1" all songs, "v1.1" some) with feedback per song and timecode; revisions counted per song, extra ones as cost item;
   song page: feedback, problems in the material, mix recall; tab "Mastering": deliverables + album list with LUFS / dBTP / ISRC
+- ✅ **Data safety** (v1.13.0): nightly finance archive (ZIP per year: CSV lists, invoices as HTML, receipts),
+  backups optionally copied off the server with rclone (encrypted), backup status in the app + warning on the start page
+- **Next**: AfA (depreciation of equipment over its useful life) in the expenses and the yearly overview
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search
 - Gear: maintenance log, lending (who has which mic), QR code labels, wishlist / budget

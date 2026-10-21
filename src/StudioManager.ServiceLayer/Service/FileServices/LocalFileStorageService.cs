@@ -1,4 +1,5 @@
 using StudioManager.ServiceLayer.IService.IFileServices;
+using StudioManager.ServiceLayer.Results;
 
 namespace StudioManager.ServiceLayer.Service.FileServices
 {
@@ -41,6 +42,33 @@ namespace StudioManager.ServiceLayer.Service.FileServices
             {
                 File.Delete(fullPath);
             }
+        }
+
+        public async Task WriteAsync(string relativePath, Stream content)
+        {
+            var fullPath = ToFullPath(relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+
+            // Write to a temporary file first and then replace - a half written file never has the real name
+            var tempPath = fullPath + ".tmp";
+            await using (var file = File.Create(tempPath))
+            {
+                await content.CopyToAsync(file);
+            }
+            File.Move(tempPath, fullPath, overwrite: true);
+        }
+
+        public IEnumerable<StoredFileInfo> List(string folder)
+        {
+            var fullPath = ToFullPath(folder);
+            if (!Directory.Exists(fullPath))
+            {
+                return [];
+            }
+
+            return new DirectoryInfo(fullPath).GetFiles()
+                .Select(f => new StoredFileInfo($"{folder}/{f.Name}", f.Length, f.LastWriteTimeUtc))
+                .ToList();
         }
 
         /// <summary>

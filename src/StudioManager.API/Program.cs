@@ -1,3 +1,4 @@
+using StudioManager.API.BackgroundJobs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -189,6 +190,10 @@ try
     builder.Services.AddScoped<IInvoiceService, InvoiceService>();
     builder.Services.AddScoped<IQuoteService, QuoteService>();
     builder.Services.AddScoped<IExpenseService, ExpenseService>();
+    builder.Services.AddScoped<IFinanceArchiveService, FinanceArchiveService>();
+
+    // Background job: writes the finance archives every night (before the backup)
+    builder.Services.AddHostedService<FinanceArchiveJob>();
     builder.Services.AddScoped<IClientService, ClientService>();
     builder.Services.AddScoped<IBandService, BandService>();
     builder.Services.AddScoped<IProjectService, ProjectService>();

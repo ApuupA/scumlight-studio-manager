@@ -966,6 +966,48 @@
         }
       }
     },
+    "/api/DataSafety/status": {
+      "get": {
+        "tags": [
+          "DataSafety"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataSafetyStatusDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DataSafety/archive/{year}": {
+      "get": {
+        "tags": [
+          "DataSafety"
+        ],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/DrumTuning/project/{projectId}": {
       "get": {
         "tags": [
@@ -8271,6 +8313,39 @@
         },
         "additionalProperties": false
       },
+      "DataSafetyStatusDto": {
+        "required": [
+          "archives"
+        ],
+        "type": "object",
+        "properties": {
+          "lastBackupAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastBackupDatabaseBytes": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "offsiteTarget": {
+            "type": "string",
+            "nullable": true
+          },
+          "offsiteOk": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "archives": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinanceArchiveDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
       "DrumTuningCreateDto": {
         "required": [
           "drum",
@@ -8608,6 +8683,29 @@
             "format": "date-time"
           },
           "dateUpdated": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FinanceArchiveDto": {
+        "required": [
+          "createdAt",
+          "sizeBytes",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
             "type": "string",
             "format": "date-time"
           }
@@ -12591,6 +12689,9 @@
     },
     {
       "name": "Client"
+    },
+    {
+      "name": "DataSafety"
     },
     {
       "name": "DrumTuning"

@@ -212,7 +212,53 @@ Restore (asks for `RESTORE` first, replaces all data):
 ~/studio-manager/scripts/restore.sh ~/studio-backups/studio-<date>.sql ~/studio-backups/studio-files-<date>.tgz
 ```
 
-Copy the backups to your PC from time to time – a backup on the same server does not help if the server is lost.
+After every backup the app knows about it: **Profil → Datensicherung** shows the last backup, and the start page
+warns if it is older than 2 days or the copy off the server failed.
+
+### Finance archive
+
+Every night at 2:30 (before the backup) the app writes `exports/finanzen-<year>.zip` into its file storage: CSV lists
+for the tax advisor, every issued invoice as an HTML file and all receipts – readable **without** the app. The backup
+takes it along. Download it any time: **Finanzen → Jahresübersicht → Archiv (ZIP)** or on the profile page.
+
+### Backups off the server
+
+A backup on the same server does not help if the server is lost. `backup.sh` can copy every backup to a second place
+with [rclone](https://rclone.org) – encrypted, so the storage provider can not read it. Example with Strato HiDrive
+(works the same with a NAS via SFTP, a Nextcloud elsewhere via WebDAV, Hetzner Storage Box, ...):
+
+```bash
+sudo apt install rclone
+rclone config
+```
+
+1. `n` (new remote), name `hidrive`, type `hidrive` – log in when asked.
+   (`rclone version` must be 1.59 or newer for `hidrive`; older Ubuntu packages are not – then install the current
+   version with `curl https://rclone.org/install.sh | sudo bash`, or use type `webdav` with
+   `https://webdav.hidrive.strato.com`.)
+2. `n` again, name `studio-crypt`, type `crypt`, remote `hidrive:studio-backups`, filename encryption `standard`,
+   choose a password (and a second one for "salt").
+   **Write both passwords down outside the server** (password manager) – without them the backups can not be read.
+
+Then in `~/studio-manager/.env`:
+
+```bash
+OFFSITE_REMOTE=studio-crypt:
+OFFSITE_KEEP_DAYS=90
+```
+
+Test it once by hand – the end of the output must say `Copied off the server to studio-crypt:`:
+
+```bash
+~/studio-manager/scripts/backup.sh
+```
+
+Restore from there: copy the two files back and use `restore.sh` as above:
+
+```bash
+rclone ls studio-crypt:
+rclone copy studio-crypt:studio-<date>.sql ~/restore/ && rclone copy studio-crypt:studio-files-<date>.tgz ~/restore/
+```
 
 **Where the data is:** in the Docker volumes `studio-manager_db-data` (database) and `studio-manager_studio-files`
 (photos, login cookie keys) under `/var/lib/docker/volumes/`. They survive updates, rebuilds and reboots – only
