@@ -33,6 +33,9 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         // ---------- Scope: which parts of the work belong to the project ----------
         // Switching a part off only hides its tabs (e.g. input lists for a mix-only project) - the data stays.
 
+        /// <summary>Songwriting (own bands): song ideas, voice memos and the arrangement before the recording.</summary>
+        public bool IncludesSongwriting { get; set; }
+
         public bool IncludesRecording { get; set; } = true;
         public bool IncludesMixing { get; set; } = true;
         public bool IncludesMastering { get; set; } = true;

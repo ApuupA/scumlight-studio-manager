@@ -95,6 +95,10 @@
 - ✅ **Client link** (v1.14.0): one link per project for the band (no login): listen to the mix versions, comment with
   name, song and timecode, approve a mix, add references, enter the band gear; studio comments get the user's name;
   "new from clients" on the start page
+- ✅ **Songwriting** (v1.15.0): fourth scope "Songwriting" (own bands) with its own tab: song statuses Idea / Writing / Demo,
+  voice memos (upload many from the phone, play, inbox -> song -> part of the arrangement); the song page links the memos
+  to the parts of the arrangement (microphone button)
+- Later for songwriting: lyrics with chords + lead sheet, demo versions via the client link, GEMA shares (split sheet)
 - **Next**: AfA (depreciation of equipment over its useful life) in the expenses and the yearly overview
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search

@@ -16,6 +16,7 @@ import RecordingChecklistCard from './RecordingChecklistCard'
 import { useSong } from './songApi'
 import SongInfoCard from './SongInfoCard'
 import SongMixCard from '../mixing/SongMixCard'
+import SongMemosCard from '../songwriting/SongMemosCard'
 
 /**
  * Song page (route /songs/:id): arrangement, recording checklist, lyrics and everything else about one song.
@@ -88,12 +89,14 @@ function SongView({ song }: { song: Song }) {
           <Stack>
             {/* Mix projects: the versions with the client's feedback, problems and mix recall */}
             {project?.includesMixing && <SongMixCard key={song.dateUpdated} song={song} />}
-            <ArrangementCard song={song} />
+            <ArrangementCard song={song} withMemos={project?.includesSongwriting} />
             <LyricsCard song={song} />
           </Stack>
         </Grid.Col>
         <Grid.Col span={{ base: 12, lg: 5 }}>
           <Stack>
+            {/* Songwriting: the voice memos of the song (riffs, ideas from the rehearsal room) */}
+            {project?.includesSongwriting && <SongMemosCard song={song} />}
             {project?.includesRecording && <RecordingChecklistCard song={song} />}
             <SongInfoCard song={song} />
           </Stack>

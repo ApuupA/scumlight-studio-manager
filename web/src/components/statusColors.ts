@@ -18,6 +18,9 @@ export const projectStatusColors: Record<ProjectStatus, string> = {
 }
 
 export const songStatusColors: Record<SongStatus, string> = {
+  Idea: 'violet',
+  Writing: 'violet',
+  Demo: 'cyan',
   Planned: 'gray',
   Recording: 'scumlight',
   Editing: 'ember',

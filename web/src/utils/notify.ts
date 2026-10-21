@@ -7,7 +7,7 @@ export function notifySuccess(message: string) {
   notifications.show({ color: 'green', message })
 }
 
-/** Red toast with a translated error message. Use it in the onError of mutations. */
-export function notifyError(error: unknown, t: TFunction) {
-  notifications.show({ color: 'red', message: getErrorMessage(error, t), autoClose: 8000 })
+/** Red toast with a translated error message. Use it in the onError of mutations. title: e.g. the file that failed. */
+export function notifyError(error: unknown, t: TFunction, title?: string) {
+  notifications.show({ color: 'red', title, message: getErrorMessage(error, t), autoClose: 8000 })
 }

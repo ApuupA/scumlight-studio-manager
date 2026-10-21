@@ -2,10 +2,12 @@ import { ActionIcon, Autocomplete, Button, Group, NumberInput, Paper, Table, Tex
 import { IconArrowDown, IconArrowUp, IconPlus, IconTrash } from '@tabler/icons-react'
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Song, SongSection, SongSectionInput } from '../../api/types'
+import type { Song, SongSection, SongSectionInput, VoiceMemo } from '../../api/types'
 import { numberOrNull, textOrNull } from '../../utils/form'
 import { notifyError } from '../../utils/notify'
 import { tempoAtBar } from '../projects/songTempos'
+import SectionMemosButton from '../songwriting/SectionMemosButton'
+import { useVoiceMemos } from '../songwriting/songwritingApi'
 import { useDeleteSongSection, useMoveSongSection, useSaveSongSection, useSongSections } from './songApi'
 
 /** Suggestions for the name of a new part (translation keys songPage.parts.*). */
@@ -37,7 +39,14 @@ function toInput(values: SectionValues, songId: number, sortOrder: number): Song
 /**
  * One editable part. Every field is saved when leaving it (like the input list).
  */
-function SectionLine({ song, section, index, count }: { song: Song; section: SongSection; index: number; count: number }) {
+function SectionLine({ song, section, index, count, memos }: {
+  song: Song
+  section: SongSection
+  index: number
+  count: number
+  /** The voice memos of the project (songwriting) - undefined: no memo button. */
+  memos?: VoiceMemo[]
+}) {
   const { t } = useTranslation()
   const saveSection = useSaveSongSection()
   const moveSection = useMoveSongSection()
@@ -86,8 +95,9 @@ function SectionLine({ song, section, index, count }: { song: Song; section: Son
         <TextInput size="xs" variant="unstyled" placeholder="–" value={values.notes} aria-label={t('common.notes')}
           onChange={(e) => setValues({ ...values, notes: e.currentTarget.value })} onBlur={save} />
       </Table.Td>
-      <Table.Td w={90}>
+      <Table.Td w={memos ? 120 : 90}>
         <Group gap={0} wrap="nowrap">
+          {memos && <SectionMemosButton section={section} memos={memos} />}
           <ActionIcon size="sm" variant="subtle" color="gray" disabled={index === 0} aria-label={t('setup.moveUp')}
             onClick={() => moveSection.mutate({ id: section.id, direction: -1 })}>
             <IconArrowUp size={14} />
@@ -108,10 +118,12 @@ function SectionLine({ song, section, index, count }: { song: Song; section: Son
 
 /**
  * The arrangement of the song: parts like "Verse 1" or "Chorus 1" with bars and notes ("needs doubled guitars").
+ * withMemos (songwriting projects): every part gets a microphone button for its voice memos.
  */
-export default function ArrangementCard({ song }: { song: Song }) {
+export default function ArrangementCard({ song, withMemos = false }: { song: Song; withMemos?: boolean }) {
   const { t } = useTranslation()
   const { data: sections } = useSongSections(song.id)
+  const { data: memos } = useVoiceMemos(song.projectId, withMemos)
   const saveSection = useSaveSongSection()
   const [newPart, setNewPart] = useState<SectionValues>({ name: '', fromBar: '', toBar: '', notes: '' })
 
@@ -156,6 +168,7 @@ export default function ArrangementCard({ song }: { song: Song }) {
                   section={section}
                   index={index}
                   count={sections.length}
+                  memos={withMemos ? memos ?? [] : undefined}
                 />
               ))}
             </Table.Tbody>

@@ -6,6 +6,7 @@ namespace StudioManager.DataLayer.DTO.Create
     /// </summary>
     public class ProjectScopeDto
     {
+        public bool IncludesSongwriting { get; set; }
         public bool IncludesRecording { get; set; }
         public bool IncludesMixing { get; set; }
         public bool IncludesMastering { get; set; }

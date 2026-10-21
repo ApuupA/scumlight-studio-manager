@@ -1,6 +1,6 @@
 import { Alert, Anchor, Button, Center, Grid, Group, Loader, Paper, Stack, Tabs, Text, Title } from '@mantine/core'
 import {
-  IconAdjustmentsHorizontal, IconArrowLeft, IconAdjustments, IconBackpack, IconCalendarEvent, IconClockDollar, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconListNumbers, IconMetronome, IconPrinter, IconTrash,
+  IconAdjustmentsHorizontal, IconArrowLeft, IconAdjustments, IconBackpack, IconBulb, IconCalendarEvent, IconClockDollar, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconListNumbers, IconMetronome, IconPrinter, IconTrash,
 } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
@@ -24,6 +24,7 @@ import FinanceTab from '../finance/FinanceTab'
 import ProjectScopeChips from './ProjectScopeChips'
 import MasteringTab from '../mixing/MasteringTab'
 import MixingTab from '../mixing/MixingTab'
+import SongwritingTab from '../songwriting/SongwritingTab'
 
 /**
  * Route /projects/new creates a project, /projects/:id shows one with all its tabs.
@@ -105,6 +106,7 @@ export default function ProjectPage() {
   const hiddenTabs = [
     ...(showInstruments ? [] : ['instruments']),
     ...(project.includesRecording ? [] : ['bandGear', 'inputLists', 'drums']),
+    ...(project.includesSongwriting ? [] : ['songwriting']),
     ...(project.includesMixing ? [] : ['mixing']),
     ...(project.includesMastering ? [] : ['mastering']),
   ]
@@ -143,6 +145,9 @@ export default function ProjectPage() {
           <Tabs.Tab value="songs" leftSection={<IconDisc size={16} />}>
             {t('projects.tabs.songs')} ({project.songCount})
           </Tabs.Tab>
+          {project.includesSongwriting && (
+            <Tabs.Tab value="songwriting" leftSection={<IconBulb size={16} />}>{t('projects.tabs.songwriting')}</Tabs.Tab>
+          )}
           <Tabs.Tab value="sessions" leftSection={<IconCalendarEvent size={16} />}>
             {t('projects.tabs.sessions')} ({project.sessionCount})
           </Tabs.Tab>
@@ -181,6 +186,7 @@ export default function ProjectPage() {
           </Grid>
         </Tabs.Panel>
         <Tabs.Panel value="songs" pt="md"><SongsTab project={project} /></Tabs.Panel>
+        <Tabs.Panel value="songwriting" pt="md"><SongwritingTab project={project} /></Tabs.Panel>
         <Tabs.Panel value="sessions" pt="md"><ProjectSessionsTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="instruments" pt="md"><InstrumentsTab project={project} /></Tabs.Panel>
         <Tabs.Panel value="bandGear" pt="md"><BandGearTab projectId={project.id} /></Tabs.Panel>

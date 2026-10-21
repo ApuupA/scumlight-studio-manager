@@ -237,6 +237,13 @@
     },
     "clientLink": {
       "tooManyEntries": "There are too many entries - please contact the studio."
+    },
+    "voiceMemo": {
+      "invalidType": "Only audio files are allowed (M4A, MP3, WAV, AAC, OGG, OPUS, FLAC, WEBM).",
+      "tooLarge": "A voice memo must not be larger than 20 MB.",
+      "fileRequired": "A voice memo is created by uploading an audio file.",
+      "sectionOfOtherSong": "The part belongs to another song.",
+      "songOfOtherProject": "The song belongs to another project."
     }
   },
   "profile": {
@@ -329,14 +336,16 @@
       "inputLists": "Input lists",
       "finance": "Time & costs",
       "mastering": "Mastering",
-      "mixing": "Mixing"
+      "mixing": "Mixing",
+      "songwriting": "Songwriting"
     },
     "filterActive": "Active projects",
     "filterAll": "All projects",
     "scope": {
       "recording": "Recording",
       "mixing": "Mixing",
-      "mastering": "Mastering"
+      "mastering": "Mastering",
+      "songwriting": "Songwriting"
     },
     "scopeHint": "What belongs to the project (or what you are doing right now). Switching a part off only hides its tabs - the data stays."
   },
@@ -383,6 +392,9 @@
     "addTempo": "Tempo change"
   },
   "songStatus": {
+    "Idea": "Idea",
+    "Writing": "Writing",
+    "Demo": "Demo",
     "Planned": "Planned",
     "Recording": "Recording",
     "Editing": "Editing",
@@ -1237,5 +1249,36 @@
     "comments": "Comments: {{count}}",
     "references": "References: {{count}}",
     "new": "new"
+  },
+  "songwriting": {
+    "title": "Songwriting",
+    "production": "Production",
+    "songs": "Songs",
+    "newSong": "New song idea",
+    "songsHint": "Status of the songs while writing. Arrangement, tempo and lyrics are on the song page – recording, mix and mastering use the same song later.",
+    "noSongs": "No songs yet – add the first idea.",
+    "memos": "Voice memos",
+    "memosHint": "Upload memos from your phone (several at once). New ones land in the inbox – sort them to a song and a part.",
+    "upload": "Upload memos",
+    "uploading": "Uploading… {{done}}/{{total}}",
+    "uploaded": "{{count}} memo(s) uploaded",
+    "inbox": "Inbox (not sorted)",
+    "inboxCount": "Inbox ({{count}})",
+    "allCount": "All ({{count}})",
+    "inboxEmpty": "The inbox is empty – all memos are sorted.",
+    "noMemos": "No memos yet.",
+    "noSongMemos": "No memos for this song yet.",
+    "memoTitle": "Title of the memo",
+    "recordedOn": "Recorded on",
+    "download": "Download",
+    "song": "Song",
+    "part": "Part (arrangement)",
+    "notesPlaceholder": "Note, e.g. \"riff for verse 2, drop C\"",
+    "deleteConfirm": "Delete memo \"{{name}}\" with its audio file?",
+    "partMemos": "Voice memos of the part",
+    "memosOf": "Memos for \"{{part}}\"",
+    "unlink": "Unlink",
+    "linkMemo": "Link a memo…",
+    "ofSong": "Memos of the song"
   }
 }

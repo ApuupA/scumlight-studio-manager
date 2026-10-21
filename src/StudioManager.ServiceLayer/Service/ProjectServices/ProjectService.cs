@@ -20,6 +20,8 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         private readonly IPhotoService _photos;
         private readonly IRepository<Invoice> _invoiceRepository;
         private readonly IRepository<Quote> _quoteRepository;
+        private readonly IRepository<VoiceMemo> _voiceMemoRepository;
+        private readonly IFileStorageService _fileStorage;
 
         public const string PhotoFolder = "project-covers";
 
@@ -30,8 +32,12 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             IPhotoService photos,
             IRepository<Invoice> invoiceRepository,
             IRepository<Quote> quoteRepository,
+            IRepository<VoiceMemo> voiceMemoRepository,
+            IFileStorageService fileStorage,
             IMapper mapper) : base(repository, mapper)
         {
+            _voiceMemoRepository = voiceMemoRepository;
+            _fileStorage = fileStorage;
             _invoiceRepository = invoiceRepository;
             _quoteRepository = quoteRepository;
             _clientRepository = clientRepository;
@@ -135,19 +141,24 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
                 await _quoteRepository.DeleteAsync(draft.Id);
             }
 
+            // The voice memos are deleted by the database (cascade) - their audio files are deleted here afterwards
+            var memoFiles = (await _voiceMemoRepository.GetAllAsync(m => m.ProjectId == id)).Select(m => m.FilePath).ToList();
+
             var project = await _repository.GetAsync(id);
             await base.Delete(id);
             _photos.DeleteFile(project?.PhotoPath);
+            memoFiles.ForEach(_fileStorage.Delete);
         }
 
         public async Task<ProjectReadDto> SetScope(int id, ProjectScopeDto dto)
         {
-            if (!dto.IncludesRecording && !dto.IncludesMixing && !dto.IncludesMastering)
+            if (!dto.IncludesSongwriting && !dto.IncludesRecording && !dto.IncludesMixing && !dto.IncludesMastering)
             {
-                throw new BusinessRuleException("project.scopeEmpty", "At least one of recording, mixing and mastering must be on.");
+                throw new BusinessRuleException("project.scopeEmpty", "At least one of songwriting, recording, mixing and mastering must be on.");
             }
 
             var project = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Project), id);
+            project.IncludesSongwriting = dto.IncludesSongwriting;
             project.IncludesRecording = dto.IncludesRecording;
             project.IncludesMixing = dto.IncludesMixing;
             project.IncludesMastering = dto.IncludesMastering;

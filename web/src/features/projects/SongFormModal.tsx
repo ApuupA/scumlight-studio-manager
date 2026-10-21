@@ -13,6 +13,8 @@ interface SongFormModalProps {
   song?: Song
   /** Track number suggested for a new song (after the last one). */
   nextTrackNumber: number
+  /** Status of a new song - "Idea" in the tab "Songwriting", otherwise "Planned". */
+  defaultStatus?: SongStatus
   onClose: () => void
 }
 
@@ -22,7 +24,7 @@ interface TempoLine {
   fromBar: number | string
 }
 
-export default function SongFormModal({ project, song, nextTrackNumber, onClose }: SongFormModalProps) {
+export default function SongFormModal({ project, song, nextTrackNumber, defaultStatus = 'Planned', onClose }: SongFormModalProps) {
   const { t } = useTranslation()
   const saveSong = useSaveSong()
 
@@ -30,7 +32,7 @@ export default function SongFormModal({ project, song, nextTrackNumber, onClose 
     initialValues: {
       title: song?.title ?? '',
       trackNumber: song?.trackNumber ?? nextTrackNumber,
-      status: song?.status ?? ('Planned' as SongStatus),
+      status: song?.status ?? defaultStatus,
       // With only one band in the project, preselect it
       bandId: song?.bandId ? String(song.bandId) : project.bands.length === 1 ? String(project.bands[0].id) : null,
       // Several tempos if the tempo changes, e.g. 190, then 120 from bar 121 - a new song starts with one empty line

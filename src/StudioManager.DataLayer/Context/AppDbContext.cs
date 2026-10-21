@@ -28,6 +28,7 @@ namespace StudioManager.DataLayer.Context
         public DbSet<MixVersion> MixVersions { get; set; } = null!;
         public DbSet<MixFeedback> MixFeedback { get; set; } = null!;
         public DbSet<ProjectDeliverable> ProjectDeliverables { get; set; } = null!;
+        public DbSet<VoiceMemo> VoiceMemos { get; set; } = null!;
         public DbSet<DrumTuning> DrumTunings { get; set; } = null!;
         public DbSet<ExternalGear> ExternalGear { get; set; } = null!;
 
@@ -281,6 +282,30 @@ namespace StudioManager.DataLayer.Context
                       .WithMany(p => p.Deliverables)
                       .HasForeignKey(d => d.ProjectId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<VoiceMemo>(entity =>
+            {
+                entity.Property(m => m.Title).HasMaxLength(200).IsRequired();
+                entity.Property(m => m.Notes).HasMaxLength(2000);
+                entity.Property(m => m.FilePath).HasMaxLength(500).IsRequired();
+                entity.Property(m => m.FileName).HasMaxLength(260).IsRequired();
+
+                entity.HasOne(m => m.Project)
+                      .WithMany()
+                      .HasForeignKey(m => m.ProjectId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // A deleted song or part sends its memos back to the inbox - a memo is never lost with a song
+                entity.HasOne(m => m.Song)
+                      .WithMany()
+                      .HasForeignKey(m => m.SongId)
+                      .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne(m => m.SongSection)
+                      .WithMany()
+                      .HasForeignKey(m => m.SongSectionId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<ProjectLink>(entity =>
