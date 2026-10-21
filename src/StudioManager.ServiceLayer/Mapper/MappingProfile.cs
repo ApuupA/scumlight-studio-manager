@@ -216,6 +216,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.MaterialNotes, opt => opt.Ignore())
                 .ForMember(dest => dest.MixVersions, opt => opt.Ignore())
                 // The scope is changed with its own endpoint (PUT api/Project/{id}/scope)
+                .ForMember(dest => dest.IncludesSongwriting, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesRecording, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesMixing, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesMastering, opt => opt.Ignore())
@@ -280,6 +281,21 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateMap<ProjectDeliverableCreateDto, ProjectDeliverable>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
+            CreateMap<VoiceMemo, VoiceMemoReadDto>()
+                .ForMember(dest => dest.SongTitle, opt => opt.MapFrom(src => src.Song != null ? src.Song.Title : null))
+                .ForMember(dest => dest.SongSectionName, opt => opt.MapFrom(src => src.SongSection != null ? src.SongSection.Name : null));
+            // The file is set by the upload (VoiceMemoService.Upload)
+            CreateMap<VoiceMemoCreateDto, VoiceMemo>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.FilePath, opt => opt.Ignore())
+                .ForMember(dest => dest.FileName, opt => opt.Ignore())
+                .ForMember(dest => dest.FileSize, opt => opt.Ignore())
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.Song, opt => opt.Ignore())
+                .ForMember(dest => dest.SongSection, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
             // The tempos are replaced by SongService (ReplaceTempos)

@@ -237,6 +237,13 @@
     },
     "clientLink": {
       "tooManyEntries": "Es gibt zu viele Einträge – bitte melde dich beim Studio."
+    },
+    "voiceMemo": {
+      "invalidType": "Nur Audio-Dateien sind erlaubt (M4A, MP3, WAV, AAC, OGG, OPUS, FLAC, WEBM).",
+      "tooLarge": "Ein Voice Memo darf maximal 20 MB groß sein.",
+      "fileRequired": "Ein Voice Memo entsteht durch das Hochladen einer Audio-Datei.",
+      "sectionOfOtherSong": "Der Teil gehört zu einem anderen Song.",
+      "songOfOtherProject": "Der Song gehört zu einem anderen Projekt."
     }
   },
   "profile": {
@@ -329,14 +336,16 @@
       "inputLists": "Input-Listen",
       "finance": "Zeit & Kosten",
       "mastering": "Mastering",
-      "mixing": "Mixing"
+      "mixing": "Mixing",
+      "songwriting": "Songwriting"
     },
     "filterActive": "Aktive Projekte",
     "filterAll": "Alle Projekte",
     "scope": {
       "recording": "Recording",
       "mixing": "Mixing",
-      "mastering": "Mastering"
+      "mastering": "Mastering",
+      "songwriting": "Songwriting"
     },
     "scopeHint": "Was zum Projekt gehört (oder woran du gerade arbeitest). Ausschalten blendet nur die Tabs aus – die Daten bleiben erhalten."
   },
@@ -383,6 +392,9 @@
     "addTempo": "Tempowechsel"
   },
   "songStatus": {
+    "Idea": "Idee",
+    "Writing": "Songwriting",
+    "Demo": "Demo",
     "Planned": "Geplant",
     "Recording": "Aufnahme",
     "Editing": "Editing",
@@ -1237,5 +1249,36 @@
     "comments": "Kommentare: {{count}}",
     "references": "Referenzen: {{count}}",
     "new": "neu"
+  },
+  "songwriting": {
+    "title": "Songwriting",
+    "production": "Produktion",
+    "songs": "Songs",
+    "newSong": "Neue Song-Idee",
+    "songsHint": "Status der Songs beim Schreiben. Arrangement, Tempo und Lyrics stehen auf der Song-Seite – Recording, Mix und Mastering nutzen später denselben Song.",
+    "noSongs": "Noch keine Songs – leg die erste Idee an.",
+    "memos": "Voice Memos",
+    "memosHint": "Lade Memos vom Handy hoch (mehrere auf einmal). Neue landen im Eingang – ordne sie einem Song und einem Teil zu.",
+    "upload": "Memos hochladen",
+    "uploading": "Lade hoch… {{done}}/{{total}}",
+    "uploaded": "{{count}} Memo(s) hochgeladen",
+    "inbox": "Eingang (nicht zugeordnet)",
+    "inboxCount": "Eingang ({{count}})",
+    "allCount": "Alle ({{count}})",
+    "inboxEmpty": "Der Eingang ist leer – alle Memos sind zugeordnet.",
+    "noMemos": "Noch keine Memos.",
+    "noSongMemos": "Noch keine Memos zu diesem Song.",
+    "memoTitle": "Titel des Memos",
+    "recordedOn": "Aufgenommen am",
+    "download": "Herunterladen",
+    "song": "Song",
+    "part": "Teil (Arrangement)",
+    "notesPlaceholder": "Notiz, z. B. „Riff für die 2. Strophe, Drop C“",
+    "deleteConfirm": "Memo „{{name}}“ mit der Audio-Datei löschen?",
+    "partMemos": "Voice Memos des Teils",
+    "memosOf": "Memos zu „{{part}}“",
+    "unlink": "Verknüpfung lösen",
+    "linkMemo": "Memo verknüpfen…",
+    "ofSong": "Memos des Songs"
   }
 }

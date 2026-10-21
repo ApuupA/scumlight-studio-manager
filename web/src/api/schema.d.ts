@@ -7620,6 +7620,268 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/VoiceMemo/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VoiceMemoReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/VoiceMemo/project/{projectId}/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: {
+                    recordedOn?: string;
+                    songId?: number;
+                };
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "multipart/form-data": {
+                        /** Format: binary */
+                        file?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VoiceMemoReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/VoiceMemo/{id}/file": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/VoiceMemo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VoiceMemoReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["VoiceMemoCreateDto"];
+                    "text/json": components["schemas"]["VoiceMemoCreateDto"];
+                    "application/*+json": components["schemas"]["VoiceMemoCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VoiceMemoReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/VoiceMemo/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VoiceMemoReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["VoiceMemoCreateDto"];
+                    "text/json": components["schemas"]["VoiceMemoCreateDto"];
+                    "application/*+json": components["schemas"]["VoiceMemoCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["VoiceMemoReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -8642,6 +8904,7 @@ export interface components {
             songCount: number;
             /** Format: int32 */
             songsDoneCount: number;
+            includesSongwriting: boolean;
             includesRecording: boolean;
             includesMixing: boolean;
             includesMastering: boolean;
@@ -8662,6 +8925,7 @@ export interface components {
             hasPhoto: boolean;
         };
         ProjectScopeDto: {
+            includesSongwriting: boolean;
             includesRecording: boolean;
             includesMixing: boolean;
             includesMastering: boolean;
@@ -8951,7 +9215,7 @@ export interface components {
             title: string;
         };
         /** @enum {string} */
-        SongStatus: "Planned" | "Recording" | "Editing" | "Mixing" | "Mastering" | "Done";
+        SongStatus: "Idea" | "Writing" | "Demo" | "Planned" | "Recording" | "Editing" | "Mixing" | "Mastering" | "Done";
         SongStatusUpdateDto: {
             songIds: number[];
             status: components["schemas"]["SongStatus"];
@@ -9135,6 +9399,39 @@ export interface components {
         };
         /** @enum {string} */
         UserRole: "Owner" | "Client";
+        VoiceMemoCreateDto: {
+            /** Format: int32 */
+            projectId: number;
+            title: string;
+            notes?: string | null;
+            /** Format: date */
+            recordedOn?: string | null;
+            /** Format: int32 */
+            songId?: number | null;
+            /** Format: int32 */
+            songSectionId?: number | null;
+        };
+        VoiceMemoReadDto: {
+            /** Format: int32 */
+            id: number;
+            title: string;
+            notes?: string | null;
+            /** Format: date */
+            recordedOn?: string | null;
+            fileName: string;
+            /** Format: int64 */
+            fileSize: number;
+            /** Format: int32 */
+            projectId: number;
+            /** Format: int32 */
+            songId?: number | null;
+            songTitle?: string | null;
+            /** Format: int32 */
+            songSectionId?: number | null;
+            songSectionName?: string | null;
+            /** Format: date-time */
+            dateCreated: string;
+        };
         YearOverviewDto: {
             /** Format: int32 */
             year: number;

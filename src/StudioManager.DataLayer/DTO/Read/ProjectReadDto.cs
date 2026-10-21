@@ -30,6 +30,7 @@ namespace StudioManager.DataLayer.DTO.Read
         public int SongsDoneCount { get; set; }
 
         /// <summary>Scope of the project - decides which tabs are shown.</summary>
+        public bool IncludesSongwriting { get; set; }
         public bool IncludesRecording { get; set; }
         public bool IncludesMixing { get; set; }
         public bool IncludesMastering { get; set; }

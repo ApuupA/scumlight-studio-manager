@@ -14,10 +14,12 @@ export function useSong(id: number) {
   })
 }
 
-export function useSongSections(songId: number) {
+/** The parts of a song's arrangement. songId null = no song chosen yet (nothing is loaded). */
+export function useSongSections(songId: number | null) {
   return useQuery({
     queryKey: ['songSections', songId],
-    queryFn: () => unwrap(api.GET('/api/SongSection/song/{songId}', { params: { path: { songId } } })),
+    queryFn: () => unwrap(api.GET('/api/SongSection/song/{songId}', { params: { path: { songId: songId! } } })),
+    enabled: songId != null,
   })
 }
 

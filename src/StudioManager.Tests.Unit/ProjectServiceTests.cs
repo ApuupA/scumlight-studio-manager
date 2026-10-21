@@ -33,7 +33,8 @@ namespace StudioManager.Tests.Unit
             var mapper = TestHelper.CreateMapper();
             _photos = new PhotoService(_mockFileStorage.Object);
             _projectService = new ProjectService(
-                new Repository<Project>(_context), new Repository<Client>(_context), new Repository<Band>(_context), _photos, new Repository<Invoice>(_context), new Repository<Quote>(_context), mapper);
+                new Repository<Project>(_context), new Repository<Client>(_context), new Repository<Band>(_context), _photos, new Repository<Invoice>(_context), new Repository<Quote>(_context),
+                new Repository<VoiceMemo>(_context), _mockFileStorage.Object, mapper);
             _clientService = new ClientService(new Repository<Client>(_context), new Repository<Project>(_context), _photos, mapper);
 
             _label = new Client { Name = "Split Label" };

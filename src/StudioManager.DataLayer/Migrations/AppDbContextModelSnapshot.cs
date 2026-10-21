@@ -1492,6 +1492,9 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<bool>("IncludesRecording")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IncludesSongwriting")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("MasteringNotes")
                         .HasMaxLength(8000)
                         .HasColumnType("character varying(8000)");
@@ -1974,6 +1977,65 @@ namespace StudioManager.DataLayer.Migrations
                     b.HasIndex("SongId");
 
                     b.ToTable("SongTracks");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.VoiceMemo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(260)
+                        .HasColumnType("character varying(260)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly?>("RecordedOn")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("SongId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SongSectionId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("SongId");
+
+                    b.HasIndex("SongSectionId");
+
+                    b.ToTable("VoiceMemos");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
@@ -2695,6 +2757,31 @@ namespace StudioManager.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Song");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.VoiceMemo", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Song", "Song")
+                        .WithMany()
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.SongSection", "SongSection")
+                        .WithMany()
+                        .HasForeignKey("SongSectionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Song");
+
+                    b.Navigation("SongSection");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>

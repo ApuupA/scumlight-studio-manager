@@ -7813,6 +7813,284 @@
           }
         }
       }
+    },
+    "/api/VoiceMemo/project/{projectId}": {
+      "get": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VoiceMemoReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VoiceMemo/project/{projectId}/upload": {
+      "post": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "recordedOn",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "songId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceMemoReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VoiceMemo/{id}/file": {
+      "get": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/VoiceMemo": {
+      "get": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VoiceMemoReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceMemoCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceMemoCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceMemoCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceMemoReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/VoiceMemo/{id}": {
+      "get": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceMemoReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceMemoCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceMemoCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceMemoCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceMemoReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "VoiceMemo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -11327,6 +11605,7 @@
           "includesMastering",
           "includesMixing",
           "includesRecording",
+          "includesSongwriting",
           "sessionCount",
           "songCount",
           "songsDoneCount",
@@ -11415,6 +11694,9 @@
             "type": "integer",
             "format": "int32"
           },
+          "includesSongwriting": {
+            "type": "boolean"
+          },
           "includesRecording": {
             "type": "boolean"
           },
@@ -11469,10 +11751,14 @@
         "required": [
           "includesMastering",
           "includesMixing",
-          "includesRecording"
+          "includesRecording",
+          "includesSongwriting"
         ],
         "type": "object",
         "properties": {
+          "includesSongwriting": {
+            "type": "boolean"
+          },
           "includesRecording": {
             "type": "boolean"
           },
@@ -12514,6 +12800,9 @@
       },
       "SongStatus": {
         "enum": [
+          "Idea",
+          "Writing",
+          "Demo",
           "Planned",
           "Recording",
           "Editing",
@@ -13159,6 +13448,110 @@
         ],
         "type": "string"
       },
+      "VoiceMemoCreateDto": {
+        "required": [
+          "projectId",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "notes": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "recordedOn": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "songId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "songSectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VoiceMemoReadDto": {
+        "required": [
+          "dateCreated",
+          "fileName",
+          "fileSize",
+          "id",
+          "projectId",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "recordedOn": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "songId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "songTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "songSectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "songSectionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "YearOverviewDto": {
         "required": [
           "bookings",
@@ -13329,6 +13722,9 @@
     },
     {
       "name": "User"
+    },
+    {
+      "name": "VoiceMemo"
     }
   ]
 }
