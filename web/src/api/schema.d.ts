@@ -3305,6 +3305,329 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/MixFeedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixFeedbackReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["MixFeedbackCreateDto"];
+                    "text/json": components["schemas"]["MixFeedbackCreateDto"];
+                    "application/*+json": components["schemas"]["MixFeedbackCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixFeedbackReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/MixFeedback/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixFeedbackReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["MixFeedbackCreateDto"];
+                    "text/json": components["schemas"]["MixFeedbackCreateDto"];
+                    "application/*+json": components["schemas"]["MixFeedbackCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixFeedbackReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/MixVersion/song/{songId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    songId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixVersionReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/MixVersion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixVersionReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["MixVersionCreateDto"];
+                    "text/json": components["schemas"]["MixVersionCreateDto"];
+                    "application/*+json": components["schemas"]["MixVersionCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixVersionReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/MixVersion/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixVersionReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["MixVersionCreateDto"];
+                    "text/json": components["schemas"]["MixVersionCreateDto"];
+                    "application/*+json": components["schemas"]["MixVersionCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MixVersionReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Project/client/{clientId}": {
         parameters: {
             query?: never;
@@ -3762,6 +4085,223 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["ProjectCostItemReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectDeliverable/project/{projectId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectDeliverableReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectDeliverable/project/{projectId}/defaults": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectDeliverableReadDto"][];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectDeliverable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectDeliverableReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectDeliverableCreateDto"];
+                    "text/json": components["schemas"]["ProjectDeliverableCreateDto"];
+                    "application/*+json": components["schemas"]["ProjectDeliverableCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectDeliverableReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ProjectDeliverable/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectDeliverableReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectDeliverableCreateDto"];
+                    "text/json": components["schemas"]["ProjectDeliverableCreateDto"];
+                    "application/*+json": components["schemas"]["ProjectDeliverableCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectDeliverableReadDto"];
                     };
                 };
             };
@@ -5122,6 +5662,49 @@ export interface paths {
                     "application/json": components["schemas"]["SongLyricsDto"];
                     "text/json": components["schemas"]["SongLyricsDto"];
                     "application/*+json": components["schemas"]["SongLyricsDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SongReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Song/{id}/mix-info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["SongMixInfoDto"];
+                    "text/json": components["schemas"]["SongMixInfoDto"];
+                    "application/*+json": components["schemas"]["SongMixInfoDto"];
                 };
             };
             responses: {
@@ -7206,6 +7789,49 @@ export interface components {
             email: string;
             password: string;
         };
+        MixFeedbackCreateDto: {
+            /** Format: int32 */
+            mixVersionId: number;
+            timecode?: string | null;
+            text: string;
+            isDone: boolean;
+        };
+        MixFeedbackReadDto: {
+            /** Format: int32 */
+            id: number;
+            timecode?: string | null;
+            text: string;
+            isDone: boolean;
+            /** Format: int32 */
+            mixVersionId: number;
+        };
+        MixVersionCreateDto: {
+            /** Format: int32 */
+            songId: number;
+            /** Format: date */
+            date: string;
+            status: components["schemas"]["MixVersionStatus"];
+            /** Format: uri */
+            link?: string | null;
+            notes?: string | null;
+        };
+        MixVersionReadDto: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            number: number;
+            /** Format: date */
+            date: string;
+            status: components["schemas"]["MixVersionStatus"];
+            link?: string | null;
+            notes?: string | null;
+            /** Format: int32 */
+            songId: number;
+            isExtraRevision: boolean;
+            feedback: components["schemas"]["MixFeedbackReadDto"][];
+        };
+        /** @enum {string} */
+        MixVersionStatus: "InProgress" | "Sent" | "ChangesRequested" | "Approved";
         MonthTotalDto: {
             /** Format: int32 */
             month: number;
@@ -7319,6 +7945,26 @@ export interface components {
             clientId: number;
             bandIds: number[];
         };
+        ProjectDeliverableCreateDto: {
+            /** Format: int32 */
+            projectId: number;
+            name: string;
+            isDone: boolean;
+            notes?: string | null;
+            /** Format: int32 */
+            sortOrder: number;
+        };
+        ProjectDeliverableReadDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            isDone: boolean;
+            notes?: string | null;
+            /** Format: int32 */
+            sortOrder: number;
+            /** Format: int32 */
+            projectId: number;
+        };
         ProjectFinanceDto: {
             pricingMode: components["schemas"]["PricingMode"];
             /** Format: double */
@@ -7327,6 +7973,10 @@ export interface components {
             effectiveHourlyRate: number;
             /** Format: double */
             flatPrice?: number | null;
+            /** Format: int32 */
+            includedRevisions?: number | null;
+            /** Format: double */
+            extraRevisionPrice?: number | null;
             /** Format: double */
             totalHours: number;
             /** Format: double */
@@ -7411,6 +8061,10 @@ export interface components {
             hourlyRate?: number | null;
             /** Format: double */
             flatPrice?: number | null;
+            /** Format: int32 */
+            includedRevisions?: number | null;
+            /** Format: double */
+            extraRevisionPrice?: number | null;
         };
         ProjectReadDto: {
             /** Format: int32 */
@@ -7661,6 +8315,23 @@ export interface components {
         SongLyricsDto: {
             lyrics?: string | null;
         };
+        SongMixInfoDto: {
+            /** Format: date */
+            materialReceivedOn?: string | null;
+            /** Format: uri */
+            materialLink?: string | null;
+            /** Format: int32 */
+            materialTrackCount?: number | null;
+            materialNotes?: string | null;
+            mixNotes?: string | null;
+            isrc?: string | null;
+            /** Format: double */
+            measuredLufs?: number | null;
+            /** Format: double */
+            truePeak?: number | null;
+            /** Format: double */
+            gapBeforeSeconds?: number | null;
+        };
         SongReadDto: {
             /** Format: int32 */
             id: number;
@@ -7676,6 +8347,23 @@ export interface components {
             trackCount: number;
             /** Format: int32 */
             tracksRecordedCount: number;
+            /** Format: date */
+            materialReceivedOn?: string | null;
+            materialLink?: string | null;
+            /** Format: int32 */
+            materialTrackCount?: number | null;
+            materialNotes?: string | null;
+            mixNotes?: string | null;
+            isrc?: string | null;
+            /** Format: double */
+            measuredLufs?: number | null;
+            /** Format: double */
+            truePeak?: number | null;
+            /** Format: double */
+            gapBeforeSeconds?: number | null;
+            /** Format: int32 */
+            latestMixNumber?: number | null;
+            latestMixStatus?: components["schemas"]["MixVersionStatus"];
             /** Format: int32 */
             projectId: number;
             /** Format: int32 */

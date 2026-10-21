@@ -17,6 +17,10 @@ namespace StudioManager.DataLayer.DTO.Read
 
         public decimal? FlatPrice { get; set; }
 
+        /// <summary>Mix revisions per song included in the price, null = not agreed.</summary>
+        public int? IncludedRevisions { get; set; }
+        public decimal? ExtraRevisionPrice { get; set; }
+
         public decimal TotalHours { get; set; }
         public decimal BillableHours { get; set; }
 

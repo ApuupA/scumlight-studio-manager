@@ -16,5 +16,12 @@ namespace StudioManager.DataLayer.DTO.Create
 
         [Range(0, 10000000)]
         public decimal? FlatPrice { get; set; }
+
+        /// <summary>Mix revisions per song included in the price, null = not agreed.</summary>
+        [Range(0, 100)]
+        public int? IncludedRevisions { get; set; }
+
+        [Range(0, 100000)]
+        public decimal? ExtraRevisionPrice { get; set; }
     }
 }

@@ -62,6 +62,12 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// <summary>Agreed total price (pricing mode FlatPrice).</summary>
         public decimal? FlatPrice { get; set; }
 
+        /// <summary>Mix revisions per song included in the price (v2 = 1st revision). Null = not agreed.</summary>
+        public int? IncludedRevisions { get; set; }
+
+        /// <summary>Price of every further revision - suggested for the extra item.</summary>
+        public decimal? ExtraRevisionPrice { get; set; }
+
         public int ClientId { get; set; }
         public Client? Client { get; set; }
 
@@ -77,5 +83,6 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public ICollection<ExternalGear> ExternalGear { get; set; } = new List<ExternalGear>();
         public ICollection<ProjectInstrument> Instruments { get; set; } = new List<ProjectInstrument>();
         public ICollection<InputList> InputLists { get; set; } = new List<InputList>();
+        public ICollection<ProjectDeliverable> Deliverables { get; set; } = new List<ProjectDeliverable>();
     }
 }

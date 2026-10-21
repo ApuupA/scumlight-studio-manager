@@ -22,6 +22,32 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// <summary>Lyrics, e.g. for the vocal booth.</summary>
         public string? Lyrics { get; set; }
 
+        // ---------- Mixing (song page, only with scope "Mixing") ----------
+
+        public DateOnly? MaterialReceivedOn { get; set; }
+
+        /// <summary>Where the multitracks / stems are, e.g. a WeTransfer or Nextcloud link.</summary>
+        public string? MaterialLink { get; set; }
+
+        public int? MaterialTrackCount { get; set; }
+
+        /// <summary>Problems found in the material, e.g. "Bass clipped in the chorus".</summary>
+        public string? MaterialNotes { get; set; }
+
+        /// <summary>Mix recall: plugin chain, bus settings, ...</summary>
+        public string? MixNotes { get; set; }
+
+        // ---------- Mastering (only with scope "Mastering") ----------
+
+        public string? Isrc { get; set; }
+        public decimal? MeasuredLufs { get; set; }
+        public decimal? TruePeak { get; set; }
+
+        /// <summary>Pause before the song on the album in seconds.</summary>
+        public decimal? GapBeforeSeconds { get; set; }
+
+        public ICollection<MixVersion> MixVersions { get; set; } = new List<MixVersion>();
+
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
 

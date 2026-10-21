@@ -3416,6 +3416,351 @@
         }
       }
     },
+    "/api/MixFeedback": {
+      "get": {
+        "tags": [
+          "MixFeedback"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MixFeedbackReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "MixFeedback"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixFeedbackCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixFeedbackCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixFeedbackCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MixFeedbackReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MixFeedback/{id}": {
+      "get": {
+        "tags": [
+          "MixFeedback"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MixFeedbackReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MixFeedback"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixFeedbackCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixFeedbackCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixFeedbackCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MixFeedbackReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MixFeedback"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MixVersion/song/{songId}": {
+      "get": {
+        "tags": [
+          "MixVersion"
+        ],
+        "parameters": [
+          {
+            "name": "songId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MixVersionReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MixVersion": {
+      "get": {
+        "tags": [
+          "MixVersion"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MixVersionReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "MixVersion"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixVersionCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixVersionCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixVersionCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MixVersionReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MixVersion/{id}": {
+      "get": {
+        "tags": [
+          "MixVersion"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MixVersionReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MixVersion"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixVersionCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixVersionCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixVersionCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MixVersionReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MixVersion"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Project/client/{clientId}": {
       "get": {
         "tags": [
@@ -3923,6 +4268,228 @@
       "delete": {
         "tags": [
           "ProjectCostItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ProjectDeliverable/project/{projectId}": {
+      "get": {
+        "tags": [
+          "ProjectDeliverable"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectDeliverableReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProjectDeliverable/project/{projectId}/defaults": {
+      "post": {
+        "tags": [
+          "ProjectDeliverable"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectDeliverableReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProjectDeliverable": {
+      "get": {
+        "tags": [
+          "ProjectDeliverable"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectDeliverableReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ProjectDeliverable"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDeliverableCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDeliverableCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDeliverableCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDeliverableReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProjectDeliverable/{id}": {
+      "get": {
+        "tags": [
+          "ProjectDeliverable"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDeliverableReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProjectDeliverable"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDeliverableCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDeliverableCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDeliverableCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDeliverableReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProjectDeliverable"
         ],
         "parameters": [
           {
@@ -5287,6 +5854,55 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/SongLyricsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SongReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Song/{id}/mix-info": {
+      "put": {
+        "tags": [
+          "Song"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongMixInfoDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongMixInfoDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongMixInfoDto"
               }
             }
           }
@@ -8920,6 +9536,161 @@
         },
         "additionalProperties": false
       },
+      "MixFeedbackCreateDto": {
+        "required": [
+          "isDone",
+          "mixVersionId",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "mixVersionId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "timecode": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MixFeedbackReadDto": {
+        "required": [
+          "id",
+          "isDone",
+          "mixVersionId",
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timecode": {
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          },
+          "mixVersionId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MixVersionCreateDto": {
+        "required": [
+          "date",
+          "songId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "songId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MixVersionStatus"
+          },
+          "link": {
+            "maxLength": 2000,
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "notes": {
+            "maxLength": 4000,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MixVersionReadDto": {
+        "required": [
+          "date",
+          "feedback",
+          "id",
+          "isExtraRevision",
+          "number",
+          "songId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MixVersionStatus"
+          },
+          "link": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "songId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isExtraRevision": {
+            "type": "boolean"
+          },
+          "feedback": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MixFeedbackReadDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "MixVersionStatus": {
+        "enum": [
+          "InProgress",
+          "Sent",
+          "ChangesRequested",
+          "Approved"
+        ],
+        "type": "string"
+      },
       "MonthTotalDto": {
         "required": [
           "expenses",
@@ -9294,6 +10065,76 @@
         },
         "additionalProperties": false
       },
+      "ProjectDeliverableCreateDto": {
+        "required": [
+          "isDone",
+          "name",
+          "projectId",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          },
+          "notes": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectDeliverableReadDto": {
+        "required": [
+          "id",
+          "isDone",
+          "name",
+          "projectId",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "ProjectFinanceDto": {
         "required": [
           "billableHours",
@@ -9322,6 +10163,16 @@
             "format": "double"
           },
           "flatPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "includedRevisions": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "extraRevisionPrice": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -9588,6 +10439,20 @@
           },
           "flatPrice": {
             "maximum": 10000000,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "includedRevisions": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "extraRevisionPrice": {
+            "maximum": 100000,
             "minimum": 0,
             "type": "number",
             "format": "double",
@@ -10505,6 +11370,67 @@
         },
         "additionalProperties": false
       },
+      "SongMixInfoDto": {
+        "type": "object",
+        "properties": {
+          "materialReceivedOn": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "materialLink": {
+            "maxLength": 2000,
+            "type": "string",
+            "format": "uri",
+            "nullable": true
+          },
+          "materialTrackCount": {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "materialNotes": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "mixNotes": {
+            "maxLength": 8000,
+            "type": "string",
+            "nullable": true
+          },
+          "isrc": {
+            "maxLength": 15,
+            "pattern": "^[A-Za-z]{2}-?[A-Za-z0-9]{3}-?\\d{2}-?\\d{5}$",
+            "type": "string",
+            "nullable": true
+          },
+          "measuredLufs": {
+            "maximum": 0,
+            "minimum": -60,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "truePeak": {
+            "maximum": 3,
+            "minimum": -20,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gapBeforeSeconds": {
+            "maximum": 60,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SongReadDto": {
         "required": [
           "dateCreated",
@@ -10559,6 +11485,55 @@
           "tracksRecordedCount": {
             "type": "integer",
             "format": "int32"
+          },
+          "materialReceivedOn": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "materialLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "materialTrackCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "materialNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "mixNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "isrc": {
+            "type": "string",
+            "nullable": true
+          },
+          "measuredLufs": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "truePeak": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gapBeforeSeconds": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "latestMixNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "latestMixStatus": {
+            "$ref": "#/components/schemas/MixVersionStatus"
           },
           "projectId": {
             "type": "integer",
@@ -11429,10 +12404,19 @@
       "name": "Invoice"
     },
     {
+      "name": "MixFeedback"
+    },
+    {
+      "name": "MixVersion"
+    },
+    {
       "name": "Project"
     },
     {
       "name": "ProjectCostItem"
+    },
+    {
+      "name": "ProjectDeliverable"
     },
     {
       "name": "ProjectInstrument"

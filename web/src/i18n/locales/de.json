@@ -227,6 +227,9 @@
     "receipt": {
       "invalidType": "Nur PDF-, JPG-, PNG- und WEBP-Dateien sind erlaubt.",
       "tooLarge": "Der Beleg darf nicht größer als 10 MB sein."
+    },
+    "mixVersion": {
+      "otherSong": "Eine Mix-Version kann nicht zu einem anderen Song verschoben werden."
     }
   },
   "profile": {
@@ -317,7 +320,8 @@
       "instruments": "Instrumente & Setup",
       "bandGear": "Mitgebrachtes Equipment",
       "inputLists": "Input-Listen",
-      "finance": "Zeit & Kosten"
+      "finance": "Zeit & Kosten",
+      "mastering": "Mastering"
     },
     "filterActive": "Aktive Projekte",
     "filterAll": "Alle Projekte",
@@ -821,7 +825,10 @@
     "note": "Notiz (intern)",
     "noteHint": "Wird nicht auf die Rechnung gedruckt",
     "taskOrNote": "Wähle eine Leistung oder schreib eine Notiz",
-    "invoicedHint": "Abgerechnet {{invoiced}} · bezahlt {{paid}}"
+    "invoicedHint": "Abgerechnet {{invoiced}} · bezahlt {{paid}}",
+    "includedRevisions": "Inkl. Mix-Revisionen",
+    "includedRevisionsHint": "pro Song (v2 = 1. Revision)",
+    "extraRevisionPrice": "Preis je weitere Revision"
   },
   "taskUnit": {
     "Hour": "Pro Stunde",
@@ -1091,5 +1098,56 @@
     "noActiveProjects": "Keine laufenden Projekte.",
     "nextSession": "nächste Session {{date}}",
     "songsDone": "{{done}}/{{total}} Songs fertig"
+  },
+  "mixVersionStatus": {
+    "InProgress": "In Arbeit",
+    "Sent": "Verschickt",
+    "ChangesRequested": "Änderungswünsche",
+    "Approved": "Freigegeben"
+  },
+  "mixing": {
+    "mix": "Mix",
+    "versions": "Mix-Versionen",
+    "noVersions": "Noch keine Mix-Version.",
+    "newVersion": "Neue Version",
+    "editVersion": "v{{number}} bearbeiten",
+    "deleteVersionConfirm": "Version v{{number}} und das Feedback dazu werden gelöscht.",
+    "status": "Status",
+    "link": "Link zum Bounce",
+    "linkInvalid": "Der Link muss mit http:// oder https:// beginnen",
+    "listen": "Anhören",
+    "changes": "Was wurde geändert",
+    "changesPlaceholder": "z. B. Vocals +1 dB, weniger Hall auf der Snare",
+    "includedRevisions": "Inkl. Revisionen pro Song: {{count}}",
+    "extraRevision": "Extra-Revision",
+    "bookExtraRevision": "Als Extra-Posten buchen",
+    "extraRevisionItem": "Zusätzliche Mix-Revision: {{title}} v{{number}}",
+    "feedback": "Feedback",
+    "feedbackPlaceholder": "Feedback vom Kunden, z. B. Vocals zu leise",
+    "feedbackDone": "Erledigt",
+    "timecode": "Zeitpunkt",
+    "material": "Material",
+    "materialReceivedOn": "Erhalten am",
+    "materialTrackCount": "Anzahl Spuren",
+    "materialLink": "Link zu den Dateien",
+    "materialNotes": "Probleme im Material",
+    "materialNotesPlaceholder": "z. B. Bass im Refrain übersteuert, Kick-Spur fehlt",
+    "mixNotes": "Mix-Recall",
+    "mixNotesHint": "Plugin-Kette, Bus-Einstellungen, … um den Mix später wiederholen zu können.",
+    "isrcInvalid": "Ungültiger ISRC (z. B. DE-A12-26-00001)"
+  },
+  "mastering": {
+    "title": "Mastering",
+    "measuredLufs": "Lautheit (gemessen)",
+    "truePeak": "True Peak",
+    "gapBefore": "Pause vor dem Song",
+    "gap": "Pause",
+    "deliverables": "Lieferumfang",
+    "deliverablesDone": "{{done}} von {{total}} geliefert",
+    "addDefaults": "Übliche hinzufügen",
+    "deliverablePlaceholder": "z. B. Instrumental von Song 3",
+    "sequence": "Album-Reihenfolge",
+    "sequenceHint": "Die Werte trägst du auf den Song-Seiten ein. True Peak über -1 dBTP ist orange (kann als MP3 / AAC verzerren).",
+    "target": "Ziel: {{lufs}} LUFS."
   }
 }

@@ -20,7 +20,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         }
 
         // Load the band (for BandName), the tempos and the tracks (for the recording progress)
-        protected override Expression<Func<Song, object>>[] DefaultIncludes => [s => s.Band!, s => s.Tempos, s => s.Tracks];
+        protected override Expression<Func<Song, object>>[] DefaultIncludes => [s => s.Band!, s => s.Tempos, s => s.Tracks, s => s.MixVersions];
 
         public async Task<IEnumerable<SongReadDto>> GetForProject(int projectId)
         {
@@ -63,6 +63,26 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
             _mapper.Map(updateDto, song);
             ReplaceTempos(song, updateDto);
+            await _repository.UpdateAsync(song);
+
+            return (await Get(id))!;
+        }
+
+        public async Task<SongReadDto> SetMixInfo(int id, SongMixInfoDto dto)
+        {
+            var song = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Song), id);
+
+            static string? Clean(string? text) => string.IsNullOrWhiteSpace(text) ? null : text.Trim();
+            song.MaterialReceivedOn = dto.MaterialReceivedOn;
+            song.MaterialLink = Clean(dto.MaterialLink);
+            song.MaterialTrackCount = dto.MaterialTrackCount;
+            song.MaterialNotes = Clean(dto.MaterialNotes);
+            song.MixNotes = Clean(dto.MixNotes);
+            // ISRC always in the short form without dashes, e.g. "DEA122600001"
+            song.Isrc = Clean(dto.Isrc)?.Replace("-", "").ToUpperInvariant();
+            song.MeasuredLufs = dto.MeasuredLufs;
+            song.TruePeak = dto.TruePeak;
+            song.GapBeforeSeconds = dto.GapBeforeSeconds;
             await _repository.UpdateAsync(song);
 
             return (await Get(id))!;
