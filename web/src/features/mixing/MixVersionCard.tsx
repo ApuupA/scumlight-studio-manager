@@ -1,5 +1,6 @@
 import { ActionIcon, Anchor, Badge, Group, Paper, Text, Tooltip } from '@mantine/core'
 import { IconExternalLink, IconPencil, IconReceipt, IconTrash } from '@tabler/icons-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MixVersion } from '../../api/types'
 import StatusBadge from '../../components/StatusBadge'
@@ -22,9 +23,12 @@ interface MixVersionCardProps {
 export default function MixVersionCard({ version, onEdit, onDelete, onBookExtra }: MixVersionCardProps) {
   const { t, i18n } = useTranslation()
   const hasExtra = version.extraRevisionSongs.length > 0
+  // A completed version (all worked in, the next one exists) is folded away - its comments only on request
+  const isCompleted = version.status === 'Completed'
+  const [showFeedback, setShowFeedback] = useState(!isCompleted)
 
   return (
-    <Paper withBorder p="sm" radius="sm">
+    <Paper withBorder p="sm" radius="sm" style={isCompleted ? { opacity: 0.7 } : undefined}>
       <Group justify="space-between" wrap="nowrap" align="flex-start" mb="xs">
         <div>
           <Group gap="xs">
@@ -61,7 +65,13 @@ export default function MixVersionCard({ version, onEdit, onDelete, onBookExtra 
           <ActionIcon variant="subtle" color="red" onClick={onDelete} aria-label={t('common.delete')}><IconTrash size={16} /></ActionIcon>
         </Group>
       </Group>
-      <FeedbackList version={version} />
+      {showFeedback ? (
+        <FeedbackList version={version} canAdd={!isCompleted} />
+      ) : (
+        <Anchor component="button" size="xs" onClick={() => setShowFeedback(true)}>
+          {t('mixing.showFeedback', { count: version.feedback.length })}
+        </Anchor>
+      )}
     </Paper>
   )
 }

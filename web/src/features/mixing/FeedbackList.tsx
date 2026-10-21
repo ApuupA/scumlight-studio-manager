@@ -1,9 +1,10 @@
-import { ActionIcon, Badge, Button, Checkbox, Group, Select, Stack, Text, TextInput } from '@mantine/core'
+import { ActionIcon, Badge, Box, Button, Checkbox, Group, Select, Stack, Text, TextInput } from '@mantine/core'
 import { IconPlus, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MixFeedback, MixVersion } from '../../api/types'
 import { notifyError } from '../../utils/notify'
+import { groupFeedback } from './groupFeedback'
 import { useDeleteFeedback, useSaveFeedback } from './mixApi'
 
 interface FeedbackListProps {
@@ -57,27 +58,40 @@ export default function FeedbackList({ version, onlySongId, canAdd = true }: Fee
     )
   }
 
+  const songLabel = (title: string) => {
+    const song = version.songs.find((s) => s.title === title)
+    return song ? `${song.trackNumber}. ${song.title}` : title
+  }
+
   return (
     <Stack gap={6}>
-      {feedback.map((item) => (
-        <Group key={item.id} gap="xs" wrap="nowrap" align="flex-start">
-          <Checkbox mt={2} checked={item.isDone} onChange={() => handleToggle(item)} aria-label={t('mixing.feedbackDone')} />
-          <Text component="div" size="sm" style={{ flex: 1 }} td={item.isDone ? 'line-through' : undefined} c={item.isDone ? 'dimmed' : undefined}>
-            {(!onlySongId || item.songId == null) && (
-              <Badge size="xs" variant="light" color={item.songTitle ? 'gray' : 'blue'} mr={6}>
-                {item.songTitle ?? t('mixing.general')}
-              </Badge>
-            )}
-            {item.timecode && <Text span fw={600} ff="monospace">{item.timecode} </Text>}
-            {item.text}
-            {item.author && <Text span size="xs" c="dimmed"> – {item.author}</Text>}
-            {item.isUnread && <Badge size="xs" color="scumlight" ml={6}>{t('clientNews.new')}</Badge>}
-          </Text>
-          <ActionIcon size="sm" variant="subtle" color="red" aria-label={t('common.delete')}
-            onClick={() => deleteFeedback.mutate(item.id, { onError: (error) => notifyError(error, t) })}>
-            <IconTrash size={14} />
-          </ActionIcon>
-        </Group>
+      {/* Grouped for reading: general first, then song by song (track order) */}
+      {groupFeedback(feedback, version.songs.map((s) => s.title)).map((group) => (
+        <Box key={group.songTitle ?? ''} pl="xs" style={{ borderLeft: '2px solid var(--mantine-color-default-border)' }}>
+          <Group gap={6} mb={2}>
+            <Text size="xs" fw={700} tt="uppercase" c={group.songTitle ? undefined : 'blue'}>
+              {group.songTitle ? songLabel(group.songTitle) : t('mixing.general')}
+            </Text>
+            <Text size="xs" c="dimmed">{t('mixing.openCount', { open: group.items.filter((i) => !i.isDone).length, total: group.items.length })}</Text>
+          </Group>
+          <Stack gap={2}>
+            {group.items.map((item) => (
+              <Group key={item.id} gap="xs" wrap="nowrap" align="flex-start">
+                <Checkbox mt={2} size="xs" checked={item.isDone} onChange={() => handleToggle(item)} aria-label={t('mixing.feedbackDone')} />
+                <Text component="div" size="sm" style={{ flex: 1 }} td={item.isDone ? 'line-through' : undefined} c={item.isDone ? 'dimmed' : undefined}>
+                  {item.timecode && <Text span fw={600} ff="monospace">{item.timecode} </Text>}
+                  {item.text}
+                  {item.author && <Text span size="xs" c="dimmed"> – {item.author}</Text>}
+                  {item.isUnread && <Badge size="xs" color="scumlight" ml={6}>{t('clientNews.new')}</Badge>}
+                </Text>
+                <ActionIcon size="sm" variant="subtle" color="red" aria-label={t('common.delete')}
+                  onClick={() => deleteFeedback.mutate(item.id, { onError: (error) => notifyError(error, t) })}>
+                  <IconTrash size={14} />
+                </ActionIcon>
+              </Group>
+            ))}
+          </Stack>
+        </Box>
       ))}
 
       {/* New feedback point: Enter in the text field adds it */}

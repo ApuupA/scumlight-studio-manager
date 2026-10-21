@@ -10,7 +10,7 @@ import type {
  */
 
 /** All statuses in workflow order (same as the C# enum MixVersionStatus). */
-export const mixVersionStatuses: MixVersionStatus[] = ['InProgress', 'Sent', 'ChangesRequested', 'Approved']
+export const mixVersionStatuses: MixVersionStatus[] = ['InProgress', 'Sent', 'ChangesRequested', 'Approved', 'Completed']
 
 /** Reloads the versions and the songs (the song list shows the newest version). */
 function useInvalidateMix() {
