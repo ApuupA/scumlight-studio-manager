@@ -234,6 +234,9 @@
     },
     "mixFeedback": {
       "songNotInVersion": "Der Song ist nicht in dieser Mix-Version."
+    },
+    "clientLink": {
+      "tooManyEntries": "Es gibt zu viele Einträge – bitte melde dich beim Studio."
     }
   },
   "profile": {
@@ -1184,5 +1187,52 @@
     "warningOld": "Die letzte Sicherung ist vom {{date}} – älter als 2 Tage.",
     "warningOffsite": "Die Kopie außerhalb des Servers ({{target}}) ist fehlgeschlagen.",
     "toProfile": "Details auf der Profilseite"
+  },
+  "clientLink": {
+    "title": "Kunden-Link",
+    "hint": "Ein Link für die Band: Mix-Versionen anhören und kommentieren, Mixe freigeben, Referenzen eintragen, mitgebrachtes Equipment angeben – ohne Login.",
+    "open": "Öffnen",
+    "create": "Link erstellen",
+    "renew": "Neuer Link",
+    "renewConfirm": "Der Link, den die Band hat, funktioniert dann nicht mehr. Sie braucht den neuen.",
+    "switchOff": "Link abschalten",
+    "switchOffConfirm": "Die Kunden-Seite kann nicht mehr geöffnet werden. Alles Eingetragene bleibt."
+  },
+  "clientPage": {
+    "yourName": "Dein Name",
+    "yourNameHint": "Damit wird jeder Kommentar unterschrieben – wird auf diesem Gerät gemerkt.",
+    "yourNamePlaceholder": "z. B. Simon (Gitarre)",
+    "nameRequired": "Bitte gib zuerst deinen Namen ein.",
+    "mixes": "Mixe",
+    "references": "Referenzen",
+    "gear": "Equipment",
+    "noVersions": "Noch kein Mix zum Anhören.",
+    "mixesHint": "Hör dir eine Version an und schreib, was sich ändern soll – am besten mit der Stelle im Song (z. B. 1:23). Wenn alles passt: „Mix freigeben\".",
+    "changes": "Neu in dieser Version",
+    "studio": "Studio",
+    "done": "erledigt",
+    "feedbackPlaceholder": "Was soll sich ändern? z. B. Gesang etwas lauter",
+    "send": "Senden",
+    "approve": "Mix freigeben",
+    "approveTitle": "{{name}} freigeben?",
+    "approveConfirm": "Das Studio sieht dann, dass dieser Mix für euch so passt.",
+    "approvedBy": "Freigegeben von {{name}}",
+    "referencesHint": "Songs, die so klingen, wie eurer klingen soll – mit Link (Spotify, YouTube, …) und was euch daran gefällt.",
+    "noReferences": "Noch keine Referenzen.",
+    "referenceTitle": "Band – Song",
+    "referenceTitlePlaceholder": "z. B. Mastodon – Blood and Thunder",
+    "referenceUrl": "Link",
+    "referenceNotes": "Was gefällt euch daran?",
+    "referenceNotesPlaceholder": "z. B. der Snare-Sound, die breiten Gitarren",
+    "allSongs": "Alle Songs",
+    "addReference": "Referenz hinzufügen",
+    "addedBy": "von {{name}}"
+  },
+  "clientNews": {
+    "title": "Neues von Kunden",
+    "from": "von {{names}}",
+    "comments": "Kommentare: {{count}}",
+    "references": "Referenzen: {{count}}",
+    "new": "neu"
   }
 }

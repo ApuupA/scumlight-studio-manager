@@ -17,6 +17,15 @@ namespace StudioManager.DataLayer.Models.ProjectModels
 
         public bool IsDone { get; set; }
 
+        /// <summary>Who wrote it: the name of the logged in user, or the name the client entered on the client page.</summary>
+        public string? Author { get; set; }
+
+        /// <summary>Written on the client page (link without login).</summary>
+        public bool IsFromClient { get; set; }
+
+        /// <summary>From the client and not seen by the studio yet - shown as "new" (start page, tab "Mixing").</summary>
+        public bool IsUnread { get; set; }
+
         public int MixVersionId { get; set; }
         public MixVersion? MixVersion { get; set; }
     }

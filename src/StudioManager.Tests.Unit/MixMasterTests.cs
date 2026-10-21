@@ -2,6 +2,7 @@ using StudioManager.DataLayer.Context;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.Models.ClientModels;
 using StudioManager.DataLayer.Models.ProjectModels;
+using StudioManager.DataLayer.Models.UserModels;
 using StudioManager.RepositoryLayer.Repository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.Service.ProjectServices;
@@ -27,7 +28,7 @@ namespace StudioManager.Tests.Unit
         {
             var mapper = TestHelper.CreateMapper();
             _versionService = new MixVersionService(new Repository<MixVersion>(_context), new Repository<Project>(_context), new Repository<Song>(_context), mapper);
-            _feedbackService = new MixFeedbackService(new Repository<MixFeedback>(_context), new Repository<MixVersion>(_context), mapper);
+            _feedbackService = new MixFeedbackService(new Repository<MixFeedback>(_context), new Repository<MixVersion>(_context), new Repository<User>(_context), mapper);
             _songService = new SongService(new Repository<Song>(_context), new Repository<Project>(_context), mapper);
             _deliverableService = new ProjectDeliverableService(new Repository<ProjectDeliverable>(_context), new Repository<Project>(_context), mapper);
 

@@ -237,6 +237,7 @@ namespace StudioManager.DataLayer.Context
             modelBuilder.Entity<MixVersion>(entity =>
             {
                 entity.Property(v => v.Name).HasMaxLength(30).IsRequired();
+                entity.Property(v => v.ApprovedBy).HasMaxLength(100);
                 entity.Property(v => v.Status).HasConversion<string>().HasMaxLength(20);
                 entity.Property(v => v.Link).HasMaxLength(2000);
                 entity.Property(v => v.Notes).HasMaxLength(4000);
@@ -256,6 +257,7 @@ namespace StudioManager.DataLayer.Context
             modelBuilder.Entity<MixFeedback>(entity =>
             {
                 entity.Property(f => f.Timecode).HasMaxLength(10);
+                entity.Property(f => f.Author).HasMaxLength(100);
                 entity.Property(f => f.Text).HasMaxLength(1000).IsRequired();
 
                 entity.HasOne(f => f.MixVersion)
@@ -283,6 +285,7 @@ namespace StudioManager.DataLayer.Context
 
             modelBuilder.Entity<ProjectLink>(entity =>
             {
+                entity.Property(l => l.AddedBy).HasMaxLength(100);
                 entity.Property(l => l.Type).HasConversion<string>().HasMaxLength(20);
                 entity.Property(l => l.Title).HasMaxLength(200).IsRequired();
                 entity.Property(l => l.Url).HasMaxLength(2000).IsRequired();

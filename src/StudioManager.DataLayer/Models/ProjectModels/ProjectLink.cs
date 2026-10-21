@@ -10,6 +10,12 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public string Url { get; set; } = string.Empty;
         public string? Notes { get; set; }
 
+        /// <summary>The name of the client who added the link on the client page, null if the studio added it.</summary>
+        public string? AddedBy { get; set; }
+
+        /// <summary>Added by the client and not seen by the studio yet.</summary>
+        public bool IsUnread { get; set; }
+
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
 

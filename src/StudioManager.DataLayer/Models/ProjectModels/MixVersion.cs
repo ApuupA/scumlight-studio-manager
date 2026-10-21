@@ -22,6 +22,9 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// <summary>What changed in this version, e.g. "Vocals +1 dB on all songs".</summary>
         public string? Notes { get; set; }
 
+        /// <summary>The name of the client who approved the mix on the client page, null if the studio set the status.</summary>
+        public string? ApprovedBy { get; set; }
+
         public int ProjectId { get; set; }
         public Project? Project { get; set; }
 

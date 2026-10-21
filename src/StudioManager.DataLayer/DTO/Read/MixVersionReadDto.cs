@@ -11,6 +11,9 @@ namespace StudioManager.DataLayer.DTO.Read
         public MixVersionStatus Status { get; set; }
         public string? Link { get; set; }
         public string? Notes { get; set; }
+
+        /// <summary>The client who approved the mix on the client page.</summary>
+        public string? ApprovedBy { get; set; }
         public int ProjectId { get; set; }
 
         /// <summary>The songs exported in this version, in track order.</summary>

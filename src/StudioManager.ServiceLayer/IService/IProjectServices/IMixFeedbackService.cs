@@ -9,5 +9,7 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
     /// </summary>
     public interface IMixFeedbackService : IBaseService<MixFeedback, MixFeedbackReadDto, MixFeedbackCreateDto>
     {
+        /// <summary>A comment of the studio - the author is the display name of the logged in user.</summary>
+        Task<MixFeedbackReadDto> InsertFromStudio(MixFeedbackCreateDto createDto, int userId);
     }
 }

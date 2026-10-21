@@ -1,11 +1,13 @@
 import { Anchor, Badge, Button, Group, Table, Text } from '@mantine/core'
 import { IconExternalLink, IconPlus } from '@tabler/icons-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ProjectLink } from '../../api/types'
 import RowActions from '../../components/RowActions'
 import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
+import ClientLinkCard from '../clientLink/ClientLinkCard'
+import { useMarkClientNewsRead } from '../clientLink/clientLinkApi'
 import LinkFormModal from './LinkFormModal'
 import { useDeleteProjectLink, useProjectLinks } from './projectApi'
 
@@ -18,6 +20,10 @@ export default function LinksTab({ projectId }: { projectId: number }) {
   const deleteLink = useDeleteProjectLink()
   const [modal, setModal] = useState<ModalState>({ open: false })
 
+  // Opening the tab = the references of the client are seen
+  const { mutate: markRead } = useMarkClientNewsRead()
+  useEffect(() => markRead(projectId), [markRead, projectId])
+
   const handleDelete = (link: ProjectLink) =>
     confirmDelete(t, t('links.deleteConfirm', { name: link.title }), () =>
       deleteLink.mutate(link.id, {
@@ -28,7 +34,8 @@ export default function LinksTab({ projectId }: { projectId: number }) {
 
   return (
     <>
-      <Group justify="space-between" mb="sm">
+      <ClientLinkCard projectId={projectId} />
+      <Group justify="space-between" my="sm">
         <Text size="sm" c="dimmed">{t('links.hint')}</Text>
         <Button variant="light" leftSection={<IconPlus size={16} />} onClick={() => setModal({ open: true })}>
           {t('links.new')}
@@ -54,6 +61,13 @@ export default function LinksTab({ projectId }: { projectId: number }) {
                       <Group gap={4} wrap="nowrap">{link.title}<IconExternalLink size={14} /></Group>
                     </Anchor>
                     {link.notes && <Text size="xs" c="dimmed">{link.notes}</Text>}
+                    {/* Added by the client on the client page */}
+                    {link.addedBy && (
+                      <Group gap={4}>
+                        <Text size="xs" c="dimmed">{t('clientPage.addedBy', { name: link.addedBy })}</Text>
+                        {link.isUnread && <Badge size="xs" color="scumlight">{t('clientNews.new')}</Badge>}
+                      </Group>
+                    )}
                   </Table.Td>
                   <Table.Td c="dimmed">{link.songTitle}</Table.Td>
                   <Table.Td w={90}>

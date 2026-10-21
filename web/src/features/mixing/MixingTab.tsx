@@ -1,10 +1,12 @@
 import { Button, Grid, Group, Paper, Stack, Text, Title } from '@mantine/core'
 import { IconPlus } from '@tabler/icons-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MixVersion, Project } from '../../api/types'
 import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
+import ClientLinkCard from '../clientLink/ClientLinkCard'
+import { useMarkClientNewsRead } from '../clientLink/clientLinkApi'
 import CostItemFormModal from '../finance/CostItemFormModal'
 import { useProjectFinance } from '../finance/financeApi'
 import { useSongs } from '../projects/projectApi'
@@ -35,10 +37,17 @@ export default function MixingTab({ project }: { project: Project }) {
 
   const nextNumber = Math.max(0, ...(versions ?? []).map((v) => v.number)) + 1
 
+  // Opening the tab = the comments of the client are seen (the "new" marks stay until the tab is opened again)
+  const { mutate: markRead } = useMarkClientNewsRead()
+  useEffect(() => markRead(project.id), [markRead, project.id])
+
   return (
     <Grid gap="lg">
       <Grid.Col span={{ base: 12, lg: 4 }}>
-        <MaterialCard key={project.dateUpdated} project={project} />
+        <Stack>
+          <ClientLinkCard projectId={project.id} />
+          <MaterialCard key={project.dateUpdated} project={project} />
+        </Stack>
       </Grid.Col>
 
       <Grid.Col span={{ base: 12, lg: 8 }}>

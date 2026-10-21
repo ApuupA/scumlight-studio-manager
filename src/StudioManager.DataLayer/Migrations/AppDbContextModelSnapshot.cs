@@ -1337,6 +1337,10 @@ namespace StudioManager.DataLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Author")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -1344,6 +1348,12 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDone")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFromClient")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUnread")
                         .HasColumnType("boolean");
 
                     b.Property<int>("MixVersionId")
@@ -1377,6 +1387,10 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
@@ -1639,11 +1653,18 @@ namespace StudioManager.DataLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AddedBy")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsUnread")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(2000)

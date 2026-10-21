@@ -70,6 +70,8 @@ export default function FeedbackList({ version, onlySongId, canAdd = true }: Fee
             )}
             {item.timecode && <Text span fw={600} ff="monospace">{item.timecode} </Text>}
             {item.text}
+            {item.author && <Text span size="xs" c="dimmed"> – {item.author}</Text>}
+            {item.isUnread && <Badge size="xs" color="scumlight" ml={6}>{t('clientNews.new')}</Badge>}
           </Text>
           <ActionIcon size="sm" variant="subtle" color="red" aria-label={t('common.delete')}
             onClick={() => deleteFeedback.mutate(item.id, { onError: (error) => notifyError(error, t) })}>

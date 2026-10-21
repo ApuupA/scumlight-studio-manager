@@ -2,6 +2,7 @@ using AutoMapper;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.ProjectModels;
+using StudioManager.DataLayer.Models.UserModels;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IProjectServices;
@@ -12,11 +13,24 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
     public class MixFeedbackService : BaseService<MixFeedback, MixFeedbackReadDto, MixFeedbackCreateDto>, IMixFeedbackService
     {
         private readonly IRepository<MixVersion> _versionRepository;
+        private readonly IRepository<User> _userRepository;
 
-        public MixFeedbackService(IRepository<MixFeedback> repository, IRepository<MixVersion> versionRepository, IMapper mapper)
+        public MixFeedbackService(IRepository<MixFeedback> repository, IRepository<MixVersion> versionRepository, IRepository<User> userRepository, IMapper mapper)
             : base(repository, mapper)
         {
             _versionRepository = versionRepository;
+            _userRepository = userRepository;
+        }
+
+        public async Task<MixFeedbackReadDto> InsertFromStudio(MixFeedbackCreateDto createDto, int userId)
+        {
+            await Validate(createDto);
+            var feedback = _mapper.Map<MixFeedback>(createDto);
+            // The name at the moment of writing - stays even if the user is renamed or deleted later
+            feedback.Author = (await _userRepository.GetAsync(userId))?.DisplayName;
+
+            await _repository.AddAsync(feedback);
+            return (await Get(feedback.Id))!;
         }
 
         // Load the song, so its title can be shown

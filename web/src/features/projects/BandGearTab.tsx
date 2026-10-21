@@ -8,7 +8,7 @@ import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import ExternalGearFormModal from './ExternalGearFormModal'
 import { useDeleteExternalGear, useExternalGear } from './projectApi'
-import BandGearLinkCard from '../bandGearLink/BandGearLinkCard'
+import ClientLinkCard from '../clientLink/ClientLinkCard'
 import { useAcceptBandGear } from '../bandGearLink/bandGearLinkApi'
 
 type ModalState = { open: false } | { open: true; gear?: ExternalGear }
@@ -36,7 +36,7 @@ export default function BandGearTab({ projectId }: { projectId: number }) {
 
   return (
     <Stack gap="xs">
-      <BandGearLinkCard projectId={projectId} />
+      <ClientLinkCard projectId={projectId} />
 
       {suggestionCount > 0 && (
         <Alert color="yellow" variant="light">{t('bandGearLink.newSuggestions', { count: suggestionCount })}</Alert>

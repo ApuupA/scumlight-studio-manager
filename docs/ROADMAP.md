@@ -92,6 +92,9 @@
   song page: feedback, problems in the material, mix recall; tab "Mastering": deliverables + album list with LUFS / dBTP / ISRC
 - ✅ **Data safety** (v1.13.0): nightly finance archive (ZIP per year: CSV lists, invoices as HTML, receipts),
   backups optionally copied off the server with rclone (encrypted), backup status in the app + warning on the start page
+- ✅ **Client link** (v1.14.0): one link per project for the band (no login): listen to the mix versions, comment with
+  name, song and timecode, approve a mix, add references, enter the band gear; studio comments get the user's name;
+  "new from clients" on the start page
 - **Next**: AfA (depreciation of equipment over its useful life) in the expenses and the yearly overview
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search

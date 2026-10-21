@@ -20,7 +20,8 @@ import SettingsPage from './features/settings/SettingsPage'
 import SongPage from './features/songs/SongPage'
 import SongSheetPage from './features/songs/SongSheetPage'
 import AppLayout from './layout/AppLayout'
-import BandGearPage from './features/bandGearLink/BandGearPage'
+import ClientLinkPage from './features/clientLink/ClientLinkPage'
+import BandGearRedirect from './features/clientLink/BandGearRedirect'
 import DashboardPage from './features/dashboard/DashboardPage'
 import FinancePage from './features/finance/FinancePage'
 import InvoicePage from './features/invoices/InvoicePage'
@@ -41,7 +42,9 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         {/* Public page for bands - the secret link is the key, no login */}
-        <Route path="/band-gear/:token" element={<BandGearPage />} />
+        <Route path="/client/:token" element={<ClientLinkPage />} />
+        {/* Links sent before the client page existed */}
+        <Route path="/band-gear/:token" element={<BandGearRedirect />} />
 
         {/* Everything below requires a logged in user */}
         <Route element={<RequireAuth />}>
