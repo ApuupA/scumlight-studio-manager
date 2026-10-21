@@ -1,6 +1,6 @@
 import { Alert, Anchor, Button, Center, Grid, Group, Loader, Paper, Stack, Tabs, Text, Title } from '@mantine/core'
 import {
-  IconAdjustmentsHorizontal, IconArrowLeft, IconBackpack, IconCalendarEvent, IconClockDollar, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconListNumbers, IconMetronome, IconPrinter, IconTrash,
+  IconAdjustmentsHorizontal, IconArrowLeft, IconAdjustments, IconBackpack, IconCalendarEvent, IconClockDollar, IconDisc, IconGuitarPick, IconInfoCircle, IconLink, IconListNumbers, IconMetronome, IconPrinter, IconTrash,
 } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
@@ -23,6 +23,7 @@ import PhotoCard from '../../components/PhotoCard'
 import FinanceTab from '../finance/FinanceTab'
 import ProjectScopeChips from './ProjectScopeChips'
 import MasteringTab from '../mixing/MasteringTab'
+import MixingTab from '../mixing/MixingTab'
 
 /**
  * Route /projects/new creates a project, /projects/:id shows one with all its tabs.
@@ -104,6 +105,7 @@ export default function ProjectPage() {
   const hiddenTabs = [
     ...(showInstruments ? [] : ['instruments']),
     ...(project.includesRecording ? [] : ['bandGear', 'inputLists', 'drums']),
+    ...(project.includesMixing ? [] : ['mixing']),
     ...(project.includesMastering ? [] : ['mastering']),
   ]
   const currentTab = hiddenTabs.includes(activeTab) ? 'overview' : activeTab
@@ -158,6 +160,9 @@ export default function ProjectPage() {
           {project.includesRecording && (
             <Tabs.Tab value="drums" leftSection={<IconMetronome size={16} />}>{t('projects.tabs.drums')}</Tabs.Tab>
           )}
+          {project.includesMixing && (
+            <Tabs.Tab value="mixing" leftSection={<IconAdjustments size={16} />}>{t('projects.tabs.mixing')}</Tabs.Tab>
+          )}
           {project.includesMastering && (
             <Tabs.Tab value="mastering" leftSection={<IconAdjustmentsHorizontal size={16} />}>{t('projects.tabs.mastering')}</Tabs.Tab>
           )}
@@ -183,6 +188,7 @@ export default function ProjectPage() {
         <Tabs.Panel value="finance" pt="md"><FinanceTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="links" pt="md"><LinksTab projectId={project.id} /></Tabs.Panel>
         <Tabs.Panel value="drums" pt="md"><DrumTuningTab projectId={project.id} /></Tabs.Panel>
+        <Tabs.Panel value="mixing" pt="md"><MixingTab project={project} /></Tabs.Panel>
         <Tabs.Panel value="mastering" pt="md"><MasteringTab project={project} /></Tabs.Panel>
       </Tabs>
     </Stack>

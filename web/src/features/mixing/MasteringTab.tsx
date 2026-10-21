@@ -1,13 +1,11 @@
-import { ActionIcon, Anchor, Button, Checkbox, Grid, Group, Paper, Stack, Table, Text, TextInput, Title } from '@mantine/core'
+import { ActionIcon, Button, Checkbox, Grid, Group, Paper, Stack, Table, Text, TextInput, Title } from '@mantine/core'
 import { IconListCheck, IconPlus, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
 import type { Project, ProjectDeliverable } from '../../api/types'
-import StatusBadge from '../../components/StatusBadge'
-import { mixVersionStatusColors } from '../../components/statusColors'
 import { notifyError } from '../../utils/notify'
 import { useSongs } from '../projects/projectApi'
+import MasterRow from './MasterRow'
 import { useAddDefaultDeliverables, useDeleteDeliverable, useDeliverables, useSaveDeliverable } from './mixApi'
 
 /** "-9,2" / "-9.2" - one decimal in the UI language. */
@@ -16,7 +14,8 @@ function formatNumber(value: number | null | undefined, language: string): strin
 }
 
 /**
- * Project tab "Mastering": the deliverables checklist and the master values of all songs in album order.
+ * Project tab "Mastering": the deliverables checklist and the album list, where the master values of all songs
+ * (pause, LUFS, true peak, ISRC) are entered - the album is mastered as a whole, not song by song.
  */
 export default function MasteringTab({ project }: { project: Project }) {
   const { t, i18n } = useTranslation()
@@ -92,37 +91,24 @@ export default function MasteringTab({ project }: { project: Project }) {
           <Text size="xs" c="dimmed" mb="sm">
             {t('mastering.sequenceHint')}{project.targetLufs != null && ` ${t('mastering.target', { lufs: formatNumber(project.targetLufs, i18n.language) })}`}
           </Text>
-          <Table.ScrollContainer minWidth={520}>
+          <Table.ScrollContainer minWidth={820}>
             <Table>
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th w={40}>{t('songs.trackNumber')}</Table.Th>
                   <Table.Th>{t('songs.songTitle')}</Table.Th>
-                  <Table.Th>{t('mixing.mix')}</Table.Th>
-                  <Table.Th ta="right">{t('mastering.gap')}</Table.Th>
-                  <Table.Th ta="right">LUFS</Table.Th>
-                  <Table.Th ta="right">dBTP</Table.Th>
+                  <Table.Th w={160}>{t('mixing.mix')}</Table.Th>
+                  <Table.Th>{t('mastering.gap')}</Table.Th>
+                  <Table.Th>LUFS</Table.Th>
+                  <Table.Th>dBTP</Table.Th>
                   <Table.Th>ISRC</Table.Th>
+                  <Table.Th w={40} />
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
+                {/* key with the values: after saving, the row starts again from the saved values */}
                 {songs?.map((song) => (
-                  <Table.Tr key={song.id}>
-                    <Table.Td c="dimmed">{song.trackNumber}</Table.Td>
-                    <Table.Td><Anchor component={Link} to={`/songs/${song.id}`} size="sm">{song.title}</Anchor></Table.Td>
-                    <Table.Td>
-                      {song.latestMixStatus && (
-                        <StatusBadge value={song.latestMixStatus} translationKey="mixVersionStatus" colors={mixVersionStatusColors} size="xs" />
-                      )}
-                    </Table.Td>
-                    <Table.Td ta="right">{song.gapBeforeSeconds != null ? `${formatNumber(song.gapBeforeSeconds, i18n.language)} s` : '–'}</Table.Td>
-                    <Table.Td ta="right">{formatNumber(song.measuredLufs, i18n.language)}</Table.Td>
-                    {/* Above -1 dBTP can distort after MP3 / AAC encoding */}
-                    <Table.Td ta="right" c={song.truePeak != null && song.truePeak > -1 ? 'orange' : undefined}>
-                      {formatNumber(song.truePeak, i18n.language)}
-                    </Table.Td>
-                    <Table.Td ff="monospace" fz="xs">{song.isrc ?? '–'}</Table.Td>
-                  </Table.Tr>
+                  <MasterRow key={`${song.id}-${song.dateUpdated}`} song={song} />
                 ))}
               </Table.Tbody>
             </Table>

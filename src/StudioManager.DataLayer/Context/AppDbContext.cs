@@ -146,6 +146,8 @@ namespace StudioManager.DataLayer.Context
             modelBuilder.Entity<Project>(entity =>
             {
                 entity.Property(p => p.ExtraRevisionPrice).HasPrecision(10, 2);
+                entity.Property(p => p.MaterialLink).HasMaxLength(2000);
+                entity.Property(p => p.MaterialNotes).HasMaxLength(2000);
                 entity.Property(p => p.PhotoPath).HasMaxLength(300);
                 entity.Property(p => p.BandGearToken).HasMaxLength(64);
                 entity.HasIndex(p => p.BandGearToken).IsUnique();
@@ -175,7 +177,6 @@ namespace StudioManager.DataLayer.Context
 
             modelBuilder.Entity<Song>(entity =>
             {
-                entity.Property(s => s.MaterialLink).HasMaxLength(2000);
                 entity.Property(s => s.MaterialNotes).HasMaxLength(2000);
                 entity.Property(s => s.MixNotes).HasMaxLength(8000);
                 entity.Property(s => s.Isrc).HasMaxLength(12);
@@ -235,15 +236,21 @@ namespace StudioManager.DataLayer.Context
 
             modelBuilder.Entity<MixVersion>(entity =>
             {
+                entity.Property(v => v.Name).HasMaxLength(30).IsRequired();
                 entity.Property(v => v.Status).HasConversion<string>().HasMaxLength(20);
                 entity.Property(v => v.Link).HasMaxLength(2000);
                 entity.Property(v => v.Notes).HasMaxLength(4000);
-                entity.HasIndex(v => new { v.SongId, v.Number }).IsUnique();
+                entity.HasIndex(v => new { v.ProjectId, v.Number }).IsUnique();
 
-                entity.HasOne(v => v.Song)
-                      .WithMany(s => s.MixVersions)
-                      .HasForeignKey(v => v.SongId)
+                entity.HasOne(v => v.Project)
+                      .WithMany(p => p.MixVersions)
+                      .HasForeignKey(v => v.ProjectId)
                       .OnDelete(DeleteBehavior.Cascade);
+
+                // The exported songs; deleting a song only removes it from the versions
+                entity.HasMany(v => v.Songs)
+                      .WithMany(s => s.MixVersions)
+                      .UsingEntity(join => join.ToTable("MixVersionSongs"));
             });
 
             modelBuilder.Entity<MixFeedback>(entity =>
@@ -255,6 +262,12 @@ namespace StudioManager.DataLayer.Context
                       .WithMany(v => v.Feedback)
                       .HasForeignKey(f => f.MixVersionId)
                       .OnDelete(DeleteBehavior.Cascade);
+
+                // A deleted song turns its feedback into general feedback
+                entity.HasOne(f => f.Song)
+                      .WithMany()
+                      .HasForeignKey(f => f.SongId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<ProjectDeliverable>(entity =>

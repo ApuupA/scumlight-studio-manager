@@ -146,10 +146,10 @@ export default function SongsTab({ project }: { project: Project }) {
                   )}
                   {project.includesMixing && (
                     <Table.Td>
-                      {/* The newest mix version, e.g. "v3 · Approved" */}
-                      {song.latestMixNumber != null && song.latestMixStatus && (
+                      {/* The newest mix version with this song, e.g. "v1.1 · Approved" */}
+                      {song.latestMixName && song.latestMixStatus && (
                         <Group gap={6} wrap="nowrap">
-                          <Text size="sm" fw={600}>v{song.latestMixNumber}</Text>
+                          <Text size="sm" fw={600}>{song.latestMixName}</Text>
                           <StatusBadge value={song.latestMixStatus} translationKey="mixVersionStatus" colors={mixVersionStatusColors} size="xs" />
                         </Group>
                       )}

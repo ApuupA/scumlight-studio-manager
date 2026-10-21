@@ -5,11 +5,14 @@ using StudioManager.DataLayer.Models.ProjectModels;
 namespace StudioManager.ServiceLayer.IService.IProjectServices
 {
     /// <summary>
-    /// Mix versions of a song (v1, v2, ...) with the client's feedback.
+    /// Mix versions of a project ("v1" with all songs, "v1.1" with some) with the client's feedback.
     /// </summary>
     public interface IMixVersionService : IBaseService<MixVersion, MixVersionReadDto, MixVersionCreateDto>
     {
-        /// <summary>The versions of a song, newest first.</summary>
+        /// <summary>The versions of a project, newest first.</summary>
+        Task<IEnumerable<MixVersionReadDto>> GetForProject(int projectId);
+
+        /// <summary>The versions a song was exported in, newest first - for the song page.</summary>
         Task<IEnumerable<MixVersionReadDto>> GetForSong(int songId);
     }
 }

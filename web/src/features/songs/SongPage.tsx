@@ -15,8 +15,7 @@ import LyricsCard from './LyricsCard'
 import RecordingChecklistCard from './RecordingChecklistCard'
 import { useSong } from './songApi'
 import SongInfoCard from './SongInfoCard'
-import MixVersionsCard from '../mixing/MixVersionsCard'
-import SongProductionCard from '../mixing/SongProductionCard'
+import SongMixCard from '../mixing/SongMixCard'
 
 /**
  * Song page (route /songs/:id): arrangement, recording checklist, lyrics and everything else about one song.
@@ -87,8 +86,8 @@ function SongView({ song }: { song: Song }) {
       <Grid gap="lg">
         <Grid.Col span={{ base: 12, lg: 7 }}>
           <Stack>
-            {/* Mix projects: the versions and the client's feedback are the main work */}
-            {project?.includesMixing && <MixVersionsCard song={song} />}
+            {/* Mix projects: the versions with the client's feedback, problems and mix recall */}
+            {project?.includesMixing && <SongMixCard key={song.dateUpdated} song={song} />}
             <ArrangementCard song={song} />
             <LyricsCard song={song} />
           </Stack>
@@ -96,9 +95,6 @@ function SongView({ song }: { song: Song }) {
         <Grid.Col span={{ base: 12, lg: 5 }}>
           <Stack>
             {project?.includesRecording && <RecordingChecklistCard song={song} />}
-            {project && (project.includesMixing || project.includesMastering) && (
-              <SongProductionCard song={song} showMixing={project.includesMixing} showMastering={project.includesMastering} />
-            )}
             <SongInfoCard song={song} />
           </Stack>
         </Grid.Col>

@@ -209,6 +209,12 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.IncludedRevisions, opt => opt.Ignore())
                 .ForMember(dest => dest.ExtraRevisionPrice, opt => opt.Ignore())
                 .ForMember(dest => dest.Deliverables, opt => opt.Ignore())
+                // Tab "Mixing": own endpoint (PUT api/Project/{id}/material) and the mix versions
+                .ForMember(dest => dest.MaterialReceivedOn, opt => opt.Ignore())
+                .ForMember(dest => dest.MaterialLink, opt => opt.Ignore())
+                .ForMember(dest => dest.MaterialTrackCount, opt => opt.Ignore())
+                .ForMember(dest => dest.MaterialNotes, opt => opt.Ignore())
+                .ForMember(dest => dest.MixVersions, opt => opt.Ignore())
                 // The scope is changed with its own endpoint (PUT api/Project/{id}/scope)
                 .ForMember(dest => dest.IncludesRecording, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesMixing, opt => opt.Ignore())
@@ -235,29 +241,34 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.Tempos, opt => opt.MapFrom(src => src.Tempos.OrderBy(t => t.SortOrder)))
                 .ForMember(dest => dest.TrackCount, opt => opt.MapFrom(src => src.Tracks.Count))
                 .ForMember(dest => dest.TracksRecordedCount, opt => opt.MapFrom(src => src.Tracks.Count(t => t.Status != SongTrackStatus.Open)))
-                .ForMember(dest => dest.LatestMixNumber, opt => opt.MapFrom(src =>
-                    src.MixVersions.Count > 0 ? src.MixVersions.Max(v => v.Number) : (int?)null))
+                .ForMember(dest => dest.LatestMixName, opt => opt.MapFrom(src =>
+                    src.MixVersions.Count > 0 ? src.MixVersions.OrderByDescending(v => v.Number).First().Name : null))
                 .ForMember(dest => dest.LatestMixStatus, opt => opt.MapFrom(src =>
                     src.MixVersions.Count > 0 ? src.MixVersions.OrderByDescending(v => v.Number).First().Status : (MixVersionStatus?)null));
             CreateMap<SongTempo, SongTempoReadDto>();
 
             // Mix versions: "extra" = a revision beyond the ones included in the price of the project
+            CreateMap<Song, SongShortDto>();
             CreateMap<MixVersion, MixVersionReadDto>()
-                .ForMember(dest => dest.IsExtraRevision, opt => opt.MapFrom(src =>
-                    src.Song != null && src.Song.Project != null && src.Song.Project.IncludedRevisions != null
-                    && src.Number - 1 > src.Song.Project.IncludedRevisions))
+                .ForMember(dest => dest.Songs, opt => opt.MapFrom(src => src.Songs.OrderBy(s => s.TrackNumber)))
+                .ForMember(dest => dest.IsAllSongs, opt => opt.Ignore())          // set by MixVersionService
+                .ForMember(dest => dest.ExtraRevisionSongs, opt => opt.Ignore())  // set by MixVersionService
                 .ForMember(dest => dest.Feedback, opt => opt.MapFrom(src => src.Feedback.OrderBy(f => f.Id)));
             CreateMap<MixVersionCreateDto, MixVersion>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Number, opt => opt.Ignore()) // given by MixVersionService
-                .ForMember(dest => dest.Song, opt => opt.Ignore())
+                .ForMember(dest => dest.Name, opt => opt.Ignore())   // "v" + number if empty, set by MixVersionService
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.Songs, opt => opt.Ignore())
                 .ForMember(dest => dest.Feedback, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
-            CreateMap<MixFeedback, MixFeedbackReadDto>();
+            CreateMap<MixFeedback, MixFeedbackReadDto>()
+                .ForMember(dest => dest.SongTitle, opt => opt.MapFrom(src => src.Song != null ? src.Song.Title : null));
             CreateMap<MixFeedbackCreateDto, MixFeedback>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.MixVersion, opt => opt.Ignore())
+                .ForMember(dest => dest.Song, opt => opt.Ignore())
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
             CreateMap<ProjectDeliverable, ProjectDeliverableReadDto>();
@@ -270,10 +281,7 @@ namespace StudioManager.ServiceLayer.Mapper
             // Lyrics, arrangement and recording checklist are edited on the song page with their own endpoints
             CreateMap<SongCreateDto, Song>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                // Mixing and mastering details: own endpoint (PUT api/Song/{id}/mix-info)
-                .ForMember(dest => dest.MaterialReceivedOn, opt => opt.Ignore())
-                .ForMember(dest => dest.MaterialLink, opt => opt.Ignore())
-                .ForMember(dest => dest.MaterialTrackCount, opt => opt.Ignore())
+                // Mixing notes and master values: own endpoints (PUT api/Song/{id}/mix-info and .../master-info)
                 .ForMember(dest => dest.MaterialNotes, opt => opt.Ignore())
                 .ForMember(dest => dest.MixNotes, opt => opt.Ignore())
                 .ForMember(dest => dest.Isrc, opt => opt.Ignore())

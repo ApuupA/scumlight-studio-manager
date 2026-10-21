@@ -62,7 +62,19 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// <summary>Agreed total price (pricing mode FlatPrice).</summary>
         public decimal? FlatPrice { get; set; }
 
-        /// <summary>Mix revisions per song included in the price (v2 = 1st revision). Null = not agreed.</summary>
+        // ---------- Mixing: the material from the client (usually all songs with one link) ----------
+
+        public DateOnly? MaterialReceivedOn { get; set; }
+
+        /// <summary>Where the multitracks / stems are, e.g. a WeTransfer or Nextcloud link.</summary>
+        public string? MaterialLink { get; set; }
+
+        public int? MaterialTrackCount { get; set; }
+
+        /// <summary>General notes on the material, e.g. "48 kHz / 24 bit, all songs start at bar 1".</summary>
+        public string? MaterialNotes { get; set; }
+
+        /// <summary>Mix revisions per song included in the price (2nd version of a song = 1st revision). Null = not agreed.</summary>
         public int? IncludedRevisions { get; set; }
 
         /// <summary>Price of every further revision - suggested for the extra item.</summary>
@@ -84,5 +96,6 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public ICollection<ProjectInstrument> Instruments { get; set; } = new List<ProjectInstrument>();
         public ICollection<InputList> InputLists { get; set; } = new List<InputList>();
         public ICollection<ProjectDeliverable> Deliverables { get; set; } = new List<ProjectDeliverable>();
+        public ICollection<MixVersion> MixVersions { get; set; } = new List<MixVersion>();
     }
 }

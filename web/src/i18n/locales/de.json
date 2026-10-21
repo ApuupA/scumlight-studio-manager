@@ -229,7 +229,11 @@
       "tooLarge": "Der Beleg darf nicht größer als 10 MB sein."
     },
     "mixVersion": {
-      "otherSong": "Eine Mix-Version kann nicht zu einem anderen Song verschoben werden."
+      "otherProject": "Eine Mix-Version kann nicht in ein anderes Projekt verschoben werden.",
+      "invalidSongs": "Wähle mindestens einen Song des Projekts."
+    },
+    "mixFeedback": {
+      "songNotInVersion": "Der Song ist nicht in dieser Mix-Version."
     }
   },
   "profile": {
@@ -321,7 +325,8 @@
       "bandGear": "Mitgebrachtes Equipment",
       "inputLists": "Input-Listen",
       "finance": "Zeit & Kosten",
-      "mastering": "Mastering"
+      "mastering": "Mastering",
+      "mixing": "Mixing"
     },
     "filterActive": "Aktive Projekte",
     "filterAll": "Alle Projekte",
@@ -1108,20 +1113,19 @@
   "mixing": {
     "mix": "Mix",
     "versions": "Mix-Versionen",
-    "noVersions": "Noch keine Mix-Version.",
+    "noVersions": "Noch keine Mix-Version – „Neue Version\", wenn du den ersten Mix verschickst.",
     "newVersion": "Neue Version",
-    "editVersion": "v{{number}} bearbeiten",
-    "deleteVersionConfirm": "Version v{{number}} und das Feedback dazu werden gelöscht.",
+    "editVersion": "{{name}} bearbeiten",
+    "deleteVersionConfirm": "Version {{name}} und das Feedback dazu werden gelöscht.",
     "status": "Status",
     "link": "Link zum Bounce",
     "linkInvalid": "Der Link muss mit http:// oder https:// beginnen",
     "listen": "Anhören",
     "changes": "Was wurde geändert",
     "changesPlaceholder": "z. B. Vocals +1 dB, weniger Hall auf der Snare",
-    "includedRevisions": "Inkl. Revisionen pro Song: {{count}}",
-    "extraRevision": "Extra-Revision",
+    "includedRevisions": "Inkl. Revisionen pro Song: {{count}} (wird pro Song gezählt)",
     "bookExtraRevision": "Als Extra-Posten buchen",
-    "extraRevisionItem": "Zusätzliche Mix-Revision: {{title}} v{{number}}",
+    "extraRevisionItem": "Zusätzliche Mix-Revision {{name}}: {{songs}}",
     "feedback": "Feedback",
     "feedbackPlaceholder": "Feedback vom Kunden, z. B. Vocals zu leise",
     "feedbackDone": "Erledigt",
@@ -1129,25 +1133,34 @@
     "material": "Material",
     "materialReceivedOn": "Erhalten am",
     "materialTrackCount": "Anzahl Spuren",
-    "materialLink": "Link zu den Dateien",
-    "materialNotes": "Probleme im Material",
+    "materialLink": "Link zu den Spuren",
+    "materialNotes": "Probleme im Material dieses Songs",
     "materialNotesPlaceholder": "z. B. Bass im Refrain übersteuert, Kick-Spur fehlt",
     "mixNotes": "Mix-Recall",
     "mixNotesHint": "Plugin-Kette, Bus-Einstellungen, … um den Mix später wiederholen zu können.",
-    "isrcInvalid": "Ungültiger ISRC (z. B. DE-A12-26-00001)"
+    "title": "Mixing",
+    "toMixingTab": "Versionen im Tab „Mixing\"",
+    "songNotExported": "Dieser Song ist noch in keiner Mix-Version.",
+    "noSongs": "Lege zuerst die Songs des Projekts an (Tab „Songs\").",
+    "versionName": "Name",
+    "allSongs": "Alle Songs",
+    "exportedSongs": "Exportierte Songs",
+    "chooseSongs": "Wähle mindestens einen Song.",
+    "general": "Allgemein",
+    "song": "Song",
+    "extraRevisions": "Extra-Revision ({{count}})",
+    "openMaterial": "Öffnen",
+    "materialGeneralNotes": "Notizen",
+    "materialGeneralNotesPlaceholder": "z. B. 48 kHz / 24 Bit, alle Songs starten bei Takt 1"
   },
   "mastering": {
-    "title": "Mastering",
-    "measuredLufs": "Lautheit (gemessen)",
-    "truePeak": "True Peak",
-    "gapBefore": "Pause vor dem Song",
     "gap": "Pause",
     "deliverables": "Lieferumfang",
     "deliverablesDone": "{{done}} von {{total}} geliefert",
     "addDefaults": "Übliche hinzufügen",
     "deliverablePlaceholder": "z. B. Instrumental von Song 3",
     "sequence": "Album-Reihenfolge",
-    "sequenceHint": "Die Werte trägst du auf den Song-Seiten ein. True Peak über -1 dBTP ist orange (kann als MP3 / AAC verzerren).",
+    "sequenceHint": "Trag die Werte direkt hier ein – der Haken speichert die Zeile. True Peak über -1 dBTP ist orange (kann als MP3 / AAC verzerren).",
     "target": "Ziel: {{lufs}} LUFS."
   }
 }

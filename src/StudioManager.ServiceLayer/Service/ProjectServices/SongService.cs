@@ -72,12 +72,17 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         {
             var song = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Song), id);
 
-            static string? Clean(string? text) => string.IsNullOrWhiteSpace(text) ? null : text.Trim();
-            song.MaterialReceivedOn = dto.MaterialReceivedOn;
-            song.MaterialLink = Clean(dto.MaterialLink);
-            song.MaterialTrackCount = dto.MaterialTrackCount;
             song.MaterialNotes = Clean(dto.MaterialNotes);
             song.MixNotes = Clean(dto.MixNotes);
+            await _repository.UpdateAsync(song);
+
+            return (await Get(id))!;
+        }
+
+        public async Task<SongReadDto> SetMasterInfo(int id, SongMasterInfoDto dto)
+        {
+            var song = await _repository.GetAsync(id) ?? throw new EntityNotFoundException(nameof(Song), id);
+
             // ISRC always in the short form without dashes, e.g. "DEA122600001"
             song.Isrc = Clean(dto.Isrc)?.Replace("-", "").ToUpperInvariant();
             song.MeasuredLufs = dto.MeasuredLufs;
@@ -87,6 +92,8 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
             return (await Get(id))!;
         }
+
+        private static string? Clean(string? text) => string.IsNullOrWhiteSpace(text) ? null : text.Trim();
 
         public async Task<SongReadDto> SetLyrics(int id, SongLyricsDto dto)
         {

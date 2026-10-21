@@ -23,6 +23,11 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
         Task<ProjectReadDto> SetScope(int id, ProjectScopeDto dto);
 
         /// <summary>
+        /// Saves the material for the mix: received on, link, number of tracks, notes (tab "Mixing").
+        /// </summary>
+        Task<ProjectReadDto> SetMaterial(int id, ProjectMaterialDto dto);
+
+        /// <summary>
         /// The picture for downloading, null if there is none.
         /// </summary>
         Task<FileDownload?> GetPhoto(int id);

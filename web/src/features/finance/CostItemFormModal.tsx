@@ -15,7 +15,7 @@ interface CostItemFormModalProps {
   /** The item to edit, undefined for a new one. */
   item?: ProjectCostItem
   /** Prefilled values for a new item, e.g. an extra mix revision. */
-  defaults?: { description: string; unitPrice?: number | null }
+  defaults?: { description: string; quantity?: number; unitPrice?: number | null }
   onClose: () => void
 }
 
@@ -27,7 +27,7 @@ export default function CostItemFormModal({ projectId, item, defaults, onClose }
     initialValues: {
       date: item?.date ?? todayIso(),
       description: item?.description ?? defaults?.description ?? '',
-      quantity: (item?.quantity ?? 1) as number | string,
+      quantity: (item?.quantity ?? defaults?.quantity ?? 1) as number | string,
       unitPrice: (item?.unitPrice ?? defaults?.unitPrice ?? '') as number | string,
       isBillable: item?.isBillable ?? true,
     },
