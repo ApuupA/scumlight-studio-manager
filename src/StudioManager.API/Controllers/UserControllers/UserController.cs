@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudioManager.API.Infrastructure;
 using StudioManager.DataLayer.DTO.Auth;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.ServiceLayer.IService.IUserServices;
@@ -9,12 +10,12 @@ namespace StudioManager.API.Controllers.UserControllers
 {
     /// <summary>
     /// Logins of the studio (settings page). Only owners may manage them.
-    /// Every login sees the same data - projects, sessions etc. do not belong to a user.
+    /// Owners see everything; assistants see no finance and can not change the settings.
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    [Authorize(Roles = "Owner")]
+    [Authorize(Roles = Roles.Owner)]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -40,6 +41,15 @@ namespace StudioManager.API.Controllers.UserControllers
         public async Task<ActionResult<UserReadDto>> Create([FromBody] UserCreateDto dto)
         {
             return Ok(await _userService.Create(dto));
+        }
+
+        /// <summary>
+        /// Changes the role of another login (Owner / Assistant).
+        /// </summary>
+        [HttpPut("{id:int}/role")]
+        public async Task<ActionResult<UserReadDto>> SetRole(int id, [FromBody] SetRoleDto dto)
+        {
+            return Ok(await _userService.SetRole(id, dto, CurrentUserId));
         }
 
         /// <summary>

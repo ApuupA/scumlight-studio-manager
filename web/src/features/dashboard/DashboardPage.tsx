@@ -1,7 +1,7 @@
 import { Grid, Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { formatDateLong, todayIso } from '../../utils/format'
-import { useCurrentUser } from '../auth/authApi'
+import { useCurrentUser, useIsOwner } from '../auth/authApi'
 import { coversDay } from '../sessions/sessionDates'
 import { useSessions } from '../sessions/sessionApi'
 import BackupWarning from '../dataSafety/BackupWarning'
@@ -20,6 +20,7 @@ const nextSessionsCount = 5
 export default function DashboardPage() {
   const { t, i18n } = useTranslation()
   const { data: user } = useCurrentUser()
+  const isOwner = useIsOwner()
   const { data: sessions } = useSessions()
 
   const today = todayIso()
@@ -37,7 +38,7 @@ export default function DashboardPage() {
         <Text c="dimmed">{formatDateLong(today, i18n.language)}</Text>
       </div>
 
-      <BackupWarning />
+      {isOwner && <BackupWarning />}
 
       <Grid>
         <Grid.Col span={{ base: 12, md: 6 }}>
@@ -50,7 +51,7 @@ export default function DashboardPage() {
         <Grid.Col span={{ base: 12, md: 6 }}>
           <Stack>
             <ClientNewsCard />
-            <MoneyCard />
+            {isOwner && <MoneyCard />}
             <ActiveProjectsCard />
           </Stack>
         </Grid.Col>

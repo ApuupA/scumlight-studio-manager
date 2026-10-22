@@ -98,7 +98,7 @@ namespace StudioManager.Tests.Unit
         }
 
         [Fact]
-        public async Task Create_ShouldAddALoginWithFullAccess()
+        public async Task Create_ShouldAddAnAssistantByDefault()
         {
             await CreateOwner();
 
@@ -106,9 +106,26 @@ namespace StudioManager.Tests.Unit
 
             Assert.Equal("Max", created.DisplayName);
             Assert.Equal("max@band.de", created.Email);
-            Assert.Equal(UserRole.Owner, created.Role);
+            Assert.Equal(UserRole.Assistant, created.Role);
             Assert.NotNull(await _service.ValidateCredentials("max@band.de", "start-password"));
             Assert.Equal(2, (await _service.GetAll()).Count());
+        }
+
+        [Fact]
+        public async Task SetRole_ShouldChangeOthers_ButNotYourself()
+        {
+            var owner = await CreateOwner();
+            var max = await _service.Create(new UserCreateDto { DisplayName = "Max", Email = "max@band.de", Password = "start-password" });
+
+            var promoted = await _service.SetRole(max.Id, new SetRoleDto { Role = UserRole.Owner }, owner.Id);
+            var ownChange = await Assert.ThrowsAsync<BusinessRuleException>(() =>
+                _service.SetRole(owner.Id, new SetRoleDto { Role = UserRole.Assistant }, owner.Id));
+            var clientRole = await Assert.ThrowsAsync<BusinessRuleException>(() =>
+                _service.SetRole(max.Id, new SetRoleDto { Role = UserRole.Client }, owner.Id));
+
+            Assert.Equal(UserRole.Owner, promoted.Role);
+            Assert.Equal("user.cannotChangeOwnRole", ownChange.ErrorCode);
+            Assert.Equal("user.invalidRole", clientRole.ErrorCode);
         }
 
         [Fact]

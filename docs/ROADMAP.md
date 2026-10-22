@@ -102,6 +102,11 @@
   lyrics on its own page); demo versions like mix versions (own numbering "Demo 1", no mix revisions), the band listens,
   comments and approves them on the client link (tab "Demos")
 - Later for songwriting: lyrics with chords, GEMA shares (split sheet)
+- ✅ **Roles** (v1.17.0): Owner (everything) and Assistant (projects, sessions, gear - no finance, no settings,
+  no logins, no purchase prices); locked in the backend ([Authorize(Roles = Owner)] / [OwnerForChanges]), a changed
+  role counts from the next request on
+- **Next: groups** (v1.18.0): projects belong to groups, assistants only see the projects (and their clients / bands /
+  sessions) of their groups plus the projects marked "visible to everyone"; assistants may create projects and clients
 - **Next**: AfA (depreciation of equipment over its useful life) in the expenses and the yearly overview
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search

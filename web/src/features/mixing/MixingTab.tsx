@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { MixVersion, Project } from '../../api/types'
 import { confirmDelete } from '../../utils/confirmDelete'
+import { useIsOwner } from '../auth/authApi'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import ClientLinkCard from '../clientLink/ClientLinkCard'
 import { useMarkClientNewsRead } from '../clientLink/clientLinkApi'
@@ -28,7 +29,9 @@ export default function MixingTab({ project }: { project: Project }) {
   const { data: allVersions } = useProjectMixVersions(project.id)
   // The demos of the songwriting are in the tab "Songwriting"
   const versions = allVersions?.filter((v) => !v.isDemo)
-  const { data: finance } = useProjectFinance(project.id)
+  // Included revisions and their price: finance, only for the owner
+  const isOwner = useIsOwner()
+  const { data: finance } = useProjectFinance(project.id, isOwner)
   const deleteVersion = useDeleteMixVersion()
   const [dialog, setDialog] = useState<Dialog>({ type: 'none' })
 
@@ -76,7 +79,7 @@ export default function MixingTab({ project }: { project: Project }) {
                 version={version}
                 onEdit={() => setDialog({ type: 'version', version })}
                 onDelete={() => handleDelete(version)}
-                onBookExtra={() => setDialog({ type: 'extra', version })}
+                onBookExtra={isOwner ? () => setDialog({ type: 'extra', version }) : undefined}
               />
             ))}
           </Stack>

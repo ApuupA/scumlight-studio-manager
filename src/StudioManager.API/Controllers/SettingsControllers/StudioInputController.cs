@@ -1,3 +1,4 @@
+using StudioManager.API.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
@@ -6,6 +7,7 @@ using StudioManager.ServiceLayer.IService.ISettingsServices;
 
 namespace StudioManager.API.Controllers.SettingsControllers
 {
+    [OwnerForChanges] // studio settings: everybody reads (input lists), only the owner changes
     public class StudioInputController : BaseController<StudioInputReadDto, StudioInputCreateDto, StudioInput, IStudioInputService>
     {
         private readonly IStudioInputService _service;

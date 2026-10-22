@@ -16,6 +16,7 @@ import SessionForm from './SessionForm'
 import SessionEquipment from './SessionEquipment'
 import SessionTasks from './SessionTasks'
 import TimeEntryFormModal from '../finance/TimeEntryFormModal'
+import { useIsOwner } from '../auth/authApi'
 
 /**
  * Route /sessions/new creates a session (optionally with ?projectId= and ?date=), /sessions/:id shows one:
@@ -38,6 +39,7 @@ export default function SessionPage() {
   // The session the duplicate dialog is open for (this one, or the one chosen under "copy from" on a new session)
   const [sessionToCopy, setSessionToCopy] = useState<Session | null>(null)
   const [bookingHours, setBookingHours] = useState(false)
+  const isOwner = useIsOwner()
 
   const handleSubmit = (input: SessionInput) => {
     if (isNew) {
@@ -135,10 +137,12 @@ export default function SessionPage() {
           </Text>
         </div>
         <Group gap="xs">
-          {/* Time tracking: the session's hours as suggestion */}
-          <Button variant="light" leftSection={<IconClockPlus size={16} />} onClick={() => setBookingHours(true)}>
-            {t('finance.bookHours')}
-          </Button>
+          {/* Time tracking: the session's hours as suggestion (money - only the owner) */}
+          {isOwner && (
+            <Button variant="light" leftSection={<IconClockPlus size={16} />} onClick={() => setBookingHours(true)}>
+              {t('finance.bookHours')}
+            </Button>
+          )}
           <Button variant="light" leftSection={<IconCopy size={16} />} onClick={() => setSessionToCopy(session)}>
             {t('sessions.duplicate')}
           </Button>

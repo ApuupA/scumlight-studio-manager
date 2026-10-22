@@ -13,6 +13,15 @@ export function useCurrentUser() {
   })
 }
 
+/**
+ * True for the studio owner. Assistants see no finance (times, prices, invoices, ...) and no settings -
+ * the backend refuses those requests as well, hiding them here only keeps the pages clean.
+ */
+export function useIsOwner(): boolean {
+  const { data: user } = useCurrentUser()
+  return user?.role === 'Owner'
+}
+
 export function useLogin() {
   const queryClient = useQueryClient()
 

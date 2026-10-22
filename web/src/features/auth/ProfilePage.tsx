@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { ProfileInput, User } from '../../api/types'
 import { minPasswordLength } from '../../utils/form'
 import { notifyError, notifySuccess } from '../../utils/notify'
-import { useChangePassword, useCurrentUser, useUpdateProfile } from './authApi'
+import { useChangePassword, useCurrentUser, useIsOwner, useUpdateProfile } from './authApi'
 import CalendarSubscriptionCard from '../calendar/CalendarSubscriptionCard'
 import BusinessDataCard from '../finance/BusinessDataCard'
 import DataSafetyCard from '../dataSafety/DataSafetyCard'
@@ -15,6 +15,7 @@ import DataSafetyCard from '../dataSafety/DataSafetyCard'
 export default function ProfilePage() {
   const { t } = useTranslation()
   const { data: user } = useCurrentUser() // always loaded here, RequireAuth waits for it
+  const isOwner = useIsOwner()
 
   return (
     <Stack maw={960}>
@@ -24,9 +25,10 @@ export default function ProfilePage() {
         {user && <ProfileForm key={user.email} user={user} />}
         <PasswordForm />
       </SimpleGrid>
-      <BusinessDataCard />
+      {/* Business data (address, tax number, bank) and backups: only the owner */}
+      {isOwner && <BusinessDataCard />}
       <CalendarSubscriptionCard />
-      <DataSafetyCard />
+      {isOwner && <DataSafetyCard />}
     </Stack>
   )
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using StudioManager.API.Infrastructure;
 using StudioManager.ServiceLayer.IService;
 
 namespace StudioManager.API.Controllers
@@ -24,6 +25,11 @@ namespace StudioManager.API.Controllers
         {
             _service = service;
         }
+
+        /// <summary>
+        /// True for the studio owner - assistants see no money (e.g. purchase prices of the gear).
+        /// </summary>
+        protected bool IsOwner => User.IsInRole(Roles.Owner);
 
         /// <summary>
         /// Gets all entities.

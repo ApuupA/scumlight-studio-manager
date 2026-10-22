@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router'
 import LoginPage from './features/auth/LoginPage'
 import ProfilePage from './features/auth/ProfilePage'
 import RequireAuth from './features/auth/RequireAuth'
+import RequireOwner from './features/auth/RequireOwner'
 import ClientListPage from './features/clients/ClientListPage'
 import ClientPage from './features/clients/ClientPage'
 import CategoriesPage from './features/gear/CategoriesPage'
@@ -55,8 +56,11 @@ export default function App() {
           <Route path="/input-lists/:id/sheet" element={<InputSheetPage />} />
           <Route path="/songs/:id/sheet" element={<SongSheetPage />} />
           <Route path="/projects/:id/songbook" element={<SongbookPage />} />
-          <Route path="/invoices/:id/print" element={<InvoicePrintPage />} />
-          <Route path="/quotes/:id/print" element={<QuotePrintPage />} />
+          {/* Finance and settings: only the owner */}
+          <Route element={<RequireOwner />}>
+            <Route path="/invoices/:id/print" element={<InvoicePrintPage />} />
+            <Route path="/quotes/:id/print" element={<QuotePrintPage />} />
+          </Route>
 
           {/* Normal pages inside the app layout */}
           <Route element={<AppLayout />}>
@@ -68,11 +72,14 @@ export default function App() {
             <Route path="/projects/new" element={<ProjectPage />} />
             <Route path="/projects/:id" element={<ProjectPage />} />
             <Route path="/songs/:id" element={<SongPage />} />
-            <Route path="/finance" element={<FinancePage />} />
-            {/* The old address of the invoice list */}
-            <Route path="/invoices" element={<Navigate to="/finance" replace />} />
-            <Route path="/invoices/:id" element={<InvoicePage />} />
-            <Route path="/quotes/:id" element={<QuotePage />} />
+            <Route element={<RequireOwner />}>
+              <Route path="/finance" element={<FinancePage />} />
+              {/* The old address of the invoice list */}
+              <Route path="/invoices" element={<Navigate to="/finance" replace />} />
+              <Route path="/invoices/:id" element={<InvoicePage />} />
+              <Route path="/quotes/:id" element={<QuotePage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+            </Route>
             <Route path="/clients" element={<ClientListPage />} />
             <Route path="/clients/:id" element={<ClientPage />} />
             <Route path="/gear" element={<GearListPage />} />
@@ -80,7 +87,6 @@ export default function App() {
             <Route path="/gear/:id" element={<GearItemPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/settings" element={<SettingsPage />} />
           </Route>
         </Route>
 

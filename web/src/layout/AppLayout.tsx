@@ -3,22 +3,22 @@ import { useDisclosure } from '@mantine/hooks'
 import { IconCalendarEvent, IconCategory, IconDisc, IconFileInvoice, IconHome, IconLogout, IconMoon, IconSettings, IconSun, IconTool, IconUser, IconUsersGroup } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 import { NavLink as RouterNavLink, Outlet, useNavigate } from 'react-router'
-import { useCurrentUser, useLogout } from '../features/auth/authApi'
+import { useCurrentUser, useIsOwner, useLogout } from '../features/auth/authApi'
 import classes from './AppLayout.module.css'
 import Brand from './Brand'
 import LanguageSwitcher from './LanguageSwitcher'
 import TimerButton from '../features/finance/TimerButton'
 
-/** Entries of the side navigation. New features (projects, sessions, mixes, ...) are added here. */
+/** Entries of the side navigation. New features (projects, sessions, mixes, ...) are added here. ownerOnly: hidden for assistants. */
 const navItems = [
   { to: '/', labelKey: 'nav.start', icon: IconHome },
   { to: '/sessions', labelKey: 'nav.calendar', icon: IconCalendarEvent },
   { to: '/projects', labelKey: 'nav.projects', icon: IconDisc },
   { to: '/clients', labelKey: 'nav.clients', icon: IconUsersGroup },
-  { to: '/finance', labelKey: 'nav.finance', icon: IconFileInvoice },
+  { to: '/finance', labelKey: 'nav.finance', icon: IconFileInvoice, ownerOnly: true },
   { to: '/gear', labelKey: 'nav.gear', icon: IconTool },
   { to: '/categories', labelKey: 'nav.categories', icon: IconCategory },
-  { to: '/settings', labelKey: 'nav.settings', icon: IconSettings },
+  { to: '/settings', labelKey: 'nav.settings', icon: IconSettings, ownerOnly: true },
 ]
 
 /**
@@ -30,6 +30,7 @@ export default function AppLayout() {
   const [navbarOpened, { toggle: toggleNavbar, close: closeNavbar }] = useDisclosure()
   const { colorScheme, toggleColorScheme } = useMantineColorScheme()
   const { data: user } = useCurrentUser()
+  const isOwner = useIsOwner()
   const logout = useLogout()
 
   const handleLogout = () => {
@@ -61,7 +62,8 @@ export default function AppLayout() {
 
           {/* On phones these settings move into the navigation (see below), so the header has room for the logo */}
           <Group gap="sm" wrap="nowrap" visibleFrom="sm">
-            <TimerButton />
+            {/* The timer books working time (money) - only the owner */}
+            {isOwner && <TimerButton />}
             <Anchor component={RouterNavLink} to="/profile" size="sm" c="dimmed">
               {user?.displayName}
             </Anchor>
@@ -72,7 +74,7 @@ export default function AppLayout() {
 
       <AppShell.Navbar p="sm">
         <AppShell.Section grow>
-          {navItems.map((item) => (
+          {navItems.filter((item) => isOwner || !item.ownerOnly).map((item) => (
             <NavLink
               key={item.to}
               component={RouterNavLink}

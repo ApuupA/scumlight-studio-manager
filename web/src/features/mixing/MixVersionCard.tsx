@@ -54,7 +54,7 @@ export default function MixVersionCard({ version, onEdit, onDelete, onBookExtra 
           {version.notes && <Text size="sm" mt={4}>{version.notes}</Text>}
         </div>
         <Group gap={2} wrap="nowrap">
-          {hasExtra && (
+          {hasExtra && onBookExtra && (
             <Tooltip label={t('mixing.bookExtraRevision')}>
               <ActionIcon variant="subtle" color="orange" onClick={onBookExtra} aria-label={t('mixing.bookExtraRevision')}>
                 <IconReceipt size={16} />

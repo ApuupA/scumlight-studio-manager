@@ -81,16 +81,32 @@ try
             options.ExpireTimeSpan = TimeSpan.FromDays(14);
             options.SlidingExpiration = true;
 
-            // A deleted login is logged out right away (the cookie itself would stay valid for 14 days)
+            // A deleted login is logged out right away (the cookie itself would stay valid for 14 days),
+            // a changed role (owner <-> assistant) counts from the next request on - not only after the next login
             options.Events.OnValidatePrincipal = async context =>
             {
                 var userId = int.Parse(context.Principal!.FindFirstValue(ClaimTypes.NameIdentifier)!);
                 var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                var user = await userService.Get(userId);
 
-                if (await userService.Get(userId) == null)
+                if (user == null)
                 {
                     context.RejectPrincipal();
                     await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    return;
+                }
+
+                var role = user.Role.ToString();
+                if (context.Principal.FindFirstValue(ClaimTypes.Role) != role)
+                {
+                    var identity = (ClaimsIdentity)context.Principal.Identity!;
+                    foreach (var claim in identity.FindAll(ClaimTypes.Role).ToList())
+                    {
+                        identity.RemoveClaim(claim);
+                    }
+                    identity.AddClaim(new Claim(ClaimTypes.Role, role));
+                    context.ReplacePrincipal(new ClaimsPrincipal(identity));
+                    context.ShouldRenew = true; // the cookie gets the new role
                 }
             };
 
