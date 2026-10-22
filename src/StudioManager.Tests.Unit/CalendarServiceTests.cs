@@ -21,7 +21,7 @@ namespace StudioManager.Tests.Unit
 
         public CalendarServiceTests()
         {
-            _service = new CalendarService(new Repository<User>(_context), new Repository<Session>(_context));
+            _service = new CalendarService(new Repository<User>(_context), new Repository<Session>(_context), new TestProjectAccess());
 
             _user = new User { Email = "owner@studio.local", DisplayName = "Owner" };
             _project = new Project { Title = "Album", Client = new Client { Name = "Label" } };

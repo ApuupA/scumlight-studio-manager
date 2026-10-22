@@ -1,3 +1,4 @@
+using StudioManager.DataLayer.Context;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.SessionModels;
 using StudioManager.DataLayer.Models.UserModels;
@@ -20,11 +21,13 @@ namespace StudioManager.ServiceLayer.Service.CalendarServices
 
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Session> _sessionRepository;
+        private readonly IProjectAccess _access;
 
-        public CalendarService(IRepository<User> userRepository, IRepository<Session> sessionRepository)
+        public CalendarService(IRepository<User> userRepository, IRepository<Session> sessionRepository, IProjectAccess access)
         {
             _userRepository = userRepository;
             _sessionRepository = sessionRepository;
+            _access = access;
         }
 
         public async Task<CalendarTokenDto> GetToken(int userId)
@@ -47,10 +50,15 @@ namespace StudioManager.ServiceLayer.Service.CalendarServices
 
         public async Task<string?> GetFeed(string token)
         {
-            if (string.IsNullOrWhiteSpace(token) || !await _userRepository.ExistsAsync(u => u.CalendarToken == token))
+            var user = string.IsNullOrWhiteSpace(token) ? null : await _userRepository.GetAsync(u => u.CalendarToken == token);
+            if (user == null)
             {
                 return null;
             }
+
+            // The calendar app asks without login - the feed contains what the token's user sees (an assistant:
+            // only the sessions of their projects)
+            _access.ActAs(user.Id, user.Role == UserRole.Owner);
 
             var from = DateOnly.FromDateTime(DateTime.Now).AddDays(-DaysInThePast);
             var sessions = (await _sessionRepository.GetAllWithPathsAsync(s => (s.EndDate ?? s.Date) >= from, "Project.Client"))

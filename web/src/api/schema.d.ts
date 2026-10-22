@@ -2505,6 +2505,149 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Group": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GroupReadDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["GroupCreateDto"];
+                    "text/json": components["schemas"]["GroupCreateDto"];
+                    "application/*+json": components["schemas"]["GroupCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GroupReadDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Group/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GroupReadDto"];
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["GroupCreateDto"];
+                    "text/json": components["schemas"]["GroupCreateDto"];
+                    "application/*+json": components["schemas"]["GroupCreateDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GroupReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/InputGroup": {
         parameters: {
             query?: never;
@@ -4031,6 +4174,49 @@ export interface paths {
                     "application/json": components["schemas"]["ProjectScopeDto"];
                     "text/json": components["schemas"]["ProjectScopeDto"];
                     "application/*+json": components["schemas"]["ProjectScopeDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProjectReadDto"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Project/{id}/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ProjectAccessDto"];
+                    "text/json": components["schemas"]["ProjectAccessDto"];
+                    "application/*+json": components["schemas"]["ProjectAccessDto"];
                 };
             };
             responses: {
@@ -8403,6 +8589,28 @@ export interface components {
             quantity: number;
             notes?: string | null;
         };
+        GroupCreateDto: {
+            name: string;
+            userIds: number[];
+        };
+        GroupMemberDto: {
+            /** Format: int32 */
+            id: number;
+            displayName: string;
+        };
+        GroupReadDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            members: components["schemas"]["GroupMemberDto"][];
+            /** Format: int32 */
+            projectCount: number;
+        };
+        GroupShortDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
         InputGroupCreateDto: {
             name: string;
             color: string;
@@ -8736,6 +8944,10 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        ProjectAccessDto: {
+            groupIds: number[];
+            isVisibleToAll: boolean;
+        };
         ProjectCostItemCreateDto: {
             /** Format: date */
             date: string;
@@ -8951,6 +9163,8 @@ export interface components {
             songCount: number;
             /** Format: int32 */
             songsDoneCount: number;
+            groups: components["schemas"]["GroupShortDto"][];
+            isVisibleToAll: boolean;
             includesSongwriting: boolean;
             includesRecording: boolean;
             includesMixing: boolean;

@@ -55,6 +55,9 @@ try
         throw new InvalidOperationException("Connection string 'StudioDatabase' must be set in configuration.");
     }
 
+    // Who is asking - the database filters the projects by it (see AppDbContext.Access.cs)
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddScoped<IProjectAccess, HttpProjectAccess>();
     builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
     // ---------- File storage ----------
@@ -198,6 +201,7 @@ try
     builder.Services.AddScoped<IGearCategoryService, GearCategoryService>();
     builder.Services.AddScoped<IGearItemService, GearItemService>();
     builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IGroupService, GroupService>();
     builder.Services.AddScoped<ICalendarService, CalendarService>();
     builder.Services.AddScoped<IFinanceService, FinanceService>();
     builder.Services.AddScoped<ITimeEntryService, TimeEntryService>();

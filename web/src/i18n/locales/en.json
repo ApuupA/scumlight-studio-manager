@@ -140,7 +140,8 @@
       "invalidRole": "A login is an owner or an assistant."
     },
     "common": {
-      "invalidReference": "The data refers to an entry that does not exist (anymore)."
+      "invalidReference": "The data refers to an entry that does not exist (anymore).",
+      "noAccess": "This belongs to a project you do not see."
     },
     "client": {
       "hasProjects": "The client still has projects. Delete the projects first."
@@ -246,6 +247,9 @@
       "fileRequired": "A voice memo is created by uploading an audio file.",
       "sectionOfOtherSong": "The part belongs to another song.",
       "songOfOtherProject": "The song belongs to another project."
+    },
+    "group": {
+      "nameExists": "A group with this name already exists."
     }
   },
   "profile": {
@@ -1308,5 +1312,24 @@
       "Assistant": "Works on the projects, but sees no finance (times, prices, invoices) and no settings.",
       "Client": "Not used yet."
     }
+  },
+  "groups": {
+    "title": "Groups",
+    "new": "New group",
+    "edit": "Edit group \"{{name}}\"",
+    "name": "Name",
+    "namePlaceholder": "e.g. band name",
+    "members": "Members",
+    "membersHint": "Assistants in the group see the projects of the group. Owners see everything anyway.",
+    "hint": "Teams of the studio: assistants only see the projects of their groups, the ones \"visible to everyone\" and the ones they created.",
+    "none": "No groups yet.",
+    "noMembers": "No members",
+    "projectCount": "{{count}} project(s)",
+    "deleteConfirm": "Delete group \"{{name}}\"? The projects stay, but its members do not see them anymore.",
+    "access": "Who sees the project?",
+    "accessHint": "Assistants see the project when they are in one of its groups – or when it is visible to everyone. Owners see everything.",
+    "visibleToAll": "Visible to everyone",
+    "visibleToAllHint": "Every assistant sees the project, no matter in which group.",
+    "onlyOwner": "Owners only"
   }
 }

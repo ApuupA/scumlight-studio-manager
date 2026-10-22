@@ -30,6 +30,10 @@ namespace StudioManager.DataLayer.DTO.Read
         public int SongsDoneCount { get; set; }
 
         /// <summary>Scope of the project - decides which tabs are shown.</summary>
+        /// <summary>Who sees the project: its groups and "visible to everyone" (the owner sees every project).</summary>
+        public List<GroupShortDto> Groups { get; set; } = new();
+        public bool IsVisibleToAll { get; set; }
+
         public bool IncludesSongwriting { get; set; }
         public bool IncludesRecording { get; set; }
         public bool IncludesMixing { get; set; }

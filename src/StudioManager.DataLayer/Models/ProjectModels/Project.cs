@@ -1,5 +1,6 @@
 using StudioManager.DataLayer.Models.ClientModels;
 using StudioManager.DataLayer.Models.SessionModels;
+using StudioManager.DataLayer.Models.UserModels;
 
 namespace StudioManager.DataLayer.Models.ProjectModels
 {
@@ -102,5 +103,16 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         public ICollection<InputList> InputLists { get; set; } = new List<InputList>();
         public ICollection<ProjectDeliverable> Deliverables { get; set; } = new List<ProjectDeliverable>();
         public ICollection<MixVersion> MixVersions { get; set; } = new List<MixVersion>();
+
+        // ---------- Who sees the project (the owner sees every project) ----------
+
+        /// <summary>The groups whose assistants see the project (many-to-many, join table "ProjectGroups").</summary>
+        public ICollection<Group> Groups { get; set; } = new List<Group>();
+
+        /// <summary>"Visible to everyone": every assistant sees the project, no matter in which groups.</summary>
+        public bool IsVisibleToAll { get; set; }
+
+        /// <summary>The assistant who created the project - always sees it (also without a group). Null = created by an owner.</summary>
+        public int? CreatedByUserId { get; set; }
     }
 }

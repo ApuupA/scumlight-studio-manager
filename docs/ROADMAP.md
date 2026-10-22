@@ -105,8 +105,10 @@
 - ✅ **Roles** (v1.17.0): Owner (everything) and Assistant (projects, sessions, gear - no finance, no settings,
   no logins, no purchase prices); locked in the backend ([Authorize(Roles = Owner)] / [OwnerForChanges]), a changed
   role counts from the next request on
-- **Next: groups** (v1.18.0): projects belong to groups, assistants only see the projects (and their clients / bands /
-  sessions) of their groups plus the projects marked "visible to everyone"; assistants may create projects and clients
+- ✅ **Groups** (v1.18.0): projects belong to groups, assistants only see the projects of their groups, the ones
+  "visible to everyone" and the ones they created - with everything belonging to them (songs, sessions, clients, bands,
+  calendar subscription, start page). One central rule: EF Core query filters in AppDbContext.Access.cs; changes into a
+  foreign project are rolled back (403). A test fails if a new entity has no filter.
 - **Next**: AfA (depreciation of equipment over its useful life) in the expenses and the yearly overview
 - **Recall photos** per session / instrument setup (mic positions, amp settings)
 - Contacts per client / band, global search

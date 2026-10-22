@@ -22,6 +22,7 @@ import SongsTab from './SongsTab'
 import PhotoCard from '../../components/PhotoCard'
 import FinanceTab from '../finance/FinanceTab'
 import ProjectScopeChips from './ProjectScopeChips'
+import ProjectAccess from '../groups/ProjectAccess'
 import { useIsOwner } from '../auth/authApi'
 import MasteringTab from '../mixing/MasteringTab'
 import MixingTab from '../mixing/MixingTab'
@@ -130,7 +131,10 @@ export default function ProjectPage() {
             {project.bands.length > 0 && ` · ${project.bands.map((b) => b.name).join(', ')}`}
             {` · ${t(`projectType.${project.type}`)}`}
           </Text>
-          <Group mt="xs"><ProjectScopeChips project={project} /></Group>
+          <Group mt="xs" gap="sm">
+            <ProjectScopeChips project={project} />
+            <ProjectAccess project={project} />
+          </Group>
         </div>
         <Group gap="xs">
           <Button variant="light" leftSection={<IconPrinter size={16} />} onClick={() => navigate(`/projects/${project.id}/sheet`)}>

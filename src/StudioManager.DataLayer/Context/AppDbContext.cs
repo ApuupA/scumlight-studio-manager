@@ -10,11 +10,19 @@ using StudioManager.DataLayer.Models.UserModels;
 
 namespace StudioManager.DataLayer.Context
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+    /// <summary>
+    /// The database. Which projects (and everything belonging to them) a query returns depends on the user:
+    /// see the query filters in AppDbContext.Access.cs.
+    /// </summary>
+    /// <param name="access">Who is asking. Null (tests, migrations) = sees everything.</param>
+    public partial class AppDbContext(DbContextOptions<AppDbContext> options, IProjectAccess? access = null) : DbContext(options)
     {
+        private readonly IProjectAccess? _access = access;
+
         public DbSet<GearCategory> GearCategories { get; set; } = null!;
         public DbSet<GearItem> GearItems { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Group> Groups { get; set; } = null!;
 
         public DbSet<Client> Clients { get; set; } = null!;
         public DbSet<Band> Bands { get; set; } = null!;
@@ -59,6 +67,9 @@ namespace StudioManager.DataLayer.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Who sees which projects: query filters, see AppDbContext.Access.cs
+            AddAccessFilters(modelBuilder);
 
             modelBuilder.Entity<GearCategory>(entity =>
             {
@@ -113,8 +124,28 @@ namespace StudioManager.DataLayer.Context
 
         private static void ConfigureClients(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Group>(entity =>
+            {
+                entity.Property(g => g.Name).HasMaxLength(100).IsRequired();
+                entity.HasIndex(g => g.Name).IsUnique();
+
+                // Many-to-many: join tables "UserGroups" and "ProjectGroups"
+                entity.HasMany(g => g.Users)
+                      .WithMany(u => u.Groups)
+                      .UsingEntity(join => join.ToTable("UserGroups"));
+                entity.HasMany(g => g.Projects)
+                      .WithMany(p => p.Groups)
+                      .UsingEntity(join => join.ToTable("ProjectGroups"));
+            });
+
             modelBuilder.Entity<Client>(entity =>
             {
+                // A deleted login keeps its clients and projects (they are only no longer "created by" anybody)
+                entity.HasOne<User>()
+                      .WithMany()
+                      .HasForeignKey(c => c.CreatedByUserId)
+                      .OnDelete(DeleteBehavior.SetNull);
+
                 entity.Property(c => c.PhotoPath).HasMaxLength(300);
                 entity.Property(c => c.Name).HasMaxLength(200).IsRequired();
                 entity.Property(c => c.ContactPerson).HasMaxLength(200);
@@ -169,6 +200,11 @@ namespace StudioManager.DataLayer.Context
                       .WithMany(c => c.Projects)
                       .HasForeignKey(p => p.ClientId)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne<User>()
+                      .WithMany()
+                      .HasForeignKey(p => p.CreatedByUserId)
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 // Many-to-many: EF creates the join table "ProjectBands" automatically
                 entity.HasMany(p => p.Bands)
@@ -560,16 +596,16 @@ namespace StudioManager.DataLayer.Context
             }));
         }
 
+        // Both ways of saving check the access of an assistant (AppDbContext.Access.cs).
+        // The app only uses the async one - the sync one waits for it.
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            SetTimestamps();
-            return base.SaveChanges(acceptAllChangesOnSuccess);
+            return SaveCheckedAsync(acceptAllChangesOnSuccess, CancellationToken.None).GetAwaiter().GetResult();
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            SetTimestamps();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            return SaveCheckedAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         /// <summary>

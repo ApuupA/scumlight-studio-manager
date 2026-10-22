@@ -11,6 +11,7 @@ import BulkInputsModal from './BulkInputsModal'
 import InputGroupFormModal from './InputGroupFormModal'
 import { useDeleteInputGroup, useDeleteStudioInput, useInputGroups, useStudioInputs } from './settingsApi'
 import UsersCard from '../users/UsersCard'
+import GroupsCard from '../groups/GroupsCard'
 import StudioInputFormModal from './StudioInputFormModal'
 import BillingSettingsCard from '../finance/BillingSettingsCard'
 import StandardTasksCard from '../finance/StandardTasksCard'
@@ -129,6 +130,7 @@ export default function SettingsPage() {
       <BillingSettingsCard />
       <StandardTasksCard />
       <UsersCard />
+      <GroupsCard />
 
       {dialog.type === 'group' && <InputGroupFormModal group={dialog.group} onClose={close} />}
       {dialog.type === 'input' && <StudioInputFormModal input={dialog.input} onClose={close} />}

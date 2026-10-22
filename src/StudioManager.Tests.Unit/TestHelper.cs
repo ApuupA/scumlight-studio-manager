@@ -11,13 +11,14 @@ namespace StudioManager.Tests.Unit
     /// </summary>
     internal static class TestHelper
     {
-        public static AppDbContext CreateDbContext()
+        /// <param name="access">Who is asking (filters the projects) - null: sees everything.</param>
+        public static AppDbContext CreateDbContext(IProjectAccess? access = null)
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
-            return new AppDbContext(options);
+            return new AppDbContext(options, access);
         }
 
         public static IMapper CreateMapper()

@@ -35,6 +35,13 @@ namespace StudioManager.API.Infrastructure
                     Title = businessRule.Message,
                     Extensions = { ["errorCode"] = businessRule.ErrorCode }
                 },
+                // An assistant changed data of a project they do not see (AppDbContext.Access.cs)
+                UnauthorizedAccessException => new ProblemDetails
+                {
+                    Status = StatusCodes.Status403Forbidden,
+                    Title = "This belongs to a project you do not see.",
+                    Extensions = { ["errorCode"] = "common.noAccess" }
+                },
                 // Fallback for references the services don't check themselves (e.g. a song for a project that
                 // was deleted in the meantime): the database rejects it with a foreign key violation
                 DbUpdateException { InnerException: PostgresException { SqlState: PostgresErrorCodes.ForeignKeyViolation } } => new ProblemDetails

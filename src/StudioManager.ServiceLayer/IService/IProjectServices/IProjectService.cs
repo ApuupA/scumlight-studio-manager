@@ -23,6 +23,11 @@ namespace StudioManager.ServiceLayer.IService.IProjectServices
         Task<ProjectReadDto> SetScope(int id, ProjectScopeDto dto);
 
         /// <summary>
+        /// Sets who sees the project: its groups and "visible to everyone" (only the owner).
+        /// </summary>
+        Task<ProjectReadDto> SetAccess(int id, ProjectAccessDto dto);
+
+        /// <summary>
         /// Saves the material for the mix: received on, link, number of tracks, notes (tab "Mixing").
         /// </summary>
         Task<ProjectReadDto> SetMaterial(int id, ProjectMaterialDto dto);
