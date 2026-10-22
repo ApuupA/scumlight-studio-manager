@@ -167,6 +167,7 @@ namespace StudioManager.ServiceLayer.Mapper
         private void CreateClientMappings()
         {
             CreateMap<Client, ClientReadDto>()
+                .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src => src.CreatedByUser != null ? src.CreatedByUser.DisplayName : null))
                 .ForMember(dest => dest.BandCount, opt => opt.MapFrom(src => src.Bands.Count))
                 .ForMember(dest => dest.ProjectCount, opt => opt.MapFrom(src => src.Projects.Count))
                 .ForMember(dest => dest.HasPhoto, opt => opt.MapFrom(src => src.PhotoPath != null))
@@ -178,6 +179,7 @@ namespace StudioManager.ServiceLayer.Mapper
             CreateMap<ClientCreateDto, Client>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore()) // set by AppDbContext
+                .ForMember(dest => dest.CreatedByUser, opt => opt.Ignore())
                 .ForMember(dest => dest.PhotoPath, opt => opt.Ignore())
                 .ForMember(dest => dest.Bands, opt => opt.Ignore())
                 .ForMember(dest => dest.Projects, opt => opt.Ignore())
@@ -205,6 +207,7 @@ namespace StudioManager.ServiceLayer.Mapper
         private void CreateProjectMappings()
         {
             CreateMap<Project, ProjectReadDto>()
+                .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src => src.CreatedByUser != null ? src.CreatedByUser.DisplayName : null))
                 .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client != null ? src.Client.Name : string.Empty))
                 .ForMember(dest => dest.SongCount, opt => opt.MapFrom(src => src.Songs.Count))
                 .ForMember(dest => dest.SongsDoneCount, opt => opt.MapFrom(src => src.Songs.Count(s => s.Status == SongStatus.Done)))
@@ -235,6 +238,7 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.Groups, opt => opt.Ignore())
                 .ForMember(dest => dest.IsVisibleToAll, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedByUser, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesRecording, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesMixing, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesMastering, opt => opt.Ignore())
@@ -387,6 +391,7 @@ namespace StudioManager.ServiceLayer.Mapper
         private void CreateSessionMappings()
         {
             CreateMap<Session, SessionReadDto>()
+                .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src => src.CreatedByUser != null ? src.CreatedByUser.DisplayName : null))
                 .ForMember(dest => dest.ProjectTitle, opt => opt.MapFrom(src => src.Project != null ? src.Project.Title : string.Empty))
                 .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src =>
                     src.Project != null && src.Project.Client != null ? src.Project.Client.Name : string.Empty))
@@ -399,6 +404,8 @@ namespace StudioManager.ServiceLayer.Mapper
             // The songs are set by SessionService (they have to be loaded from the database)
             CreateMap<SessionCreateDto, Session>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore()) // set by AppDbContext
+                .ForMember(dest => dest.CreatedByUser, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.InputList, opt => opt.Ignore())
                 .ForMember(dest => dest.Songs, opt => opt.Ignore())

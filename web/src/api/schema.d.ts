@@ -8370,6 +8370,7 @@ export interface components {
             dateUpdated: string;
             hasPhoto: boolean;
             fallbackPhoto?: components["schemas"]["PhotoRefDto"];
+            createdByName?: string | null;
         };
         ClientReferenceCreateDto: {
             title: string;
@@ -9184,6 +9185,7 @@ export interface components {
             /** Format: date-time */
             dateUpdated: string;
             hasPhoto: boolean;
+            createdByName?: string | null;
         };
         ProjectScopeDto: {
             includesSongwriting: boolean;
@@ -9310,6 +9312,7 @@ export interface components {
             dateCreated: string;
             /** Format: date-time */
             dateUpdated: string;
+            createdByName?: string | null;
         };
         /** @enum {string} */
         SessionStatus: "Planned" | "Confirmed" | "Completed" | "Cancelled";

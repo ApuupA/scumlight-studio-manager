@@ -2,6 +2,7 @@ import { Alert, Button, Center, Group, Loader, Progress, Select, SimpleGrid, Sta
 import { IconDisc, IconPlus, IconSearch } from '@tabler/icons-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import CreatedByBadge from '../../components/CreatedByBadge'
 import { useNavigate } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
 import { projectStatuses, type ProjectStatus } from '../../api/types'
@@ -91,7 +92,10 @@ export default function ProjectListPage() {
                   subtitle={[project.clientName, ...project.bands.map((b) => b.name)].filter((v, i, all) => all.indexOf(v) === i).join(' · ')}
                   onClick={() => navigate(`/projects/${project.id}`)}
                 >
-                  <StatusBadge value={project.status} translationKey="projectStatus" colors={projectStatusColors} />
+                  <Group gap={4}>
+                    <StatusBadge value={project.status} translationKey="projectStatus" colors={projectStatusColors} />
+                    <CreatedByBadge name={project.createdByName} />
+                  </Group>
                   {project.songCount > 0 && (
                     <Progress value={(project.songsDoneCount / project.songCount) * 100} color="green" size="sm" />
                   )}
@@ -115,7 +119,10 @@ export default function ProjectListPage() {
                   {visibleProjects.map((project) => (
                     <Table.Tr key={project.id} onClick={() => navigate(`/projects/${project.id}`)} style={{ cursor: 'pointer' }}>
                       <Table.Td>
-                        <Text fw={500}>{project.title}</Text>
+                        <Group gap={6} wrap="nowrap">
+                          <Text fw={500}>{project.title}</Text>
+                          <CreatedByBadge name={project.createdByName} />
+                        </Group>
                         <Text size="xs" c="dimmed">{t(`projectType.${project.type}`)}</Text>
                       </Table.Td>
                       <Table.Td>

@@ -116,7 +116,8 @@ namespace StudioManager.DataLayer.Context
         // ---------- Checking changes ----------
 
         /// <summary>
-        /// The assistant who creates a project or a client is noted - they always see it (also without a group).
+        /// The assistant who creates a project, a client or a session is noted: they always see their projects and
+        /// clients (also without a group), and the owner sees "by Assi" on all three.
         /// </summary>
         private void SetCreatedBy()
         {
@@ -134,6 +135,9 @@ namespace StudioManager.DataLayer.Context
                         break;
                     case Client client:
                         client.CreatedByUserId = AccessUserId;
+                        break;
+                    case Session session:
+                        session.CreatedByUserId = AccessUserId;
                         break;
                 }
             }

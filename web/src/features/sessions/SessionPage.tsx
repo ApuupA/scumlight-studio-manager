@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
 import type { Session, SessionInput } from '../../api/types'
 import StatusBadge from '../../components/StatusBadge'
+import CreatedByBadge from '../../components/CreatedByBadge'
 import { sessionStatusColors } from '../../components/statusColors'
 import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
@@ -127,6 +128,7 @@ export default function SessionPage() {
             <Title order={2}>{session.title}</Title>
             <Badge variant="outline" color="gray">{t(`sessionType.${session.type}`)}</Badge>
             <StatusBadge value={session.status} translationKey="sessionStatus" colors={sessionStatusColors} />
+            <CreatedByBadge name={session.createdByName} size="sm" />
           </Group>
           <Text c="dimmed">
             {formatSessionDates(session, i18n.language, t('common.allDay'), t('sessions.daily'))} ·{' '}

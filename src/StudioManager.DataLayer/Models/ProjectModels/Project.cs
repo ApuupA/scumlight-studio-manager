@@ -114,5 +114,6 @@ namespace StudioManager.DataLayer.Models.ProjectModels
 
         /// <summary>The assistant who created the project - always sees it (also without a group). Null = created by an owner.</summary>
         public int? CreatedByUserId { get; set; }
+        public User? CreatedByUser { get; set; }
     }
 }

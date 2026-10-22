@@ -1,5 +1,6 @@
 import { Badge, Group, Loader, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
+import CreatedByBadge from '../../components/CreatedByBadge'
 import { useNavigate } from 'react-router'
 import type { Session } from '../../api/types'
 import StatusBadge from '../../components/StatusBadge'
@@ -34,7 +35,10 @@ export default function SessionsCard({ title, sessions, emptyText }: SessionsCar
               <Paper withBorder p="xs" radius="sm">
                 <Group justify="space-between" wrap="nowrap" align="flex-start">
                   <div style={{ minWidth: 0 }}>
-                    <Text size="sm" fw={600}>{session.title}</Text>
+                    <Group gap={6} wrap="nowrap">
+                      <Text size="sm" fw={600}>{session.title}</Text>
+                      <CreatedByBadge name={session.createdByName} />
+                    </Group>
                     <Text size="xs" c="dimmed">{session.projectTitle} · {session.clientName}</Text>
                     <Text size="xs">{formatSessionDates(session, i18n.language, t('common.allDay'), t('sessions.daily'))}</Text>
                   </div>

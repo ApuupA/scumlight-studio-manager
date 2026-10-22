@@ -1,3 +1,4 @@
+using StudioManager.DataLayer.Models.UserModels;
 using StudioManager.DataLayer.Models.ProjectModels;
 
 namespace StudioManager.DataLayer.Models.SessionModels
@@ -54,6 +55,10 @@ namespace StudioManager.DataLayer.Models.SessionModels
         public InputList? InputList { get; set; }
 
         public ICollection<SessionTask> Tasks { get; set; } = new List<SessionTask>();
+
+        /// <summary>The assistant who created the session - shown to the owner ("by Assi"). Null = created by an owner.</summary>
+        public int? CreatedByUserId { get; set; }
+        public User? CreatedByUser { get; set; }
 
         /// <summary>
         /// Instruments recorded in this session (many-to-many) - the session's gear comes from their setups.
