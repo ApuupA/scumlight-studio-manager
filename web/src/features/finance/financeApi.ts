@@ -81,10 +81,12 @@ export function useDeleteStandardTask() {
 
 // ---------- Project: pricing and summary ----------
 
-export function useProjectFinance(projectId: number) {
+/** enabled false: nothing is loaded (assistants may not see the finance of a project). */
+export function useProjectFinance(projectId: number, enabled = true) {
   return useQuery({
     queryKey: ['projectFinance', projectId],
     queryFn: () => unwrap(api.GET('/api/Finance/project/{projectId}', { params: { path: { projectId } } })),
+    enabled,
   })
 }
 

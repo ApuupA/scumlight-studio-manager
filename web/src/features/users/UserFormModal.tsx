@@ -1,6 +1,7 @@
-import { Button, Group, Modal, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
+import { Button, Group, Modal, PasswordInput, Select, Stack, Text, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
+import { loginRoles, type UserRole } from '../../api/types'
 import { minPasswordLength } from '../../utils/form'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useCreateUser } from './userApi'
@@ -13,7 +14,8 @@ export default function UserFormModal({ onClose }: { onClose: () => void }) {
   const createUser = useCreateUser()
 
   const form = useForm({
-    initialValues: { displayName: '', email: '', password: '' },
+    // New logins are assistants - an owner sees all the money, so that is a conscious choice
+    initialValues: { displayName: '', email: '', password: '', role: 'Assistant' as UserRole },
     validate: {
       displayName: (value) => (value.trim() ? null : t('validation.required')),
       email: (value) => (/^\S+@\S+\.\S+$/.test(value.trim()) ? null : t('users.invalidEmail')),
@@ -24,7 +26,7 @@ export default function UserFormModal({ onClose }: { onClose: () => void }) {
 
   const handleSubmit = (values: typeof form.values) => {
     createUser.mutate(
-      { displayName: values.displayName.trim(), email: values.email.trim(), password: values.password },
+      { displayName: values.displayName.trim(), email: values.email.trim(), password: values.password, role: values.role },
       {
         onSuccess: () => {
           notifySuccess(t('users.created'))
@@ -42,6 +44,13 @@ export default function UserFormModal({ onClose }: { onClose: () => void }) {
           <Text size="sm" c="dimmed">{t('users.newHint')}</Text>
           <TextInput label={t('profile.displayName')} withAsterisk maxLength={100} data-autofocus {...form.getInputProps('displayName')} />
           <TextInput label={t('auth.email')} type="email" withAsterisk maxLength={200} autoComplete="off" {...form.getInputProps('email')} />
+          <Select
+            label={t('users.role')}
+            description={t(`userRole.hint.${form.values.role}`)}
+            data={loginRoles.map((role) => ({ value: role, label: t(`userRole.${role}`) }))}
+            allowDeselect={false}
+            {...form.getInputProps('role')}
+          />
           <PasswordInput
             label={t('users.startPassword')}
             description={t('profile.passwordHint', { count: minPasswordLength })}

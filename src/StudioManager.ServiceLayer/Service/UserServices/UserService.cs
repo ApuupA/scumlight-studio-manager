@@ -45,17 +45,41 @@ namespace StudioManager.ServiceLayer.Service.UserServices
                 throw new BusinessRuleException("user.emailExists", "Another user already uses this email address.");
             }
 
-            // For now every login has full access and sees the same data as the owner
+            CheckRole(dto.Role);
             var user = new User
             {
                 Email = normalizedEmail,
                 DisplayName = dto.DisplayName.Trim(),
-                Role = UserRole.Owner
+                Role = dto.Role
             };
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
 
             await _repository.AddAsync(user);
             return _mapper.Map<UserReadDto>(user);
+        }
+
+        public async Task<UserReadDto> SetRole(int id, SetRoleDto dto, int currentUserId)
+        {
+            // So the studio never ends up without an owner: nobody changes their own role
+            if (id == currentUserId)
+            {
+                throw new BusinessRuleException("user.cannotChangeOwnRole", "You can not change your own role.");
+            }
+
+            CheckRole(dto.Role);
+            var user = await GetEntity(id);
+            user.Role = dto.Role;
+            await _repository.UpdateAsync(user);
+            return _mapper.Map<UserReadDto>(user);
+        }
+
+        /// <summary>Logins of the studio are owners or assistants (the role "Client" is not used yet).</summary>
+        private static void CheckRole(UserRole role)
+        {
+            if (role is not (UserRole.Owner or UserRole.Assistant))
+            {
+                throw new BusinessRuleException("user.invalidRole", "A login is an owner or an assistant.");
+            }
         }
 
         public async Task SetPassword(int id, SetPasswordDto dto)

@@ -1,25 +1,26 @@
-import { ActionIcon, Badge, Button, Card, Group, Table, Text, Title, Tooltip } from '@mantine/core'
+import { ActionIcon, Badge, Button, Card, Group, Select, Table, Text, Title, Tooltip } from '@mantine/core'
 import { IconKey, IconPlus, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { User } from '../../api/types'
+import { loginRoles, type User, type UserRole } from '../../api/types'
 import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
 import { useCurrentUser } from '../auth/authApi'
 import SetPasswordModal from './SetPasswordModal'
-import { useDeleteUser, useUsers } from './userApi'
+import { useDeleteUser, useSetUserRole, useUsers } from './userApi'
 import UserFormModal from './UserFormModal'
 
 type Dialog = { type: 'none' } | { type: 'new' } | { type: 'password'; user: User }
 
 /**
- * Settings card "Users": the logins of the studio. Every login sees the same data.
+ * Settings card "Users": the logins of the studio with their role (owner: everything, assistant: no finance, no settings).
  */
 export default function UsersCard() {
   const { t } = useTranslation()
   const { data: users } = useUsers()
   const { data: currentUser } = useCurrentUser()
   const deleteUser = useDeleteUser()
+  const setRole = useSetUserRole()
   const [dialog, setDialog] = useState<Dialog>({ type: 'none' })
   const close = () => setDialog({ type: 'none' })
 
@@ -52,6 +53,19 @@ export default function UsersCard() {
                   </Text>
                 </Table.Td>
                 <Table.Td c="dimmed">{user.email}</Table.Td>
+                <Table.Td w={150}>
+                  {/* Your own role can not be changed - so the studio always keeps an owner */}
+                  {isMe ? (
+                    <Text size="sm">{t(`userRole.${user.role}`)}</Text>
+                  ) : (
+                    <Select size="xs" allowDeselect={false} aria-label={t('users.role')} value={user.role}
+                      data={loginRoles.map((role) => ({ value: role, label: t(`userRole.${role}`) }))}
+                      onChange={(role) => role && setRole.mutate({ id: user.id, role: role as UserRole }, {
+                        onSuccess: () => notifySuccess(t('common.saved')),
+                        onError: (error) => notifyError(error, t),
+                      })} />
+                  )}
+                </Table.Td>
                 <Table.Td w={90}>
                   {/* Your own login and password are changed on the profile page */}
                   {!isMe && (

@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { DatePickerInput } from '@mantine/dates'
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
+import { useIsOwner } from '../auth/authApi'
 import { gearStatuses, type GearItem, type GearItemInput, type GearStatus } from '../../api/types'
 import { useCategories } from './categoryApi'
 import { useGearItems } from './gearApi'
@@ -76,6 +77,7 @@ interface GearItemFormProps {
  */
 export default function GearItemForm({ item, isSaving, onSubmit, onCancel }: GearItemFormProps) {
   const { t, i18n } = useTranslation()
+  const isOwner = useIsOwner()
   const { data: categories } = useCategories()
   const { data: allGear } = useGearItems()
 
@@ -123,7 +125,8 @@ export default function GearItemForm({ item, isSaving, onSubmit, onCancel }: Gea
             {...form.getInputProps('location')}
           />
           <DatePickerInput label={t('gear.purchaseDate')} clearable valueFormat="L" {...form.getInputProps('purchaseDate')} />
-          <NumberInput
+          {/* Money: only the owner sees and changes the price (the backend keeps it for assistants) */}
+          {isOwner && <NumberInput
             label={t('gear.purchasePrice')}
             min={0}
             decimalScale={2}
@@ -132,7 +135,7 @@ export default function GearItemForm({ item, isSaving, onSubmit, onCancel }: Gea
             thousandSeparator={i18n.language.startsWith('de') ? '.' : ','}
             decimalSeparator={i18n.language.startsWith('de') ? ',' : '.'}
             {...form.getInputProps('purchasePrice')}
-          />
+          />}
         </SimpleGrid>
 
         <TagsInput

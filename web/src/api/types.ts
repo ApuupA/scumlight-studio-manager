@@ -18,6 +18,9 @@ export type LoginInput = Schemas['LoginDto']
 export type ProfileInput = Schemas['UpdateProfileDto']
 export type ChangePasswordInput = Schemas['ChangePasswordDto']
 export type UserInput = Schemas['UserCreateDto']
+export type UserRole = Schemas['UserRole']
+/** The roles a login can have (the role "Client" is not used yet). */
+export const loginRoles: UserRole[] = ['Owner', 'Assistant']
 export type SetPasswordInput = Schemas['SetPasswordDto']
 
 export type Client = Schemas['ClientReadDto']

@@ -1,3 +1,4 @@
+using StudioManager.DataLayer.Models.UserModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace StudioManager.DataLayer.DTO.Auth
@@ -15,5 +16,8 @@ namespace StudioManager.DataLayer.DTO.Auth
 
         [Required, MinLength(8), MaxLength(200)]
         public string Password { get; set; } = string.Empty;
+
+        /// <summary>Owner (everything) or Assistant (no finance, no settings).</summary>
+        public UserRole Role { get; set; } = UserRole.Assistant;
     }
 }

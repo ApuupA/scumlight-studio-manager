@@ -23,6 +23,12 @@ namespace StudioManager.ServiceLayer.IService.IUserServices
         Task SetPassword(int id, SetPasswordDto dto);
 
         /// <summary>
+        /// Changes the role of another login (Owner / Assistant). Your own role can not be changed,
+        /// so there is always an owner. Takes effect with the next request of that user.
+        /// </summary>
+        Task<UserReadDto> SetRole(int id, SetRoleDto dto, int currentUserId);
+
+        /// <summary>
         /// Deletes a login. The logged in user can not delete themselves, so there is always one login left.
         /// </summary>
         Task Delete(int id, int currentUserId);

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudioManager.API.Infrastructure;
 using Microsoft.Net.Http.Headers;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.ServiceLayer.IService.IFinanceServices;
@@ -11,6 +13,7 @@ namespace StudioManager.API.Controllers.FinanceControllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [Authorize(Roles = Roles.Owner)] // backups and archives: only the owner
     public class DataSafetyController : ControllerBase
     {
         private readonly IFinanceArchiveService _archiveService;

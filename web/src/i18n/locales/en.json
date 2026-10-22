@@ -135,7 +135,9 @@
     "user": {
       "emailExists": "Another user already uses this email address.",
       "wrongPassword": "The current password is wrong.",
-      "cannotDeleteSelf": "You can not delete your own login."
+      "cannotDeleteSelf": "You can not delete your own login.",
+      "cannotChangeOwnRole": "You can not change your own role – so there is always an owner.",
+      "invalidRole": "A login is an owner or an assistant."
     },
     "common": {
       "invalidReference": "The data refers to an entry that does not exist (anymore)."
@@ -669,7 +671,7 @@
   },
   "users": {
     "title": "Users",
-    "hint": "Everyone who can log in. All users see and edit the same data.",
+    "hint": "The logins of the studio. Owners see everything, assistants no finance and no settings.",
     "new": "Add user",
     "newTitle": "New user",
     "newHint": "Give the start password to the new user – they can change it in their profile after logging in.",
@@ -680,7 +682,8 @@
     "you": "you",
     "setPassword": "Set new password",
     "setPasswordTitle": "New password for {{name}}",
-    "deleteConfirm": "{{name}} will be deleted and can not log in anymore. The data stays."
+    "deleteConfirm": "{{name}} will be deleted and can not log in anymore. The data stays.",
+    "role": "Role"
   },
   "songPage": {
     "arrangement": "Arrangement",
@@ -1295,5 +1298,15 @@
     "overview": "Overview",
     "songCount": "{{count}} songs",
     "tuning": "Tuning"
+  },
+  "userRole": {
+    "Owner": "Owner",
+    "Assistant": "Assistant",
+    "Client": "Client",
+    "hint": {
+      "Owner": "Sees and changes everything – also finance, settings and logins.",
+      "Assistant": "Works on the projects, but sees no finance (times, prices, invoices) and no settings.",
+      "Client": "Not used yet."
+    }
   }
 }

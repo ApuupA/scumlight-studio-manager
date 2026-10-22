@@ -135,7 +135,9 @@
     "user": {
       "emailExists": "Diese E-Mail-Adresse wird bereits von einem anderen Benutzer verwendet.",
       "wrongPassword": "Das aktuelle Passwort ist falsch.",
-      "cannotDeleteSelf": "Du kannst deinen eigenen Zugang nicht löschen."
+      "cannotDeleteSelf": "Du kannst deinen eigenen Zugang nicht löschen.",
+      "cannotChangeOwnRole": "Deine eigene Rolle kannst du nicht ändern – so bleibt immer ein Inhaber.",
+      "invalidRole": "Ein Login ist Inhaber oder Assistent."
     },
     "common": {
       "invalidReference": "Die Daten verweisen auf einen Eintrag, der nicht (mehr) existiert."
@@ -669,7 +671,7 @@
   },
   "users": {
     "title": "Benutzer",
-    "hint": "Alle, die sich anmelden können. Alle Benutzer sehen und bearbeiten dieselben Daten.",
+    "hint": "Die Logins des Studios. Inhaber sehen alles, Assistenten keine Finanzen und keine Einstellungen.",
     "new": "Benutzer hinzufügen",
     "newTitle": "Neuer Benutzer",
     "newHint": "Gib das Startpasswort an den neuen Benutzer weiter – er kann es nach der Anmeldung in seinem Profil ändern.",
@@ -680,7 +682,8 @@
     "you": "du",
     "setPassword": "Neues Passwort setzen",
     "setPasswordTitle": "Neues Passwort für {{name}}",
-    "deleteConfirm": "{{name}} wird gelöscht und kann sich nicht mehr anmelden. Die Daten bleiben erhalten."
+    "deleteConfirm": "{{name}} wird gelöscht und kann sich nicht mehr anmelden. Die Daten bleiben erhalten.",
+    "role": "Rolle"
   },
   "songPage": {
     "arrangement": "Arrangement",
@@ -1295,5 +1298,15 @@
     "overview": "Übersicht",
     "songCount": "{{count}} Songs",
     "tuning": "Stimmung"
+  },
+  "userRole": {
+    "Owner": "Inhaber",
+    "Assistant": "Assistent",
+    "Client": "Kunde",
+    "hint": {
+      "Owner": "Sieht und ändert alles – auch Finanzen, Einstellungen und Logins.",
+      "Assistant": "Arbeitet an den Projekten, sieht aber keine Finanzen (Zeiten, Preise, Rechnungen) und keine Einstellungen.",
+      "Client": "Wird noch nicht verwendet."
+    }
   }
 }

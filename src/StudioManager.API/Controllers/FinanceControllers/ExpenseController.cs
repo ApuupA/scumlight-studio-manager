@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudioManager.API.Infrastructure;
 using Microsoft.Net.Http.Headers;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
@@ -11,6 +13,7 @@ namespace StudioManager.API.Controllers.FinanceControllers
     /// <summary>
     /// Expenses with receipts and the yearly overview of income and expenses.
     /// </summary>
+    [Authorize(Roles = Roles.Owner)] // finance: only the owner
     public class ExpenseController : BaseController<ExpenseReadDto, ExpenseCreateDto, Expense, IExpenseService>
     {
         private readonly IExpenseService _service;

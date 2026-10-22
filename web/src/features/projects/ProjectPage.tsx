@@ -22,6 +22,7 @@ import SongsTab from './SongsTab'
 import PhotoCard from '../../components/PhotoCard'
 import FinanceTab from '../finance/FinanceTab'
 import ProjectScopeChips from './ProjectScopeChips'
+import { useIsOwner } from '../auth/authApi'
 import MasteringTab from '../mixing/MasteringTab'
 import MixingTab from '../mixing/MixingTab'
 import SongwritingTab from '../songwriting/SongwritingTab'
@@ -31,6 +32,7 @@ import SongwritingTab from '../songwriting/SongwritingTab'
  */
 export default function ProjectPage() {
   const { t } = useTranslation()
+  const isOwner = useIsOwner()
   const navigate = useNavigate()
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -106,6 +108,7 @@ export default function ProjectPage() {
   const hiddenTabs = [
     ...(showInstruments ? [] : ['instruments']),
     ...(project.includesRecording ? [] : ['bandGear', 'inputLists', 'drums']),
+    ...(isOwner ? [] : ['finance']), // time & costs: only the owner
     ...(project.includesSongwriting ? [] : ['songwriting']),
     ...(project.includesMixing ? [] : ['mixing']),
     ...(project.includesMastering ? [] : ['mastering']),
@@ -160,7 +163,7 @@ export default function ProjectPage() {
               <Tabs.Tab value="inputLists" leftSection={<IconListNumbers size={16} />}>{t('projects.tabs.inputLists')}</Tabs.Tab>
             </>
           )}
-          <Tabs.Tab value="finance" leftSection={<IconClockDollar size={16} />}>{t('projects.tabs.finance')}</Tabs.Tab>
+          {isOwner && <Tabs.Tab value="finance" leftSection={<IconClockDollar size={16} />}>{t('projects.tabs.finance')}</Tabs.Tab>}
           <Tabs.Tab value="links" leftSection={<IconLink size={16} />}>{t('projects.tabs.links')}</Tabs.Tab>
           {project.includesRecording && (
             <Tabs.Tab value="drums" leftSection={<IconMetronome size={16} />}>{t('projects.tabs.drums')}</Tabs.Tab>

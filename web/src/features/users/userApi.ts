@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, unwrap } from '../../api/client'
-import type { SetPasswordInput, UserInput } from '../../api/types'
+import type { SetPasswordInput, UserInput, UserRole } from '../../api/types'
 
 /**
- * Data access for the logins of the studio (settings page). Every login sees the same data.
+ * Data access for the logins of the studio (settings page). Owners see everything, assistants no finance and no settings.
  */
 
 export function useUsers() {
@@ -17,6 +17,16 @@ export function useCreateUser() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (input: UserInput) => unwrap(api.POST('/api/User', { body: input })),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
+  })
+}
+
+/** Owner <-> assistant. Counts from the next request of that user on (no new login needed). */
+export function useSetUserRole() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, role }: { id: number; role: UserRole }) =>
+      unwrap(api.PUT('/api/User/{id}/role', { params: { path: { id } }, body: { role } })),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
   })
 }
