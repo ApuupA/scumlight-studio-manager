@@ -1,4 +1,4 @@
-import { Alert, Badge, Button, Center, Group, Loader, Modal, SimpleGrid, Stack, Table, Text, TextInput, Title } from '@mantine/core'
+import { Alert, Badge, Button, Center, Group, Loader, Modal, SimpleGrid, Stack, Table, Text, TextInput, Title, SegmentedControl } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconPlus, IconSearch, IconUsersGroup } from '@tabler/icons-react'
 import { useMemo, useState } from 'react'
@@ -13,6 +13,8 @@ import { photoRefUrl, photoUrl } from '../../api/photos'
 import Tile from '../../components/Tile'
 import { useViewMode } from '../../components/useViewMode'
 import ViewToggle from '../../components/ViewToggle'
+import { useIsOwner } from '../auth/authApi'
+import CreatedByBadge from '../../components/CreatedByBadge'
 
 export default function ClientListPage() {
   const { t } = useTranslation()
@@ -21,14 +23,19 @@ export default function ClientListPage() {
   const createClient = useCreateClient()
   const [modalOpened, { open: openModal, close: closeModal }] = useDisclosure()
   const [search, setSearch] = useState('')
+  // Owner: all clients, only the own ones, or the ones assistants created
+  const isOwner = useIsOwner()
+  const [createdBy, setCreatedBy] = useState<'all' | 'mine' | 'assistants'>('all')
   const [viewMode, setViewMode] = useViewMode('clients')
 
   const visibleClients = useMemo(() => {
     const searchText = search.trim().toLowerCase()
-    return (clients ?? []).filter((client) =>
-      !searchText || [client.name, client.contactPerson, client.email].some((value) => value?.toLowerCase().includes(searchText)),
-    )
-  }, [clients, search])
+    return (clients ?? [])
+      .filter((client) => createdBy === 'all' || (createdBy === 'mine' ? !client.createdByName : !!client.createdByName))
+      .filter((client) =>
+        !searchText || [client.name, client.contactPerson, client.email].some((value) => value?.toLowerCase().includes(searchText)),
+      )
+  }, [clients, search, createdBy])
 
   const handleCreate = (input: ClientInput) => {
     createClient.mutate(input, {
@@ -57,13 +64,27 @@ export default function ClientListPage() {
         <Text c="dimmed" ta="center" py="xl">{t('clients.empty')}</Text>
       ) : (
         <>
-          <TextInput
-            placeholder={t('common.search')}
-            leftSection={<IconSearch size={16} />}
-            value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
-            maw={360}
-          />
+          <Group gap="sm">
+            <TextInput
+              placeholder={t('common.search')}
+              leftSection={<IconSearch size={16} />}
+              value={search}
+              onChange={(event) => setSearch(event.currentTarget.value)}
+              maw={360}
+              style={{ flex: 1 }}
+            />
+            {isOwner && (
+              <SegmentedControl
+                value={createdBy}
+                onChange={(value) => setCreatedBy(value as typeof createdBy)}
+                data={[
+                  { value: 'all', label: t('createdBy.all') },
+                  { value: 'mine', label: t('createdBy.mine') },
+                  { value: 'assistants', label: t('createdBy.assistants') },
+                ]}
+              />
+            )}
+          </Group>
           {viewMode === 'tiles' ? (
             <SimpleGrid cols={{ base: 2, sm: 3, md: 4, xl: 6 }}>
               {visibleClients.map((client) => (
@@ -76,6 +97,7 @@ export default function ClientListPage() {
                   onClick={() => navigate(`/clients/${client.id}`)}
                 >
                   <Group gap={4}>
+                    <CreatedByBadge name={client.createdByName} />
                     <Badge size="xs" variant="light" color="gray">{t('clients.bandsCount', { count: client.bandCount })}</Badge>
                     <Badge size="xs" variant="light" color="gray">{t('clients.projectsCount', { count: client.projectCount })}</Badge>
                   </Group>
@@ -97,7 +119,9 @@ export default function ClientListPage() {
                 <Table.Tbody>
                   {visibleClients.map((client) => (
                     <Table.Tr key={client.id} onClick={() => navigate(`/clients/${client.id}`)} style={{ cursor: 'pointer' }}>
-                      <Table.Td fw={500}>{client.name}</Table.Td>
+                      <Table.Td fw={500}>
+                        <Group gap={6} wrap="nowrap">{client.name}<CreatedByBadge name={client.createdByName} /></Group>
+                      </Table.Td>
                       <Table.Td>{client.contactPerson}</Table.Td>
                       <Table.Td>{client.email}</Table.Td>
                       <Table.Td>{client.bandCount}</Table.Td>

@@ -22,5 +22,8 @@ namespace StudioManager.DataLayer.DTO.Read
         /// so it does not have to be uploaded twice. Null if there is none.
         /// </summary>
         public PhotoRefDto? FallbackPhoto { get; set; }
+
+        /// <summary>Name of the assistant who created it - null if an owner created it.</summary>
+        public string? CreatedByName { get; set; }
     }
 }

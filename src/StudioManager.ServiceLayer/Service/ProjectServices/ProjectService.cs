@@ -55,7 +55,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
         // Everything needed for the list: client name, bands and the progress numbers
         protected override Expression<Func<Project, object>>[] DefaultIncludes =>
-            [p => p.Client!, p => p.Bands, p => p.Songs, p => p.Sessions, p => p.Groups];
+            [p => p.Client!, p => p.Bands, p => p.Songs, p => p.Sessions, p => p.Groups, p => p.CreatedByUser!];
 
         public override async Task<IEnumerable<ProjectReadDto>> GetAll()
         {

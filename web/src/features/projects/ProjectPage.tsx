@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
 import type { ProjectInput } from '../../api/types'
 import StatusBadge from '../../components/StatusBadge'
+import CreatedByBadge from '../../components/CreatedByBadge'
 import { projectStatusColors } from '../../components/statusColors'
 import { confirmDelete } from '../../utils/confirmDelete'
 import { notifyError, notifySuccess } from '../../utils/notify'
@@ -125,6 +126,7 @@ export default function ProjectPage() {
           <Group gap="sm">
             <Title order={2}>{project.title}</Title>
             <StatusBadge value={project.status} translationKey="projectStatus" colors={projectStatusColors} />
+            <CreatedByBadge name={project.createdByName} size="sm" />
           </Group>
           <Text c="dimmed">
             <Anchor component={Link} to={`/clients/${project.clientId}`} c="dimmed">{project.clientName}</Anchor>

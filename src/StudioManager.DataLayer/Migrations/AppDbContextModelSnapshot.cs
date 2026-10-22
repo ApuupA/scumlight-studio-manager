@@ -2096,6 +2096,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("integer");
+
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
@@ -2156,6 +2159,8 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
 
                     b.HasIndex("Date");
 
@@ -2454,10 +2459,12 @@ namespace StudioManager.DataLayer.Migrations
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ClientModels.Client", b =>
                 {
-                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", null)
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatedByUser");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.Expense", b =>
@@ -2751,12 +2758,14 @@ namespace StudioManager.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", null)
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Client");
+
+                    b.Navigation("CreatedByUser");
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.ProjectModels.ProjectDeliverable", b =>
@@ -2902,6 +2911,11 @@ namespace StudioManager.DataLayer.Migrations
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.SessionModels.Session", b =>
                 {
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.InputList", "InputList")
                         .WithMany("Sessions")
                         .HasForeignKey("InputListId")
@@ -2912,6 +2926,8 @@ namespace StudioManager.DataLayer.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CreatedByUser");
 
                     b.Navigation("InputList");
 

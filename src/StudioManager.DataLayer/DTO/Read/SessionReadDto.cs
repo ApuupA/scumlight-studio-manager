@@ -38,5 +38,8 @@ namespace StudioManager.DataLayer.DTO.Read
 
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+
+        /// <summary>Name of the assistant who created it - null if an owner created it.</summary>
+        public string? CreatedByName { get; set; }
     }
 }

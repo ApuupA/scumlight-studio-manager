@@ -1,3 +1,4 @@
+using StudioManager.DataLayer.Models.UserModels;
 using StudioManager.DataLayer.Models.ProjectModels;
 
 namespace StudioManager.DataLayer.Models.ClientModels
@@ -26,5 +27,6 @@ namespace StudioManager.DataLayer.Models.ClientModels
         /// Otherwise assistants see a client only through its projects.
         /// </summary>
         public int? CreatedByUserId { get; set; }
+        public User? CreatedByUser { get; set; }
     }
 }

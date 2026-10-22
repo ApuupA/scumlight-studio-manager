@@ -2,6 +2,7 @@ import { Alert, Anchor, Avatar, Button, Card, Center, Grid, Group, Loader, Paper
 import { IconArrowLeft, IconPlus, IconTrash, IconUsersGroup } from '@tabler/icons-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import CreatedByBadge from '../../components/CreatedByBadge'
 import { Link, useNavigate, useParams } from 'react-router'
 import { getErrorMessage } from '../../api/errors'
 import type { Band, ClientInput } from '../../api/types'
@@ -72,7 +73,10 @@ export default function ClientPage() {
       </Anchor>
 
       <Group justify="space-between">
-        <Title order={2}>{client.name}</Title>
+        <Group gap="sm">
+          <Title order={2}>{client.name}</Title>
+          <CreatedByBadge name={client.createdByName} size="sm" />
+        </Group>
         <Button variant="subtle" color="red" leftSection={<IconTrash size={16} />} onClick={handleDeleteClient}>
           {t('common.delete')}
         </Button>

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { sessionStatuses, type Session, type SessionStatus } from '../../api/types'
 import StatusBadge from '../../components/StatusBadge'
+import CreatedByBadge from '../../components/CreatedByBadge'
 import { sessionStatusColors } from '../../components/statusColors'
 import { notifyError } from '../../utils/notify'
 import { useSetSessionStatus } from './sessionApi'
@@ -43,7 +44,10 @@ export default function SessionList({ sessions, showProject = true }: SessionLis
               <Text size="xs" c="dimmed">
                 {formatSessionDates(session, i18n.language, t('common.allDay'), t('sessions.daily'))}
               </Text>
-              <Text fw={600}>{session.title}</Text>
+              <Group gap={6} wrap="nowrap">
+                <Text fw={600}>{session.title}</Text>
+                <CreatedByBadge name={session.createdByName} />
+              </Group>
               {showProject && (
                 <Text size="sm" c="dimmed">{session.projectTitle} · {session.clientName}</Text>
               )}

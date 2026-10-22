@@ -9304,6 +9304,10 @@
           },
           "fallbackPhoto": {
             "$ref": "#/components/schemas/PhotoRefDto"
+          },
+          "createdByName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -12129,6 +12133,10 @@
           },
           "hasPhoto": {
             "type": "boolean"
+          },
+          "createdByName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -12602,6 +12610,10 @@
           "dateUpdated": {
             "type": "string",
             "format": "date-time"
+          },
+          "createdByName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

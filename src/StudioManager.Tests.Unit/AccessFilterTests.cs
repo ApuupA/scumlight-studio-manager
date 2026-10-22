@@ -140,6 +140,20 @@ namespace StudioManager.Tests.Unit
         }
 
         [Fact]
+        public async Task SessionOfAnAssistant_ShouldNoteTheAssistant_SoTheOwnerSeesWhoCreatedIt()
+        {
+            _access.AsAssistant(_assistant.Id);
+            var session = new Session { Title = "Vocals", ProjectId = _groupProject.Id, Date = new DateOnly(2026, 11, 3) };
+            _context.Sessions.Add(session);
+            await _context.SaveChangesAsync();
+
+            _access.AsOwner();
+            var saved = await _context.Sessions.Include(s => s.CreatedByUser).SingleAsync(s => s.Id == session.Id);
+
+            Assert.Equal("Assi", saved.CreatedByUser!.DisplayName);
+        }
+
+        [Fact]
         public async Task CalendarFeed_ShouldOnlyContainTheSessionsOfTheTokensUser()
         {
             var assistant = await _context.Users.SingleAsync(u => u.Id == _assistant.Id);

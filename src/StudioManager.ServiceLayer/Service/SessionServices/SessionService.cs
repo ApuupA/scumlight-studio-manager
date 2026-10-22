@@ -33,7 +33,7 @@ namespace StudioManager.ServiceLayer.Service.SessionServices
 
         // Project + client for the names, the rest for the counters in the DTO
         protected override Expression<Func<Session, object>>[] DefaultIncludes =>
-            [s => s.Project!.Client!, s => s.Songs, s => s.Tasks, s => s.Instruments, s => s.InputList!];
+            [s => s.Project!.Client!, s => s.Songs, s => s.Tasks, s => s.Instruments, s => s.InputList!, s => s.CreatedByUser!];
 
         public override async Task<IEnumerable<SessionReadDto>> GetAll()
         {

@@ -141,7 +141,7 @@ namespace StudioManager.DataLayer.Context
             modelBuilder.Entity<Client>(entity =>
             {
                 // A deleted login keeps its clients and projects (they are only no longer "created by" anybody)
-                entity.HasOne<User>()
+                entity.HasOne(c => c.CreatedByUser)
                       .WithMany()
                       .HasForeignKey(c => c.CreatedByUserId)
                       .OnDelete(DeleteBehavior.SetNull);
@@ -201,7 +201,7 @@ namespace StudioManager.DataLayer.Context
                       .HasForeignKey(p => p.ClientId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<User>()
+                entity.HasOne(p => p.CreatedByUser)
                       .WithMany()
                       .HasForeignKey(p => p.CreatedByUserId)
                       .OnDelete(DeleteBehavior.SetNull);
@@ -400,6 +400,11 @@ namespace StudioManager.DataLayer.Context
         {
             modelBuilder.Entity<Session>(entity =>
             {
+                entity.HasOne(s => s.CreatedByUser)
+                      .WithMany()
+                      .HasForeignKey(s => s.CreatedByUserId)
+                      .OnDelete(DeleteBehavior.SetNull);
+
                 entity.Property(s => s.Title).HasMaxLength(200).IsRequired();
                 entity.Property(s => s.Type).HasConversion<string>().HasMaxLength(20);
                 entity.Property(s => s.Status).HasConversion<string>().HasMaxLength(20);

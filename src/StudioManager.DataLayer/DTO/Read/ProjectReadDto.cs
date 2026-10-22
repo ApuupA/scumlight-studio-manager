@@ -55,5 +55,8 @@ namespace StudioManager.DataLayer.DTO.Read
 
         /// <summary>True if a picture was uploaded (GET .../{id}/photo).</summary>
         public bool HasPhoto { get; set; }
+
+        /// <summary>Name of the assistant who created it - null if an owner created it.</summary>
+        public string? CreatedByName { get; set; }
     }
 }

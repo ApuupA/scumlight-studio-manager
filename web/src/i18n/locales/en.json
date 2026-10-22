@@ -1331,5 +1331,12 @@
     "visibleToAll": "Visible to everyone",
     "visibleToAllHint": "Every assistant sees the project, no matter in which group.",
     "onlyOwner": "Owners only"
+  },
+  "createdBy": {
+    "label": "by {{name}}",
+    "hint": "Created by {{name}} (assistant)",
+    "all": "All",
+    "mine": "Mine",
+    "assistants": "By assistants"
   }
 }

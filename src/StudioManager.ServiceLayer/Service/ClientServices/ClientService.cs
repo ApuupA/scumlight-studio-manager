@@ -28,7 +28,7 @@ namespace StudioManager.ServiceLayer.Service.ClientServices
         }
 
         // Load bands and projects, so BandCount and ProjectCount can be filled
-        protected override Expression<Func<Client, object>>[] DefaultIncludes => [c => c.Bands, c => c.Projects];
+        protected override Expression<Func<Client, object>>[] DefaultIncludes => [c => c.Bands, c => c.Projects, c => c.CreatedByUser!];
 
         public override async Task<IEnumerable<ClientReadDto>> GetAll()
         {
