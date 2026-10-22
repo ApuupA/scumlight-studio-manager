@@ -165,6 +165,77 @@
   border-top: 3px solid #cc3300;
 }
 
+/* ---------- Session timetable (landscape): days as columns, sessions as blocks at their time ---------- */
+
+.timetable {
+  display: grid;
+  margin-top: 12px;
+  border-top: 1px solid #999;
+  border-left: 1px solid #999;
+  font-size: 9pt;
+  /* print the colored blocks (browsers skip background colors by default) */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.timetable > * {
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+}
+
+.timetableHead {
+  background: #eee;
+  font-weight: 700;
+  text-align: center;
+  padding: 4px;
+}
+
+.timetableHour {
+  box-sizing: border-box;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  color: #444;
+  background: #f6f6f6;
+  border-bottom: 1px solid #ddd;
+}
+
+.timetableAllDay {
+  padding: 2px;
+}
+
+.timetableDay {
+  position: relative;
+}
+
+.timetableLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+}
+
+.timetableBlock {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 3px 4px;
+  border: 1px solid #555;
+  overflow: hidden;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.timetableTime {
+  font-size: 7.5pt;
+  color: #333;
+}
+
+.timetableGoals {
+  white-space: pre-wrap;
+  font-size: 8pt;
+}
+
 /* When printing: only the white sheet, no toolbar, no grey background */
 @media print {
   .page {

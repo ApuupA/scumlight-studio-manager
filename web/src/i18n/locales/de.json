@@ -1338,5 +1338,13 @@
     "all": "Alle",
     "mine": "Meine",
     "assistants": "Von Assistenten"
+  },
+  "timetable": {
+    "title": "Zeitplan",
+    "range": "Zeitraum",
+    "time": "Zeit",
+    "hours": "Stunden",
+    "total": "Gesamt",
+    "empty": "Im gewählten Zeitraum sind keine Sessions geplant."
   }
 }
