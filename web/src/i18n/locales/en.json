@@ -1338,5 +1338,13 @@
     "all": "All",
     "mine": "Mine",
     "assistants": "By assistants"
+  },
+  "timetable": {
+    "title": "Timetable",
+    "range": "Period",
+    "time": "Time",
+    "hours": "Hours",
+    "total": "Total",
+    "empty": "No sessions are planned in the chosen period."
   }
 }

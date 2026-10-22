@@ -21,6 +21,7 @@ import SettingsPage from './features/settings/SettingsPage'
 import SongPage from './features/songs/SongPage'
 import SongSheetPage from './features/songs/SongSheetPage'
 import SongbookPage from './features/songwriting/SongbookPage'
+import TimetablePage from './features/sessions/TimetablePage'
 import AppLayout from './layout/AppLayout'
 import ClientLinkPage from './features/clientLink/ClientLinkPage'
 import BandGearRedirect from './features/clientLink/BandGearRedirect'
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/input-lists/:id/sheet" element={<InputSheetPage />} />
           <Route path="/songs/:id/sheet" element={<SongSheetPage />} />
           <Route path="/projects/:id/songbook" element={<SongbookPage />} />
+          <Route path="/projects/:id/timetable" element={<TimetablePage />} />
           {/* Finance and settings: only the owner */}
           <Route element={<RequireOwner />}>
             <Route path="/invoices/:id/print" element={<InvoicePrintPage />} />
