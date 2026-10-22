@@ -20,5 +20,11 @@ namespace StudioManager.DataLayer.Models.ClientModels
 
         public ICollection<Band> Bands { get; set; } = new List<Band>();
         public ICollection<Project> Projects { get; set; } = new List<Project>();
+
+        /// <summary>
+        /// The assistant who created the client - sees it even before it has a project. Null = created by an owner.
+        /// Otherwise assistants see a client only through its projects.
+        /// </summary>
+        public int? CreatedByUserId { get; set; }
     }
 }

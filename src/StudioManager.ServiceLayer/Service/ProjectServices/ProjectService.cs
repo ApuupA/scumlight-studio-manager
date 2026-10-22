@@ -1,8 +1,10 @@
 using AutoMapper;
+using StudioManager.DataLayer.Context;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.ClientModels;
 using StudioManager.DataLayer.Models.ProjectModels;
+using StudioManager.DataLayer.Models.UserModels;
 using StudioManager.RepositoryLayer.IRepository;
 using StudioManager.ServiceLayer.Exceptions;
 using StudioManager.ServiceLayer.IService.IFileServices;
@@ -22,6 +24,8 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
         private readonly IRepository<Quote> _quoteRepository;
         private readonly IRepository<VoiceMemo> _voiceMemoRepository;
         private readonly IFileStorageService _fileStorage;
+        private readonly IRepository<Group> _groupRepository;
+        private readonly IProjectAccess _access;
 
         public const string PhotoFolder = "project-covers";
 
@@ -34,8 +38,12 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             IRepository<Quote> quoteRepository,
             IRepository<VoiceMemo> voiceMemoRepository,
             IFileStorageService fileStorage,
+            IRepository<Group> groupRepository,
+            IProjectAccess access,
             IMapper mapper) : base(repository, mapper)
         {
+            _groupRepository = groupRepository;
+            _access = access;
             _voiceMemoRepository = voiceMemoRepository;
             _fileStorage = fileStorage;
             _invoiceRepository = invoiceRepository;
@@ -47,7 +55,7 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
 
         // Everything needed for the list: client name, bands and the progress numbers
         protected override Expression<Func<Project, object>>[] DefaultIncludes =>
-            [p => p.Client!, p => p.Bands, p => p.Songs, p => p.Sessions];
+            [p => p.Client!, p => p.Bands, p => p.Songs, p => p.Sessions, p => p.Groups];
 
         public override async Task<IEnumerable<ProjectReadDto>> GetAll()
         {
@@ -70,6 +78,16 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             foreach (var band in bands)
             {
                 project.Bands.Add(band);
+            }
+
+            // An assistant's new project gets their groups - so their team sees it right away
+            if (_access.UserId != null)
+            {
+                var userId = _access.UserId.Value;
+                foreach (var group in await _groupRepository.GetAllAsync(g => g.Users.Any(u => u.Id == userId)))
+                {
+                    project.Groups.Add(group);
+                }
             }
 
             await _repository.AddAsync(project);
@@ -148,6 +166,29 @@ namespace StudioManager.ServiceLayer.Service.ProjectServices
             await base.Delete(id);
             _photos.DeleteFile(project?.PhotoPath);
             memoFiles.ForEach(_fileStorage.Delete);
+        }
+
+        public async Task<ProjectReadDto> SetAccess(int id, ProjectAccessDto dto)
+        {
+            var project = await _repository.GetAsync(p => p.Id == id, p => p.Groups)
+                ?? throw new EntityNotFoundException(nameof(Project), id);
+
+            var groupIds = dto.GroupIds.Distinct().ToList();
+            var groups = (await _groupRepository.GetAllAsync(g => groupIds.Contains(g.Id))).ToList();
+            if (groups.Count != groupIds.Count)
+            {
+                throw new EntityNotFoundException(nameof(Group), groupIds.Except(groups.Select(g => g.Id)).First());
+            }
+
+            project.IsVisibleToAll = dto.IsVisibleToAll;
+            project.Groups.Clear();
+            foreach (var group in groups)
+            {
+                project.Groups.Add(group);
+            }
+
+            await _repository.UpdateAsync(project);
+            return (await Get(id))!;
         }
 
         public async Task<ProjectReadDto> SetScope(int id, ProjectScopeDto dto)

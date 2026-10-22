@@ -38,6 +38,36 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("ProjectBands", (string)null);
                 });
 
+            modelBuilder.Entity("GroupProject", b =>
+                {
+                    b.Property<int>("GroupsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("GroupsId", "ProjectsId");
+
+                    b.HasIndex("ProjectsId");
+
+                    b.ToTable("ProjectGroups", (string)null);
+                });
+
+            modelBuilder.Entity("GroupUser", b =>
+                {
+                    b.Property<int>("GroupsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("GroupsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserGroups", (string)null);
+                });
+
             modelBuilder.Entity("MixVersionSong", b =>
                 {
                     b.Property<int>("MixVersionsId")
@@ -152,6 +182,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -180,6 +213,8 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("character varying(300)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Clients");
                 });
@@ -1454,6 +1489,9 @@ namespace StudioManager.DataLayer.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -1496,6 +1534,9 @@ namespace StudioManager.DataLayer.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IncludesSongwriting")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsVisibleToAll")
                         .HasColumnType("boolean");
 
                     b.Property<string>("MasteringNotes")
@@ -1564,6 +1605,8 @@ namespace StudioManager.DataLayer.Migrations
                         .IsUnique();
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Projects");
                 });
@@ -2233,6 +2276,33 @@ namespace StudioManager.DataLayer.Migrations
                     b.ToTable("StudioInputs");
                 });
 
+            modelBuilder.Entity("StudioManager.DataLayer.Models.UserModels.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Groups");
+                });
+
             modelBuilder.Entity("StudioManager.DataLayer.Models.UserModels.User", b =>
                 {
                     b.Property<int>("Id")
@@ -2296,6 +2366,36 @@ namespace StudioManager.DataLayer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GroupProject", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.ProjectModels.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GroupUser", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MixVersionSong", b =>
                 {
                     b.HasOne("StudioManager.DataLayer.Models.ProjectModels.MixVersion", null)
@@ -2350,6 +2450,14 @@ namespace StudioManager.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("StudioManager.DataLayer.Models.ClientModels.Client", b =>
+                {
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("StudioManager.DataLayer.Models.FinanceModels.Expense", b =>
@@ -2642,6 +2750,11 @@ namespace StudioManager.DataLayer.Migrations
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("StudioManager.DataLayer.Models.UserModels.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Client");
                 });

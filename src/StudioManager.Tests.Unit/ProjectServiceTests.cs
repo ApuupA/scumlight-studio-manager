@@ -1,3 +1,4 @@
+using StudioManager.DataLayer.Models.UserModels;
 using Moq;
 using StudioManager.DataLayer.Context;
 using StudioManager.DataLayer.DTO.Create;
@@ -34,7 +35,7 @@ namespace StudioManager.Tests.Unit
             _photos = new PhotoService(_mockFileStorage.Object);
             _projectService = new ProjectService(
                 new Repository<Project>(_context), new Repository<Client>(_context), new Repository<Band>(_context), _photos, new Repository<Invoice>(_context), new Repository<Quote>(_context),
-                new Repository<VoiceMemo>(_context), _mockFileStorage.Object, mapper);
+                new Repository<VoiceMemo>(_context), _mockFileStorage.Object, new Repository<Group>(_context), new TestProjectAccess(), mapper);
             _clientService = new ClientService(new Repository<Client>(_context), new Repository<Project>(_context), _photos, mapper);
 
             _label = new Client { Name = "Split Label" };

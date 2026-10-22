@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudioManager.API.Infrastructure;
 using StudioManager.DataLayer.DTO.Create;
 using StudioManager.DataLayer.DTO.Read;
 using StudioManager.DataLayer.Models.ProjectModels;
@@ -32,6 +34,16 @@ namespace StudioManager.API.Controllers.ProjectControllers
         public async Task<ActionResult<ProjectReadDto>> SetScope(int id, [FromBody] ProjectScopeDto dto)
         {
             return Ok(await _service.SetScope(id, dto));
+        }
+
+        /// <summary>
+        /// Sets who sees the project: its groups and "visible to everyone". Only the owner.
+        /// </summary>
+        [HttpPut("{id:int}/access")]
+        [Authorize(Roles = Roles.Owner)]
+        public async Task<ActionResult<ProjectReadDto>> SetAccess(int id, [FromBody] ProjectAccessDto dto)
+        {
+            return Ok(await _service.SetAccess(id, dto));
         }
 
         /// <summary>

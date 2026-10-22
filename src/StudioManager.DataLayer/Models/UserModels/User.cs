@@ -16,5 +16,8 @@ namespace StudioManager.DataLayer.Models.UserModels
         /// Secret of the calendar subscription link (/api/Calendar/{token}.ics). Null = no link yet.
         /// </summary>
         public string? CalendarToken { get; set; }
+
+        /// <summary>The groups of the user - an assistant sees the projects of these groups.</summary>
+        public ICollection<Group> Groups { get; set; } = new List<Group>();
     }
 }

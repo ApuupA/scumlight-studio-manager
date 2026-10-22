@@ -45,6 +45,19 @@ namespace StudioManager.ServiceLayer.Mapper
             // Users (the password hash never leaves the service layer)
             CreateMap<User, UserReadDto>();
 
+            CreateMap<Group, GroupShortDto>();
+            CreateMap<Group, GroupReadDto>()
+                .ForMember(dest => dest.Members, opt => opt.MapFrom(src => src.Users.OrderBy(u => u.DisplayName)))
+                .ForMember(dest => dest.ProjectCount, opt => opt.MapFrom(src => src.Projects.Count));
+            CreateMap<User, GroupMemberDto>();
+            // The members are set by GroupService (loaded from the database)
+            CreateMap<GroupCreateDto, Group>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Users, opt => opt.Ignore())
+                .ForMember(dest => dest.Projects, opt => opt.Ignore())
+                .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+                .ForMember(dest => dest.DateUpdated, opt => opt.Ignore());
+
             CreateClientMappings();
             CreateProjectMappings();
             CreateSessionMappings();
@@ -164,6 +177,7 @@ namespace StudioManager.ServiceLayer.Mapper
 
             CreateMap<ClientCreateDto, Client>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore()) // set by AppDbContext
                 .ForMember(dest => dest.PhotoPath, opt => opt.Ignore())
                 .ForMember(dest => dest.Bands, opt => opt.Ignore())
                 .ForMember(dest => dest.Projects, opt => opt.Ignore())
@@ -217,6 +231,10 @@ namespace StudioManager.ServiceLayer.Mapper
                 .ForMember(dest => dest.MixVersions, opt => opt.Ignore())
                 // The scope is changed with its own endpoint (PUT api/Project/{id}/scope)
                 .ForMember(dest => dest.IncludesSongwriting, opt => opt.Ignore())
+                // Who sees the project: own endpoint, only the owner (PUT api/Project/{id}/access); CreatedBy by AppDbContext
+                .ForMember(dest => dest.Groups, opt => opt.Ignore())
+                .ForMember(dest => dest.IsVisibleToAll, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesRecording, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesMixing, opt => opt.Ignore())
                 .ForMember(dest => dest.IncludesMastering, opt => opt.Ignore())

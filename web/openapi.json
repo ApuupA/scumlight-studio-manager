@@ -2524,6 +2524,162 @@
         }
       }
     },
+    "/api/Group": {
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Group"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Group/{id}": {
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Group"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Group"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/InputGroup": {
       "get": {
         "tags": [
@@ -4127,6 +4283,55 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectScopeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectReadDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Project/{id}/access": {
+      "put": {
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectAccessDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectAccessDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectAccessDto"
               }
             }
           }
@@ -9866,6 +10071,91 @@
         },
         "additionalProperties": false
       },
+      "GroupCreateDto": {
+        "required": [
+          "name",
+          "userIds"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupMemberDto": {
+        "required": [
+          "displayName",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupReadDto": {
+        "required": [
+          "id",
+          "members",
+          "name",
+          "projectCount"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupMemberDto"
+            }
+          },
+          "projectCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupShortDto": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "InputGroupCreateDto": {
         "required": [
           "color",
@@ -11033,6 +11323,26 @@
         },
         "additionalProperties": { }
       },
+      "ProjectAccessDto": {
+        "required": [
+          "groupIds",
+          "isVisibleToAll"
+        ],
+        "type": "object",
+        "properties": {
+          "groupIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "isVisibleToAll": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "ProjectCostItemCreateDto": {
         "required": [
           "date",
@@ -11665,12 +11975,14 @@
           "clientName",
           "dateCreated",
           "dateUpdated",
+          "groups",
           "hasPhoto",
           "id",
           "includesMastering",
           "includesMixing",
           "includesRecording",
           "includesSongwriting",
+          "isVisibleToAll",
           "sessionCount",
           "songCount",
           "songsDoneCount",
@@ -11758,6 +12070,15 @@
           "songsDoneCount": {
             "type": "integer",
             "format": "int32"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupShortDto"
+            }
+          },
+          "isVisibleToAll": {
+            "type": "boolean"
           },
           "includesSongwriting": {
             "type": "boolean"
@@ -13738,6 +14059,9 @@
     },
     {
       "name": "GearItem"
+    },
+    {
+      "name": "Group"
     },
     {
       "name": "InputGroup"

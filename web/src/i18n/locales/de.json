@@ -140,7 +140,8 @@
       "invalidRole": "Ein Login ist Inhaber oder Assistent."
     },
     "common": {
-      "invalidReference": "Die Daten verweisen auf einen Eintrag, der nicht (mehr) existiert."
+      "invalidReference": "Die Daten verweisen auf einen Eintrag, der nicht (mehr) existiert.",
+      "noAccess": "Das gehört zu einem Projekt, das du nicht siehst."
     },
     "client": {
       "hasProjects": "Der Kunde hat noch Projekte. Lösche zuerst die Projekte."
@@ -246,6 +247,9 @@
       "fileRequired": "Ein Voice Memo entsteht durch das Hochladen einer Audio-Datei.",
       "sectionOfOtherSong": "Der Teil gehört zu einem anderen Song.",
       "songOfOtherProject": "Der Song gehört zu einem anderen Projekt."
+    },
+    "group": {
+      "nameExists": "Eine Gruppe mit diesem Namen gibt es schon."
     }
   },
   "profile": {
@@ -1308,5 +1312,24 @@
       "Assistant": "Arbeitet an den Projekten, sieht aber keine Finanzen (Zeiten, Preise, Rechnungen) und keine Einstellungen.",
       "Client": "Wird noch nicht verwendet."
     }
+  },
+  "groups": {
+    "title": "Gruppen",
+    "new": "Neue Gruppe",
+    "edit": "Gruppe „{{name}}“ bearbeiten",
+    "name": "Name",
+    "namePlaceholder": "z. B. Bandname",
+    "members": "Mitglieder",
+    "membersHint": "Assistenten in der Gruppe sehen die Projekte der Gruppe. Inhaber sehen ohnehin alles.",
+    "hint": "Teams des Studios: Assistenten sehen nur die Projekte ihrer Gruppen, die „für alle sichtbaren“ und die selbst angelegten.",
+    "none": "Noch keine Gruppen.",
+    "noMembers": "Keine Mitglieder",
+    "projectCount": "{{count}} Projekt(e)",
+    "deleteConfirm": "Gruppe „{{name}}“ löschen? Die Projekte bleiben erhalten, ihre Mitglieder sehen sie dann aber nicht mehr.",
+    "access": "Wer sieht das Projekt?",
+    "accessHint": "Assistenten sehen das Projekt, wenn sie in einer seiner Gruppen sind – oder wenn es für alle sichtbar ist. Inhaber sehen alles.",
+    "visibleToAll": "Für alle sichtbar",
+    "visibleToAllHint": "Alle Assistenten sehen das Projekt, egal in welcher Gruppe.",
+    "onlyOwner": "Nur Inhaber"
   }
 }
