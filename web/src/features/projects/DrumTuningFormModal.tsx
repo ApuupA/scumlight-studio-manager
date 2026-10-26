@@ -22,6 +22,7 @@ export default function DrumTuningFormModal({ projectId, tuning, onClose }: Drum
   const form = useForm({
     initialValues: {
       drum: tuning?.drum ?? '',
+      fundamentalHz: tuning?.fundamentalHz ?? ('' as number | string),
       batterHz: tuning?.batterHz ?? ('' as number | string),
       resonantHz: tuning?.resonantHz ?? ('' as number | string),
       heads: tuning?.heads ?? '',
@@ -37,6 +38,7 @@ export default function DrumTuningFormModal({ projectId, tuning, onClose }: Drum
     const input = {
       projectId,
       drum: values.drum.trim(),
+      fundamentalHz: numberOrNull(values.fundamentalHz),
       batterHz: numberOrNull(values.batterHz),
       resonantHz: numberOrNull(values.resonantHz),
       heads: textOrNull(values.heads),
@@ -65,8 +67,17 @@ export default function DrumTuningFormModal({ projectId, tuning, onClose }: Drum
             data-autofocus
             {...form.getInputProps('drum')}
           />
-          <SimpleGrid cols={2}>
+          <SimpleGrid cols={3}>
             {/* The description shows the matching note while typing, e.g. "G3 +4" */}
+            <NumberInput
+              label={t('drums.fundamental')}
+              description={noteFromHz(Number(form.values.fundamentalHz)) || ' '}
+              suffix=" Hz"
+              min={20}
+              max={2000}
+              decimalScale={1}
+              {...form.getInputProps('fundamentalHz')}
+            />
             <NumberInput
               label={t('drums.batter')}
               description={noteFromHz(Number(form.values.batterHz)) || ' '}

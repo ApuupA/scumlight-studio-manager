@@ -7,6 +7,10 @@ namespace StudioManager.DataLayer.DTO.Create
         [Required, MaxLength(100)]
         public string Drum { get; set; } = string.Empty;
 
+        /// <summary>The fundamental the drum is tuned to.</summary>
+        [Range(20, 2000)]
+        public decimal? FundamentalHz { get; set; }
+
         [Range(20, 2000)]
         public decimal? BatterHz { get; set; }
 

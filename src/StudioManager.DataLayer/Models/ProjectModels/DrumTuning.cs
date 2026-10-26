@@ -8,6 +8,12 @@ namespace StudioManager.DataLayer.Models.ProjectModels
         /// <summary>The drum, e.g. "Snare 14x6.5" or "Floor tom 16".</summary>
         public string Drum { get; set; } = string.Empty;
 
+        /// <summary>
+        /// The fundamental the drum is tuned to (the note you hear), e.g. 98 Hz = G2 for a floor tom.
+        /// Batter and resonant head are tuned around it.
+        /// </summary>
+        public decimal? FundamentalHz { get; set; }
+
         public decimal? BatterHz { get; set; }
         public decimal? ResonantHz { get; set; }
 
