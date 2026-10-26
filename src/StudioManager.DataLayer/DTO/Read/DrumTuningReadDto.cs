@@ -4,6 +4,7 @@ namespace StudioManager.DataLayer.DTO.Read
     {
         public int Id { get; set; }
         public string Drum { get; set; } = string.Empty;
+        public decimal? FundamentalHz { get; set; }
         public decimal? BatterHz { get; set; }
         public decimal? ResonantHz { get; set; }
         public string? Heads { get; set; }

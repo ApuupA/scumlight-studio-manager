@@ -74,6 +74,7 @@ export default function SongInfoCard({ song }: { song: Song }) {
           {songTunings.map((tuning) => (
             <Text key={tuning.id} size="sm">
               <Text span fw={500}>{tuning.drum}</Text>
+              {tuning.fundamentalHz && <Text span fw={600}> · {noteFromHz(tuning.fundamentalHz)} ({tuning.fundamentalHz} Hz)</Text>}
               {tuning.batterHz && ` · ${tuning.batterHz} Hz (${noteFromHz(tuning.batterHz)})`}
               {tuning.resonantHz && ` / ${tuning.resonantHz} Hz (${noteFromHz(tuning.resonantHz)})`}
               {tuning.songId == null && <Text span c="dimmed"> · {t('drums.wholeProject')}</Text>}

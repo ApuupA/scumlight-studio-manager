@@ -8400,6 +8400,8 @@ export interface components {
         DrumTuningCreateDto: {
             drum: string;
             /** Format: double */
+            fundamentalHz?: number | null;
+            /** Format: double */
             batterHz?: number | null;
             /** Format: double */
             resonantHz?: number | null;
@@ -8414,6 +8416,8 @@ export interface components {
             /** Format: int32 */
             id: number;
             drum: string;
+            /** Format: double */
+            fundamentalHz?: number | null;
             /** Format: double */
             batterHz?: number | null;
             /** Format: double */

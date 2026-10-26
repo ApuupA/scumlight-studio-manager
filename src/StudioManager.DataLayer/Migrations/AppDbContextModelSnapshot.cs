@@ -1136,6 +1136,10 @@ namespace StudioManager.DataLayer.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<decimal?>("FundamentalHz")
+                        .HasPrecision(7, 2)
+                        .HasColumnType("numeric(7,2)");
+
                     b.Property<string>("Heads")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");

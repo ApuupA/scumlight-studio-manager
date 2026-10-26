@@ -367,6 +367,7 @@ namespace StudioManager.DataLayer.Context
             modelBuilder.Entity<DrumTuning>(entity =>
             {
                 entity.Property(d => d.Drum).HasMaxLength(100).IsRequired();
+                entity.Property(d => d.FundamentalHz).HasPrecision(7, 2);
                 entity.Property(d => d.BatterHz).HasPrecision(7, 2);
                 entity.Property(d => d.ResonantHz).HasPrecision(7, 2);
                 entity.Property(d => d.Heads).HasMaxLength(200);

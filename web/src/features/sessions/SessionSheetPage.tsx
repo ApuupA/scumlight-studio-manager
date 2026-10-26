@@ -170,6 +170,7 @@ function SessionSheet({ session }: { session: Session }) {
                   <thead>
                     <tr>
                       <th>{t('drums.drum')}</th>
+                      <th>{t('drums.fundamental')}</th>
                       <th>{t('drums.batter')}</th>
                       <th>{t('drums.resonant')}</th>
                     </tr>
@@ -178,6 +179,7 @@ function SessionSheet({ session }: { session: Session }) {
                     {tunings.map((tuning) => (
                       <tr key={tuning.id}>
                         <td>{tuning.drum}{tuning.songTitle && <span className={classes.muted}> ({tuning.songTitle})</span>}</td>
+                        <td><strong>{tuning.fundamentalHz && `${tuning.fundamentalHz} Hz · ${noteFromHz(tuning.fundamentalHz)}`}</strong></td>
                         <td>{tuning.batterHz && `${tuning.batterHz} Hz · ${noteFromHz(tuning.batterHz)}`}</td>
                         <td>{tuning.resonantHz && `${tuning.resonantHz} Hz · ${noteFromHz(tuning.resonantHz)}`}</td>
                       </tr>

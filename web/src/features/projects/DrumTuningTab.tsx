@@ -53,6 +53,7 @@ export default function DrumTuningTab({ projectId }: { projectId: number }) {
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>{t('drums.drum')}</Table.Th>
+                <Table.Th>{t('drums.fundamental')}</Table.Th>
                 <Table.Th>{t('drums.batter')}</Table.Th>
                 <Table.Th>{t('drums.resonant')}</Table.Th>
                 <Table.Th>{t('drums.heads')}</Table.Th>
@@ -67,6 +68,7 @@ export default function DrumTuningTab({ projectId }: { projectId: number }) {
                     <Text fw={500}>{tuning.drum}</Text>
                     {tuning.notes && <Text size="xs" c="dimmed">{tuning.notes}</Text>}
                   </Table.Td>
+                  <Table.Td fw={600}><HzWithNote hz={tuning.fundamentalHz} /></Table.Td>
                   <Table.Td><HzWithNote hz={tuning.batterHz} /></Table.Td>
                   <Table.Td><HzWithNote hz={tuning.resonantHz} /></Table.Td>
                   <Table.Td>{tuning.heads}</Table.Td>

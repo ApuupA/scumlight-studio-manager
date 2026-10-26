@@ -9422,6 +9422,13 @@
             "minLength": 1,
             "type": "string"
           },
+          "fundamentalHz": {
+            "maximum": 2000,
+            "minimum": 20,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "batterHz": {
             "maximum": 2000,
             "minimum": 20,
@@ -9476,6 +9483,11 @@
           },
           "drum": {
             "type": "string"
+          },
+          "fundamentalHz": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "batterHz": {
             "type": "number",
